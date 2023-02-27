@@ -1,0 +1,11 @@
+<main class="main">
+    <div class="responsive-wrapper">
+        <div class="horizontal-tabs">
+            <a routerLink="/dashboard/settings/change-personal-info" class="active">My details</a>
+            <a routerLink="/dashboard/settings/change-password">Change password</a>
+        </div>
+        <div class="content">
+            <app-dynamic-forms [path]="path" [file]="file"></app-dynamic-forms>
+        </div>
+    </div>
+</main>

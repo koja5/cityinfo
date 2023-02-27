@@ -1,0 +1,42 @@
+<section class="navigation">
+    <div class="nav-container">
+        <div class="brand">
+            <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
+        </div>
+        <nav>
+            <div class="nav-mobile">
+                <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+            </div>
+            <ul class="nav-list {{showHideMenu}}">
+                <!-- Setting the links to #! will ensure that no action takes place on click. -->
+
+                <li>
+                    <select class="combobox input-large form-control" name="normal">
+                        <option value="" selected="selected">Select a State</option>
+                        <option *ngFor="let item of listOfCities">{{item.name}}</option>
+                    </select>
+                </li>
+
+                <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<div class="left-ads">IMAGE</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+        <app-ad-card></app-ad-card>
+    </div>
+</div>
+
+
+<div class="right-ads">IMAGE</div>

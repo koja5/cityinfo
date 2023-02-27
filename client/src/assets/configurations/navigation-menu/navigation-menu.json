@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Users",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/superadmin/users"
+  },
+  {
+    "title": "Cities",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/superadmin/cities"
+  }
+]

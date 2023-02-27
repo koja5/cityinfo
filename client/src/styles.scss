@@ -1,0 +1,234 @@
+@import "~bootstrap/scss/bootstrap";
+
+@import "../node_modules/@syncfusion/ej2-base/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-angular-grids/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-angular-schedule/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-pdfviewer/styles/fabric.css";
+@import "../node_modules/@syncfusion/ej2-angular-calendars/styles/fabric.css";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+
+:root {
+  --bg-color: #f5f5f5;
+  --bg-round-a: #4481eb;
+  --bg-round-b: #04befe;
+  --panel-color: #fff;
+  --title: #444;
+  --bg-input: #e0e0e0;
+  --input-icon: #8a8a8a;
+  --input: #333;
+  --input-hover: #222;
+  --btn-color: #5995fd;
+  --btn-text: #fff;
+  --btn-hover: #4d84e2;
+  --social-text: #444;
+  --social-icon: #4481eb;
+  --icon-color: #333;
+  --check-text: #333;
+  --check-hover: #333;
+  --check-link: #4d84e2;
+  --pass-color: #444;
+  --key-color: #777;
+  --pass-hover-color: #4d84e2;
+  --keyboard-color: #e0e0e0;
+  --key-letter: #333;
+  --c-text-primary: #282a32;
+  --c-text-secondary: #686b87;
+  --c-text-action: #404089;
+  --c-accent-primary: #434ce8;
+  --c-border-primary: #eff1f6;
+  --c-background-primary: #ffffff;
+  --c-background-secondary: #fdfcff;
+  --c-background-tertiary: #ecf3fe;
+  --c-background-quaternary: #e9ecf4;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #222;
+  --bg-round-a: #4a4a4a;
+  --bg-round-b: #2e2e2e;
+  --panel-color: #fff;
+  --title: #f2f2f2;
+  --bg-input: #444;
+  --input-icon: #ccc;
+  --input: #ccc;
+  --input-hover: #aaa;
+  --btn-color: #333;
+  --btn-text: #f2f2f2;
+  --btn-hover: #444;
+  --social-text: #ccc;
+  --social-icon: #fff;
+  --icon-color: #aaa;
+  --check-text: #fff;
+  --check-hover: #fff;
+  --check-link: #5995fd;
+  --pass-color: #fff;
+  --pass-hover-color: #5995fd;
+  --key-color: #f0f0f0;
+  --keyboard-color: #444;
+  --key-letter: #fff;
+  --c-text-primary: #282a32;
+  --c-text-secondary: #686b87;
+  --c-text-action: #404089;
+  --c-accent-primary: #434ce8;
+  --c-border-primary: #eff1f6;
+  --c-background-primary: #ffffff;
+  --c-background-secondary: #fdfcff;
+  --c-background-tertiary: #ecf3fe;
+  --c-background-quaternary: #e9ecf4;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label {
+  font-family: "Roboto", sans-serif !important;
+}
+
+a {
+  cursor: pointer;
+}
+
+.custom-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(147, 159, 173, 0.84);
+  line-height: 0.9375rem;
+  font-weight: bold;
+}
+
+label {
+  margin-bottom: 0.5rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.responsive-wrapper {
+  width: 90%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.outer {
+  display: table;
+  text-align: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: inherit;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.position-end {
+  text-align: end;
+}
+
+.button-action {
+  padding: 9px 22px !important;
+}
+
+.p-3 {
+  padding: 1rem;
+}
+
+.mt-3,
+.my-3 {
+  margin-top: 1rem !important;
+}
+
+.form-group {
+  display: inline-block;
+  margin-bottom: 4px !important;
+}
+
+.position-start {
+  text-align: start;
+}
+
+.position-center {
+  text-align: center;
+}
+
+.position-end {
+  text-align: end;
+}
+
+.display-none {
+  display: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.center-text {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .e-popup.e-popup-open.e-dialog {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .e-popup.e-popup-open.e-dialog {
+    width: 70% !important;
+  }
+}
+
+
