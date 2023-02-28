@@ -81,16 +81,18 @@ export class LoginComponent implements OnInit {
   }
 
   sentLinkToEmailForReset() {
-    this.service.callPostMethod('/api/sentLinkToEmailForReset', this.user).subscribe((data) => {
-      if (data) {
-        this.mode = '';
-      } else {
-        this.toastr.showErrorCustom(
-          'Your email or password is incorrect or you have not verified your email address!',
-          ''
-        );
-      }
-    });
+    this.service
+      .callPostMethod('/api/sentLinkToEmailForReset', this.user)
+      .subscribe((data) => {
+        if (data) {
+          this.mode = '';
+        } else {
+          this.toastr.showErrorCustom(
+            'Your email or password is incorrect or you have not verified your email address!',
+            ''
+          );
+        }
+      });
   }
 
   setUserInfoAndRoute(data: any) {
@@ -105,10 +107,14 @@ export class LoginComponent implements OnInit {
   }
 
   setLanguageForDashboard() {
-    this.configurationService
+    /*this.configurationService
       .getLanguageForDashboard('english')
       .subscribe((data) => {
         this.helpService.setLanguage(data);
-      });
+      });*/
+    this.helpService.setLanguage({
+      gridPopupAddTitle: 'Add new record',
+      gridPopupEditTitle: 'Edit record',
+    });
   }
 }
