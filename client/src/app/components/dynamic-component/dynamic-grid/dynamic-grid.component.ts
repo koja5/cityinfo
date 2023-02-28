@@ -22,7 +22,7 @@ import { HelpService } from 'src/app/services/help.service';
 import { MessageService } from 'src/app/services/message.service';
 import { ToastrComponent } from '../common/toastr/toastr.component';
 import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 import { FilterSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 
@@ -233,12 +233,12 @@ export class DynamicGridComponent implements OnInit {
     this.unsuscribeME();
   }
 
-  downloadDocument(body: any) {
-    this.apiService.getDocument(body).subscribe(
-      (data: any) => saveAs(data, body.name),
-      (error: any) => console.error(error)
-    );
-  }
+  // downloadDocument(body: any) {
+  //   this.apiService.getDocument(body).subscribe(
+  //     (data: any) => saveAs(data, body.name),
+  //     (error: any) => console.error(error)
+  //   );
+  // }
 
   previewDocument(body: any) {
     this.apiService.getDocument(body).subscribe((data: any) => {

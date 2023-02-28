@@ -78,7 +78,7 @@
                 <span *ngIf="item.template.label">{{ item.template.label }}</span>
               </button>
   
-              <button
+              <!-- <button
                 [class]="item.template.class"
                 *ngIf="item.template.action === 'downloadDocument'"
                 (click)="downloadDocument(data)"
@@ -90,7 +90,7 @@
                   >{{ item.template.classIcon }}</mat-icon
                 >
                 <span *ngIf="item.template.label">{{ item.template.label }}</span>
-              </button>
+              </button> -->
             </div>
   
             <div *ngIf="item.template.type === 'dropdownbutton'">
