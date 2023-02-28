@@ -45,7 +45,7 @@ export class DynamicFormsComponent implements OnInit {
   public modalShow: boolean = false;
 
   get controls() {
-    return this.config?.config!.filter(({ type }) => type !== 'button');
+    return this.config.config!.filter(({ type }) => type !== 'button');
   }
   get changes() {
     return this.form.valueChanges;
@@ -122,14 +122,14 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   setDisableEdit() {
-    if (this.config?.config) {
-      for (let i = 0; i < this.config?.config.length; i++) {
+    if (this.config.config) {
+      for (let i = 0; i < this.config.config.length; i++) {
         this.config.config[i].readonly = true;
         if (
           this.config.config[i].type === 'button' &&
           this.config.config[i].field === 'submit'
         ) {
-          this.config?.config.splice(i, 1);
+          this.config.config.splice(i, 1);
         } else if (this.config.config[i].type === 'radio') {
           this.config.config[i].disabled = true;
         }

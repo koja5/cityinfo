@@ -11,8 +11,8 @@
       [dataSource]="data"
       [editSettings]="config.editSettings"
       [toolbar]="config.toolbar"
-      [allowSorting]="config?.sorting?.enable"
-      [sortSettings]="config?.sorting?.initialSorting"
+      [allowSorting]="config.sorting.enable"
+      [sortSettings]="config.sorting.initialSorting"
       [allowGrouping]="config.grouping.enable"
       [allowResizing]="config.allowResizing"
       [allowPaging]="config.paging.enable"
@@ -34,8 +34,8 @@
           [field]="item.field"
           [headerText]="item.title"
           [width]="item.width"
-          [class]="item?.class"
-          [textAlign]="item?.position ? item?.position : 'center'"
+          [class]="item.class"
+          [textAlign]="item.position ? item.position : 'center'"
           [isPrimaryKey]="item.isPrimaryKey"
           [editType]="item.editType ? item.editType : null"
           [allowEditing]="item.allowEditing"
@@ -43,7 +43,7 @@
           [validationRules]="item.validation"
           [allowFiltering]="item.allowFiltering === false ? false : true"
         >
-          <ng-template #template let-data *ngIf="item?.template">
+          <ng-template #template let-data *ngIf="item.template">
             <div *ngIf="item.template.type === 'button'">
               <button
                 [class]="item.template.class"

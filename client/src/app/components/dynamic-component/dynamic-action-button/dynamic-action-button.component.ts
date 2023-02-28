@@ -47,12 +47,12 @@ export class DynamicActionButtonComponent implements OnInit {
   }
 
   initialize() {
-    if (this.config?.actionButtons.dropDownButtons) {
-      this.itemsModelDropDown = this.config?.actionButtons.dropDownButtons
+    if (this.config.actionButtons.dropDownButtons) {
+      this.itemsModelDropDown = this.config.actionButtons.dropDownButtons
         .items as ItemModel[];
     }
-    if (this.config?.actionButtons.splitButtons) {
-      this.itemsModelSplit = this.config?.actionButtons.splitButtons
+    if (this.config.actionButtons.splitButtons) {
+      this.itemsModelSplit = this.config.actionButtons.splitButtons
         .items as ItemModel[];
     }
   }
@@ -84,9 +84,9 @@ export class DynamicActionButtonComponent implements OnInit {
     this.loader = true;
     console.log(this.data);
     if (this.data && this.data.length) {
-      this.callServerMethod(this.config.editSettingsRequest?.edit, event);
+      this.callServerMethod(this.config.editSettingsRequest.edit, event);
     } else {
-      this.callServerMethod(this.config.editSettingsRequest?.add, event);
+      this.callServerMethod(this.config.editSettingsRequest.add, event);
     }
   }
 
@@ -112,7 +112,7 @@ export class DynamicActionButtonComponent implements OnInit {
   setResponseData(data: any) {
     this.loader = false;
     this.modal = false;
-    if (this.config?.request?.type === 'GET') {
+    if (this.config.request!.type === 'GET') {
       this.data = data;
       this.refreshFormData.emit(this.data);
     }
@@ -123,6 +123,6 @@ export class DynamicActionButtonComponent implements OnInit {
   }
 
   checkRights() {
-    return this.helpService.checkRights(this.config?.actionButtons.rights);
+    return this.helpService.checkRights(this.config.actionButtons.rights);
   }
 }

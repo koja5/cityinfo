@@ -1,11 +1,11 @@
 
-<div *ngIf="config && !config?.childrens">
+<div *ngIf="config && !config.childrens">
     <div *ngIf="loader" style="height: 70vh">
       <app-loader></app-loader>
     </div>
     <div *ngIf="!loader">
       <app-dynamic-action-button
-        *ngIf="config?.actionButtons && !hideActionButtons"
+        *ngIf="config.actionButtons && !hideActionButtons"
         [config]="config"
         [data]="data"
         [path]="path"
@@ -15,7 +15,7 @@
       ></app-dynamic-action-button>
       <div
         *ngIf="config && config.additionalInfo"
-        class="{{ !hideActionButtons ? config?.class : '' }}"
+        class="{{ !hideActionButtons ? config.class : '' }}"
       >
         <div class="card card-form">
           <div class="row no-gutters">
@@ -47,7 +47,7 @@
       </div>
       <div
         *ngIf="config && config.additionalInfo === undefined"
-        class="{{ !hideActionButtons ? config?.class : '' }}"
+        class="{{ !hideActionButtons ? config.class : '' }}"
       >
         <form [formGroup]="form" (submit)="handleSubmit($event)">
           <ng-container
@@ -62,9 +62,9 @@
     </div>
   </div>
   
-  <div *ngIf="config?.childrens">
+  <div *ngIf="config.childrens">
     <app-dynamic-forms
-      *ngFor="let item of config?.childrens"
+      *ngFor="let item of config.childrens"
       [config]="item"
     ></app-dynamic-forms>
   </div>

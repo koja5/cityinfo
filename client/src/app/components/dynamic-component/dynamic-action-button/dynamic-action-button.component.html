@@ -1,27 +1,27 @@
 <div *ngIf="
-    config?.actionButtons.simpleButtons &&
-    config?.actionButtons.simpleButtons.length > 0 &&
+    config.actionButtons.simpleButtons &&
+    config.actionButtons.simpleButtons.length > 0 &&
     checkRights()
-  " class="{{ config?.actionButtons.class }}">
-    <button *ngFor="let item of config?.actionButtons.simpleButtons" (click)="clickAction(item.action)">
+  " class="{{ config.actionButtons.class }}">
+    <button *ngFor="let item of config.actionButtons.simpleButtons" (click)="clickAction(item.action)">
         {{ language[item.title] ? language[item.title] : item.title }}
     </button>
 </div>
 
 <div *ngIf="
-    config?.actionButtons.dropDownButtons &&
+    config.actionButtons.dropDownButtons &&
     itemsModelDropDown.length > 0 &&
     checkRights()
-  " class="{{ config?.actionButtons.class }}">
-    <button ejs-dropdownbutton content="{{ config?.actionButtons.dropDownButtons.content }}"
+  " class="{{ config.actionButtons.class }}">
+    <button ejs-dropdownbutton content="{{ config.actionButtons.dropDownButtons.content }}"
         [items]="itemsModelDropDown" (select)="clickAction($event)"></button>
 </div>
 <div *ngIf="
-    config?.actionButtons.splitButtons &&
+    config.actionButtons.splitButtons &&
     itemsModelSplit.length > 0 &&
     checkRights()
-  " class="{{ config?.actionButtons.class }}">
-    <ejs-splitbutton content="{{ config?.actionButtons.splitButtons.content }}" [items]="itemsModelSplit"
+  " class="{{ config.actionButtons.class }}">
+    <ejs-splitbutton content="{{ config.actionButtons.splitButtons.content }}" [items]="itemsModelSplit"
         (select)="clickAction($event)"></ejs-splitbutton>
 </div>
 

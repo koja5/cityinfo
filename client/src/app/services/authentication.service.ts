@@ -10,7 +10,7 @@ export class AuthenticationService {
   public get getToken() {
     return {
       'x-access-token':
-        this.storageService.getToken()?.split('"').join('') + '',
+        this.storageService.getToken().split('"').join('') + '',
     };
   }
 }

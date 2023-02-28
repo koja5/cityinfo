@@ -27,10 +27,10 @@ export class ButtonComponent implements OnInit {
   }
 
   clickButton() {
-    this.clickEmitter?.emit();
+    this.clickEmitter.emit();
   }
 
   checkRights() {
-    return this.helpService.checkRights(this.config?.rights);
+    return this.helpService.checkRights(this.config.rights);
   }
 }
