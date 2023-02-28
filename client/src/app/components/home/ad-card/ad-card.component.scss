@@ -123,5 +123,20 @@ p {
 }
 
 .card-icon {
-    font-size: 30px;
+  font-size: 30px;
+}
+
+.contact {
+  width: 300px;
+}
+
+.contact div {
+  text-align: center;
+  cursor: pointer;
+}
+
+a {
+  display: block;
+  text-decoration: blink;
+  color: black;
 }
