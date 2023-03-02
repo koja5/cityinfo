@@ -172,18 +172,28 @@ nav ul li ul li a {
   text-decoration: none;
 }
 
-.left-ads {
+.left-fixed-ads {
   position: fixed;
-  width: 20%;
-  left: 0px;
-  text-align: center;
+  width: 400px;
+  height: 100%;
+  z-index: -1;
 }
 
-.right-ads {
+.right-fixed-ads {
   position: fixed;
-  width: 20%;
+  width: 400px;
+  height: 100%;
   right: 0px;
-  text-align: center;
+  z-index: -1;
+}
+
+.inner-ads {
+  position: absolute;
+}
+
+.inner-ads-right {
+  position: absolute;
+  right: 0px;
 }
 
 .input-large {
