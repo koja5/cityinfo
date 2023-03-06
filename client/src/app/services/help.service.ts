@@ -107,6 +107,11 @@ export class HelpService {
     return UserType[UserType.user];
   }
 
+  getUserType() {
+    const token = this.getDecodeToken();
+    return token.type;
+  }
+
   checkRights(rights: any) {
     const type = this.getTypeOfName(this.getDecodeToken().type);
     if (rights) {
@@ -122,5 +127,10 @@ export class HelpService {
   getUserNameFromToken() {
     const token = this.getDecodeToken();
     return token.firstname ? token.firstname : token.lastname;
+  }
+
+  getUserId() {
+    const token = this.getDecodeToken();
+    return token.id;
   }
 }

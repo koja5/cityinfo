@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const api = require("./providers/api");
 const mailApi = require("./providers/mail-api");
 const mailServer = require("./providers/mail_server/mail-server");
+const upload = require("./providers/upload");
 
 app.use(function (req, res, next) {
   //allow cross origin requests
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use("/api", api);
 app.use("/api", mailApi);
 app.use("/api/mail-server", mailServer);
+app.use("/api/upload", upload);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/src/index.html"));

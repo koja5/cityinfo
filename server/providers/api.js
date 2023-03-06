@@ -109,7 +109,7 @@ router.post("/login", function (req, res, next) {
               user: {
                 id: rows[0].id,
                 firstname: rows[0].firstname,
-                type: 2,
+                type: rows[0].type,
               },
               email: rows[0].email,
             },
@@ -330,7 +330,6 @@ router.get("/getUsers", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from users where type = 2",
-          [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -427,6 +426,111 @@ router.post("/deleteUser", auth, function (req, res, next) {
 
 /* END USERS */
 
+/* DISTRICTS */
+
+router.get("/getDistricts", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query("select * from districts", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            console.log(rows);
+            res.json(rows);
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createDistrict", auth, async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      conn.query("insert into districts set ?", req.body, async function (err) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          return res.json(err);
+        } else {
+          logger.log("info", "Create new city");
+          res.json(true);
+        }
+      });
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updateDistrict", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update districts SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteCity", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from cities where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END DISTRICTS */
+
 router.get("/verificationMail/:email", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -455,3 +559,282 @@ router.get("/verificationMail/:email", async (req, res, next) => {
     res.json(ex);
   }
 });
+
+/* ADS DRAFT */
+
+router.get("/getMyAds", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from ads_draft where id_user = ?",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteMyAds", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from cities where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END ADS DRAFT */
+
+
+/* PAID ADS */
+
+router.get("/getPaidAds", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from paid_ads where id_user = ?",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPaidAd", auth, async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      conn.query("insert into paid_ads set ?", req.body, async function (err) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          return res.json(err);
+        } else {
+          logger.log("info", "Create new city");
+          res.json(true);
+        }
+      });
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updatePaidAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_ads SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteMyAds", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from cities where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END PAID ADS */
+
+
+/* POSITION PRICE */
+
+router.get("/getPositionPrices", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from position_prices",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPositionPrice", auth, async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      conn.query("insert into position_prices set ?", req.body, async function (err) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          return res.json(err);
+        } else {
+          logger.log("info", "Create new city");
+          res.json(true);
+        }
+      });
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updatePositionPrice", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update position_prices SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePositionPrice", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from position_prices where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END POSITION PRICE */

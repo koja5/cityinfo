@@ -1,0 +1,40 @@
+<div class="row">
+    <!-- <div class="file-drop-area col-md-12">
+        <span class="fake-btn">Choose files</span>
+        <input class="file-input" type="file" single>
+    </div> -->
+
+
+
+    <div class="col-md-12">
+        <label class="custom-label">Name of company</label>
+        <ejs-textbox cssClass="e-outline" [id]="data.name" [(ngModel)]="data.name" name="name"></ejs-textbox>
+    </div>
+    <div class="col-md-12">
+        <label class="custom-label">Address</label>
+        <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address" name="address"></ejs-textbox>
+    </div>
+
+    <div class="col-md-12 row m-0 p-0">
+
+        <div class="col-md-6">
+            <label class="custom-label">Phone</label>
+            <ejs-textbox cssClass="e-outline" [id]="data.phone" [(ngModel)]="data.phone" name="phone"></ejs-textbox>
+        </div>
+
+        <div class="col-md-6">
+            <label class="custom-label">Email</label>
+            <ejs-textbox cssClass="e-outline" [id]="data.email" [(ngModel)]="data.email" name="email"></ejs-textbox>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label class="custom-label">Description</label>
+        <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description" [(ngModel)]="data.description"
+            name="description"></ejs-textbox>
+    </div>
+    <div class="col-md-12">
+        <label class="custom-label">Upload Cover image</label>
+        <ejs-uploader #defaultupload [asyncSettings]="asyncSettings" [autoUpload]="false"
+            (uploading)="onUploadBegin($event)" [buttons]="{upload: 'Upload cover image and save ads'}"></ejs-uploader>
+    </div>
+</div>
