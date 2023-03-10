@@ -35,7 +35,7 @@ router.post("/sendMail", function (req, res) {
   var compiledTemplate = hogan.compile(confirmTemplate);
   var mailOptions = {
     from: req.body.email
-      ? '"' + req.body.email + '"' + process.env.smtp_user
+      ? req.body.email
       : '"CityInfo"' + process.env.smtp_user,
     to: req.body.fields["email"] ? req.body.fields["email"] : req.body.email,
     subject: req.body.subject,
