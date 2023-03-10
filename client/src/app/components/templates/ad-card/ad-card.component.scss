@@ -154,3 +154,20 @@ a {
   border: 3px solid red;
   color: #000;
 }
+
+.description {
+  white-space: pre-line;
+  height: 44px;
+  overflow: hidden;
+}
+
+.show-more {
+  font-size: 12px;
+  font-weight: bold;
+  color: #5995fd;
+  cursor: pointer;
+}
+
+.description-container {
+  height: 122px;
+}

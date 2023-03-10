@@ -17,7 +17,7 @@ import { ActionsType } from 'src/app/enums/actions-type';
   styleUrls: ['./user-ads.component.scss'],
 })
 export class UserAdsComponent implements OnInit {
-  @ViewChild('template') template!: DialogComponent;
+  @ViewChild('dialog') dialog!: DialogComponent;
   public asyncSettings!: Object;
   public data = new AdsModel();
   public config = new UploadModel();
@@ -91,6 +91,7 @@ export class UserAdsComponent implements OnInit {
     setTimeout(() => {
       if (args.currentRequest?.status == 200) {
         this.toastr.showSuccessCustom('You successfuly created new ads draft!');
+        window.location.reload();
       } else {
         this.toastr.showErrorCustom('Not successfuly created new ads draft!');
       }
@@ -106,7 +107,7 @@ export class UserAdsComponent implements OnInit {
   }
 
   createNewAdDraft() {
-    this.template.show();
+    this.dialog.show();
     this.data = new AdsModel();
     this.editButton = false;
   }
@@ -116,16 +117,16 @@ export class UserAdsComponent implements OnInit {
     this.data = event.data;
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
-      this.template.show();
+      this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
         .callPostMethod('api/deleteMyAds', this.data)
         .subscribe((data) => {
           if (data) {
-            this.template.hide();
+            this.dialog.hide();
             this.toastr.showSuccessCustom('You successfuly delete ads draft!');
           } else {
-            this.template.hide();
+            this.dialog.hide();
             this.toastr.showErrorCustom('Not successfuly delete ads draft!');
           }
         });
@@ -137,10 +138,10 @@ export class UserAdsComponent implements OnInit {
       .callPostMethod('api/updateMyAds', this.data)
       .subscribe((data) => {
         if (data) {
-          this.template.hide();
+          this.dialog.hide();
           this.toastr.showSuccessCustom('You successfuly update ads draft!');
         } else {
-          this.template.hide();
+          this.dialog.hide();
           this.toastr.showErrorCustom('Not successfuly update ads draft!');
         }
       });

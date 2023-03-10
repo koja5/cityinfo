@@ -240,7 +240,6 @@ ejs-uploader {
   width: 100%;
 }
 
-
 .btn {
   width: auto;
   height: 49px;
@@ -260,7 +259,6 @@ ejs-uploader {
   background-color: var(--btn-hover);
 }
 
-
 .btn.transparent {
   margin: 0;
   background: none;
@@ -273,4 +271,10 @@ ejs-uploader {
 
 .btn-danger {
   background: red;
+}
+
+@media (max-width: 768px) {
+  .hidden-xs {
+    display: none;
+  }
 }

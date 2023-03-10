@@ -14,11 +14,15 @@ export class AdCardComponent implements OnInit {
   @Input() public edit: boolean = false;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   public cover: any;
+  public showModeButton: boolean = false;
 
   constructor(private apiService: CallApiService) {}
 
   ngOnInit(): void {
     console.log(this.data);
+    if(this.data.description && this.data.description?.length > 30) {
+      this.showModeButton = true;
+    }
     if (!this.data.cover) {
       this.cover = '../../../../assets/images/no-photo-available.png';
     } else {
