@@ -20,14 +20,17 @@ export class AdCardComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data);
-    if(this.data.description && this.data.description?.length > 30) {
+    if (this.data.description && this.data.description?.length > 30) {
       this.showModeButton = true;
     }
     if (!this.data.cover) {
       this.cover = '../../../../assets/images/no-photo-available.png';
     } else {
-      const data = this.data.cover.split('\\assets');
-      this.cover = '\\assets' + data[1];
+      let data = this.data.cover.split('/assets');
+      if (data.length == 1) {
+        data = this.data.cover.split('\\assets');
+      }
+      this.cover = '/assets' + data[1];
     }
   }
 

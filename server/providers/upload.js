@@ -5,7 +5,6 @@ const mysql = require("mysql");
 const auth = require("./config/auth");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart({
-  // uploadDir: "./providers/file_uploads",
   uploadDir: "../../CityInfo/client/src/assets/file_upload",
   auth,
 });
