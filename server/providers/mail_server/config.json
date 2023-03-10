@@ -1,7 +1,7 @@
 {
     "activate_mail": {
         "template": "activate_mail.hjs",
-        "email": "kidsnode@gmail.com",
+        "email": "clinicnode@gmail.com",
         "subject": "Activate your account",
         "fields": {
             "title": "Please activate your account!",
@@ -11,7 +11,7 @@
     },
     "reset_password": {
         "template": "reset_password.hjs",
-        "email": "kidsnode@gmail.com",
+        "email": "clinicnode@gmail.com",
         "subject": "Password recovery request",
         "fields": {
             "title": "Password recovery request",
@@ -21,7 +21,7 @@
     },
     "send_request_for_free_ad": {
         "template": "send_request_for_free_ad.hjs",
-        "email": "kidsnodeoffice@gmail.com",
+        "email": "clinicnode@gmail.com",
         "subject": "Received new request for free ad",
         "fields": {
             "title": "New request for free ad",
@@ -31,7 +31,7 @@
     },
     "info_for_active_free_ad": {
         "template": "info_for_active_free_ad.hjs",
-        "email": "kidsnode@gmail.com",
+        "email": "clinicnode@gmail.com",
         "subject": "Free relationship request",
         "fields": {
             "title": "Free relationship request",
