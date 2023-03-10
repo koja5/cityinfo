@@ -26,8 +26,8 @@ export class AdCardComponent implements OnInit {
     if (!this.data.cover) {
       this.cover = '../../../../assets/images/no-photo-available.png';
     } else {
-      const data = this.data.cover.split('\\src');
-      this.cover = data[1];
+      const data = this.data.cover.split('\\assets');
+      this.cover = '\\assets' + data[1];
     }
   }
 
