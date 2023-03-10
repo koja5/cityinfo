@@ -231,7 +231,46 @@ label {
   }
 }
 
+.new-row {
+  display: flow-root;
+  margin-bottom: 7px;
+}
 
 ejs-uploader {
   width: 100%;
+}
+
+
+.btn {
+  width: auto;
+  height: 49px;
+  border: none;
+  outline: none;
+  border-radius: 49px;
+  cursor: pointer;
+  background-color: var(--btn-color);
+  color: var(--btn-text);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  background-color: var(--btn-hover);
+}
+
+
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff;
+  width: 130px;
+  height: 41px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.btn-danger {
+  background: red;
 }

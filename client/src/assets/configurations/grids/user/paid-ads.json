@@ -2,7 +2,7 @@
     "pageSize": 10,
     "request": {
       "type": "GET",
-      "api": "/api/getPaidAds",
+      "api": "/api/getPaidAdsByUser",
       "parameters": [],
       "fields": "",
       "root": ""
@@ -102,7 +102,8 @@
         "title": "Start date",
         "filterable": true,
         "hideable": true,
-        "type": "datepicker",
+        "type": "date",
+        "format": "dd.MM.yyyy",
         "class": "text-align-right",
         "field": "start_date",
         "validation": {
@@ -110,23 +111,23 @@
         }
       },
       {
-        "title": "Ads draft",
+        "title": "Ads name",
         "filterable": true,
         "hideable": true,
         "type": "string",
         "class": "text-align-right",
-        "field": "ads_draft",
+        "field": "ads_name",
         "validation": {
           "required": true
         }
       },
       {
-        "title": "District",
+        "title": "City",
         "filterable": true,
         "hideable": true,
         "type": "string",
         "class": "text-align-right",
-        "field": "district",
+        "field": "city_name",
         "validation": {
           "required": true
         }
@@ -146,9 +147,9 @@
         "type": "datepicker",
         "width": "col-md-12",
         "class": "e-outline",
-        "name": "start_from",
-        "title": "Start from",
-        "field": "start_from"
+        "name": "start_date",
+        "title": "Start date",
+        "field": "start_date"
       },
       {
         "type": "combobox",
@@ -227,9 +228,9 @@
         "type": "numeric",
         "width": "col-md-12",
         "class": "e-outline",
-        "name": "number_of_week",
+        "name": "number_of_weeks",
         "title": "Number of weeks",
-        "field": "number_of_week",
+        "field": "number_of_weeks",
         "format": "###.##",
         "min": 1
       },

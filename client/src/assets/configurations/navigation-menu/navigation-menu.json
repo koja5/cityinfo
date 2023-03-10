@@ -28,6 +28,13 @@
     "link": "/dashboard/superadmin/position-prices"
   },
   {
+    "title": "Request ads",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/request-ads"
+  },
+  {
     "title": "My ads",
     "rights": [
       "user"

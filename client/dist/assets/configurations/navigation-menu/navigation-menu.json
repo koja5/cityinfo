@@ -2,15 +2,50 @@
   {
     "title": "Users",
     "rights": [
-      "user"
+      "superadmin"
     ],
     "link": "/dashboard/superadmin/users"
   },
   {
     "title": "Cities",
     "rights": [
-      "user"
+      "superadmin"
     ],
     "link": "/dashboard/superadmin/cities"
+  },
+  {
+    "title": "Districts",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/districts"
+  },
+  {
+    "title": "Prices",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/position-prices"
+  },
+  {
+    "title": "Request ads",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/request-ads"
+  },
+  {
+    "title": "My ads",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-ads"
+  },
+  {
+    "title": "Paid ads",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/paid-ads"
   }
 ]

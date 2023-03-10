@@ -21,6 +21,7 @@ import { ComboBoxModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { DatepickerComponent } from '../dynamic-fields/inputs/datepicker/datepicker.component';
 import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbox/numeric-textbox.component';
+import { SwitchComponent } from '../dynamic-fields/buttons/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbo
     DynamicIconComponent,
     ComboboxComponent,
     DatepickerComponent,
-    NumericTextboxComponent
+    NumericTextboxComponent,
+    SwitchComponent
   ],
   exports: [
     DynamicFieldsDirective,
@@ -41,7 +43,8 @@ import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbo
     DynamicIconComponent,
     ComboboxComponent,
     DatepickerComponent,
-    NumericTextboxComponent
+    NumericTextboxComponent,
+    SwitchComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +59,8 @@ import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbo
     SharingModule,
     ComboBoxModule,
     DatePickerModule,
-    NumericTextBoxModule
+    NumericTextBoxModule,
+    SwitchModule
   ],
   entryComponents: [
     DynamicFieldsDirective,
@@ -66,7 +70,8 @@ import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbo
     DynamicIconComponent,
     ComboboxComponent,
     DatepickerComponent,
-    NumericTextboxComponent
+    NumericTextboxComponent,
+    SwitchComponent
   ],
 })
 export class DynamicFormsModule {}

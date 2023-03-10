@@ -591,6 +591,33 @@ router.get("/getMyAds", auth, async (req, res, next) => {
   }
 });
 
+router.post("/updateMyAds", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update ads_draft SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/deleteMyAds", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -599,7 +626,7 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
         res.json(err);
       }
       conn.query(
-        "delete from cities where id = ?",
+        "delete from ads_draft where id = ?",
         [req.body.id],
         function (err, rows) {
           conn.release();
@@ -620,10 +647,9 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
 
 /* END ADS DRAFT */
 
-
 /* PAID ADS */
 
-router.get("/getPaidAds", auth, async (req, res, next) => {
+router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -631,7 +657,7 @@ router.get("/getPaidAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from paid_ads where id_user = ?",
+          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -659,15 +685,40 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         return res.json(err);
       }
-      conn.query("insert into paid_ads set ?", req.body, async function (err) {
-        if (err) {
-          logger.log("error", err.sql + ". " + err.sqlMessage);
-          return res.json(err);
-        } else {
-          logger.log("info", "Create new city");
-          res.json(true);
+      req.body.start_date = new Date(req.body.start_date);
+      req.body.id_user = req.user.user.id;
+      conn.query(
+        "insert into paid_ads set ?",
+        req.body,
+        async function (err, rows) {
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Create request for free Ad");
+            conn.query(
+              "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id = ?",
+              rows.insertId,
+              function (err, rows, fields) {
+                conn.release();
+                if (err) {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(err);
+                } else {
+                  var options = {
+                    url: process.env.link_api + "sendRequestForFreeAd",
+                    method: "POST",
+                    body: rows[0],
+                    json: true,
+                  };
+                  request(options, function (error, response, body) {});
+                  res.json(true);
+                }
+              }
+            );
+          }
         }
-      });
+      );
     });
   } catch (err) {
     logger.log("error", err);
@@ -728,8 +779,123 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
   }
 });
 
-/* END PAID ADS */
+router.get("/getPaidAds", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query("select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 2", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            console.log(rows);
+            res.json(rows);
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
 
+router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 2",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getRequestAds", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.firstname, u.email from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id where p.active = 0",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/activeAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_ads SET active = 1 where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            var options = {
+              url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END PAID ADS */
 
 /* POSITION PRICE */
 
@@ -768,15 +934,19 @@ router.post("/createPositionPrice", auth, async function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         return res.json(err);
       }
-      conn.query("insert into position_prices set ?", req.body, async function (err) {
-        if (err) {
-          logger.log("error", err.sql + ". " + err.sqlMessage);
-          return res.json(err);
-        } else {
-          logger.log("info", "Create new city");
-          res.json(true);
+      conn.query(
+        "insert into position_prices set ?",
+        req.body,
+        async function (err) {
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Create new city");
+            res.json(true);
+          }
         }
-      });
+      );
     });
   } catch (err) {
     logger.log("error", err);

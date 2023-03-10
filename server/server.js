@@ -1,5 +1,5 @@
 // const express = require("express");
-const app = require("./providers/config/app");
+// const app = require("./providers/config/app");
 const http = require("http");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -8,6 +8,18 @@ const api = require("./providers/api");
 const mailApi = require("./providers/mail-api");
 const mailServer = require("./providers/mail_server/mail-server");
 const upload = require("./providers/upload");
+const sqlDatabase = require('./providers/config/sql-database');
+sqlDatabase.connect();
+
+const express = require("express");
+const router = express.Router();
+// const express = require("express");
+
+const app = express();
+
+app.use(express.json());
+
+module.exports = app;
 
 app.use(function (req, res, next) {
   //allow cross origin requests
@@ -38,6 +50,8 @@ app.use("/api", api);
 app.use("/api", mailApi);
 app.use("/api/mail-server", mailServer);
 app.use("/api/upload", upload);
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/src/index.html"));

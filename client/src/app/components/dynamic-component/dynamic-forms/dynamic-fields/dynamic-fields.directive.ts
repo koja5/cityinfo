@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Field } from '../models/field';
 import { FieldConfig } from '../models/field-config';
 import { ButtonComponent } from './buttons/button/button.component';
+import { SwitchComponent } from './buttons/switch/switch.component';
 import { ComboboxComponent } from './dropdowns/combobox/combobox.component';
 import { DatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { NumericTextboxComponent } from './inputs/numeric-textbox/numeric-textbox.component';
@@ -16,7 +17,8 @@ const components: {[type: string]: Type<Field>} = {
   label: LabelComponent,
   button: ButtonComponent,
   combobox: ComboboxComponent,
-  datepicker: DatepickerComponent
+  datepicker: DatepickerComponent,
+  switch: SwitchComponent
 };
 
 @Directive({
