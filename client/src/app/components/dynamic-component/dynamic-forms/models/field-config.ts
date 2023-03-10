@@ -32,4 +32,7 @@ export class FieldConfig {
   schedule?: FieldConfig;
   mode?: string;
   rights?: string[];
+  format?: string;
+  min?: string;
+  max?: string;
 }

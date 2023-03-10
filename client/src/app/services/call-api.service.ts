@@ -101,4 +101,15 @@ export class CallApiService {
       headers: new HttpHeaders().append('Content-Type', 'application/json'),
     });
   }
+
+  getImage(body: any) {
+    if (!body.path) {
+      body = {
+        path: body,
+      };
+    }
+    return this.http.post('/api/upload/getImage', body, {
+      responseType: 'blob',
+    });
+  }
 }

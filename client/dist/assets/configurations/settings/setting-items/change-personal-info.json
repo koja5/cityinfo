@@ -106,6 +106,15 @@
             "title": "City",
             "field": "city"
         },
+        
+        {
+            "type": "switch",
+            "width": "col-md-12 mt-4",
+            "class": "e-outline",
+            "name": "isClub",
+            "title": "Are you club?",
+            "field": "isClub"
+        },
         {
             "type": "button",
             "width": "col-md-12",

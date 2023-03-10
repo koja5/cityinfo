@@ -1,0 +1,156 @@
+.justify-end {
+  justify-content: flex-end;
+}
+
+.flex {
+  display: flex;
+}
+
+.p-4 {
+  padding: 1rem !important;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+p {
+  margin: 0;
+}
+
+.h-56 {
+  height: 14rem;
+}
+
+.bg-cover img {
+  background-size: cover;
+  width: 100%;
+  height: 210px;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.fill-current {
+  fill: currentColor;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.border-t {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.border-gray-300 {
+  border-color: #e2e8f0;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.fill-current {
+  fill: currentColor;
+}
+
+.text-gray-600 {
+  color: #718096;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.bg-gray-100 {
+  background-color: #f7fafc;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.card-item {
+  border: 1px solid lightgray;
+  box-shadow: 0px 0px 8px 2px lightgray;
+  transition: 0.5s all ease-in-out;
+}
+
+.card-item:hover {
+  transform: scale(1.1);
+}
+
+.card-icon {
+  font-size: 30px;
+}
+
+.contact {
+  width: 300px;
+}
+
+.contact div {
+  text-align: center;
+  cursor: pointer;
+}
+
+a {
+  display: block;
+  text-decoration: blink;
+  color: black;
+}
+
+.edit {
+  background: none;
+  border: 3px solid #5995fd;
+  color: #000;
+}
+
+.delete {
+  background: none;
+  border: 3px solid red;
+  color: #000;
+}

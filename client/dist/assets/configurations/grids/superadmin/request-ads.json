@@ -1,0 +1,297 @@
+{
+    "pageSize": 10,
+    "request": {
+      "type": "GET",
+      "api": "/api/getRequestAds",
+      "parameters": [],
+      "fields": "",
+      "root": ""
+    },
+    "paging": {
+      "enable": true,
+      "settings": {
+        "pageSize": 10
+      }
+    },
+    "sorting": {
+      "enable": true
+    },
+    "grouping": {
+      "enable": true,
+      "group": []
+    },
+    "filtering": {
+      "enable": false
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "contextMenuItems": [
+      "AutoFit",
+      "AutoFitAll",
+      "SortAscending",
+      "SortDescending",
+      "Copy",
+      "Edit",
+      "Delete",
+      "Save",
+      "Cancel",
+      "FirstPage",
+      "PrevPage",
+      "LastPage",
+      "NextPage",
+      "Group",
+      "Ungroup"
+    ],
+    "toolbar": [
+      "Add",
+      "Edit",
+      "Delete",
+      "Print",
+      "Search"
+    ],
+    "editSettings": {
+      "allowEditing": true,
+      "allowAdding": true,
+      "allowDeleting": true,
+      "showDeleteConfirmDialog": true,
+      "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+      "add": {
+        "type": "POST",
+        "api": "/api/createPaidAd",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+      },
+      "edit": {
+        "type": "POST",
+        "api": "/api/activeAd",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+      },
+      "delete": {
+        "type": "POST",
+        "api": "/api/deletePaidAd",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+      }
+    },
+    "columns": [
+      {
+        "title": "ID",
+        "width": 70,
+        "filterable": true,
+        "hideable": true,
+        "filter": "date",
+        "type": "number",
+        "class": "text-align-right",
+        "field": "id",
+        "isPrimaryKey": true,
+        "allowEditing": false
+      },
+      {
+        "title": "Start date",
+        "filterable": true,
+        "hideable": true,
+        "type": "date",
+        "format": "dd.MM.yyyy",
+        "class": "text-align-right",
+        "field": "start_date",
+        "validation": {
+          "required": true
+        }
+      },
+      {
+        "title": "Ads name",
+        "filterable": true,
+        "hideable": true,
+        "type": "string",
+        "class": "text-align-right",
+        "field": "ads_name",
+        "validation": {
+          "required": true
+        }
+      },
+      {
+        "title": "City",
+        "filterable": true,
+        "hideable": true,
+        "type": "string",
+        "class": "text-align-right",
+        "field": "city_name",
+        "validation": {
+          "required": true
+        }
+      },
+      {
+        "title": "User",
+        "filterable": true,
+        "hideable": true,
+        "type": "string",
+        "class": "text-align-right",
+        "field": "firstname",
+        "validation": {
+          "required": true
+        }
+      },
+      {
+        "title": "Email",
+        "filterable": true,
+        "hideable": true,
+        "type": "string",
+        "class": "text-align-right",
+        "field": "email",
+        "validation": {
+          "required": true
+        }
+      }
+    ],
+    "config": [
+      {
+        "type": "textbox",
+        "width": "col-md-12 hide",
+        "class": "e-outline",
+        "name": "id",
+        "title": "ID",
+        "field": "id",
+        "readonly": true
+      },
+      {
+        "type": "textbox",
+        "width": "col-md-12 hide",
+        "class": "e-outline",
+        "name": "firstname",
+        "title": "Firstname",
+        "field": "firstname",
+        "readonly": true
+      },
+      {
+        "type": "textbox",
+        "width": "col-md-12 hide",
+        "class": "e-outline",
+        "name": "email",
+        "title": "Email",
+        "field": "email",
+        "readonly": true
+      },
+      {
+        "type": "datepicker",
+        "width": "col-md-12",
+        "class": "e-outline",
+        "name": "start_date",
+        "title": "Start date",
+        "field": "start_date"
+      },
+      {
+        "type": "combobox",
+        "width": "col-md-12",
+        "class": "e-outline",
+        "name": "ads_draft",
+        "title": "Ads draft",
+        "field": {
+          "text": "name",
+          "value": "id"
+        },
+        "request": {
+          "type": "GET",
+          "api": "/api/getMyAds",
+          "parameters": [],
+          "fields": "",
+          "root": ""
+        },
+        "placeholder": "Please select name of ads",
+        "fieldConfig": {
+          "ignoreAccent": false,
+          "filter": true
+        },
+        "required": true
+      },
+      {
+        "type": "combobox",
+        "width": "col-md-12",
+        "class": "e-outline",
+        "name": "city",
+        "title": "City",
+        "field": {
+          "text": "name",
+          "value": "id"
+        },
+        "request": {
+          "type": "GET",
+          "api": "/api/getCities",
+          "parameters": [],
+          "fields": "",
+          "root": ""
+        },
+        "placeholder": "Please select name of ads",
+        "fieldConfig": {
+          "ignoreAccent": false,
+          "filter": true
+        },
+        "required": true
+      },
+      
+      {
+        "type": "combobox",
+        "width": "col-md-12",
+        "class": "e-outline",
+        "name": "position",
+        "title": "position",
+        "field": {
+          "text": "name",
+          "value": "id"
+        },
+        "request": {
+          "type": "GET",
+          "api": "/api/getPositionPrices",
+          "parameters": [],
+          "fields": "",
+          "root": ""
+        },
+        "placeholder": "Please select position for your ads",
+        "fieldConfig": {
+          "ignoreAccent": false,
+          "filter": true
+        },
+        "required": true
+      },
+      {
+        "type": "numeric",
+        "width": "col-md-12",
+        "class": "e-outline",
+        "name": "number_of_weeks",
+        "title": "Number of weeks",
+        "field": "number_of_weeks",
+        "format": "###.##",
+        "min": 1
+      },
+      {
+        "type": "switch",
+        "width": "col-md-12 mt-2",
+        "class": "e-outline",
+        "name": "active",
+        "title": "Active ad",
+        "field": "active",
+        "format": "###.##",
+        "min": 1
+      },
+      {
+        "type": "button",
+        "width": "col-md-12",
+        "class": "e-info button-action",
+        "name": "submit",
+        "title": "Save",
+        "field": "submit",
+        "positionClass": "position-end mt-3 col-md-12"
+      }
+    ]
+  }

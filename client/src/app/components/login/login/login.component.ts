@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserType } from 'src/app/enums/user-type';
 import { UserModel } from 'src/app/models/user-model';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -101,8 +102,11 @@ export class LoginComponent implements OnInit {
     this.helpService.setLocalStorage('logo', token.logo);
     this.setLanguageForDashboard();
     setTimeout(() => {
-      // this.loader = false;
-      this.router.navigate(['/dashboard']);
+      if (token.type === UserType.user) {
+        this.router.navigate(['/dashboard/user']);
+      } else {
+        this.router.navigate(['/dashboard/superadmin']);
+      }
     }, 20);
   }
 

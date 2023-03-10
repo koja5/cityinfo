@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicFieldsDirective } from '../dynamic-fields/dynamic-fields.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { NumericTextBoxModule, TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import {
   ButtonModule,
   CheckBoxModule,
@@ -14,6 +14,14 @@ import { LabelComponent } from '../dynamic-fields/label/label.component';
 import { ButtonComponent } from '../dynamic-fields/buttons/button/button.component';
 import { DynamicIconComponent } from '../../common/dynamic-icon/dynamic-icon.component';
 import { MatIconModule } from '@angular/material/icon';
+import { LoaderSvgComponent } from 'src/app/components/common/loader-svg/loader-svg.component';
+import { SharingModule } from 'src/app/sharing.module';
+import { ComboboxComponent } from '../dynamic-fields/dropdowns/combobox/combobox.component';
+import { ComboBoxModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DatepickerComponent } from '../dynamic-fields/inputs/datepicker/datepicker.component';
+import { NumericTextboxComponent } from '../dynamic-fields/inputs/numeric-textbox/numeric-textbox.component';
+import { SwitchComponent } from '../dynamic-fields/buttons/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +29,22 @@ import { MatIconModule } from '@angular/material/icon';
     TextBoxComponent,
     LabelComponent,
     ButtonComponent,
-    DynamicIconComponent
+    DynamicIconComponent,
+    ComboboxComponent,
+    DatepickerComponent,
+    NumericTextboxComponent,
+    SwitchComponent
   ],
   exports: [
     DynamicFieldsDirective,
     TextBoxComponent,
     LabelComponent,
     ButtonComponent,
-    DynamicIconComponent
+    DynamicIconComponent,
+    ComboboxComponent,
+    DatepickerComponent,
+    NumericTextboxComponent,
+    SwitchComponent
   ],
   imports: [
     CommonModule,
@@ -39,14 +55,23 @@ import { MatIconModule } from '@angular/material/icon';
     CheckBoxModule,
     RadioButtonModule,
     SwitchModule,
-    MatIconModule
+    MatIconModule,
+    SharingModule,
+    ComboBoxModule,
+    DatePickerModule,
+    NumericTextBoxModule,
+    SwitchModule
   ],
   entryComponents: [
     DynamicFieldsDirective,
     TextBoxComponent,
     LabelComponent,
     ButtonComponent,
-    DynamicIconComponent
+    DynamicIconComponent,
+    ComboboxComponent,
+    DatepickerComponent,
+    NumericTextboxComponent,
+    SwitchComponent
   ],
 })
 export class DynamicFormsModule {}

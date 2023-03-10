@@ -1,0 +1,43 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActionsType } from 'src/app/enums/actions-type';
+import { AdsModel } from 'src/app/models/ads-model';
+import { EmitterModel } from 'src/app/models/emitter-model';
+import { CallApiService } from 'src/app/services/call-api.service';
+
+@Component({
+  selector: 'app-ad-card',
+  templateUrl: './ad-card.component.html',
+  styleUrls: ['./ad-card.component.scss'],
+})
+export class AdCardComponent implements OnInit {
+  @Input() public data!: AdsModel;
+  @Input() public edit: boolean = false;
+  @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
+  public cover: any;
+
+  constructor(private apiService: CallApiService) {}
+
+  ngOnInit(): void {
+    console.log(this.data);
+    if (!this.data.cover) {
+      this.cover = '../../../../assets/images/no-photo-available.png';
+    } else {
+      const data = this.data.cover.split('\\src');
+      this.cover = data[1];
+    }
+  }
+
+  editButton() {
+    const emitterModel = new EmitterModel();
+    emitterModel.operation = ActionsType.edit;
+    emitterModel.data = this.data;
+    this.clickEmitter.emit(emitterModel);
+  }
+
+  deleteButton() {
+    const emitterModel = new EmitterModel();
+    emitterModel.operation = ActionsType.delete;
+    emitterModel.data = this.data;
+    this.clickEmitter.emit(emitterModel);
+  }
+}

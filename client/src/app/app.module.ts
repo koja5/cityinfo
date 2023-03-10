@@ -14,15 +14,12 @@ import { SharingModule } from './sharing.module';
 import { DynamicModule } from './components/dynamic-component/dynamic-module/dynamic/dynamic.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
-import { AdCardComponent } from './components/home/ad-card/ad-card.component';
-import { ComboBoxModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    AdCardComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,

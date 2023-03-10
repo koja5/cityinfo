@@ -1,0 +1,62 @@
+<div class="container mt-4">
+
+    <div class="text-right mb-4">
+        <button class="btn solid login" (click)="createNewAdDraft()" style="font-size: 15px">Create Ad draft</button>
+    </div>
+    <div class="row">
+        <div *ngFor="let item of listOfAds" class="col-md-4">
+            <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
+        </div>
+    </div>
+
+    <ejs-dialog id='dialog' #template showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+        <ng-template #content>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <label class="custom-label">Name of company</label>
+                    <ejs-textbox cssClass="e-outline" [id]="data.name" [(ngModel)]="data.name"
+                        name="name"></ejs-textbox>
+                </div>
+                <div class="col-md-12">
+                    <label class="custom-label">Address</label>
+                    <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address"
+                        name="address"></ejs-textbox>
+                </div>
+
+                <div class="col-md-12 row m-0 p-0">
+
+                    <div class="col-md-6">
+                        <label class="custom-label">Phone</label>
+                        <ejs-textbox cssClass="e-outline" [id]="data.phone" [(ngModel)]="data.phone"
+                            name="phone"></ejs-textbox>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="custom-label">Email</label>
+                        <ejs-textbox cssClass="e-outline" [id]="data.email" [(ngModel)]="data.email"
+                            name="email"></ejs-textbox>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="custom-label">Description</label>
+                    <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
+                        [(ngModel)]="data.description" name="description"></ejs-textbox>
+                </div>
+                <div class="col-md-12">
+                    <label class="custom-label">Upload Cover image</label>
+                    <ejs-uploader #defaultupload [asyncSettings]="asyncSettings" [autoUpload]="false"
+                        (uploading)="onUploadBegin($event)" (change)="changesFile($event)"
+                        (removing)="clearingFile($event)" (clearing)="clearingFile($event)"
+                        [buttons]="{upload: 'Upload cover image and save ads'}"></ejs-uploader>
+                </div>
+                <div *ngIf="editButton" class="col-md-12 text-right mt-4">
+                    <button class="btn" (click)="editAd()">Edit Ad</button>
+                </div>
+            </div>
+        </ng-template>
+    </ejs-dialog>
+
+
+</div>

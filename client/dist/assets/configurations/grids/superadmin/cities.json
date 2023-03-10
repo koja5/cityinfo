@@ -1,168 +1,203 @@
 {
-    "pageSize": 10,
-    "request": {
-      "type": "GET",
-      "api": "/api/getCities",
+  "pageSize": 10,
+  "request": {
+    "type": "GET",
+    "api": "/api/getCities",
+    "parameters": [],
+    "fields": "",
+    "root": ""
+  },
+  "paging": {
+    "enable": true,
+    "settings": {
+      "pageSize": 10
+    }
+  },
+  "sorting": {
+    "enable": true
+  },
+  "grouping": {
+    "enable": true,
+    "group": []
+  },
+  "filtering": {
+    "enable": false
+  },
+  "customGrouping": false,
+  "allowResizing": true,
+  "reorderable": true,
+  "selectable": true,
+  "scrollable": false,
+  "hideable": true,
+  "refresh": false,
+  "reset": true,
+  "contextMenuItems": [
+    "AutoFit",
+    "AutoFitAll",
+    "SortAscending",
+    "SortDescending",
+    "Copy",
+    "Edit",
+    "Delete",
+    "Save",
+    "Cancel",
+    "FirstPage",
+    "PrevPage",
+    "LastPage",
+    "NextPage",
+    "Group",
+    "Ungroup"
+  ],
+  "toolbar": [
+    "Add",
+    "Edit",
+    "Delete",
+    "Print",
+    "Search"
+  ],
+  "editSettings": {
+    "allowEditing": true,
+    "allowAdding": true,
+    "allowDeleting": true,
+    "showDeleteConfirmDialog": true,
+    "mode": "Dialog"
+  },
+  "editSettingsRequest": {
+    "add": {
+      "type": "POST",
+      "api": "/api/createCity",
       "parameters": [],
       "fields": "",
       "root": ""
     },
-    "paging": {
-      "enable": true,
-      "settings": {
-        "pageSize": 10
+    "edit": {
+      "type": "POST",
+      "api": "/api/updateCity",
+      "parameters": [],
+      "fields": "",
+      "root": ""
+    },
+    "delete": {
+      "type": "POST",
+      "api": "/api/deleteCity",
+      "parameters": [],
+      "fields": "",
+      "root": ""
+    }
+  },
+  "columns": [
+    {
+      "title": "ID",
+      "width": 70,
+      "filterable": true,
+      "hideable": true,
+      "filter": "date",
+      "type": "number",
+      "class": "text-align-right",
+      "field": "id",
+      "isPrimaryKey": true,
+      "allowEditing": false
+    },
+    {
+      "title": "Name",
+      "filterable": true,
+      "hideable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "name",
+      "validation": {
+        "required": true
       }
     },
-    "sorting": {
-      "enable": true
+    {
+      "title": "Zip code",
+      "filterable": true,
+      "hideable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "zip_code",
+      "validation": {
+        "required": true
+      }
     },
-    "grouping": {
-      "enable": true,
-      "group": []
+    {
+      "title": "District",
+      "filterable": true,
+      "hideable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "district",
+      "validation": {
+        "required": true
+      }
+    }
+  ],
+  "config": [
+    {
+      "type": "textbox",
+      "width": "col-md-12 hide",
+      "class": "e-outline",
+      "name": "id",
+      "title": "ID",
+      "field": "id",
+      "readonly": true
     },
-    "filtering": {
-      "enable": false
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "name",
+      "title": "Name",
+      "field": "name"
     },
-    "customGrouping": false,
-    "allowResizing": true,
-    "reorderable": true,
-    "selectable": true,
-    "scrollable": false,
-    "hideable": true,
-    "refresh": false,
-    "reset": true,
-    "contextMenuItems": [
-      "AutoFit",
-      "AutoFitAll",
-      "SortAscending",
-      "SortDescending",
-      "Copy",
-      "Edit",
-      "Delete",
-      "Save",
-      "Cancel",
-      "FirstPage",
-      "PrevPage",
-      "LastPage",
-      "NextPage",
-      "Group",
-      "Ungroup"
-    ],
-    "toolbar": ["Add", "Edit", "Delete", "Print", "Search"],
-    "editSettings": {
-      "allowEditing": true,
-      "allowAdding": true,
-      "allowDeleting": true,
-      "showDeleteConfirmDialog": true,
-      "mode": "Dialog"
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "zip_code",
+      "title": "Zip code",
+      "field": "zip_code"
     },
-    "editSettingsRequest": {
-      "add": {
-        "type": "POST",
-        "api": "/api/createCity",
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "district",
+      "title": "District",
+      "field": "district"
+    },
+    {
+      "type": "combobox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "district",
+      "title": "District",
+      "field": {
+        "text": "name",
+        "value": "id"
+      },
+      "request": {
+        "type": "GET",
+        "api": "/api/getDistricts",
         "parameters": [],
         "fields": "",
         "root": ""
       },
-      "edit": {
-        "type": "POST",
-        "api": "/api/updateCity",
-        "parameters": [],
-        "fields": "",
-        "root": ""
+      "placeholder": "Please select kindergarden group",
+      "fieldConfig": {
+        "ignoreAccent": false,
+        "filter": true
       },
-      "delete": {
-        "type": "POST",
-        "api": "/api/deleteCity",
-        "parameters": [],
-        "fields": "",
-        "root": ""
-      }
+      "required": true
     },
-    "columns": [
-      {
-        "title": "ID",
-        "width": 70,
-        "filterable": true,
-        "hideable": true,
-        "filter": "date",
-        "type": "number",
-        "class": "text-align-right",
-        "field": "id",
-        "isPrimaryKey": true,
-        "allowEditing": false
-      },
-      {
-        "title": "Name",
-        "filterable": true,
-        "hideable": true,
-        "type": "string",
-        "class": "text-align-right",
-        "field": "name",
-        "validation": { "required": true }
-      },
-      {
-        "title": "Zip code",
-        "filterable": true,
-        "hideable": true,
-        "type": "string",
-        "class": "text-align-right",
-        "field": "zip_code",
-        "validation": { "required": true }
-      },
-      {
-        "title": "District",
-        "filterable": true,
-        "hideable": true,
-        "type": "string",
-        "class": "text-align-right",
-        "field": "district",
-        "validation": { "required": true }
-      }
-    ],
-    "config": [
-      {
-        "type": "textbox",
-        "width": "col-md-12 hide",
-        "class": "e-outline",
-        "name": "id",
-        "title": "ID",
-        "field": "id",
-        "readonly": true
-      },
-      {
-        "type": "textbox",
-        "width": "col-md-12",
-        "class": "e-outline",
-        "name": "name",
-        "title": "Name",
-        "field": "name"
-      },
-      {
-        "type": "textbox",
-        "width": "col-md-12",
-        "class": "e-outline",
-        "name": "zip_code",
-        "title": "Zip code",
-        "field": "zip_code"
-      },
-      {
-        "type": "textbox",
-        "width": "col-md-12",
-        "class": "e-outline",
-        "name": "district",
-        "title": "District",
-        "field": "district"
-      },
-      {
-        "type": "button",
-        "width": "col-md-12",
-        "class": "e-info button-action",
-        "name": "submit",
-        "title": "Save",
-        "field": "submit",
-        "positionClass": "position-end mt-3 col-md-12"
-      }
-    ]
-  }
-  
+    {
+      "type": "button",
+      "width": "col-md-12",
+      "class": "e-info button-action",
+      "name": "submit",
+      "title": "Save",
+      "field": "submit",
+      "positionClass": "position-end mt-3 col-md-12"
+    }
+  ]
+}

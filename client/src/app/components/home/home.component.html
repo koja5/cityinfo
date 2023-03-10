@@ -11,9 +11,9 @@
                 <!-- Setting the links to #! will ensure that no action takes place on click. -->
 
                 <li>
-                    <select class="combobox input-large form-control" name="normal">
+                    <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
                         <option value="" selected="selected">Select a State</option>
-                        <option *ngFor="let item of listOfCities">{{item.name}}</option>
+                        <option *ngFor="let item of listOfCities" value="{{item.id}}" [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
                     </select>
                 </li>
 
@@ -40,14 +40,17 @@
 </div>
 
 <div class="container mt-4">
-    <div class="row">
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
-        <app-ad-card></app-ad-card>
+    <div class="row" *ngIf="allAds && allAds.length > 0">
+        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
+
+    </div>
+    <div *ngIf="!allAds || allAds.length == 0" class="outer">
+        <div class="middle">
+            <div class="inner">
+                <img style="width: 310px;" src="../../../assets/images/no-data.jpg">
+                <h4>No data found for selected city!</h4>
+            </div>
+        </div>
     </div>
 </div>
 

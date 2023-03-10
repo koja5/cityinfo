@@ -9,16 +9,6 @@
             "buttonText": "Activate your account"
         }
     },
-    "new_account": {
-        "template": "new_account.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Kreiran je nalog za vas!",
-        "fields": {
-            "title": "Kreiran je nalog za Vas!",
-            "text": "Uspešno je kreiran nalog za Vas. U nastavku imate podatke za pristup!",
-            "buttonText": "Prijavite se"
-        }
-    },
     "reset_password": {
         "template": "reset_password.hjs",
         "email": "kidsnode@gmail.com",
@@ -29,64 +19,24 @@
             "buttonText": "Reset password"
         }
     },
-    "send_children_invoice": {
-        "template": "children_invoice.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Faktura za uplatu vrtića",
+    "send_request_for_free_ad": {
+        "template": "send_request_for_free_ad.hjs",
+        "email": "kidsnodeoffice@gmail.com",
+        "subject": "Received new request for free ad",
         "fields": {
-            "title": "Faktura za uplatu vrtića",
-            "text": "Kreiran je račun za mesec {month} za dete {firstname} {lastname}. U nastavku se nalaze podaci za uplatu. Molimo Vas da shodno svojim mogucnostima izmirite dugovanje.",
-            "greeting": "Poštovani/na {firstname}"
+            "title": "New request for free ad",
+            "text": "You received a new request for free ad. Information about ad you can see below.",
+            "greeting": "Hi"
         }
     },
-    "children_invoice_paied": {
-        "template": "children_invoice_paied.hjs",
+    "info_for_active_free_ad": {
+        "template": "info_for_active_free_ad.hjs",
         "email": "kidsnode@gmail.com",
-        "subject": "Potvrda o uplati",
+        "subject": "Free relationship request",
         "fields": {
-            "title": "Potvrda o uplati",
-            "text": "Hvala Vam što ste izmirili dugovanje prema vrtiću za mesec {month} za dete {firstname} {lastname}.",
-            "greeting": "Poštovani/na {firstname}"
-        }
-    },
-    "children_daily_notification": {
-        "template": "children_daily_notification.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Dnevne informacije o detetu",
-        "fields": {
-            "title": "Dnevne informacije o detetu",
-            "text": "U nastavku se nalazi zapažanje za dete {firstname} {lastname} za dan {date}.",
-            "greeting": "Poštovani/na {firstname}"
-        }
-    },
-    "request_for_demo_account": {
-        "template": "request_for_demo_account.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Novi zahtev za kreiranje naloga",
-        "fields": {
-            "title": "Novi zahtev za kreiranje naloga",
-            "text": "Dobili ste zahtev za kreiranje naloga za mail koji se nalazi u nastavku!",
-            "greeting": "Poštovani"
-        }
-    },
-    "request_for_demo_account_full": {
-        "template": "request_for_demo_account_full.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Novi zahtev za kreiranje naloga",
-        "fields": {
-            "title": "Novi zahtev za kreiranje naloga",
-            "text": "Dobili ste zahtev za kreiranje naloga za mail koji se nalazi u nastavku!",
-            "greeting": "Poštovani"
-        }
-    },
-    "send_from_contact_form": {
-        "template": "send_from_contact_form.hjs",
-        "email": "kidsnode@gmail.com",
-        "subject": "Upit putem kontakt forme",
-        "fields": {
-            "title": "Upit putem kontakt forme",
-            "text": "Dobili ste upit putem kontakt forme. Podaci o korisniku i poruka se nalaze u nastavku!",
-            "greeting": "Poštovani"
+            "title": "Free relationship request",
+            "text": "Your request for a free ad on the www.city-info.at portal has been approved and is valid for the next 2 weeks.",
+            "greeting": "Hi {firstname}"
         }
     }
 }
