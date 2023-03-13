@@ -172,7 +172,7 @@ export class DynamicGridComponent implements OnInit {
   setResponseData(data: any) {
     if (this.config.request.type === 'GET') {
       this.data = data;
-      this.grid.hideSpinner();
+      this.disabledGridSpinner();
     }
   }
 
@@ -185,7 +185,7 @@ export class DynamicGridComponent implements OnInit {
   disabledGridSpinner() {
     setTimeout(() => {
       this.grid.hideSpinner();
-    }, 150);
+    }, 100);
   }
 
   deleteData(event: any) {

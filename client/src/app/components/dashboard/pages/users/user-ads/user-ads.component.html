@@ -3,7 +3,16 @@
     <div class="text-right mb-4">
         <button class="btn solid login" (click)="createNewAdDraft()" style="font-size: 15px">Create Ad draft</button>
     </div>
-    <div class="row">
+    <div class="outer" *ngIf="!listOfAds || listOfAds.length == 0">
+        <div class="middle">
+            <div class="inner">
+                <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png">
+                <h4>You don't have yet Ad draft!</h4>
+                <h5>Create new one!</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="listOfAds">
         <div *ngFor="let item of listOfAds" class="col-md-4">
             <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
         </div>
