@@ -7,9 +7,10 @@ import { UsersComponent } from '../users/users.component';
 import { DistrictsComponent } from '../district/districts.component';
 import { PositionPriceComponent } from '../position-price/position-price.component';
 import { RequestAdsComponent } from '../request-ads/request-ads.component';
+import { AllAdsComponent } from '../all-ads/all-ads.component';
 
 @NgModule({
-  declarations: [CitiesComponent, UsersComponent, DistrictsComponent, PositionPriceComponent, RequestAdsComponent],
+  declarations: [CitiesComponent, UsersComponent, DistrictsComponent, PositionPriceComponent, RequestAdsComponent, AllAdsComponent],
   imports: [CommonModule, SuperadminRouting, DynamicModule],
   providers: [],
 })

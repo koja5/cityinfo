@@ -26,7 +26,7 @@
 </section>
 
 <div class="left-fixed-ads hidden-xs">
-    <!-- <div class="outer">
+    <div class="outer" *ngIf="!leftFixedAds || leftFixedAds.length == 0">
         <div class="middle">
             <div class="inner-ads">
                 <img style="margin-left: 70px;
@@ -37,14 +37,20 @@
                 margin-top: 18px;">Place your fixed Ad here</h2>
             </div>
         </div>
-    </div> -->
+    </div>
 
-    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-12"></app-ad-card>
+    <div class="row mt-4" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+        <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
     </div>
 </div>
 
-<div class="container mt-4">
+<div class="container mt-4" style="position: absolute; left: 20%;">
+    <div class="row mt-4 hidden-md" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+        <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
+    </div>
+    <div class="row mt-4 hidden-md" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+        <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
+    </div>
     <div class="row" *ngIf="allAds && allAds.length > 0">
         <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
 
@@ -61,7 +67,7 @@
 
 
 <div class="right-fixed-ads hidden-xs">
-    <div class="outer">
+    <div class="outer" *ngIf="!rightFixedAds || rightFixedAds.length == 0">
         <div class="middle">
             <div class="inner-ads-right">
                 <!-- <img src="../../../assets/images/logo.png"> -->
@@ -75,7 +81,7 @@
         </div>
     </div>
 
-    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
+    <div class="row mt-4" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+        <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
     </div>
 </div>

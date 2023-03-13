@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AllAdsComponent } from '../all-ads/all-ads.component';
 import { CitiesComponent } from '../cities/cities.component';
 import { DistrictsComponent } from '../district/districts.component';
 import { PositionPriceComponent } from '../position-price/position-price.component';
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'request-ads',
     component: RequestAdsComponent,
+  },
+  {
+    path: 'all-ads',
+    component: AllAdsComponent,
   },
 ];
 

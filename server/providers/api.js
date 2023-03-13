@@ -110,6 +110,7 @@ router.post("/login", function (req, res, next) {
                 id: rows[0].id,
                 firstname: rows[0].firstname,
                 type: rows[0].type,
+                isClub: rows[0].is_club
               },
               email: rows[0].email,
             },
@@ -732,6 +733,7 @@ router.post("/updatePaidAd", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
+      req.body.start_date = new Date(req.body.start_date);
       conn.query(
         "update paid_ads SET ? where id = ?",
         [req.body, req.body.id],
@@ -779,23 +781,26 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
   }
 });
 
-router.get("/getPaidAds", async (req, res, next) => {
+router.get("/getPaidScrollAds", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 2", function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            console.log(rows);
-            res.json(rows);
+        conn.query(
+          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 2",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
           }
-        });
+        );
       }
     });
   } catch (ex) {
@@ -804,7 +809,7 @@ router.get("/getPaidAds", async (req, res, next) => {
   }
 });
 
-router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
+router.get("/getPaidFixedAds", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -812,7 +817,64 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 2",
+          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 1",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidScrollAdsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 2",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidFixedAdsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 1",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -888,6 +950,34 @@ router.post("/activeAd", auth, function (req, res, next) {
           }
         }
       );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllPaidAds", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
     });
   } catch (ex) {
     logger.log("error", err.sql + ". " + err.sqlMessage);

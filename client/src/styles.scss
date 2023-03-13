@@ -273,8 +273,14 @@ ejs-uploader {
   background: red;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .hidden-xs {
+    display: none;
+  }
+}
+
+@media (min-width: 1201px) {
+  .hidden-md {
     display: none;
   }
 }

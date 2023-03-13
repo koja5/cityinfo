@@ -2,7 +2,7 @@
     "pageSize": 10,
     "request": {
         "type": "GET",
-        "api": "/api/getUsers",
+        "api": "/api/getAllPaidAds",
         "parameters": [],
         "fields": "",
         "root": ""
@@ -57,7 +57,7 @@
     ],
     "editSettings": {
         "allowEditing": true,
-        "allowAdding": true,
+        "allowAdding": false,
         "allowDeleting": true,
         "showDeleteConfirmDialog": true,
         "mode": "Dialog"
@@ -65,21 +65,21 @@
     "editSettingsRequest": {
         "add": {
             "type": "POST",
-            "api": "/api/createUser",
+            "api": "/api/createPaidAd",
             "parameters": [],
             "fields": "",
             "root": ""
         },
         "edit": {
             "type": "POST",
-            "api": "/api/updateUser",
+            "api": "/api/updatePaidAd",
             "parameters": [],
             "fields": "",
             "root": ""
         },
         "delete": {
             "type": "POST",
-            "api": "/api/deleteUser",
+            "api": "/api/deletePaidAd",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -99,56 +99,24 @@
             "allowEditing": false
         },
         {
-            "title": "Firstname",
+            "title": "Start date",
             "filterable": true,
             "hideable": true,
-            "type": "string",
+            "type": "date",
+            "format": "dd.MM.yyyy",
             "class": "text-align-right",
-            "field": "firstname",
+            "field": "start_date",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "Phone",
+            "title": "Ads name",
             "filterable": true,
             "hideable": true,
             "type": "string",
             "class": "text-align-right",
-            "field": "phone",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "Mobile",
-            "filterable": true,
-            "hideable": true,
-            "type": "string",
-            "class": "text-align-right",
-            "field": "mobile",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "Address",
-            "filterable": true,
-            "hideable": true,
-            "type": "string",
-            "class": "text-align-right",
-            "field": "address",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "Zip code",
-            "filterable": true,
-            "hideable": true,
-            "type": "string",
-            "class": "text-align-right",
-            "field": "zip_code",
+            "field": "ads_name",
             "validation": {
                 "required": true
             }
@@ -159,7 +127,7 @@
             "hideable": true,
             "type": "string",
             "class": "text-align-right",
-            "field": "city",
+            "field": "city_name",
             "validation": {
                 "required": true
             }
@@ -185,18 +153,24 @@
             "field": "active"
         },
         {
-            "title": "Club",
+            "title": "Position",
             "template": {
                 "choices": [
                     {
-                        "field": "is_club",
+                        "field": "position",
                         "value": 1,
                         "operator": "==",
-                        "html": "<span class='e-badge e-badge-info'>Club</span>"
+                        "html": "<span class='e-badge e-badge-info'>Fixed</span>"
+                    },
+                    {
+                        "field": "position",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Scroll</span>"
                     }
                 ]
             },
-            "field": "active"
+            "field": "position"
         }
     ],
     "config": [
@@ -210,85 +184,102 @@
             "readonly": true
         },
         {
-            "type": "textbox",
+            "type": "datepicker",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "firstname",
-            "title": "Firstname",
-            "field": "firstname"
+            "name": "start_date",
+            "title": "Start date",
+            "field": "start_date"
         },
         {
-            "type": "textbox",
-            "width": "col-md-6",
+            "type": "combobox",
+            "width": "col-md-12",
             "class": "e-outline",
-            "name": "email",
-            "title": "Email",
-            "field": "email"
+            "name": "ads_draft",
+            "title": "Ads draft",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getMyAds",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
         },
         {
-            "type": "password",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "password",
-            "title": "Password",
-            "field": "password",
-            "readonly": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "phone",
-            "title": "Phone",
-            "field": "phone"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "mobile",
-            "title": "Mobile",
-            "field": "mobile"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-4",
-            "class": "e-outline",
-            "name": "address",
-            "title": "Address",
-            "field": "address"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-4",
-            "class": "e-outline",
-            "name": "zip_code",
-            "title": "Zip code",
-            "field": "zip_code"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-4",
+            "type": "combobox",
+            "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
             "title": "City",
-            "field": "city"
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "position",
+            "title": "position",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getPositionPrices",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select position for your ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "Number of weeks",
+            "field": "number_of_weeks",
+            "format": "###.##",
+            "min": 1
         },
         {
             "type": "switch",
-            "width": "col-md-12 mt-2",
+            "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "active",
             "title": "Active",
             "field": "active"
-        },
-        {
-            "type": "switch",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "is_club",
-            "title": "Is club?",
-            "field": "is_club"
         },
         {
             "type": "button",

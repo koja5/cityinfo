@@ -114,9 +114,10 @@ export class HelpService {
 
   checkRights(rights: any) {
     const type = this.getTypeOfName(this.getDecodeToken().type);
+    const isClub = this.getDecodeToken().isClub;
     if (rights) {
       for (let i = 0; i < rights.length; i++) {
-        if (rights[i] === type) {
+        if (rights[i] === type || (rights[i] == 'isClub' && isClub)) {
           return true;
         }
       }

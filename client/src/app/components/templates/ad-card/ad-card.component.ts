@@ -12,6 +12,7 @@ import { CallApiService } from 'src/app/services/call-api.service';
 export class AdCardComponent implements OnInit {
   @Input() public data!: AdsModel;
   @Input() public edit: boolean = false;
+  @Input() public fixed: string = '';
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   public cover: any;
   public showModeButton: boolean = false;

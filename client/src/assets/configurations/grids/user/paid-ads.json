@@ -241,6 +241,7 @@
         "name": "submit",
         "title": "Save",
         "field": "submit",
+        "rights": ["isClub"],
         "positionClass": "position-end mt-3 col-md-12"
       }
     ]

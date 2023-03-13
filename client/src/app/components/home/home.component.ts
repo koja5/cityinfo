@@ -11,6 +11,8 @@ export class HomeComponent implements OnInit {
   public showHideMenu = '';
   public listOfCities: any;
   public allAds: any;
+  public leftFixedAds: any;
+  public rightFixedAds: any;
   public selectedCity: any;
 
   constructor(
@@ -32,15 +34,11 @@ export class HomeComponent implements OnInit {
     });
 
     if (this.selectedCity) {
-      this.service
-        .callGetMethod('api/getPaidAdsByCity', this.selectedCity)
-        .subscribe((data) => {
-          this.allAds = data;
-        });
+      this.getPaidScrollAdsByCity(this.selectedCity);
+      this.getPaidFixedAdsByCity(this.selectedCity);
     } else {
-      this.service.callGetMethod('api/getPaidAds', '').subscribe((data) => {
-        this.allAds = data;
-      });
+      this.getPaidScrollAdsByCity('');
+      this.getPaidFixedAdsByCity('');
     }
   }
 
@@ -54,10 +52,29 @@ export class HomeComponent implements OnInit {
 
   changeCity(event: any) {
     this.helpService.setLocalStorage('selectedCity', event.target.value);
+    this.allAds = null;
+    this.leftFixedAds = null;
+    this.rightFixedAds = null;
+    this.getPaidScrollAdsByCity(event.target.value);
+    this.getPaidFixedAdsByCity(event.target.value);
+  }
+
+  getPaidScrollAdsByCity(parameter: string) {
     this.service
-      .callGetMethod('api/getPaidAdsByCity', event.target.value)
+      .callGetMethod('api/getPaidScrollAdsByCity', parameter)
       .subscribe((data) => {
         this.allAds = data;
+      });
+  }
+
+  getPaidFixedAdsByCity(parameter: string) {
+    this.service
+      .callGetMethod('api/getPaidFixedAdsByCity', parameter)
+      .subscribe((data: any) => {
+        this.leftFixedAds = data.slice(0, data.length / 2);
+        if (data.length > 1) {
+          this.rightFixedAds = data.slice(data.length / 2, data.length);
+        }
       });
   }
 }
