@@ -87,8 +87,7 @@ router.post("/infoForActiveFreeAd", function (req, res, next) {
   var body = JSON.parse(
     fs.readFileSync("./providers/mail_server/config.json", "utf-8")
   );
-  console.log('THIS IS METHOD!');
-  console.log(req.body);
+  body.info_for_active_free_ad.fields["email"] = req.body.email;
   body.info_for_active_free_ad.fields["greeting"] =
     body.info_for_active_free_ad.fields["greeting"].replace(
       "{firstname}",

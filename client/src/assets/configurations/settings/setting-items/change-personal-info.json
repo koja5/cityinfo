@@ -111,9 +111,9 @@
             "type": "switch",
             "width": "col-md-12 mt-4",
             "class": "e-outline",
-            "name": "isClub",
+            "name": "is_club",
             "title": "Are you club?",
-            "field": "isClub"
+            "field": "is_club"
         },
         {
             "type": "button",

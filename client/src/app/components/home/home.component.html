@@ -13,7 +13,8 @@
                 <li>
                     <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
                         <option value="" selected="selected">Select a State</option>
-                        <option *ngFor="let item of listOfCities" value="{{item.id}}" [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
+                        <option *ngFor="let item of listOfCities" value="{{item.id}}"
+                            [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
                     </select>
                 </li>
 
@@ -25,7 +26,7 @@
 </section>
 
 <div class="left-fixed-ads hidden-xs">
-    <div class="outer">
+    <!-- <div class="outer">
         <div class="middle">
             <div class="inner-ads">
                 <img style="margin-left: 70px;
@@ -36,6 +37,10 @@
                 margin-top: 18px;">Place your fixed Ad here</h2>
             </div>
         </div>
+    </div> -->
+
+    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
+        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-12"></app-ad-card>
     </div>
 </div>
 
@@ -68,5 +73,9 @@
                margin-top: 18px;">Place your fixed Ad here</h2>
             </div>
         </div>
+    </div>
+
+    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
+        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
     </div>
 </div>
