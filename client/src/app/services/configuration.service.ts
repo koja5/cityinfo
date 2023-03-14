@@ -17,9 +17,9 @@ export class ConfigurationService {
     );
   }
 
-  getLanguageForLanding(language: string) {
+  getLanguage(language?: string) {
     return this.http.get(
-      '../../assets/configurations/languages/landing/' + language + '.json'
+      '../../assets/configurations/languages/english.json'
     );
   }
 

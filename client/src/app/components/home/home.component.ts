@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CallApiService } from 'src/app/services/call-api.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
 
 @Component({
@@ -14,18 +15,29 @@ export class HomeComponent implements OnInit {
   public leftFixedAds: any;
   public rightFixedAds: any;
   public selectedCity: any;
+  public language: any;
 
   constructor(
     private service: CallApiService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private configurationService: ConfigurationService
   ) {}
 
   ngOnInit(): void {
+    this.initializeConfig();
+    this.initializeData();
+  }
+
+  initializeConfig() {
+    this.configurationService.getLanguage().subscribe((data) => {
+      this.language = data;
+      this.helpService.setLanguage(data);
+    });
+
     if (this.helpService.getLocalStorageStringValue('selectedCity')) {
       this.selectedCity =
         this.helpService.getLocalStorageStringValue('selectedCity');
     }
-    this.initializeData();
   }
 
   initializeData() {

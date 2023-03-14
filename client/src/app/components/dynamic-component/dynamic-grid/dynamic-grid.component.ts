@@ -81,6 +81,7 @@ export class DynamicGridComponent implements OnInit {
 
   initializeConfig() {
     this.language = this.helpService.getLanguage();
+    console.log(this.language);
 
     this.configurationService
       .getConfiguration(this.path, this.file)

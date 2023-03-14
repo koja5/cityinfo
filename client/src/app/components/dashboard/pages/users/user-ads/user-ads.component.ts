@@ -29,6 +29,7 @@ export class UserAdsComponent implements OnInit {
     X: 'center',
     Y: 'center',
   };
+  public language: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -57,6 +58,14 @@ export class UserAdsComponent implements OnInit {
   }
 
   initializeConfig() {
+    if (this.helpService.getLanguage()) {
+      this.language = this.helpService.getLanguage();
+    } else {
+      this.configurationService.getLanguage().subscribe((data) => {
+        this.language = data;
+      });
+    }
+
     this.configurationService
       .getConfiguration(this.path, this.file)
       .subscribe((data) => {

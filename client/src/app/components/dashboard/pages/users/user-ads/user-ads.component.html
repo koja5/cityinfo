@@ -7,8 +7,8 @@
         <div class="middle">
             <div class="inner">
                 <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png">
-                <h4>You don't have yet Ad draft!</h4>
-                <h5>Create new one!</h5>
+                <h4>{{language.noHaveAdYet}}</h4>
+                <h5>{{language.createNewOneAd}}</h5>
             </div>
         </div>
     </div>
@@ -24,12 +24,12 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <label class="custom-label">Name of company</label>
+                    <label class="custom-label">{{language.nameOfCompany}}</label>
                     <ejs-textbox cssClass="e-outline" [id]="data.name" [(ngModel)]="data.name"
                         name="name"></ejs-textbox>
                 </div>
                 <div class="col-md-12">
-                    <label class="custom-label">Address</label>
+                    <label class="custom-label">{{language.address}}</label>
                     <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address"
                         name="address"></ejs-textbox>
                 </div>
@@ -37,31 +37,31 @@
                 <div class="col-md-12 row m-0 p-0">
 
                     <div class="col-md-6">
-                        <label class="custom-label">Phone</label>
+                        <label class="custom-label">{{language.phone}}</label>
                         <ejs-textbox cssClass="e-outline" [id]="data.phone" [(ngModel)]="data.phone"
                             name="phone"></ejs-textbox>
                     </div>
 
                     <div class="col-md-6">
-                        <label class="custom-label">Email</label>
+                        <label class="custom-label">{{language.email}}</label>
                         <ejs-textbox cssClass="e-outline" [id]="data.email" [(ngModel)]="data.email"
                             name="email"></ejs-textbox>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <label class="custom-label">Description</label>
+                    <label class="custom-label">{{language.description}}</label>
                     <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
                         [(ngModel)]="data.description" name="description"></ejs-textbox>
                 </div>
                 <div class="col-md-12">
-                    <label class="custom-label">Upload Cover image</label>
+                    <label class="custom-label">{{language.uploadCoverImage}}</label>
                     <ejs-uploader #defaultupload [asyncSettings]="asyncSettings" [autoUpload]="false"
                         (uploading)="onUploadBegin($event)" (change)="changesFile($event)"
                         (removing)="clearingFile($event)" (clearing)="clearingFile($event)"
-                        [buttons]="{upload: 'Upload cover image and save ads'}"></ejs-uploader>
+                        [buttons]="{upload: language.uploadCoverImageButton}"></ejs-uploader>
                 </div>
                 <div *ngIf="editButton" class="col-md-12 text-right mt-4">
-                    <button class="btn" (click)="editAd()">Edit Ad</button>
+                    <button class="btn" (click)="editAd()">{{language.editAd}}</button>
                 </div>
             </div>
         </ng-template>

@@ -4,10 +4,10 @@
         "class": "text-right p-3",
         "simpleButtons": [],
         "dropDownButtons": {
-            "content": "Options",
+            "content": "options",
             "items": [
                 {
-                    "text": "Edit",
+                    "text": "edit",
                     "id": "edit",
                     "iconCss": "ddb-icons e-edit"
                 }
@@ -106,14 +106,16 @@
             "title": "City",
             "field": "city"
         },
-        
         {
             "type": "switch",
             "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "is_club",
             "title": "Are you club?",
-            "field": "is_club"
+            "field": "is_club",
+            "rights": [
+                "user"
+            ]
         },
         {
             "type": "button",

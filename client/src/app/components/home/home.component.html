@@ -1,87 +1,94 @@
-<section class="navigation">
-    <div class="nav-container">
-        <div class="brand">
-            <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
-        </div>
-        <nav>
-            <div class="nav-mobile">
-                <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+<div *ngIf="language">
+    <section class="navigation">
+        <div class="nav-container">
+            <div class="brand">
+                <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
             </div>
-            <ul class="nav-list {{showHideMenu}}">
-                <!-- Setting the links to #! will ensure that no action takes place on click. -->
+            <nav>
+                <div class="nav-mobile">
+                    <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+                </div>
+                <ul class="nav-list {{showHideMenu}}">
+                    <!-- Setting the links to #! will ensure that no action takes place on click. -->
 
-                <li>
-                    <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
-                        <option value="" selected="selected">Select a State</option>
-                        <option *ngFor="let item of listOfCities" value="{{item.id}}"
-                            [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
-                    </select>
-                </li>
+                    <li>
+                        <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
+                            <option value="" selected="selected">{{language.selectState}}</option>
+                            <option *ngFor="let item of listOfCities" value="{{item.id}}"
+                                [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
+                        </select>
+                    </li>
 
-                <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        Login</a></li>
-            </ul>
-        </nav>
-    </div>
-</section>
+                    <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right"
+                                aria-hidden="true"></i>
+                            {{language.login}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
 
-<div class="left-fixed-ads hidden-xs">
-    <div class="outer" *ngIf="!leftFixedAds || leftFixedAds.length == 0">
-        <div class="middle">
-            <div class="inner-ads">
-                <img style="margin-left: 70px;
+    <div class="left-fixed-ads hidden-xs">
+        <div class="outer" *ngIf="!leftFixedAds || leftFixedAds.length == 0">
+            <div class="middle">
+                <div class="inner-ads">
+                    <img style="margin-left: 70px;
                 width: 148px;" src="../../../assets/images/ads.png">
-                <h2 style="width: 150px;
+                    <h2 style="width: 150px;
                 margin-left: 81px;
                 font-weight: bold;
-                margin-top: 18px;">Place your fixed Ad here</h2>
+                margin-top: 18px;">{{language.placedFixedAd}}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
+    </div>
+
+    <div class="container mt-4" style="position: absolute; left: 20%;">
+        <div class="row mt-4 hidden-md" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
+        <div class="row mt-4 hidden-md" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
+        <div class="row" *ngIf="allAds && allAds.length > 0">
+            <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
+
+        </div>
+        <div *ngIf="!allAds || allAds.length == 0" class="outer">
+            <div class="middle">
+                <div class="inner">
+                    <img style="width: 310px;" src="../../../assets/images/no-data.jpg">
+                    <h4>{{language.noFoundDataForSelectedCity}}</h4>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4" *ngIf="leftFixedAds && leftFixedAds.length > 0">
-        <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
-    </div>
-</div>
 
-<div class="container mt-4" style="position: absolute; left: 20%;">
-    <div class="row mt-4 hidden-md" *ngIf="leftFixedAds && leftFixedAds.length > 0">
-        <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
-    </div>
-    <div class="row mt-4 hidden-md" *ngIf="rightFixedAds && rightFixedAds.length > 0">
-        <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
-    </div>
-    <div class="row" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
-
-    </div>
-    <div *ngIf="!allAds || allAds.length == 0" class="outer">
-        <div class="middle">
-            <div class="inner">
-                <img style="width: 310px;" src="../../../assets/images/no-data.jpg">
-                <h4>No data found for selected city!</h4>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="right-fixed-ads hidden-xs">
-    <div class="outer" *ngIf="!rightFixedAds || rightFixedAds.length == 0">
-        <div class="middle">
-            <div class="inner-ads-right">
-                <!-- <img src="../../../assets/images/logo.png"> -->
-                <img style="margin-right: 70px;
+    <div class="right-fixed-ads hidden-xs">
+        <div class="outer" *ngIf="!rightFixedAds || rightFixedAds.length == 0">
+            <div class="middle">
+                <div class="inner-ads-right">
+                    <!-- <img src="../../../assets/images/logo.png"> -->
+                    <img style="margin-right: 70px;
                 width: 148px;" src="../../../assets/images/ads.png">
-                <h2 style="width: 150px;
+                    <h2 style="width: 150px;
                margin-right: 81px;
                font-weight: bold;
-               margin-top: 18px;">Place your fixed Ad here</h2>
+               margin-top: 18px;">{{language.placedFixedAd}}</h2>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-4" *ngIf="rightFixedAds && rightFixedAds.length > 0">
-        <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12" [fixed]="'fixed'"></app-ad-card>
+        <div class="row mt-4" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
     </div>
 </div>

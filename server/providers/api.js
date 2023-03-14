@@ -110,7 +110,7 @@ router.post("/login", function (req, res, next) {
                 id: rows[0].id,
                 firstname: rows[0].firstname,
                 type: rows[0].type,
-                isClub: rows[0].is_club
+                isClub: rows[0].is_club,
               },
               email: rows[0].email,
             },
@@ -932,6 +932,40 @@ router.post("/activeAd", auth, function (req, res, next) {
       }
       conn.query(
         "update paid_ads SET active = 1 where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            var options = {
+              url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePaidAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from paid_ads where id = ?",
         [req.body.id],
         function (err, rows) {
           conn.release();

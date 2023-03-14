@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   public mode = '';
   public passwordMode = 'password';
   public user = new UserModel();
+  public language: any;
 
   constructor(
     private service: CallApiService,
@@ -27,7 +28,16 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrComponent
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.helpService.getLanguage()) {
+      this.language = this.helpService.getLanguage();
+    } else {
+      this.configurationService.getLanguage().subscribe((data) => {
+        this.language = data;
+        this.helpService.setLanguage(data);
+      });
+    }
+  }
 
   switchToSignUpMode() {
     this.mode = 'sign-up-mode';
@@ -116,9 +126,5 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         this.helpService.setLanguage(data);
       });*/
-    this.helpService.setLanguage({
-      gridPopupAddTitle: 'Add new record',
-      gridPopupEditTitle: 'Edit record',
-    });
   }
 }

@@ -50,10 +50,20 @@ export class DynamicActionButtonComponent implements OnInit {
     if (this.config.actionButtons.dropDownButtons) {
       this.itemsModelDropDown = this.config.actionButtons.dropDownButtons
         .items as ItemModel[];
+      this.translateItem(this.itemsModelDropDown);
     }
     if (this.config.actionButtons.splitButtons) {
       this.itemsModelSplit = this.config.actionButtons.splitButtons
         .items as ItemModel[];
+      this.translateItem(this.itemsModelSplit);
+    }
+  }
+
+  translateItem(items: any) {
+    for (let i = 0; i < items.length; i++) {
+      if (this.language[items[i].text]) {
+        items[i].text = this.language[items[i].text];
+      }
     }
   }
 
