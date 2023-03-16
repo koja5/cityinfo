@@ -1,1 +1,43 @@
-<app-dynamic-grid [path]="path" [file]="file"></app-dynamic-grid>
+<!-- <app-dynamic-grid [path]="path" [file]="file"></app-dynamic-grid> -->
+
+<div class="container mt-4">
+
+    <div class="text-right mb-4">
+        <button class="btn solid login" (click)="createNewPaidAd()"
+            style="font-size: 15px">{{language.createNewAdDraft}}</button>
+    </div>
+    <div class="outer" *ngIf="!listOfAds || listOfAds.length == 0">
+        <div class="middle">
+            <div class="inner">
+                <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png">
+                <h4>{{language.noHaveAdYet}}</h4>
+                <h5>{{language.createNewOneAd}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="listOfAds">
+        <div *ngFor="let item of listOfAds" class="col-md-4">
+            <app-ad-card [data]="item"></app-ad-card>
+        </div>
+    </div>
+
+    <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+        <ng-template #content>
+            <div class="row">
+                <app-dynamic-forms [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
+            </div>
+        </ng-template>
+    </ejs-dialog>
+
+    <!--CARD -->
+
+    <ejs-dialog id='card' #card showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+        <ng-template #content>
+            <stripe-card #stripeCard (paymentMethodChange)="setPaymentMethod($event)"
+                (tokenChange)="setStripeToken($event)" (sourceChange)="setStripeSource($event)"></stripe-card>
+            <button type="button" (click)="stripeCard.createToken()">createToken</button>
+        </ng-template>
+    </ejs-dialog>
+</div>

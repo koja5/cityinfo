@@ -658,7 +658,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
+          "select a.*, p.* from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();

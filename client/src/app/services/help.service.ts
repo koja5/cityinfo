@@ -134,4 +134,9 @@ export class HelpService {
     const token = this.getDecodeToken();
     return token.id;
   }
+
+  checkAccountIsClub() {
+    const token = this.getDecodeToken();
+    return token.isClub;
+  }
 }

@@ -1,7 +1,7 @@
 <div class="container mt-4">
 
     <div class="text-right mb-4">
-        <button class="btn solid login" (click)="createNewAdDraft()" style="font-size: 15px">Create Ad draft</button>
+        <button class="btn solid login" (click)="createNewAdDraft()" style="font-size: 15px">{{language.createNewAdDraft}}</button>
     </div>
     <div class="outer" *ngIf="!listOfAds || listOfAds.length == 0">
         <div class="middle">
@@ -66,6 +66,4 @@
             </div>
         </ng-template>
     </ejs-dialog>
-
-
 </div>

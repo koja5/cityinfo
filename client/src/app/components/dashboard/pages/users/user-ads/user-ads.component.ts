@@ -47,8 +47,6 @@ export class UserAdsComponent implements OnInit {
     args.maxHeight = null;
   }
 
-  executeAction() {}
-
   intializeData() {
     this.service
       .callGetMethod('api/getMyAds', '')
