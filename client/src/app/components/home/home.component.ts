@@ -63,12 +63,14 @@ export class HomeComponent implements OnInit {
   }
 
   changeCity(event: any) {
-    this.helpService.setLocalStorage('selectedCity', event.target.value);
-    this.allAds = null;
-    this.leftFixedAds = null;
-    this.rightFixedAds = null;
-    this.getPaidScrollAdsByCity(event.target.value);
-    this.getPaidFixedAdsByCity(event.target.value);
+    if (event.target.value != '') {
+      this.helpService.setLocalStorage('selectedCity', event.target.value);
+      this.allAds = null;
+      this.leftFixedAds = null;
+      this.rightFixedAds = null;
+      this.getPaidScrollAdsByCity(event.target.value);
+      this.getPaidFixedAdsByCity(event.target.value);
+    }
   }
 
   getPaidScrollAdsByCity(parameter: string) {

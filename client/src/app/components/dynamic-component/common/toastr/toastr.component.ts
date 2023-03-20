@@ -45,48 +45,36 @@ export class ToastrComponent implements OnInit {
   }
 
   showSuccess() {
-    /*this.toastr.success(
+    this.toastr.success(
       this.helpService.getLanguage().toastrSuccessExecutedActionText,
       this.helpService.getLanguage().toastrSuccessExecutedActionTitle,
       {
         timeOut: 7000,
         positionClass: 'toast-bottom-right',
       }
-    );*/
-    this.toastr.success('The action was successfully executed', '', {
-      timeOut: 7000,
-      positionClass: 'toast-bottom-right',
-    });
+    );
   }
 
   showInfo() {
-    /*this.toastr.info(
+    this.toastr.info(
       this.helpService.getLanguage().toastrInfoExecutedActionText,
       this.helpService.getLanguage().toastrInfoExecutedActionTitle,
       {
         timeOut: 7000,
         positionClass: 'toast-bottom-right',
       }
-    );*/
-    this.toastr.info('The action was successfully executed', '', {
-      timeOut: 7000,
-      positionClass: 'toast-bottom-right',
-    });
+    );
   }
 
   showError() {
-    /*this.toastr.error(
+    this.toastr.error(
       this.helpService.getLanguage().toastrErrorExecutedActionText,
       this.helpService.getLanguage().toastrErrorExecutedActionTitle,
       {
         timeOut: 7000,
         positionClass: 'toast-bottom-right',
       }
-    );*/
-    this.toastr.error('The action was not executed successfully', '', {
-      timeOut: 7000,
-      positionClass: 'toast-bottom-right',
-    });
+    );
   }
   showWarning() {
     this.toastr.warning(

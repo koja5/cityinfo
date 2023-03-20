@@ -67,6 +67,8 @@ router.post("/sendRequestForFreeAd", function (req, res, next) {
   body.send_request_for_free_ad.fields["city_name"] = req.body.city_name;
   body.send_request_for_free_ad.fields["number_of_weeks"] =
     req.body.number_of_weeks;
+  body.send_request_for_free_ad.fields["link"] =
+    process.env.link_client + "#/dashboard/superadmin/preview-ad/" + req.body.id;
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
@@ -97,6 +99,32 @@ router.post("/infoForActiveFreeAd", function (req, res, next) {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.info_for_active_free_ad,
+    json: true,
+  };
+  console.log(options);
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+});
+
+router.post("/infoForDenyFreeAd", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+  body.info_for_deny_free_ad.fields["email"] = req.body.email;
+  body.info_for_deny_free_ad.fields["greeting"] =
+    body.info_for_deny_free_ad.fields["greeting"].replace(
+      "{firstname}",
+      req.body.firstname
+    );
+  var options = {
+    url: process.env.link_api + "mail-server/sendMail",
+    method: "POST",
+    body: body.info_for_deny_free_ad,
     json: true,
   };
   console.log(options);

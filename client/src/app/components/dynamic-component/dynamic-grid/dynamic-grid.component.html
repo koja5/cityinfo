@@ -34,6 +34,14 @@
               <span *ngIf="item.template.label">{{ item.template.label }}</span>
             </button>
 
+            <button [class]="item.template.class" *ngIf="
+                  item.template.action === 'previewInvoice'
+                " (click)="previewInvoice(data)">
+              <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="false"
+                *ngIf="item.template.classIcon">{{ item.template.classIcon }}</mat-icon>
+              <span *ngIf="item.template.label">{{ item.template.label }}</span>
+            </button>
+
             <!-- <button
                 [class]="item.template.class"
                 *ngIf="item.template.action === 'downloadDocument'"
@@ -98,8 +106,12 @@
   </ejs-grid>
 </div>
 
-<!-- <app-dynamic-invoice
-    *ngIf="generateInvoice"
-    [invoice]="invoice"
-    [action]="invoiceAction"
-  ></app-dynamic-invoice> -->
+
+<ejs-dialog id='invoiceDialog' #invoiceDialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true" [visible]="false"
+  [isModal]="true" [position]="dialogPosition" width="300px">
+  <ng-template #content>
+    <div>
+      <app-invoice [data]="invoiceData"></app-invoice>
+    </div>
+  </ng-template>
+</ejs-dialog>

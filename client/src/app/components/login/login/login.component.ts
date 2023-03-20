@@ -112,7 +112,18 @@ export class LoginComponent implements OnInit {
     this.helpService.setLocalStorage('logo', token.logo);
     this.setLanguageForDashboard();
     setTimeout(() => {
-      if (token.type === UserType.user) {
+      if (this.helpService.getLocalStorageStringValue('previousLink')) {
+        const checkSharp = this.helpService
+          .getLocalStorageStringValue('previousLink')
+          ?.split("#");
+        this.router.navigate([
+          checkSharp && checkSharp?.length > 1
+            ? checkSharp[1]
+            : checkSharp
+            ? checkSharp[0]
+            : '',
+        ]);
+      } else if (token.type === UserType.user) {
         this.router.navigate(['/dashboard/user']);
       } else {
         this.router.navigate(['/dashboard/superadmin']);

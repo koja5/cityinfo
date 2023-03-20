@@ -147,6 +147,12 @@
                         "value": 1,
                         "operator": "==",
                         "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Deny</span>"
                     }
                 ]
             },
@@ -160,7 +166,7 @@
                         "field": "position",
                         "value": 1,
                         "operator": "==",
-                        "html": "<span class='e-badge e-badge-info'>Fixed</span>"
+                        "html": "<span class='e-badge e-badge-success'>Fixed</span>"
                     },
                     {
                         "field": "position",

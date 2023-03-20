@@ -42,6 +42,13 @@
     "link": "/dashboard/superadmin/all-ads"
   },
   {
+    "title": "All invoices",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-invoices"
+  },
+  {
     "title": "My ads",
     "rights": [
       "user"
@@ -54,5 +61,12 @@
       "user"
     ],
     "link": "/dashboard/user/paid-ads"
+  },
+  {
+    "title": "My invoice",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-invoices"
   }
 ]

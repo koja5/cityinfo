@@ -284,3 +284,27 @@ ejs-uploader {
     display: none;
   }
 }
+
+.btn-none {
+  background: none;
+  border: none;
+}
+
+.btn-none:hover {
+  background: none;
+  border: none;
+}
+
+.btn-color-default {
+  color: #000;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.muted-link {
+  color: #afafaf;
+  float: left;
+  padding: 13px;
+}

@@ -32,6 +32,7 @@ import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
   styleUrls: ['./dynamic-grid.component.scss'],
 })
 export class DynamicGridComponent implements OnInit {
+  @ViewChild('invoiceDialog') invoiceDialog!: DialogComponent;
   @Input() path!: string;
   @Input() file!: string;
   @Input() partOfTab!: boolean;
@@ -54,6 +55,11 @@ export class DynamicGridComponent implements OnInit {
   public invoiceAction!: string;
   public generateInvoice = false;
   public filterOptions!: FilterSettingsModel;
+  public dialogPosition: Object = {
+    X: 'center',
+    Y: 'center',
+  };
+  public invoiceData: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -72,6 +78,10 @@ export class DynamicGridComponent implements OnInit {
     this.filterOptions = {
       type: 'Menu',
     };
+  }
+
+  onBeforeOpen(args: any) {
+    args.maxHeight = null;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -305,5 +315,10 @@ export class DynamicGridComponent implements OnInit {
       };
       this.grid.pdfExport(pdfExportProperties);
     }
+  }
+
+  previewInvoice(body: any) {
+    this.invoiceData = body;
+    this.invoiceDialog.show();
   }
 }

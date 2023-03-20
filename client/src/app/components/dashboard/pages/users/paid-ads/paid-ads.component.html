@@ -4,7 +4,7 @@
 
     <div class="text-right mb-4">
         <button class="btn solid login" (click)="createNewPaidAd()"
-            style="font-size: 15px">{{language.createNewAdDraft}}</button>
+            style="font-size: 15px">{{language.createNewPaidAd}}</button>
     </div>
     <div class="outer" *ngIf="!listOfAds || listOfAds.length == 0">
         <div class="middle">
@@ -17,7 +17,7 @@
     </div>
     <div class="row" *ngIf="listOfAds">
         <div *ngFor="let item of listOfAds" class="col-md-4">
-            <app-ad-card [data]="item"></app-ad-card>
+            <app-ad-card [data]="item" [showStartExpiredData]="true"></app-ad-card>
         </div>
     </div>
 
@@ -35,9 +35,53 @@
     <ejs-dialog id='card' #card showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
-            <stripe-card #stripeCard (paymentMethodChange)="setPaymentMethod($event)"
-                (tokenChange)="setStripeToken($event)" (sourceChange)="setStripeSource($event)"></stripe-card>
-            <button type="button" (click)="stripeCard.createToken()">createToken</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <app-ad-card *ngIf="data" [data]="data" [additionalInformation]="paidAd"></app-ad-card>
+                </div>
+                <div class="col-md-6">
+                    <h3 clas="text-center">{{language.cardInformation}}</h3>
+                    <hr>
+                    <!-- <h5>{{language.position}}: {{paymentInformation.position}}</h5>
+                    <h5>{{language.city}}: {{paymentInformation.position}}</h5>
+                    <h5>{{language.startDate}}: {{paymentInformation.start_date | date: 'dd.MM.yyyy'}}</h5>
+                    <h5>{{language.expiredDate}}: {{paymentInformation.expired_date | date: 'dd.MM.yyyy'}}</h5>
+                    <h5>{{language.numberOfWeeks}}: {{paymentInformation.number_of_weeks}}</h5>
+                    <h5>{{language.price}}: {{paymentInformation.price}}</h5> -->
+
+                    <div *ngIf="user" class="row">
+                        <div class="col-md-12">
+                            <label class="custom-label">{{language.firstname}}</label>
+                            <ejs-textbox cssClass="e-outline" [id]="user.firstname" [(ngModel)]="user.firstname"
+                                name="name"></ejs-textbox>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="custom-label">{{language.address}}</label>
+                            <ejs-textbox cssClass="e-outline" [id]="user.address" [(ngModel)]="user.address"
+                                name="name"></ejs-textbox>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="custom-label">{{language.email}}</label>
+                            <ejs-textbox cssClass="e-outline" [id]="user.email" [(ngModel)]="user.email"
+                                name="name"></ejs-textbox>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="custom-label">{{language.phone}}</label>
+                            <ejs-textbox cssClass="e-outline" [id]="user.phone" [(ngModel)]="user.phone"
+                                name="name"></ejs-textbox>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <stripe-card #stripeCard (paymentMethodChange)="setPaymentMethod($event)"
+                            (tokenChange)="setStripeToken($event)"
+                            (sourceChange)="setStripeSource($event)"></stripe-card>
+                        <div class="text-right">
+                            <button class="button-action e-info e-control e-btn e-lib mt-4" type="button"
+                                (click)="stripeCard.createToken()">{{language.payForAds}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ng-template>
     </ejs-dialog>
 </div>

@@ -12,9 +12,10 @@ import { PaidAdsComponent } from '../paid-ads/paid-ads.component';
 import { SharingModule } from 'src/app/sharing.module';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { StripeModule } from 'stripe-angular';
+import { MyInvoicesComponent } from '../my-invoices/my-invoices.component';
 
 @NgModule({
-  declarations: [UserAdsComponent, PaidAdsComponent],
+  declarations: [UserAdsComponent, PaidAdsComponent, MyInvoicesComponent],
   imports: [
     CommonModule,
     UsersRouting,

@@ -8,4 +8,7 @@ export class AdsModel {
     description?: string;
     cover?: string;
     cover_old?: string;
+    start_date?: Date;
+    expired_date?: Date;
+    token?: any;
 }

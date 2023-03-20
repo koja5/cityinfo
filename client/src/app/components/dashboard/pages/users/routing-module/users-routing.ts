@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MyInvoicesComponent } from '../my-invoices/my-invoices.component';
 import { PaidAdsComponent } from '../paid-ads/paid-ads.component';
 import { UserAdsComponent } from '../user-ads/user-ads.component';
 
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'paid-ads',
     component: PaidAdsComponent,
+  },
+  {
+    path: 'my-invoices',
+    component: MyInvoicesComponent,
   },
 ];
 

@@ -105,7 +105,7 @@
             "class": "e-info button-action",
             "name": "submit",
             "title": "Save",
-            "field": "submit",
+            "field": "submitAndPay",
             "positionClass": "position-end mt-3 col-md-12"
         }
     ]

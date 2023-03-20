@@ -26,7 +26,8 @@
         "fields": {
             "title": "New request for free ad",
             "text": "You received a new request for free ad. Information about ad you can see below.",
-            "greeting": "Hi"
+            "greeting": "Hi",
+            "buttonText": "Preview requested ad"
         }
     },
     "info_for_active_free_ad": {
@@ -36,6 +37,16 @@
         "fields": {
             "title": "Free relationship request",
             "text": "Your request for a free ad on the www.city-info.at portal has been approved and is valid for the next 2 weeks.",
+            "greeting": "Hi {firstname}"
+        }
+    },
+    "info_for_deny_free_ad": {
+        "template": "info_for_deny_free_ad.hjs",
+        "email": "clinicnode@gmail.com",
+        "subject": "Deny request for your ad",
+        "fields": {
+            "title": "Deny request for your ad",
+            "text": "Your request for a free ad on the www.city-info.at portal has been deny. We can't approve this type of ad. You have not met the requirements for approval of a free ad.",
             "greeting": "Hi {firstname}"
         }
     }

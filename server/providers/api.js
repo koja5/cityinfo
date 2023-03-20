@@ -9,6 +9,9 @@ const logger = require("./config/logger");
 const request = require("request");
 const fs = require("fs");
 const sha1 = require("sha1");
+const stripe = require("stripe")(
+  "sk_test_51LhYhHL4uVudLiXAsXYCGWFY7RhraCcUwR9wbfV2xoL04pccSeLCLkbZvbPsxhivnRp9RJmu61YGFinNd7lKzOJz00r5f2ldt5"
+);
 
 module.exports = router;
 
@@ -658,7 +661,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select a.*, p.* from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
+          "select a.*, p.* from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -680,6 +683,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
 });
 
 router.post("/createPaidAd", auth, async function (req, res, next) {
+  console.log(auth);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -687,6 +691,11 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
         return res.json(err);
       }
       req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.number_of_weeks = 2;
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
       req.body.id_user = req.user.user.id;
       conn.query(
         "insert into paid_ads set ?",
@@ -725,6 +734,47 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
     logger.log("error", err);
   }
 });
+
+router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
+      req.body.id_user = req.body.app_token.user.id;
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "insert into paid_ads set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new Ad!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+function addWeeks(date, weeks) {
+  date.setDate(date.getDate() + 7 * weeks);
+  return date;
+}
 
 router.post("/updatePaidAd", auth, function (req, res, next) {
   try {
@@ -923,6 +973,97 @@ router.get("/getRequestAds", auth, async (req, res, next) => {
   }
 });
 
+router.get("/getRequestAdById/:id", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select a.*, c.name as 'city', pp.name as 'position', pp.price, p.number_of_weeks, p.start_date, p.expired_date, p.id as 'id', p.active, u.firstname, u.email from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.active = 0 and p.id = ?",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/getAdInformationForPayment", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from ads_draft where id = ?",
+          [req.body.ads_draft],
+          function (err, ad, fields) {
+            if (err) {
+              conn.release();
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from position_prices where id = ?",
+                [req.body.position],
+                function (err, position, fields) {
+                  console.log(position);
+                  if (err) {
+                    conn.release();
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    conn.query(
+                      "select * from cities where id = ?",
+                      [req.body.city],
+                      function (err, city, fields) {
+                        conn.release();
+                        if (err) {
+                          logger.log("error", err.sql + ". " + err.sqlMessage);
+                          res.json(err);
+                        } else {
+                          var data = ad;
+                          data[0]["city"] = city[0].name;
+                          data[0]["position"] = position[0].name;
+                          data[0]["price"] = position[0].price;
+                          data[0]["expired_date"] = addWeeks(
+                            new Date(req.body.start_date),
+                            req.body.number_of_weeks
+                          );
+                          console.log(data);
+                          res.json(data);
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/activeAd", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -938,6 +1079,40 @@ router.post("/activeAd", auth, function (req, res, next) {
           if (!err) {
             var options = {
               url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/denyAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_ads SET active = -1 where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            var options = {
+              url: process.env.link_api + "infoForDenyFreeAd",
               method: "POST",
               body: req.body,
               json: true,
@@ -999,7 +1174,64 @@ router.get("/getAllPaidAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id",
+          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id order by id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllInvoices", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.*, pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.paid_ad = 1 order by p.id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getMyInvoices", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.*, pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.paid_ad = 1 and p.id_user = ? order by p.id desc",
+          [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1132,3 +1364,39 @@ router.post("/deletePositionPrice", auth, function (req, res, next) {
 });
 
 /* END POSITION PRICE */
+
+router.post("/createPayment", (req, res, next) => {
+  stripe.charges.create(
+    {
+      amount: req.body.price * 100,
+      currency: "EUR",
+      description: req.body.description,
+      source: req.body.token.id,
+    },
+    (err, charge) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+
+      req.body.ad_date["app_token"] = decodeToken(req.body.app_token);
+      console.log("USAO SAM OVDEE!!");
+      var options = {
+        rejectUnauthorized: false,
+        url: process.env.link_api + "createPaidAdWithoutAuth",
+        method: "POST",
+        body: req.body.ad_date,
+        json: true,
+      };
+      request(options, function (error, response, body) {
+        res.json(response.body);
+      });
+    }
+  );
+});
+
+function decodeToken(token) {
+  return jwt.decode(token, process.env.TOKEN_KEY, {
+    expiresIn: expiresToken,
+  });
+}

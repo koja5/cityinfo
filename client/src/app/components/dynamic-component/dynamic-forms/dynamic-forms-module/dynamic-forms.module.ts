@@ -14,7 +14,6 @@ import { LabelComponent } from '../dynamic-fields/label/label.component';
 import { ButtonComponent } from '../dynamic-fields/buttons/button/button.component';
 import { DynamicIconComponent } from '../../common/dynamic-icon/dynamic-icon.component';
 import { MatIconModule } from '@angular/material/icon';
-import { LoaderSvgComponent } from 'src/app/components/common/loader-svg/loader-svg.component';
 import { SharingModule } from 'src/app/sharing.module';
 import { ComboboxComponent } from '../dynamic-fields/dropdowns/combobox/combobox.component';
 import { ComboBoxModule } from '@syncfusion/ej2-angular-dropdowns';
