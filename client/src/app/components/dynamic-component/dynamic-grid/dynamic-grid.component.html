@@ -42,6 +42,14 @@
               <span *ngIf="item.template.label">{{ item.template.label }}</span>
             </button>
 
+            <button [class]="item.template.class" *ngIf="
+                  item.template.action === 'previewAd'
+                " (click)="previewAd(data)">
+              <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="false"
+                *ngIf="item.template.classIcon">{{ item.template.classIcon }}</mat-icon>
+              <span *ngIf="item.template.label">{{ item.template.label }}</span>
+            </button>
+
             <!-- <button
                 [class]="item.template.class"
                 *ngIf="item.template.action === 'downloadDocument'"
@@ -111,7 +119,16 @@
   [isModal]="true" [position]="dialogPosition" width="300px">
   <ng-template #content>
     <div>
-      <app-invoice [data]="invoiceData"></app-invoice>
+      <app-invoice [data]="selectedData"></app-invoice>
+    </div>
+  </ng-template>
+</ejs-dialog>
+
+<ejs-dialog id='adDialog' #adDialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true" [visible]="false"
+  [isModal]="true" [position]="dialogPosition" width="300px">
+  <ng-template #content>
+    <div>
+      <app-ad-card *ngIf="selectedData" [data]="selectedData" [additionalInformation]="additionalInformation"></app-ad-card>
     </div>
   </ng-template>
 </ejs-dialog>

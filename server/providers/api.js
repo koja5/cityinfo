@@ -953,7 +953,7 @@ router.get("/getRequestAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.firstname, u.email from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id where p.active = 0 order by p.start_date desc",
+          "select p.*, a.*, c.name as 'city_name', u.firstname, u.email, pp.name as 'position' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.active = 0 order by p.start_date desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1174,7 +1174,7 @@ router.get("/getAllPaidAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id order by id desc",
+          "select p.*, a.*, a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id order by p.id desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {

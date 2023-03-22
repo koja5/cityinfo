@@ -24,7 +24,7 @@
     <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
-            <div class="row">
+            <div>
                 <app-dynamic-forms [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
             </div>
         </ng-template>
@@ -37,7 +37,8 @@
         <ng-template #content>
             <div class="row">
                 <div class="col-md-6">
-                    <app-ad-card *ngIf="data" [data]="data" [additionalInformation]="paidAd"></app-ad-card>
+                    <app-ad-card *ngIf="data&&paidAd" [data]="data" [additionalInformation]="paidAd"
+                        [approveDenyButton]="false"></app-ad-card>
                 </div>
                 <div class="col-md-6">
                     <h3 clas="text-center">{{language.cardInformation}}</h3>

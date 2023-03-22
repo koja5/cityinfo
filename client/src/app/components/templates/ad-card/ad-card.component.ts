@@ -20,6 +20,7 @@ export class AdCardComponent implements OnInit {
   @Input() public fixed: string = '';
   @Input() public showStartExpiredData: boolean = false;
   @Input() public approveDeny: boolean = false;
+  @Input() public approveDenyButton: boolean = true;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   public cover: any;
   public showModeButton: boolean = false;

@@ -25,6 +25,7 @@ import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component'
 // import { saveAs } from 'file-saver';
 import { FilterSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { PaidAdsModel } from 'src/app/models/paid-ads-model';
 
 @Component({
   selector: 'app-dynamic-grid',
@@ -33,6 +34,7 @@ import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 })
 export class DynamicGridComponent implements OnInit {
   @ViewChild('invoiceDialog') invoiceDialog!: DialogComponent;
+  @ViewChild('adDialog') adDialog!: DialogComponent;
   @Input() path!: string;
   @Input() file!: string;
   @Input() partOfTab!: boolean;
@@ -59,7 +61,8 @@ export class DynamicGridComponent implements OnInit {
     X: 'center',
     Y: 'center',
   };
-  public invoiceData: any;
+  public selectedData: any;
+  public additionalInformation = new PaidAdsModel();
 
   constructor(
     private configurationService: ConfigurationService,
@@ -318,7 +321,20 @@ export class DynamicGridComponent implements OnInit {
   }
 
   previewInvoice(body: any) {
-    this.invoiceData = body;
+    this.selectedData = body;
     this.invoiceDialog.show();
+  }
+
+  previewAd(body: any) {
+    this.selectedData = body;
+    this.additionalInformation = {
+      position: body.position,
+      city: body.city_name,
+      start_date: body.start_date,
+      expired_date: body.expired_date,
+      number_of_weeks: body.number_of_weeks,
+      price: body.price,
+    };
+    this.adDialog.show();
   }
 }

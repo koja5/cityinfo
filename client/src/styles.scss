@@ -231,6 +231,12 @@ label {
   }
 }
 
+@media (max-width: 991px) {
+  .e-popup.e-popup-open.e-dialog {
+    width: 100% !important;
+  }
+}
+
 .new-row {
   display: flow-root;
   margin-bottom: 7px;
