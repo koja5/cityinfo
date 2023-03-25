@@ -9,6 +9,36 @@
             "buttonText": "Activate your account"
         }
     },
+    "activate_mail_for_club": {
+        "template": "activate_mail.hjs",
+        "email": "clinicnode@gmail.com",
+        "subject": "Activate your account",
+        "fields": {
+            "title": "Please activate your account!",
+            "text": "You have successfully created an account, please use the link below to confirm your email and after that, your account will be additionally checked by an administrator! Reson for this is because you created CLUB account, which has some free options on platform, so we need to be sure that you data is really correct.",
+            "buttonText": "Activate your account"
+        }
+    },
+    "send_request_for_new_created_club_account": {
+        "template": "send_request_for_new_created_club_account.hjs",
+        "email": "clinicnode@gmail.com",
+        "subject": "Created new Club account!",
+        "fields": {
+            "title": "Created new Club account!",
+            "text": "Please check info of new created team account. Information about club you can see below!",
+            "greeting": "Hi"
+        }
+    },
+    "info_about_changed_user_data": {
+        "template": "info_about_changed_user_data.hjs",
+        "email": "clinicnode@gmail.com",
+        "subject": "Your information has been changed!",
+        "fields": {
+            "title": "Your information has been changed!",
+            "text": "We would like to inform you that the information on your account has been changed. This may mean that your access to the platform or some of the other data has been changed.",
+            "greeting": "Hi {firstname}"
+        }
+    },
     "reset_password": {
         "template": "reset_password.hjs",
         "email": "clinicnode@gmail.com",

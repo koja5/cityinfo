@@ -179,6 +179,12 @@
                         "value": 1,
                         "operator": "==",
                         "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Verified mail</span>"
                     }
                 ]
             },

@@ -13,6 +13,7 @@ import { SharingModule } from './sharing.module';
 import { DynamicModule } from './components/dynamic-component/dynamic-module/dynamic/dynamic.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
+import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule,
     SharingModule,
     DynamicModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CheckBoxModule
   ],
   providers: [CallApiService],
   bootstrap: [AppComponent]

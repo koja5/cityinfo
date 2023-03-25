@@ -84,5 +84,6 @@
     "invoiceCompanyCity": "Vorchdorf",
     "invoiceCompanyUID": "UID-Nr.",
     "invoiceCompanyUIDNumber": "ATU73092324",
-    "invoiceBuyer": "Buyer"
+    "invoiceBuyer": "Buyer",
+    "clubRegistrationTitle": "I want to open an account as a club and use free services (this type of account is additionally checked by the administrator)"
 }

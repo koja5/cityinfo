@@ -59,7 +59,11 @@ router.post("/signUp", async function (req, res, next) {
           } else {
             req.body.password = sha1(req.body.password);
             req.body.type = 2;
-            req.body.active = 0;
+            if (req.body.is_club) {
+              req.body.active = 2;
+            } else {
+              req.body.active = 0;
+            }
             conn.query(
               "insert into users set ?",
               req.body,
@@ -69,12 +73,35 @@ router.post("/signUp", async function (req, res, next) {
                   return res.json(err);
                 } else {
                   logger.log("info", "New user create account!");
-                  var options = {
-                    url: process.env.link_api + "verificationMailAddress",
-                    method: "POST",
-                    body: { email: req.body.email },
-                    json: true,
-                  };
+                  if (req.body.is_club) {
+                    var options = {
+                      url:
+                        process.env.link_api + "verificationMailAddressForClub",
+                      method: "POST",
+                      body: { email: req.body.email },
+                      json: true,
+                    };
+
+                    var option_request = {
+                      url:
+                        process.env.link_api +
+                        "sendInfoForNewCreatedClubAccount",
+                      method: "POST",
+                      body: req.body,
+                      json: true,
+                    };
+                    request(
+                      option_request,
+                      function (error, response, body) {}
+                    );
+                  } else {
+                    var options = {
+                      url: process.env.link_api + "verificationMailAddress",
+                      method: "POST",
+                      body: { email: req.body.email },
+                      json: true,
+                    };
+                  }
                   request(options, function (error, response, body) {});
                   res.json(true);
                 }
@@ -387,6 +414,14 @@ router.post("/updateUser", auth, function (req, res, next) {
         function (err, rows) {
           conn.release();
           if (!err) {
+            var option_request = {
+              url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(option_request, function (error, response, body) {});
+
             res.json(true);
           } else {
             logger.log("error", `${err.sql}. ${err.sqlMessage}`);
@@ -542,9 +577,36 @@ router.get("/verificationMail/:email", async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req.params.email);
         conn.query(
           "update users set active = 1 where SHA1(email) = ?",
+          [req.params.email],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.redirect(process.env.link_client + "login");
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/verificationMailForClub/:email", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update users set active = 2 where SHA1(email) = ?",
           [req.params.email],
           function (err, rows, fields) {
             conn.release();
