@@ -16,7 +16,10 @@
     "loginText": "Login to see all Ad or create new one!",
     "signIn": "Sign in",
     "createNewAdDraft": "Create Ad draft",
+    "createNewEventDraft": "Create event draft",
     "createNewPaidAd": "Start new Ad campaign",
+    "createNewPaidEvent": "Start new event campaign",
+    "noHaveYetPaidStaff": "You don't have yet paid staff!",
     "noHaveAdYet": "You don't have yet Ad draft!",
     "createNewOneAd": "Create new one!",
     "nameOfCompany": "Name of company",
@@ -85,5 +88,7 @@
     "invoiceCompanyUID": "UID-Nr.",
     "invoiceCompanyUIDNumber": "ATU73092324",
     "invoiceBuyer": "Buyer",
-    "clubRegistrationTitle": "I want to open an account as a club and use free services (this type of account is additionally checked by the administrator)"
+    "clubRegistrationTitle": "I want to open an account as a club and use free services (this type of account is additionally checked by the administrator)",
+    "nameOfEvent": "Name of event",
+    "optional": "Optional"
 }

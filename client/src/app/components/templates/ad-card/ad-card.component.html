@@ -26,9 +26,15 @@
                             <p class="text-gray-700">{{data.address}}
                             </p>
                         </div>
-                        <div *ngIf="showStartExpiredData" class="col-md-6 text-right start-end-date">
-                            <p class="text-gray-700 start-date">{{data.start_date | date: 'dd.MM.yyyy'}}</p>
-                            <p class="text-gray-700 expired-date">{{data.expired_date | date: 'dd.MM.yyyy'}}</p>
+                        <div *ngIf="showDate" class="col-md-6 text-right start-end-date">
+                            <div *ngIf="!data.start_date || data.expired_date">
+                                <p class="text-gray-700 start-date">{{data.start_date | date: 'dd.MM.yyyy'}}</p>
+                                <p class="text-gray-700 expired-date">{{data.expired_date | date: 'dd.MM.yyyy'}}</p>
+                            </div>
+                            <div *ngIf="data.datetime">
+                                <p class="text-gray-700"><span class="fa fa-calendar"></span> {{data.datetime | date: 'dd.MM.yyyy'}}</p>
+                                <p class="text-gray-700"><span class="fa fa-clock"></span> {{data.datetime | date: 'hh.mm'}}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="flex p-4 border-t border-gray-300 text-gray-700 contact">
@@ -94,7 +100,8 @@
                         <button class="btn edit" (click)="editButton()">{{language.edit}}</button>
                         <!-- <button class="btn delete ml-2" (click)="deleteButton()">Delete</button> -->
                     </div>
-                    <div *ngIf="additionalInformation && !additionalInformation.active && approveDenyButton" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
+                    <div *ngIf="additionalInformation && !additionalInformation.active && approveDenyButton"
+                        class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
                         <button class="btn edit" (click)="approveAd()">{{language.approveAd}}</button>
                         <button class="btn delete ml-2" (click)="denyAd()">{{language.denyAd}}</button>
                     </div>

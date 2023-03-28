@@ -12,20 +12,20 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "ads_draft",
-            "title": "Ads draft",
+            "name": "event_draft",
+            "title": "Event draft",
             "field": {
                 "text": "name",
                 "value": "id"
             },
             "request": {
                 "type": "GET",
-                "api": "/api/getMyAds",
+                "api": "/api/getEventsDraft",
                 "parameters": [],
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of ads",
+            "placeholder": "Please select name of events",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -49,7 +49,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of ads",
+            "placeholder": "Please select city",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true

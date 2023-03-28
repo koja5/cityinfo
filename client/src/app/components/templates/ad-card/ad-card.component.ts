@@ -14,11 +14,11 @@ import { ToastrComponent } from '../../dynamic-component/common/toastr/toastr.co
   styleUrls: ['./ad-card.component.scss'],
 })
 export class AdCardComponent implements OnInit {
-  @Input() public data!: AdsModel;
+  @Input() public data!: any;
   @Input() public additionalInformation!: PaidAdsModel;
   @Input() public edit: boolean = false;
   @Input() public fixed: string = '';
-  @Input() public showStartExpiredData: boolean = false;
+  @Input() public showDate: boolean = false;
   @Input() public approveDeny: boolean = false;
   @Input() public approveDenyButton: boolean = true;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();

@@ -13,6 +13,7 @@ import { SharingModule } from 'src/app/sharing.module';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { StripeModule } from 'stripe-angular';
 import { MyInvoicesComponent } from '../my-invoices/my-invoices.component';
+import { DateTimePicker, DateTimePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
   declarations: [UserAdsComponent, PaidAdsComponent, MyInvoicesComponent],
@@ -28,6 +29,7 @@ import { MyInvoicesComponent } from '../my-invoices/my-invoices.component';
     StripeModule.forRoot(
       'pk_test_51LhYhHL4uVudLiXA5WwSojoMtx6m0rOM7fufOkPllausovqA0BhBJ0Id0ROuRb336IVLZMjshamhIIOlT1hFOAAS00zH00KnIN'
     ),
+    DateTimePickerAllModule
   ],
   providers: [],
 })

@@ -42,6 +42,13 @@
     "link": "/dashboard/superadmin/all-ads"
   },
   {
+    "title": "All events",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-events"
+  },
+  {
     "title": "All invoices",
     "rights": [
       "superadmin"

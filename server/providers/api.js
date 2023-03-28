@@ -713,6 +713,121 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
 
 /* END ADS DRAFT */
 
+/* EVENTS DRAFT */
+
+router.get("/getEventsDraft", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from events_draft where id_user = ?",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updateEventDraft", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      req.body.datetime = new Date(req.body.datetime);
+      conn.query(
+        "update events_draft SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteEventDraft", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from events_draft where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePaidEvent", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_events SET active = ? where id = ?",
+        [req.body.active, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END EVENTS DRAFT */
+
 /* PAID ADS */
 
 router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
@@ -1314,6 +1429,134 @@ router.get("/getMyInvoices", auth, async (req, res, next) => {
 });
 
 /* END PAID ADS */
+
+/* PAID EVENTS */
+
+router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select e.*, p.* from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPaidEvent", auth, async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.id_user = req.user.user.id;
+      conn.query(
+        "insert into paid_events set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Create new events!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.get("/getAllPaidEvents", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select e.*, p.*, e.name as 'event_name', c.name as 'city_name' from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id order by p.id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePaidEvent", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from paid_events where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            // var options = {
+            //   url: process.env.link_api + "infoForActiveFreeAd",
+            //   method: "POST",
+            //   body: req.body,
+            //   json: true,
+            // };
+            // request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END PAID EVENTS */
 
 /* POSITION PRICE */
 

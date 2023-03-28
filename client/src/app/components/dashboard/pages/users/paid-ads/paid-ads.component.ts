@@ -18,6 +18,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class PaidAdsComponent implements OnInit {
   @ViewChild('dialog') dialog!: DialogComponent;
+  @ViewChild('dialogEvent') dialogEvent!: DialogComponent;
   @ViewChild('card') card!: DialogComponent;
   public path = '/forms/user';
   public file!: string;
@@ -26,7 +27,7 @@ export class PaidAdsComponent implements OnInit {
     Y: 'center',
   };
   public language: any;
-  public listOfAds: any;
+  public listOfPaid: any;
   public expiredDate: any;
   public config!: FormConfig;
   cardCaptureReady = false;
@@ -34,22 +35,7 @@ export class PaidAdsComponent implements OnInit {
   public paidAd = new PaidAdsModel();
   public paymentInformation = new PaymentAdsModel();
   public user: any;
-  public options = {
-    iconStyle: 'solid',
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        lineHeight: '40px',
-        fontWeight: 300,
-        fontFamily: '"Helverica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E8',
-        },
-      },
-    },
-  };
+  public isClub: boolean = false;
 
   constructor(
     private service: CallApiService,
@@ -69,22 +55,34 @@ export class PaidAdsComponent implements OnInit {
   }
 
   intializeData() {
-    this.service.callGetMethod('api/getPaidAdsByUser', '').subscribe((data) => {
-      this.listOfAds = data;
-    });
+    if (this.isClub) {
+      this.service
+        .callGetMethod('api/getPaidEventsByUser', '')
+        .subscribe((data) => {
+          this.listOfPaid = data;
+        });
+    } else {
+      this.service
+        .callGetMethod('api/getPaidAdsByUser', '')
+        .subscribe((data) => {
+          this.listOfPaid = data;
+        });
+    }
   }
 
   checkExpiredDate() {
-    for (let i = 0; i < this.listOfAds; i++) {
-      if (new Date(this.listOfAds[i].expired_date) >= new Date()) {
-        this.expiredDate[this.listOfAds[i].id] = false;
+    for (let i = 0; i < this.listOfPaid; i++) {
+      if (new Date(this.listOfPaid[i].expired_date) >= new Date()) {
+        this.expiredDate[this.listOfPaid[i].id] = false;
       } else {
-        this.expiredDate[this.listOfAds[i].id] = true;
+        this.expiredDate[this.listOfPaid[i].id] = true;
       }
     }
   }
 
   initializeConfig() {
+    this.isClub = this.helpService.checkAccountIsClub();
+
     if (this.helpService.getLanguage()) {
       this.language = this.helpService.getLanguage();
     } else {
@@ -94,7 +92,7 @@ export class PaidAdsComponent implements OnInit {
     }
 
     if (this.helpService.checkAccountIsClub()) {
-      this.file = 'free-ads.json';
+      this.file = 'paid-events.json';
     } else {
       this.file = 'paid-ads.json';
     }
@@ -105,15 +103,19 @@ export class PaidAdsComponent implements OnInit {
     // this.data = new AdsModel();
   }
 
+  createNewPaidEvent() {
+    this.dialogEvent.show();
+  }
+
   submitEmitter(event: any) {
-    console.log(event);
     if (this.helpService.checkAccountIsClub()) {
       this.service
-        .callPostMethod('api/createPaidAd', event)
+        .callPostMethod('api/createPaidEvent', event)
         .subscribe((data) => {
           if (data) {
             this.toastr.showSuccess();
-            this.dialog.hide();
+            this.dialogEvent.hide();
+            this.intializeData();
           } else {
             this.toastr.showError();
           }

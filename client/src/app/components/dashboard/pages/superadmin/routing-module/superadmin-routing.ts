@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AllAdsComponent } from '../all-ads/all-ads.component';
+import { AllEventsComponent } from '../all-events/all-events.component';
 import { AllInvoicesComponent } from '../all-invoices/all-invoices.component';
 import { CitiesComponent } from '../cities/cities.component';
 import { DistrictsComponent } from '../district/districts.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'all-ads',
     component: AllAdsComponent,
+  },
+  {
+    path: 'all-events',
+    component: AllEventsComponent,
   },
   {
     path: 'preview-ad/:id',
