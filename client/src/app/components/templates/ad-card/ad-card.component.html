@@ -20,20 +20,24 @@
                     </div>
                     <div class="row p-3">
                         <div class="col-md-6">
-                            <p class="uppercase tracking-wide text-sm font-bold text-gray-700">{{data.name}}
+                            <p class="uppercase tracking-wide text-sm font-bold text-gray-700 three-dots" title="{{data.name}}">{{data.name}}
+                                <span *ngIf="(data.start_date || data.expired_date) && !data.datetime" class="ad-badge"
+                                    title="{{language.adTitle}}">{{language.ad}}</span>
                             </p>
                             <!-- <p class="text-3xl text-gray-900">$750,000</p> -->
-                            <p class="text-gray-700">{{data.address}}
+                            <p class="text-gray-700 three-dots" title="{{data.address}}">{{data.address}}
                             </p>
                         </div>
-                        <div *ngIf="showDate" class="col-md-6 text-right start-end-date">
-                            <div *ngIf="!data.start_date || data.expired_date">
+                        <div *ngIf="showDate || data.datetime" class="col-md-6 text-right start-end-date">
+                            <div *ngIf="(!data.start_date || data.expired_date) && showDate">
                                 <p class="text-gray-700 start-date">{{data.start_date | date: 'dd.MM.yyyy'}}</p>
                                 <p class="text-gray-700 expired-date">{{data.expired_date | date: 'dd.MM.yyyy'}}</p>
                             </div>
                             <div *ngIf="data.datetime">
-                                <p class="text-gray-700"><span class="fa fa-calendar"></span> {{data.datetime | date: 'dd.MM.yyyy'}}</p>
-                                <p class="text-gray-700"><span class="fa fa-clock"></span> {{data.datetime | date: 'hh.mm'}}</p>
+                                <p class="text-gray-700"><span class="fa fa-calendar"></span> {{data.datetime | date:
+                                    'dd.MM.yyyy'}}</p>
+                                <p class="text-gray-700"><span class="fa fa-clock"></span> {{data.datetime | date:
+                                    'hh.mm'}}</p>
                             </div>
                         </div>
                     </div>

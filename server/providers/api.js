@@ -164,6 +164,30 @@ router.post("/login", function (req, res, next) {
   });
 });
 
+router.post("/recoveryPassword", function (req, res, next) {
+  console.log(req.body);
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update users SET password = ? where sha1(email) = ?",
+      [sha1(req.body.password), req.body.email],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        }
+      }
+    );
+  });
+});
+
 router.get("/getMe", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -1549,6 +1573,35 @@ router.post("/deletePaidEvent", auth, function (req, res, next) {
           }
         }
       );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 order by e.datetime asc",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
     });
   } catch (ex) {
     logger.log("error", err.sql + ". " + err.sqlMessage);

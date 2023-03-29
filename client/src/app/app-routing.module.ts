@@ -18,7 +18,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'forgot-password',
+    path: 'forgot-password/:email',
     canActivate: [LoggedGuardService],
     component: ForgotPasswordComponent,
   },

@@ -103,14 +103,13 @@ router.post("/sentLinkToEmailForReset", function (req, res, next) {
   );
   body.reset_password.fields["email"] = req.body.email;
   body.reset_password.fields["link"] =
-    process.env.link_client + "/change-password/" + sha1(req.body.email);
+    process.env.link_client + "#/forgot-password/" + sha1(req.body.email);
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.reset_password,
     json: true,
   };
-  console.log(options);
   request(options, function (error, response, body) {
     if (!error) {
       res.json(true);
@@ -118,6 +117,7 @@ router.post("/sentLinkToEmailForReset", function (req, res, next) {
       res.json(false);
     }
   });
+  res.json(true);
 });
 
 router.post("/sendRequestForFreeAd", function (req, res, next) {

@@ -107,17 +107,6 @@
             "field": "city"
         },
         {
-            "type": "switch",
-            "width": "col-md-12 mt-4",
-            "class": "e-outline",
-            "name": "is_club",
-            "title": "Are you club?",
-            "field": "is_club",
-            "rights": [
-                "user"
-            ]
-        },
-        {
             "type": "button",
             "width": "col-md-12",
             "class": "e-info  button-action",

@@ -25,6 +25,7 @@
     "nameOfCompany": "Name of company",
     "address": "Address",
     "phone": "Phone",
+    "dateAndTime": "Date and time",
     "submitAndPay": "Submit and continue with payment",
     "description": "Description",
     "uploadCoverImage": "Upload Cover image",
@@ -90,5 +91,18 @@
     "invoiceBuyer": "Buyer",
     "clubRegistrationTitle": "I want to open an account as a club and use free services (this type of account is additionally checked by the administrator)",
     "nameOfEvent": "Name of event",
-    "optional": "Optional"
+    "optional": "Optional",
+    "ad": "Ad",
+    "adTitle": "This is Ad!",
+    "recoveryTitle": "Recovery password",
+    "recoveryText": "Page for recovery your password",
+    "recoveryPassword": "Enter new password",
+    "recoveryRepeatPassword": "Repeat new password",
+    "recoveryRecoveryPassword": "Recovery my password",
+    "passwordIsNotSame": "Password is not same!",
+    "passwordIsChanged": "Password is changed!",
+    "incorectMailOrPassword": "Your email or password is incorrect or you have not verified your email address!",
+    "sendLinkForRecoveryPasswordOnMail": "Sent link for recovery password on mail!",
+    "successfulyCreatedAccount": "You successfuly create account. Please verified your mail address!",
+    "mailExists": "Mail address exists! Try another email!"
 }

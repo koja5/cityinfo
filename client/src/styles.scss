@@ -275,6 +275,20 @@ ejs-uploader {
   font-size: 0.8rem;
 }
 
+.btn.border {
+  background: none;
+  height: 41px;
+  outline: none;
+  border-radius: 49px;
+  cursor: pointer;
+  color: var(--btn-color);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 12px 0;
+  transition: 0.5s;
+  padding: 8px;
+  border: 2px solid;
+}
 .btn-danger {
   background: red;
 }

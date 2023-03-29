@@ -14,11 +14,13 @@ import { DynamicModule } from './components/dynamic-component/dynamic-module/dyn
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
+import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    ForgotPasswordComponent,
     HomeComponent
   ],
   imports: [

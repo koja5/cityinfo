@@ -69,11 +69,11 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.mode = '';
         this.toastr.showSuccessCustom(
-          'You successfuly create account. Please verified your mail address!',
+          this.language.successfulyCreatedAccount,
           ''
         );
       } else {
-        this.toastr.showErrorCustom('Mail address exists! Try another email!');
+        this.toastr.showErrorCustom(this.language.mailExists);
       }
     });
   }
@@ -83,10 +83,7 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.setUserInfoAndRoute(data);
       } else {
-        this.toastr.showErrorCustom(
-          'Your email or password is incorrect or you have not verified your email address!',
-          ''
-        );
+        this.toastr.showErrorCustom(this.language.incorectMailOrPassword, '');
       }
     });
   }
@@ -97,11 +94,12 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.mode = '';
-        } else {
-          this.toastr.showErrorCustom(
-            'Your email or password is incorrect or you have not verified your email address!',
+          this.toastr.showInfoCustom(
+            this.language.sendLinkForRecoveryPasswordOnMail,
             ''
           );
+        } else {
+          this.toastr.showErrorCustom(this.language.incorectMailOrPassword, '');
         }
       });
   }
@@ -115,7 +113,7 @@ export class LoginComponent implements OnInit {
       if (this.helpService.getLocalStorageStringValue('previousLink')) {
         const checkSharp = this.helpService
           .getLocalStorageStringValue('previousLink')
-          ?.split("#");
+          ?.split('#');
         this.router.navigate([
           checkSharp && checkSharp?.length > 1
             ? checkSharp[1]

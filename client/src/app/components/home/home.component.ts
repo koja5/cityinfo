@@ -11,7 +11,7 @@ import { HelpService } from 'src/app/services/help.service';
 export class HomeComponent implements OnInit {
   public showHideMenu = '';
   public listOfCities: any;
-  public allAds: any;
+  public allAds: any = [];
   public leftFixedAds: any;
   public rightFixedAds: any;
   public selectedCity: any;
@@ -48,9 +48,11 @@ export class HomeComponent implements OnInit {
     if (this.selectedCity) {
       this.getPaidScrollAdsByCity(this.selectedCity);
       this.getPaidFixedAdsByCity(this.selectedCity);
+      this.getPaidScrollEventsByCity(this.selectedCity);
     } else {
       this.getPaidScrollAdsByCity('');
       this.getPaidFixedAdsByCity('');
+      this.getPaidScrollEventsByCity('');
     }
   }
 
@@ -65,19 +67,22 @@ export class HomeComponent implements OnInit {
   changeCity(event: any) {
     if (event.target.value != '') {
       this.helpService.setLocalStorage('selectedCity', event.target.value);
-      this.allAds = null;
+      this.allAds = [];
       this.leftFixedAds = null;
       this.rightFixedAds = null;
       this.getPaidScrollAdsByCity(event.target.value);
       this.getPaidFixedAdsByCity(event.target.value);
+      this.getPaidScrollEventsByCity(event.target.value);
     }
   }
 
   getPaidScrollAdsByCity(parameter: string) {
     this.service
       .callGetMethod('api/getPaidScrollAdsByCity', parameter)
-      .subscribe((data) => {
-        this.allAds = data;
+      .subscribe((data: any) => {
+        if (data.length > 0) {
+          this.allAds = this.allAds.concat(data);
+        }
       });
   }
 
@@ -85,9 +90,26 @@ export class HomeComponent implements OnInit {
     this.service
       .callGetMethod('api/getPaidFixedAdsByCity', parameter)
       .subscribe((data: any) => {
-        this.leftFixedAds = data.slice(0, data.length / 2);
         if (data.length > 1) {
-          this.rightFixedAds = data.slice(data.length / 2, data.length);
+          this.leftFixedAds = data.slice(0, data.length / 2);
+
+          if (data.length > 1) {
+            this.rightFixedAds = data.slice(data.length / 2, data.length);
+          } else {
+            this.rightFixedAds = data;
+          }
+        } else {
+          this.leftFixedAds = data;
+        }
+      });
+  }
+
+  getPaidScrollEventsByCity(parameter: string) {
+    this.service
+      .callGetMethod('api/getPaidScrollEventsByCity', parameter)
+      .subscribe((data: any) => {
+        if (data.length > 0) {
+          this.allAds = this.allAds.concat(data);
         }
       });
   }

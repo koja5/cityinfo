@@ -188,3 +188,27 @@ a {
 .expired-date {
   color: red;
 }
+
+.ad-badge {
+  position: absolute;
+  font-size: 11px;
+  margin: 4px;
+  background: #cbcb0b;
+  border-radius: 12px;
+  width: 26px;
+  text-align: center;
+  height: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.three-dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  height: 1.2em;
+  white-space: nowrap;
+  cursor: pointer;
+}
