@@ -55,8 +55,13 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
   var body = JSON.parse(
     fs.readFileSync("./providers/mail_server/config.json", "utf-8")
   );
-  body.send_request_for_new_created_club_account.fields["email_info"] = req.body.email;
-  body.send_request_for_new_created_club_account.fields["firstname"] = req.body.firstname;
+  body.send_request_for_new_created_club_account.fields["email_info"] =
+    req.body.email;
+  body.send_request_for_new_created_club_account.fields["firstname"] =
+    req.body.firstname;
+
+  body.send_request_for_new_created_club_account.fields["link"] =
+    process.env.link_api + "activeClub/" + sha1(req.body.email);
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
@@ -135,7 +140,9 @@ router.post("/sendRequestForFreeAd", function (req, res, next) {
   body.send_request_for_free_ad.fields["number_of_weeks"] =
     req.body.number_of_weeks;
   body.send_request_for_free_ad.fields["link"] =
-    process.env.link_client + "#/dashboard/superadmin/preview-ad/" + req.body.id;
+    process.env.link_client +
+    "#/dashboard/superadmin/preview-ad/" +
+    req.body.id;
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",

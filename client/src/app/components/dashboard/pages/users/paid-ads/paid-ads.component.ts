@@ -4,6 +4,7 @@ import { ToastrComponent } from 'src/app/components/dynamic-component/common/toa
 import { FormConfig } from 'src/app/components/dynamic-component/dynamic-forms/models/form-config';
 import { AdsModel } from 'src/app/models/ads-model';
 import { EmitterModel } from 'src/app/models/emitter-model';
+import { EventsModel } from 'src/app/models/events-model';
 import { PaidAdsModel } from 'src/app/models/paid-ads-model';
 import { PaymentAdsModel } from 'src/app/models/payment-ads-model';
 import { CallApiService } from 'src/app/services/call-api.service';
@@ -109,17 +110,53 @@ export class PaidAdsComponent implements OnInit {
 
   submitEmitter(event: any) {
     if (this.helpService.checkAccountIsClub()) {
-      this.service
-        .callPostMethod('api/createPaidEvent', event)
-        .subscribe((data) => {
+      if (event.start_date_top && event.number_of_weeks) {
+        this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
           if (data) {
-            this.toastr.showSuccess();
-            this.dialogEvent.hide();
-            this.intializeData();
-          } else {
-            this.toastr.showError();
+            this.user = data[0];
           }
         });
+        this.service
+          .callPostMethod('/api/getEventInformationForPayment', event)
+          .subscribe((data: any) => {
+            if (data) {
+              this.data = data[0];
+              this.paidAd = {
+                position: data[0].position,
+                city: data[0].city,
+                number_of_weeks: event.number_of_weeks,
+                price: event.number_of_weeks * data[0].price,
+                start_date: event.start_date,
+                expired_date: data[0].expired_date,
+              };
+              let event_date = new EventsModel();
+              event_date = {
+                start_date: event.start_date,
+                event_draft: event.event_draft,
+                city: event.city,
+                position: event.position,
+                number_of_weeks: event.number_of_weeks,
+                active: 1,
+              };
+              this.paymentInformation = {
+                event_date: event_date,
+              };
+              this.card.show();
+            }
+          });
+      } else {
+        this.service
+          .callPostMethod('api/createPaidEvent', event)
+          .subscribe((data) => {
+            if (data) {
+              this.toastr.showSuccess();
+              this.dialogEvent.hide();
+              this.intializeData();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      }
     } else {
       this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
         if (data) {
@@ -171,22 +208,64 @@ export class PaidAdsComponent implements OnInit {
 
   setStripeToken(token: stripe.Token) {
     if (token) {
+      let typeOfAd = '';
+      if (this.helpService.checkAccountIsClub()) {
+        typeOfAd = 'Event';
+      } else {
+        typeOfAd = 'Ad';
+      }
       this.paymentInformation.token = token;
       this.paymentInformation.price = this.paidAd.price;
       this.paymentInformation.description =
-        'CityInfo: ' + this.user.firstname + ' - ' + this.user.email;
+        this.getPaymentDescription(typeOfAd);
       this.paymentInformation.app_token = this.storageService.getToken();
-      this.service
-        .callPostMethod('/api/createPayment', this.paymentInformation)
-        .subscribe((data) => {
-          if (data) {
-            this.card.hide();
-            this.dialog.hide();
-            this.toastr.showSuccessCustom(this.language.successfullyPaidAd, '');
-            this.intializeData();
-          }
-        });
+      if (this.helpService.checkAccountIsClub()) {
+        this.service
+          .callPostMethod('/api/createEventPayment', this.paymentInformation)
+          .subscribe((data) => {
+            if (data) {
+              this.card.hide();
+              this.dialogEvent.hide();
+              this.toastr.showSuccessCustom(
+                this.language.successfullyPaidAd,
+                ''
+              );
+              this.intializeData();
+            }
+          });
+      } else {
+        this.service
+          .callPostMethod('/api/createAdPayment', this.paymentInformation)
+          .subscribe((data) => {
+            if (data) {
+              this.card.hide();
+              this.dialog.hide();
+              this.toastr.showSuccessCustom(
+                this.language.successfullyPaidAd,
+                ''
+              );
+              this.intializeData();
+            }
+          });
+      }
     }
+  }
+
+  getPaymentDescription(typeOfAd: string) {
+    return (
+      'CityInfo: Type of Ad: ' +
+      typeOfAd +
+      ', Id: ' +
+      this.data.id +
+      ', Name: ' +
+      this.data.name +
+      ', Customer name: ' +
+      this.user.firstname +
+      ', Email: ' +
+      this.user.email +
+      ', Phone: ' +
+      this.user.phone
+    );
   }
 
   setStripeSource(source: stripe.Source) {

@@ -170,6 +170,12 @@
                 "choices": [
                     {
                         "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Not verified mail</span>"
+                    },
+                    {
+                        "field": "active",
                         "value": 0,
                         "operator": "==",
                         "html": "<span class='e-badge e-badge-danger'>Inactive</span>"
@@ -184,7 +190,7 @@
                         "field": "active",
                         "value": 2,
                         "operator": "==",
-                        "html": "<span class='e-badge e-badge-warning'>Verified mail</span>"
+                        "html": "<span class='e-badge e-badge-info'>Verified mail</span>"
                     }
                 ]
             },

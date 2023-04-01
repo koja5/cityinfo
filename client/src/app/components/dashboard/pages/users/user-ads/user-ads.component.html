@@ -51,6 +51,13 @@
                             name="email"></ejs-textbox>
                     </div>
                 </div>
+
+
+                <div class="col-md-12">
+                    <label class="custom-label">{{language.mapLink}}({{language.optional}})</label>
+                    <ejs-textbox cssClass="e-outline" [id]="data.map_link" [(ngModel)]="data.map_link" name="map_link"></ejs-textbox>
+                </div>
+
                 <div class="col-md-12">
                     <label class="custom-label">{{language.description}}</label>
                     <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
@@ -89,7 +96,7 @@
                 <div class="col-md-12">
                     <label class="custom-label">{{language.dateAndTime}}</label>
                     <ejs-datetimepicker cssClass="e-outline" [id]="event.datetime" [(ngModel)]="event.datetime"
-                    name="datetime"></ejs-datetimepicker>
+                        name="datetime"></ejs-datetimepicker>
                 </div>
 
                 <div class="col-md-12 row m-0 p-0">
@@ -106,6 +113,12 @@
                             name="email"></ejs-textbox>
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                    <label class="custom-label">{{language.mapLink}}({{language.optional}})</label>
+                    <ejs-textbox cssClass="e-outline" [id]="event.map_link" [(ngModel)]="event.map_link" name="map_link"></ejs-textbox>
+                </div>
+
                 <div class="col-md-12">
                     <label class="custom-label">{{language.description}}</label>
                     <ejs-textbox multiline="true" cssClass="e-outline" [id]="event.description"

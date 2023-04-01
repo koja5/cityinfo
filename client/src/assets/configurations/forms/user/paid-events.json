@@ -57,6 +57,30 @@
             "required": true
         },
         {
+            "type": "label",
+            "width": "col-md-12 pt-2",
+            "title": "Do you want to increase the visibility of your event?",
+            "text": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra."
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date_top",
+            "title": "When you to start event on top?",
+            "field": "start_date_top"
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "Number of weeks",
+            "field": "number_of_weeks",
+            "format": "###.##",
+            "min": 1
+        },
+        {
             "type": "button",
             "width": "col-md-12",
             "class": "e-info button-action",

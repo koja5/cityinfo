@@ -3,6 +3,7 @@ export class AdsModel {
     id_user?: number;
     name?: string;
     address?: string;
+    map_link?: string;
     phone?: string;
     email?: string;
     description?: string;

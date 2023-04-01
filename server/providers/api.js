@@ -60,7 +60,7 @@ router.post("/signUp", async function (req, res, next) {
             req.body.password = sha1(req.body.password);
             req.body.type = 2;
             if (req.body.is_club) {
-              req.body.active = 2;
+              req.body.active = -1;
             } else {
               req.body.active = 0;
             }
@@ -162,6 +162,32 @@ router.post("/login", function (req, res, next) {
       }
     );
   });
+});
+
+router.get("/activeClub/:email", function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update users SET active = 1 where sha1(email) = ?",
+        [req.params.email],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            return res.redirect("/message/success");
+          } else {
+            return res.redirect("/message/error");
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
 });
 
 router.post("/recoveryPassword", function (req, res, next) {
@@ -1609,6 +1635,103 @@ router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
   }
 });
 
+router.post("/getEventInformationForPayment", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from events_draft where id = ?",
+          [req.body.event_draft],
+          function (err, event, fields) {
+            if (err) {
+              conn.release();
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from position_prices where id = 1",
+                function (err, position, fields) {
+                  console.log(position);
+                  if (err) {
+                    conn.release();
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    conn.query(
+                      "select * from cities where id = ?",
+                      [req.body.city],
+                      function (err, city, fields) {
+                        conn.release();
+                        if (err) {
+                          logger.log("error", err.sql + ". " + err.sqlMessage);
+                          res.json(err);
+                        } else {
+                          var data = event;
+                          data[0]["city"] = city[0].name;
+                          data[0]["position"] = position[0].name;
+                          data[0]["price"] = position[0].price;
+                          data[0]["expired_date"] = addWeeks(
+                            new Date(req.body.start_date),
+                            req.body.number_of_weeks
+                          );
+                          res.json(data);
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
+      req.body.id_user = req.body.app_token.user.id;
+      console.log(req.body);
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "insert into paid_events set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new Event!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
 /* END PAID EVENTS */
 
 /* POSITION PRICE */
@@ -1723,7 +1846,7 @@ router.post("/deletePositionPrice", auth, function (req, res, next) {
 
 /* END POSITION PRICE */
 
-router.post("/createPayment", (req, res, next) => {
+router.post("/createAdPayment", (req, res, next) => {
   stripe.charges.create(
     {
       amount: req.body.price * 100,
@@ -1738,12 +1861,40 @@ router.post("/createPayment", (req, res, next) => {
       }
 
       req.body.ad_date["app_token"] = decodeToken(req.body.app_token);
-      console.log("USAO SAM OVDEE!!");
       var options = {
         rejectUnauthorized: false,
         url: process.env.link_api + "createPaidAdWithoutAuth",
         method: "POST",
         body: req.body.ad_date,
+        json: true,
+      };
+      request(options, function (error, response, body) {
+        res.json(response.body);
+      });
+    }
+  );
+});
+
+router.post("/createEventPayment", (req, res, next) => {
+  stripe.charges.create(
+    {
+      amount: req.body.price * 100,
+      currency: "EUR",
+      description: req.body.description,
+      source: req.body.token.id,
+    },
+    (err, charge) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+      req.body.event_date["app_token"] = decodeToken(req.body.app_token);
+      console.log(req.body);
+      var options = {
+        rejectUnauthorized: false,
+        url: process.env.link_api + "createPaidEventWithoutAuth",
+        method: "POST",
+        body: req.body.event_date,
         json: true,
       };
       request(options, function (error, response, body) {

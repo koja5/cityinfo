@@ -58,13 +58,13 @@ export class UserAdsComponent implements OnInit {
     if (this.isClub) {
       this.service
         .callGetMethod('api/getEventsDraft', '')
-        .subscribe((data: EventsModel) => {
+        .subscribe((data: any) => {
           this.listOfDrafts = data as EventsModel[];
         });
     } else {
       this.service
         .callGetMethod('api/getMyAds', '')
-        .subscribe((data: AdsModel) => {
+        .subscribe((data: any) => {
           this.listOfDrafts = data as AdsModel[];
         });
     }

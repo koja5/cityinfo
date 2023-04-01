@@ -24,6 +24,7 @@
     "createNewOneAd": "Create new one!",
     "nameOfCompany": "Name of company",
     "address": "Address",
+    "mapLink": "Put link from google map",
     "phone": "Phone",
     "dateAndTime": "Date and time",
     "submitAndPay": "Submit and continue with payment",
@@ -60,6 +61,7 @@
     "gridPopupEditTitle": "Edit record",
     "contactUs": "Contact us",
     "sendMail": "Send mail",
+    "seeLocationOnMap": "See location",
     "showMode": "Show mode",
     "payForAds": "Pay for ad",
     "approveAd": "Approve ad",
@@ -104,5 +106,11 @@
     "incorectMailOrPassword": "Your email or password is incorrect or you have not verified your email address!",
     "sendLinkForRecoveryPasswordOnMail": "Sent link for recovery password on mail!",
     "successfulyCreatedAccount": "You successfuly create account. Please verified your mail address!",
-    "mailExists": "Mail address exists! Try another email!"
+    "mailExists": "Mail address exists! Try another email!",
+    "noContactInformationAvailable": "No contact information available!",
+    "noDescriptionInformationAvailable": "No description information available!",
+    "successfulyExecuteAction": "You successfuly execute action!",
+    "errorExecuteAction": "It happened some problem!",
+    "increaseTheVisibilityTitle": "Increase the visibility of your event",
+    "increaseTheVisibilityText": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra."
 }
