@@ -15,13 +15,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
+import { DynamicTextFormComponent } from './components/dynamic-component/dynamic-text-form/dynamic-text-form.component';
+import { ImpressumComponent } from './components/home/pages/impressum/impressum.component';
+import { TermsComponent } from './components/home/pages/terms/terms.component';
+import { RightOfWithdrawalComponent } from './components/home/pages/right-of-withdrawal/right-of-withdrawal.component';
+import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/privacy-policy.component';
+import { NavigationComponent } from './components/home/parts/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    ImpressumComponent,
+    TermsComponent,
+    RightOfWithdrawalComponent,
+    PrivacyPolicyComponent,
+    DynamicTextFormComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   public passwordMode = 'password';
   public user = new UserModel();
   public language: any;
+  public acceptTermsAndPrivacy = false;
 
   constructor(
     private service: CallApiService,
@@ -65,17 +66,23 @@ export class LoginComponent implements OnInit {
   }
 
   signUp() {
-    this.service.callPostMethod('/api/signUp', this.user).subscribe((data) => {
-      if (data) {
-        this.mode = '';
-        this.toastr.showSuccessCustom(
-          this.language.successfulyCreatedAccount,
-          ''
-        );
-      } else {
-        this.toastr.showErrorCustom(this.language.mailExists);
-      }
-    });
+    if (!this.acceptTermsAndPrivacy) {
+      this.toastr.showWarningCustom(this.language.needToAcceptTermsAndPrivacy, '');
+    } else {
+      this.service
+        .callPostMethod('/api/signUp', this.user)
+        .subscribe((data) => {
+          if (data) {
+            this.mode = '';
+            this.toastr.showSuccessCustom(
+              this.language.successfulyCreatedAccount,
+              ''
+            );
+          } else {
+            this.toastr.showErrorCustom(this.language.mailExists);
+          }
+        });
+    }
   }
 
   login() {

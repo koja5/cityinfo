@@ -35,6 +35,7 @@ import {
 import { ToastrModule } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { DynamicGridComponent } from '../../dynamic-grid/dynamic-grid.component';
+import { DynamicTextFormComponent } from '../../dynamic-text-form/dynamic-text-form.component';
 
 @NgModule({
   declarations: [

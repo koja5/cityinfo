@@ -3,6 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService } from './storage.service';
 import { UserType } from '../enums/user-type';
 import { FileType } from '../enums/file-type';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,10 @@ import { FileType } from '../enums/file-type';
 export class HelpService {
   helper = new JwtHelperService();
 
-  constructor(private storageService: StorageService) {}
+  constructor(
+    private storageService: StorageService,
+    private http: HttpClient
+  ) {}
 
   postRequestDataParameters(body: any, data: any, parameters: string[]) {
     for (let i = 0; i < parameters.length; i++) {
@@ -138,5 +142,15 @@ export class HelpService {
   checkAccountIsClub() {
     const token = this.getDecodeToken();
     return token.isClub;
+  }
+
+  getLanguageFromFolder(language: string, file: string) {
+    return this.http.get(
+      '../assets/configurations/languages/pages/' +
+        language +
+        '/' +
+        file +
+        '.json'
+    );
   }
 }

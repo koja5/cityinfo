@@ -8,6 +8,10 @@ import { ErrorPageComponent } from './components/templates/message-pages/error-p
 import { SuccessPageComponent } from './components/templates/message-pages/success-page/success-page.component';
 import { LoggedGuardService } from './services/login-guard/logged-guard.service';
 import { LoginGuardService } from './services/login-guard/login-guard.service';
+import { ImpressumComponent } from './components/home/pages/impressum/impressum.component';
+import { RightOfWithdrawalComponent } from './components/home/pages/right-of-withdrawal/right-of-withdrawal.component';
+import { TermsComponent } from './components/home/pages/terms/terms.component';
+import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   {
@@ -40,6 +44,22 @@ const routes: Routes = [
   {
     path: 'message/error',
     component: ErrorPageComponent,
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent
+  },
+  {
+    path: 'right-of-withdrawal',
+    component: RightOfWithdrawalComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
   }
 ];
 

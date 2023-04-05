@@ -10,14 +10,6 @@
             "readonly": true
         },
         {
-            "type": "datepicker",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "start_date",
-            "title": "Start date",
-            "field": "start_date"
-        },
-        {
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
@@ -88,6 +80,14 @@
                 "filter": true
             },
             "required": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date",
+            "title": "Start date",
+            "field": "start_date"
         },
         {
             "type": "numeric",

@@ -95,7 +95,9 @@
     "nameOfEvent": "Name of event",
     "optional": "Optional",
     "ad": "Ad",
+    "event": "Event",
     "adTitle": "This is Ad!",
+    "eventTitle": "This is Event!",
     "recoveryTitle": "Recovery password",
     "recoveryText": "Page for recovery your password",
     "recoveryPassword": "Enter new password",
@@ -112,5 +114,11 @@
     "successfulyExecuteAction": "You successfuly execute action!",
     "errorExecuteAction": "It happened some problem!",
     "increaseTheVisibilityTitle": "Increase the visibility of your event",
-    "increaseTheVisibilityText": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra."
+    "increaseTheVisibilityText": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra.",
+    "footerImpressum": "Impressum",
+    "footerPrivacyPolicy": "Privacy policy",
+    "footerTerms": "Terms",
+    "and": "and",
+    "agreeText": "With the registration I accept the",
+    "needToAcceptTermsAndPrivacy": "You need to accept terms and privacy policy before create account!"
 }

@@ -190,12 +190,23 @@ a {
 }
 
 .ad-badge {
+  background: #cbcb0b;
+}
+
+.event-badge {
+  background: #e16e5c;
+}
+
+.badge-info {
+  width: 97%;
+  text-align: end;
+}
+
+.badge-info span {
   position: absolute;
   font-size: 11px;
-  margin: 4px;
-  background: #cbcb0b;
   border-radius: 12px;
-  width: 26px;
+  width: 31px;
   text-align: center;
   height: 12px;
   color: #fff;

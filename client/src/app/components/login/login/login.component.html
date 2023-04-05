@@ -49,7 +49,18 @@
                     </div>
                     <div class="pt-4">
                         <div style="display: inline-flex;">
-                            <ejs-checkbox name="isClub"  [(ngModel)]="user.is_club"></ejs-checkbox>
+                            <ejs-checkbox name="isClub" [(ngModel)]="acceptTermsAndPrivacy"></ejs-checkbox>
+                            <label class="custom-label color-blue ml-2">
+                                {{
+                                language.agreeText }}
+                                <a routerLink="/terms" target="_blank" class="signup-term-link">{{ language.footerTerms
+                                    }}</a>
+                                {{ language.and }}
+                                <a routerLink="/privacy-policy" target="_blank" class="signup-term-link">{{
+                                    language.footerPrivacyPolicy }}</a></label>
+                        </div>
+                        <div style="display: inline-flex;">
+                            <ejs-checkbox name="isClub" [(ngModel)]="user.is_club"></ejs-checkbox>
                             <label class="custom-label color-blue ml-2">
                                 {{language.clubRegistrationTitle}}</label>
                         </div>
