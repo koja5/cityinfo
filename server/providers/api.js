@@ -9,6 +9,9 @@ const logger = require("./config/logger");
 const request = require("request");
 const fs = require("fs");
 const sha1 = require("sha1");
+const stripe = require("stripe")(
+  "sk_test_51LhYhHL4uVudLiXAsXYCGWFY7RhraCcUwR9wbfV2xoL04pccSeLCLkbZvbPsxhivnRp9RJmu61YGFinNd7lKzOJz00r5f2ldt5"
+);
 
 module.exports = router;
 
@@ -56,7 +59,11 @@ router.post("/signUp", async function (req, res, next) {
           } else {
             req.body.password = sha1(req.body.password);
             req.body.type = 2;
-            req.body.active = 0;
+            if (req.body.is_club) {
+              req.body.active = -1;
+            } else {
+              req.body.active = 0;
+            }
             conn.query(
               "insert into users set ?",
               req.body,
@@ -66,12 +73,35 @@ router.post("/signUp", async function (req, res, next) {
                   return res.json(err);
                 } else {
                   logger.log("info", "New user create account!");
-                  var options = {
-                    url: process.env.link_api + "verificationMailAddress",
-                    method: "POST",
-                    body: { email: req.body.email },
-                    json: true,
-                  };
+                  if (req.body.is_club) {
+                    var options = {
+                      url:
+                        process.env.link_api + "verificationMailAddressForClub",
+                      method: "POST",
+                      body: { email: req.body.email },
+                      json: true,
+                    };
+
+                    var option_request = {
+                      url:
+                        process.env.link_api +
+                        "sendInfoForNewCreatedClubAccount",
+                      method: "POST",
+                      body: req.body,
+                      json: true,
+                    };
+                    request(
+                      option_request,
+                      function (error, response, body) {}
+                    );
+                  } else {
+                    var options = {
+                      url: process.env.link_api + "verificationMailAddress",
+                      method: "POST",
+                      body: { email: req.body.email },
+                      json: true,
+                    };
+                  }
                   request(options, function (error, response, body) {});
                   res.json(true);
                 }
@@ -110,6 +140,7 @@ router.post("/login", function (req, res, next) {
                 id: rows[0].id,
                 firstname: rows[0].firstname,
                 type: rows[0].type,
+                isClub: rows[0].is_club,
               },
               email: rows[0].email,
             },
@@ -127,6 +158,56 @@ router.post("/login", function (req, res, next) {
           });
         } else {
           return res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get("/activeClub/:email", function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update users SET active = 1 where sha1(email) = ?",
+        [req.params.email],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            return res.redirect("/message/success");
+          } else {
+            return res.redirect("/message/error");
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/recoveryPassword", function (req, res, next) {
+  console.log(req.body);
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update users SET password = ? where sha1(email) = ?",
+      [sha1(req.body.password), req.body.email],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
         }
       }
     );
@@ -383,6 +464,14 @@ router.post("/updateUser", auth, function (req, res, next) {
         function (err, rows) {
           conn.release();
           if (!err) {
+            var option_request = {
+              url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(option_request, function (error, response, body) {});
+
             res.json(true);
           } else {
             logger.log("error", `${err.sql}. ${err.sqlMessage}`);
@@ -538,9 +627,36 @@ router.get("/verificationMail/:email", async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req.params.email);
         conn.query(
           "update users set active = 1 where SHA1(email) = ?",
+          [req.params.email],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.redirect(process.env.link_client + "login");
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/verificationMailForClub/:email", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update users set active = 2 where SHA1(email) = ?",
           [req.params.email],
           function (err, rows, fields) {
             conn.release();
@@ -647,6 +763,121 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
 
 /* END ADS DRAFT */
 
+/* EVENTS DRAFT */
+
+router.get("/getEventsDraft", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from events_draft where id_user = ?",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updateEventDraft", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      req.body.datetime = new Date(req.body.datetime);
+      conn.query(
+        "update events_draft SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteEventDraft", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from events_draft where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePaidEvent", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_events SET active = ? where id = ?",
+        [req.body.active, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END EVENTS DRAFT */
+
 /* PAID ADS */
 
 router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
@@ -657,7 +888,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
+          "select a.*, p.* from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -679,6 +910,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
 });
 
 router.post("/createPaidAd", auth, async function (req, res, next) {
+  console.log(auth);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -686,6 +918,11 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
         return res.json(err);
       }
       req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.number_of_weeks = 2;
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
       req.body.id_user = req.user.user.id;
       conn.query(
         "insert into paid_ads set ?",
@@ -725,6 +962,88 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
   }
 });
 
+router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
+      req.body.id_user = req.body.app_token.user.id;
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "insert into paid_ads set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new Ad!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updatePaidAdWithoutAuth", async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
+      req.body.id_user = req.body.app_token.user.id;
+      req.body.position = 1;
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "update paid_ads set start_date = ?, number_of_weeks = ?, expired_date = ? where id = ?",
+        [
+          req.body.start_date,
+          req.body.number_of_weeks,
+          req.body.expired_date,
+          req.body.id,
+        ],
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new for CURRENT EVENT!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+function addWeeks(date, weeks) {
+  date.setDate(date.getDate() + 7 * weeks);
+  return date;
+}
+
 router.post("/updatePaidAd", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -732,6 +1051,7 @@ router.post("/updatePaidAd", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
+      req.body.start_date = new Date(req.body.start_date);
       conn.query(
         "update paid_ads SET ? where id = ?",
         [req.body, req.body.id],
@@ -779,23 +1099,112 @@ router.post("/deleteMyAds", auth, function (req, res, next) {
   }
 });
 
-router.get("/getPaidAds", async (req, res, next) => {
+router.get("/getPaidScrollAds", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 2", function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            console.log(rows);
-            res.json(rows);
+        conn.query(
+          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 2",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
           }
-        });
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidFixedAds", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.position = 1",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidScrollAdsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 2",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidFixedAdsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 1",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
       }
     });
   } catch (ex) {
@@ -812,7 +1221,7 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.position = 2",
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.expired_date > now() order by p.position asc, p.start_date asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -841,7 +1250,7 @@ router.get("/getRequestAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.firstname, u.email from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id where p.active = 0 order by p.start_date desc",
+          "select p.*, a.*, c.name as 'city_name', u.firstname, u.email, pp.name as 'position' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.active = 0 order by p.start_date desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -850,6 +1259,97 @@ router.get("/getRequestAds", auth, async (req, res, next) => {
             } else {
               console.log(rows);
               res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getRequestAdById/:id", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select a.*, c.name as 'city', pp.name as 'position', pp.price, p.number_of_weeks, p.start_date, p.expired_date, p.id as 'id', p.active, u.firstname, u.email from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.active = 0 and p.id = ?",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/getAdInformationForPayment", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from ads_draft where id = ?",
+          [req.body.ads_draft],
+          function (err, ad, fields) {
+            if (err) {
+              conn.release();
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from position_prices where id = ?",
+                [req.body.position],
+                function (err, position, fields) {
+                  console.log(position);
+                  if (err) {
+                    conn.release();
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    conn.query(
+                      "select * from cities where id = ?",
+                      [req.body.city],
+                      function (err, city, fields) {
+                        conn.release();
+                        if (err) {
+                          logger.log("error", err.sql + ". " + err.sqlMessage);
+                          res.json(err);
+                        } else {
+                          var data = ad;
+                          data[0]["city"] = city[0].name;
+                          data[0]["position"] = position[0].name;
+                          data[0]["price"] = position[0].price;
+                          data[0]["expired_date"] = addWeeks(
+                            new Date(req.body.start_date),
+                            req.body.number_of_weeks
+                          );
+                          console.log(data);
+                          res.json(data);
+                        }
+                      }
+                    );
+                  }
+                }
+              );
             }
           }
         );
@@ -895,7 +1395,485 @@ router.post("/activeAd", auth, function (req, res, next) {
   }
 });
 
+router.post("/denyAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update paid_ads SET active = -1 where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            var options = {
+              url: process.env.link_api + "infoForDenyFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePaidAd", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from paid_ads where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            var options = {
+              url: process.env.link_api + "infoForActiveFreeAd",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllPaidAds", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.*, a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id order by p.id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllInvoices", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.*, pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.paid_ad = 1 order by p.id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getMyInvoices", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, a.name as 'ads_name', c.name as 'city_name', u.*, pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join users u on p.id_user = u.id join position_prices pp on p.position = pp.id where p.paid_ad = 1 and p.id_user = ? order by p.id desc",
+          [req.user.user.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 /* END PAID ADS */
+
+/* PAID EVENTS */
+
+router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select e.*, p.* from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPaidEvent", auth, async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      var d = new Date();
+      d.setDate(d.getDate() + 1);
+      req.body.start_date = d;
+      req.body.id_user = req.user.user.id;
+      conn.query(
+        "insert into paid_events set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Create new events!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.get("/getAllPaidEvents", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select e.*, p.*, e.name as 'event_name', c.name as 'city_name' from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id order by p.id desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePaidEvent", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from paid_events where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            // var options = {
+            //   url: process.env.link_api + "infoForActiveFreeAd",
+            //   method: "POST",
+            //   body: req.body,
+            //   json: true,
+            // };
+            // request(options, function (error, response, body) {});
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date > now() and p.expired_date is null order by e.datetime asc",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/getEventInformationForPayment", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from events_draft where id = ?",
+          [req.body.event_draft],
+          function (err, event, fields) {
+            if (err) {
+              conn.release();
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from position_prices where id = 1",
+                function (err, position, fields) {
+                  console.log(position);
+                  if (err) {
+                    conn.release();
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    conn.query(
+                      "select * from cities where id = ?",
+                      [req.body.city],
+                      function (err, city, fields) {
+                        conn.release();
+                        if (err) {
+                          logger.log("error", err.sql + ". " + err.sqlMessage);
+                          res.json(err);
+                        } else {
+                          var data = event;
+                          data[0]["city"] = city[0].name;
+                          data[0]["position"] = position[0].name;
+                          data[0]["price"] = position[0].price;
+                          data[0]["expired_date"] = addWeeks(
+                            new Date(req.body.start_date),
+                            req.body.number_of_weeks
+                          );
+                          res.json(data);
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
+  console.log(req.body);
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      const start_date = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date))
+      );
+      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
+      req.body.id_user = req.body.app_token.user.id;
+      console.log(req.body);
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "insert into paid_events set ?",
+        req.body,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new Event!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updatePaidEventWithoutAuth", async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(err);
+      }
+      req.body.start_date_top = new Date(req.body.start_date_top);
+      const start_date_top = new Date(
+        JSON.parse(JSON.stringify(req.body.start_date_top))
+      );
+      req.body.expired_date = addWeeks(
+        start_date_top,
+        req.body.number_of_weeks
+      );
+      req.body.id_user = req.body.app_token.user.id;
+      delete req.body.app_token;
+      delete req.body.price;
+      conn.query(
+        "update paid_events set start_date_top = ?, number_of_weeks = ?, expired_date = ?, position = 1 where id = ?",
+        [
+          req.body.start_date_top,
+          req.body.number_of_weeks,
+          req.body.expired_date,
+          req.body.id,
+        ],
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(err);
+          } else {
+            logger.log("info", "Paid new for CURRENT EVENT!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+/* END PAID EVENTS */
 
 /* POSITION PRICE */
 
@@ -1008,3 +1986,81 @@ router.post("/deletePositionPrice", auth, function (req, res, next) {
 });
 
 /* END POSITION PRICE */
+
+router.post("/createAdPayment", (req, res, next) => {
+  stripe.charges.create(
+    {
+      amount: req.body.price * 100,
+      currency: "EUR",
+      description: req.body.description,
+      source: req.body.token.id,
+    },
+    (err, charge) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+
+      req.body.ad_date["app_token"] = decodeToken(req.body.app_token);
+
+      let typeOfMethod = "";
+      if (req.body.action_type == 1) {
+        typeOfMethod = "createPaidAdWithoutAuth";
+      } else {
+        typeOfMethod = "updatePaidAdWithoutAuth";
+      }
+
+      var options = {
+        rejectUnauthorized: false,
+        url: process.env.link_api + typeOfMethod,
+        method: "POST",
+        body: req.body.ad_date,
+        json: true,
+      };
+      request(options, function (error, response, body) {
+        res.json(response.body);
+      });
+    }
+  );
+});
+
+router.post("/createEventPayment", (req, res, next) => {
+  stripe.charges.create(
+    {
+      amount: req.body.price * 100,
+      currency: "EUR",
+      description: req.body.description,
+      source: req.body.token.id,
+    },
+    (err, charge) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+      req.body.event_date["app_token"] = decodeToken(req.body.app_token);
+      let typeOfMethod = "";
+      if (req.body.action_type == 1) {
+        typeOfMethod = "createPaidEventWithoutAuth";
+      } else {
+        typeOfMethod = "updatePaidEventWithoutAuth";
+      }
+
+      var options = {
+        rejectUnauthorized: false,
+        url: process.env.link_api + typeOfMethod,
+        method: "POST",
+        body: req.body.event_date,
+        json: true,
+      };
+      request(options, function (error, response, body) {
+        res.json(response.body);
+      });
+    }
+  );
+});
+
+function decodeToken(token) {
+  return jwt.decode(token, process.env.TOKEN_KEY, {
+    expiresIn: expiresToken,
+  });
+}

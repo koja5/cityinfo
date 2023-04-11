@@ -35,4 +35,5 @@ export class FieldConfig {
   format?: string;
   min?: string;
   max?: string;
+  parameters?: any[];
 }

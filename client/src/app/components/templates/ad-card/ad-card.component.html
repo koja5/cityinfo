@@ -1,8 +1,8 @@
-<body class="antialiased bg-gray-200 font-sans mb-4">
+<body class="antialiased bg-gray-200 font-sans mb-4" *ngIf="data">
     <div class="max-w-6xl mx-auto">
         <div>
             <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 py-6 px-3">
-                <div class="bg-white shadow-xl rounded-lg overflow-hidden card-item">
+                <div class="bg-white shadow-xl rounded-lg overflow-hidden card-item {{data.position == 1 ? 'fixed' : ''}}">
                     <!-- <div class="bg-cover bg-center h-56 p-4"
                         style="background-image: url(../../../../assets/images/no-photo-available.png)">
                         <div class="flex justify-end">
@@ -18,14 +18,31 @@
                         <app-loader-content *ngIf="!cover"></app-loader-content>
                         <img *ngIf="cover" [src]="cover">
                     </div>
-                    <div class="p-4">
-                        <p class="uppercase tracking-wide text-sm font-bold text-gray-700">{{data.name}}
-                        </p>
-                        <!-- <p class="text-3xl text-gray-900">$750,000</p> -->
-                        <p class="text-gray-700">{{data.address}}</p>
+                    <div class="row p-3">
+                        <div class="col-md-6">
+                            <p class="uppercase tracking-wide text-sm font-bold text-gray-700 three-dots"
+                                title="{{data.name}}">{{data.name}}
+                            </p>
+                            <!-- <p class="text-3xl text-gray-900">$750,000</p> -->
+                            <p class="text-gray-700 three-dots" title="{{data.address}}">{{data.address}}
+                            </p>
+                        </div>
+                        <div *ngIf="showDate || data.datetime" class="col-md-6 text-right start-end-date">
+                            <div *ngIf="(!data.start_date || data.expired_date) && showDate">
+                                <p *ngIf="!data.datetime" class="text-gray-700 start-date">{{data.start_date | date: 'dd.MM.yyyy'}}</p>
+                                <p *ngIf="data.datetime" class="text-gray-700 start-date">{{data.start_date_top | date: 'dd.MM.yyyy'}}</p>
+                                <p class="text-gray-700 expired-date">{{data.expired_date | date: 'dd.MM.yyyy'}}</p>
+                            </div>
+                            <div *ngIf="data.datetime">
+                                <p class="text-gray-700"><span class="fa fa-calendar"></span> {{data.datetime | date:
+                                    'dd.MM.yyyy'}}</p>
+                                <p class="text-gray-700"><span class="fa fa-clock"></span> {{data.datetime | date:
+                                    'hh.mm'}}</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex p-4 border-t border-gray-300 text-gray-700 contact">
-                        <div class="flex-1  items-center">
+                        <div *ngIf="data.phone" class="flex-1  items-center">
                             <!-- <svg class="h-6 w-6 text-gray-600 fill-current mr-3" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
                                 <path
@@ -35,9 +52,9 @@
 
                             <a href="tel:{{data.phone}}">
                                 <span class="fa fa-phone new-row"></span>
-                                <span class="text-gray-900 font-bold"></span> Contact us</a>
+                                <span class="text-gray-900 font-bold"></span> {{language.contactUs}}</a>
                         </div>
-                        <div class="flex-1  items-center">
+                        <div *ngIf="data.email" class="flex-1  items-center">
                             <!-- <svg class="h-6 w-6 text-gray-600 fill-current mr-3" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
                                 <path fill-rule="evenodd"
@@ -47,28 +64,88 @@
 
                             <a href="mailto:{{data.email}}">
                                 <span class="fa fa-envelope new-row"></span>
-                                <span class="text-gray-900 font-bold"></span> Send mail</a>
+                                <span class="text-gray-900 font-bold"></span> {{language.sendMail}}</a>
+                        </div>
+                        <div *ngIf="data.map_link" class="flex-1  items-center">
+                            <!-- <svg class="h-6 w-6 text-gray-600 fill-current mr-3" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M17.03 21H7.97a4 4 0 0 1-1.3-.22l-1.22 2.44-.9-.44 1.22-2.44a4 4 0 0 1-1.38-1.55L.5 11h7.56a4 4 0 0 1 1.78.42l2.32 1.16a4 4 0 0 0 1.78.42h9.56l-2.9 5.79a4 4 0 0 1-1.37 1.55l1.22 2.44-.9.44-1.22-2.44a4 4 0 0 1-1.3.22zM21 11h2.5a.5.5 0 1 1 0 1h-9.06a4.5 4.5 0 0 1-2-.48l-2.32-1.15A3.5 3.5 0 0 0 8.56 10H.5a.5.5 0 0 1 0-1h8.06c.7 0 1.38.16 2 .48l2.32 1.15a3.5 3.5 0 0 0 1.56.37H20V2a1 1 0 0 0-1.74-.67c.64.97.53 2.29-.32 3.14l-.35.36-3.54-3.54.35-.35a2.5 2.5 0 0 1 3.15-.32A2 2 0 0 1 21 2v9zm-5.48-9.65l2 2a1.5 1.5 0 0 0-2-2zm-10.23 17A3 3 0 0 0 7.97 20h9.06a3 3 0 0 0 2.68-1.66L21.88 14h-7.94a5 5 0 0 1-2.23-.53L9.4 12.32A3 3 0 0 0 8.06 12H2.12l3.17 6.34z">
+                                </path>
+                            </svg> -->
+
+                            <a href="{{data.map_link}}" target="_blank">
+                                <span class="fa fa-map-marker new-row"></span>
+                                <span class="text-gray-900 font-bold"></span> {{language.seeLocationOnMap}}</a>
+                        </div>
+                        <div *ngIf="!data.phone && !data.email && !data.map_link" class="no-contact-information">
+                            {{language.noContactInformationAvailable}}
                         </div>
                     </div>
                     <div class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 description-container">
-                        <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">Description</div>
+                        <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">{{language.description}}
+                        </div>
                         <div class="flex items-center pt-2">
-                            <p class="text-sm text-gray-700 description">{{data.description}}
+                            <p *ngIf="data.description" class="text-sm text-gray-700 description">{{data.description}}
+                            </p>
+                            <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
+                                {{language.noDescriptionInformationAvailable}}
                             </p>
                         </div>
-                        <p *ngIf="showModeButton" class="show-more" (click)="dialog.show()">show mode</p>
+                        <div style="height: 20px;">
+                            <p *ngIf="showModeButton" class="show-more" (click)="dialog.show()">{{language.showMode}}
+                            </p>
+                        </div>
+                        <div class="badge-info">
+                            <span *ngIf="(data.start_date || data.expired_date) && !data.datetime" class="ad-badge"
+                                title="{{language.adTitle}}">{{language.ad}}</span>
+                            <span *ngIf="data.datetime" class="event-badge"
+                                title="{{language.eventTitle}}">{{language.event}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="additionalInformation" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100">
+                        <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">
+                            {{language.additionalInformation}}</div>
+                        <div class="items-center pt-2">
+                            <p class="text-sm text-gray-700">{{language.position}}:
+                                {{additionalInformation.position}}
+                            </p>
+                            <p class="text-sm text-gray-700">{{language.city}}:
+                                {{additionalInformation.city}}
+                            </p>
+                            <!-- <p class="text-sm text-gray-700">{{language.buyer}}:
+                                {{additionalInformation.buyer}}
+                            </p> -->
+                            <p class="text-sm text-gray-700">{{language.startDate}}:
+                                {{additionalInformation.start_date | date: 'dd.MM.yyyy'}}
+                            </p>
+                            <p class="text-sm text-gray-700">{{language.expiredDate}}:
+                                {{additionalInformation.expired_date | date: 'dd.MM.yyyy'}}
+                            </p>
+                            <p *ngIf="additionalInformation.price" class="text-sm text-gray-700">{{language.price}}:
+                                {{additionalInformation.price}}
+                            </p>
+                        </div>
                     </div>
                     <div *ngIf="edit" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
-                        <button class="btn edit" (click)="editButton()">Edit</button>
-                        <!-- <button class="btn delete ml-2" (click)="deleteButton()">Delete</button> -->
+                        <button class="btn edit" (click)="editButton()">{{language.edit}}</button>
+                    </div>
+                    <div *ngIf="promotion && checkPromoButton"
+                        class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
+                        <button class="btn edit" (click)="promotionButton()">{{language.promotion}}</button>
+                    </div>
+                    <div *ngIf="additionalInformation && !additionalInformation.active && approveDenyButton"
+                        class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
+                        <button class="btn edit" (click)="approveAd()">{{language.approveAd}}</button>
+                        <button class="btn delete ml-2" (click)="denyAd()">{{language.denyAd}}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <ejs-dialog id='dialog' #dialog showCloseIcon='true' showOnInit="true"
-        [visible]="false" [isModal]="true" width="200px">
+    <ejs-dialog id='dialog' #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true"
+        width="200px">
         <ng-template #content>
             <p style="white-space: pre;">{{this.data.description}}</p>
         </ng-template>

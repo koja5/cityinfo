@@ -50,7 +50,9 @@ router.post("/sendMail", function (req, res) {
     } else {
       logger.log(
         "info",
-        `Sent mail for VERIFICATION MAIL for USER: ${req.body.shortname} on EMAIL: ${req.body.email}`
+        `Sent mail to: ${
+          req.body.fields["email"] ? req.body.fields["email"] : req.body.email
+        }`
       );
       res.end(true);
     }

@@ -3,6 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService } from './storage.service';
 import { UserType } from '../enums/user-type';
 import { FileType } from '../enums/file-type';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,10 @@ import { FileType } from '../enums/file-type';
 export class HelpService {
   helper = new JwtHelperService();
 
-  constructor(private storageService: StorageService) {}
+  constructor(
+    private storageService: StorageService,
+    private http: HttpClient
+  ) {}
 
   postRequestDataParameters(body: any, data: any, parameters: string[]) {
     for (let i = 0; i < parameters.length; i++) {
@@ -114,9 +118,10 @@ export class HelpService {
 
   checkRights(rights: any) {
     const type = this.getTypeOfName(this.getDecodeToken().type);
+    const isClub = this.getDecodeToken().isClub;
     if (rights) {
       for (let i = 0; i < rights.length; i++) {
-        if (rights[i] === type) {
+        if (rights[i] === type || (rights[i] == 'isClub' && isClub)) {
           return true;
         }
       }
@@ -132,5 +137,20 @@ export class HelpService {
   getUserId() {
     const token = this.getDecodeToken();
     return token.id;
+  }
+
+  checkAccountIsClub() {
+    const token = this.getDecodeToken();
+    return token.isClub;
+  }
+
+  getLanguageFromFolder(language: string, file: string) {
+    return this.http.get(
+      '../assets/configurations/languages/pages/' +
+        language +
+        '/' +
+        file +
+        '.json'
+    );
   }
 }

@@ -231,6 +231,12 @@ label {
   }
 }
 
+@media (max-width: 991px) {
+  .e-popup.e-popup-open.e-dialog {
+    width: 100% !important;
+  }
+}
+
 .new-row {
   display: flow-root;
   margin-bottom: 7px;
@@ -269,12 +275,60 @@ ejs-uploader {
   font-size: 0.8rem;
 }
 
+.btn.border {
+  background: none;
+  height: 41px;
+  outline: none;
+  border-radius: 49px;
+  cursor: pointer;
+  color: var(--btn-color);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 12px 0;
+  transition: 0.5s;
+  padding: 8px;
+  border: 2px solid;
+}
 .btn-danger {
   background: red;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .hidden-xs {
     display: none;
   }
+}
+
+@media (min-width: 1201px) {
+  .hidden-md {
+    display: none;
+  }
+}
+
+.btn-none {
+  background: none;
+  border: none;
+}
+
+.btn-none:hover {
+  background: none;
+  border: none;
+}
+
+.btn-color-default {
+  color: #000;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.muted-link {
+  color: #afafaf;
+  float: left;
+  padding: 13px;
+}
+
+.text-italic {
+  font-style: italic;
 }

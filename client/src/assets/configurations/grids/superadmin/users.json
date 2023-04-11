@@ -163,6 +163,52 @@
             "validation": {
                 "required": true
             }
+        },
+        {
+            "title": "Active",
+            "template": {
+                "choices": [
+                    {
+                        "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Not verified mail</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-danger'>Inactive</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Verified mail</span>"
+                    }
+                ]
+            },
+            "field": "active"
+        },
+        {
+            "title": "Club",
+            "template": {
+                "choices": [
+                    {
+                        "field": "is_club",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Club</span>"
+                    }
+                ]
+            },
+            "field": "active"
         }
     ],
     "config": [
@@ -239,6 +285,22 @@
             "name": "city",
             "title": "City",
             "field": "city"
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12 mt-2",
+            "class": "e-outline",
+            "name": "active",
+            "title": "Active",
+            "field": "active"
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "is_club",
+            "title": "Is club?",
+            "field": "is_club"
         },
         {
             "type": "button",

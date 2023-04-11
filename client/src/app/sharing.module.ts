@@ -5,6 +5,8 @@ import { LoaderSvgComponent } from './components/common/loader-svg/loader-svg.co
 import { LoaderComponent } from './components/common/loader/loader.component';
 import { LoaderContentComponent } from './components/dynamic-component/common/loader-content/loader-content.component';
 import { AdCardComponent } from './components/templates/ad-card/ad-card.component';
+import { InvoiceComponent } from './components/templates/invoice/invoice.component';
+import { NotFoundComponent } from './components/templates/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { AdCardComponent } from './components/templates/ad-card/ad-card.componen
     LoaderSvgComponent,
     LoaderContentComponent,
     AdCardComponent,
+    NotFoundComponent,
+    InvoiceComponent
   ],
   imports: [CommonModule, DialogModule],
   exports: [
@@ -19,6 +23,8 @@ import { AdCardComponent } from './components/templates/ad-card/ad-card.componen
     LoaderSvgComponent,
     LoaderContentComponent,
     AdCardComponent,
+    NotFoundComponent,
+    InvoiceComponent
   ],
   providers: [],
   bootstrap: [],

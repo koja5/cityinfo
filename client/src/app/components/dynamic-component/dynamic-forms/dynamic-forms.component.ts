@@ -68,8 +68,10 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     if (this.path && this.file && !this.data) {
       this.initializeConfig();
+      this.loader = false;
     } else if (this.data && this.hideActionButtons) {
       this.getConfigurationFile();
+      this.loader = false;
     } else {
       this.form = this.createGroup();
       this.loader = false;

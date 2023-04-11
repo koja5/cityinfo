@@ -4,5 +4,6 @@ export class UserModel {
     password?: string;
     firstname?: string;
     type?: number;
+    is_club?: boolean;
     
 }

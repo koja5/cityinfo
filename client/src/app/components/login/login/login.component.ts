@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   public mode = '';
   public passwordMode = 'password';
   public user = new UserModel();
+  public language: any;
+  public acceptTermsAndPrivacy = false;
 
   constructor(
     private service: CallApiService,
@@ -27,7 +29,16 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrComponent
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.helpService.getLanguage()) {
+      this.language = this.helpService.getLanguage();
+    } else {
+      this.configurationService.getLanguage().subscribe((data) => {
+        this.language = data;
+        this.helpService.setLanguage(data);
+      });
+    }
+  }
 
   switchToSignUpMode() {
     this.mode = 'sign-up-mode';
@@ -55,17 +66,23 @@ export class LoginComponent implements OnInit {
   }
 
   signUp() {
-    this.service.callPostMethod('/api/signUp', this.user).subscribe((data) => {
-      if (data) {
-        this.mode = '';
-        this.toastr.showSuccessCustom(
-          'You successfuly create account. Please verified your mail address!',
-          ''
-        );
-      } else {
-        this.toastr.showErrorCustom('Mail address exists! Try another email!');
-      }
-    });
+    if (!this.acceptTermsAndPrivacy) {
+      this.toastr.showWarningCustom(this.language.needToAcceptTermsAndPrivacy, '');
+    } else {
+      this.service
+        .callPostMethod('/api/signUp', this.user)
+        .subscribe((data) => {
+          if (data) {
+            this.mode = '';
+            this.toastr.showSuccessCustom(
+              this.language.successfulyCreatedAccount,
+              ''
+            );
+          } else {
+            this.toastr.showErrorCustom(this.language.mailExists);
+          }
+        });
+    }
   }
 
   login() {
@@ -73,10 +90,7 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.setUserInfoAndRoute(data);
       } else {
-        this.toastr.showErrorCustom(
-          'Your email or password is incorrect or you have not verified your email address!',
-          ''
-        );
+        this.toastr.showErrorCustom(this.language.incorectMailOrPassword, '');
       }
     });
   }
@@ -87,11 +101,12 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.mode = '';
-        } else {
-          this.toastr.showErrorCustom(
-            'Your email or password is incorrect or you have not verified your email address!',
+          this.toastr.showInfoCustom(
+            this.language.sendLinkForRecoveryPasswordOnMail,
             ''
           );
+        } else {
+          this.toastr.showErrorCustom(this.language.incorectMailOrPassword, '');
         }
       });
   }
@@ -102,7 +117,18 @@ export class LoginComponent implements OnInit {
     this.helpService.setLocalStorage('logo', token.logo);
     this.setLanguageForDashboard();
     setTimeout(() => {
-      if (token.type === UserType.user) {
+      if (this.helpService.getLocalStorageStringValue('previousLink')) {
+        const checkSharp = this.helpService
+          .getLocalStorageStringValue('previousLink')
+          ?.split('#');
+        this.router.navigate([
+          checkSharp && checkSharp?.length > 1
+            ? checkSharp[1]
+            : checkSharp
+            ? checkSharp[0]
+            : '',
+        ]);
+      } else if (token.type === UserType.user) {
         this.router.navigate(['/dashboard/user']);
       } else {
         this.router.navigate(['/dashboard/superadmin']);
@@ -116,9 +142,5 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         this.helpService.setLanguage(data);
       });*/
-    this.helpService.setLanguage({
-      gridPopupAddTitle: 'Add new record',
-      gridPopupEditTitle: 'Edit record',
-    });
   }
 }

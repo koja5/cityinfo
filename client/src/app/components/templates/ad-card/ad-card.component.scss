@@ -171,3 +171,61 @@ a {
 .description-container {
   height: 122px;
 }
+
+.fixed {
+  border: 1px solid #ad9b42;
+}
+
+.start-end-date {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.start-date {
+  color: green;
+}
+
+.expired-date {
+  color: red;
+}
+
+.ad-badge {
+  background: #cbcb0b;
+}
+
+.event-badge {
+  background: #e16e5c;
+}
+
+.badge-info {
+  width: 97%;
+  text-align: end;
+}
+
+.badge-info span {
+  position: absolute;
+  font-size: 11px;
+  border-radius: 12px;
+  width: 31px;
+  text-align: center;
+  height: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.three-dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  height: 1.2em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.no-contact-information {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-style: italic;
+}

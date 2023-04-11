@@ -15,7 +15,7 @@ export class NavigationComponent implements OnInit {
   public language: any;
   public items: ItemModel[] = [
     {
-      text: 'Podešavanja',
+      text: 'settings',
       id: 'settings',
       iconCss: 'e-icons e-settings',
     },
@@ -23,7 +23,7 @@ export class NavigationComponent implements OnInit {
       separator: true,
     },
     {
-      text: 'Odjavi se',
+      text: 'logout',
       id: 'logout',
     },
   ];
@@ -38,6 +38,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.language = this.helpService.getLanguage();
+    this.translateItem(this.items);
     this.initializationMenu();
     this.username = this.helpService.getUserNameFromToken();
   }
@@ -76,8 +77,17 @@ export class NavigationComponent implements OnInit {
     }
   }
 
+  translateItem(items: any) {
+    for (let i = 0; i < items.length; i++) {
+      if (this.language[items[i].text]) {
+        items[i].text = this.language[items[i].text];
+      }
+    }
+  }
+
   logout() {
     this.storageService.deleteToken();
+    this.storageService.removeAllLocalStorage();
     this.router.navigate(['/login']);
   }
 }

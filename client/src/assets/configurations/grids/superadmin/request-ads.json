@@ -116,7 +116,7 @@
         "hideable": true,
         "type": "string",
         "class": "text-align-right",
-        "field": "ads_name",
+        "field": "name",
         "validation": {
           "required": true
         }
@@ -153,6 +153,20 @@
         "validation": {
           "required": true
         }
+      },
+      {
+          "title": "",
+          "filterable": true,
+          "hideable": true,
+          "type": "string",
+          "class": "text-align-right",
+          "template": {
+              "type": "button",
+              "action": "previewAd",
+              "field": "filename",
+              "class": "btn btn-none btn-color-default button-text-center button-action text-center",
+              "classIcon": "visibility"
+          }
       }
     ],
     "config": [

@@ -35,6 +35,27 @@
     "link": "/dashboard/superadmin/request-ads"
   },
   {
+    "title": "All ads",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-ads"
+  },
+  {
+    "title": "All events",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-events"
+  },
+  {
+    "title": "All invoices",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-invoices"
+  },
+  {
     "title": "My ads",
     "rights": [
       "user"
@@ -47,5 +68,12 @@
       "user"
     ],
     "link": "/dashboard/user/paid-ads"
+  },
+  {
+    "title": "My invoice",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-invoices"
   }
 ]

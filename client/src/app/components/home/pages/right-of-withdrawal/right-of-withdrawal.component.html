@@ -1,0 +1,19 @@
+<section class="navigation">
+    <div class="nav-container">
+        <div class="brand">
+            <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
+        </div>
+        <nav>
+            <div class="nav-mobile">
+                <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+            </div>
+            <ul class="nav-list {{showHideMenu}}">
+
+                <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        {{language.login}}</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<app-dynamic-text-form [type]="'right-of-withdrawal'"></app-dynamic-text-form>

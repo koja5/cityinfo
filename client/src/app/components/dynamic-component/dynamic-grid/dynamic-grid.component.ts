@@ -25,6 +25,7 @@ import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component'
 // import { saveAs } from 'file-saver';
 import { FilterSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { PaidAdsModel } from 'src/app/models/paid-ads-model';
 
 @Component({
   selector: 'app-dynamic-grid',
@@ -32,6 +33,8 @@ import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
   styleUrls: ['./dynamic-grid.component.scss'],
 })
 export class DynamicGridComponent implements OnInit {
+  @ViewChild('invoiceDialog') invoiceDialog!: DialogComponent;
+  @ViewChild('adDialog') adDialog!: DialogComponent;
   @Input() path!: string;
   @Input() file!: string;
   @Input() partOfTab!: boolean;
@@ -54,6 +57,12 @@ export class DynamicGridComponent implements OnInit {
   public invoiceAction!: string;
   public generateInvoice = false;
   public filterOptions!: FilterSettingsModel;
+  public dialogPosition: Object = {
+    X: 'center',
+    Y: 'center',
+  };
+  public selectedData: any;
+  public additionalInformation = new PaidAdsModel();
 
   constructor(
     private configurationService: ConfigurationService,
@@ -74,6 +83,10 @@ export class DynamicGridComponent implements OnInit {
     };
   }
 
+  onBeforeOpen(args: any) {
+    args.maxHeight = null;
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.height = this.helpService.getHeightForGridWithoutPx(this.partOfTab);
@@ -81,6 +94,7 @@ export class DynamicGridComponent implements OnInit {
 
   initializeConfig() {
     this.language = this.helpService.getLanguage();
+    console.log(this.language);
 
     this.configurationService
       .getConfiguration(this.path, this.file)
@@ -304,5 +318,23 @@ export class DynamicGridComponent implements OnInit {
       };
       this.grid.pdfExport(pdfExportProperties);
     }
+  }
+
+  previewInvoice(body: any) {
+    this.selectedData = body;
+    this.invoiceDialog.show();
+  }
+
+  previewAd(body: any) {
+    this.selectedData = body;
+    this.additionalInformation = {
+      position: body.position,
+      city: body.city_name,
+      start_date: body.start_date,
+      expired_date: body.expired_date,
+      number_of_weeks: body.number_of_weeks,
+      price: body.price,
+    };
+    this.adDialog.show();
   }
 }

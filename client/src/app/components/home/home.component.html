@@ -1,81 +1,129 @@
-<section class="navigation">
-    <div class="nav-container">
-        <div class="brand">
-            <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
-        </div>
-        <nav>
-            <div class="nav-mobile">
-                <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+<div *ngIf="language">
+    <section class="navigation">
+        <div class="nav-container">
+            <div class="brand">
+                <a routerLink=""><img src="../../../assets/images/logo.png" class="logo"></a>
             </div>
-            <ul class="nav-list {{showHideMenu}}">
-                <!-- Setting the links to #! will ensure that no action takes place on click. -->
+            <nav>
+                <div class="nav-mobile">
+                    <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+                </div>
+                <ul class="nav-list {{showHideMenu}}">
+                    <!-- Setting the links to #! will ensure that no action takes place on click. -->
 
-                <li>
-                    <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
-                        <option value="" selected="selected">Select a State</option>
-                        <option *ngFor="let item of listOfCities" value="{{item.id}}"
-                            [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
-                    </select>
-                </li>
+                    <li>
+                        <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
+                            <option value="" selected="selected">{{language.selectState}}</option>
+                            <option *ngFor="let item of listOfCities" value="{{item.id}}"
+                                [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
+                        </select>
+                    </li>
 
-                <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        Login</a></li>
-            </ul>
-        </nav>
-    </div>
-</section>
+                    <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right"
+                                aria-hidden="true"></i>
+                            {{language.login}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
 
-<div class="left-fixed-ads hidden-xs">
-    <!-- <div class="outer">
-        <div class="middle">
-            <div class="inner-ads">
-                <img style="margin-left: 70px;
+    <!-- <div class="left-fixed-ads hidden-xs">
+        <div class="outer" *ngIf="!leftFixedAds || leftFixedAds.length == 0">
+            <div class="middle">
+                <div class="inner-ads">
+                    <img style="margin-left: 70px;
                 width: 148px;" src="../../../assets/images/ads.png">
-                <h2 style="width: 150px;
+                    <h2 style="width: 150px;
                 margin-left: 81px;
                 font-weight: bold;
-                margin-top: 18px;">Place your fixed Ad here</h2>
+                margin-top: 18px;">{{language.placedFixedAd}}</h2>
+                </div>
             </div>
+        </div>
+
+        <div class="row mt-4" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
         </div>
     </div> -->
 
-    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-12"></app-ad-card>
-    </div>
-</div>
-
-<div class="container mt-4">
-    <div class="row" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
-
-    </div>
-    <div *ngIf="!allAds || allAds.length == 0" class="outer">
-        <div class="middle">
-            <div class="inner">
-                <img style="width: 310px;" src="../../../assets/images/no-data.jpg">
-                <h4>No data found for selected city!</h4>
+    <div class="mt-4" style="position: absolute;">
+        <!-- <div class="row mt-4 hidden-md" *ngIf="leftFixedAds && leftFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of leftFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
+        <div class="row mt-4 hidden-md" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div> -->
+        <div class="main-container">
+            <!-- <div class="row" *ngIf="allFixedAds && allFixedAds.length > 0">
+                <app-ad-card *ngFor="let item of allFixedAds" [data]="item" class="col-md-3"
+                    [fixed]="'fixed'"></app-ad-card>
+            </div> -->
+            <div class="row" *ngIf="allAds && allAds.length > 0">
+                <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-3"></app-ad-card>
+            </div>
+            <div *ngIf="!allAds || allAds.length == 0" class="outer">
+                <div class="middle">
+                    <div class="inner">
+                        <img style="width: 310px;" src="../../../assets/images/no-data.jpg">
+                        <h4>{{language.noFoundDataForSelectedCity}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom py-4" *ngIf="language">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center pt-2">
+                        <div class="col-md-6 col-lg-6 text-left">
+                            <div class="copyright-text">
+                                <p class="mb-lg-0 mb-md-0">
+                                    &copy; Copyright {{ year }}. Made
+                                    <a routerLink="/" class="text-decoration-none">CityInfo</a> with
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="heart"
+                                        class="svg-inline--fa fa-heart fa-w-16" role="img"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14">
+                                        <path fill="currentColor"
+                                            d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z">
+                                        </path>
+                                    </svg>
+                                    from Austria.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 text-right copyright-text">
+                            <a routerLink="/impressum">{{ language.footerImpressum }} | </a>
+                            <a routerLink="/privacy-policy">
+                                {{ language.footerPrivacyPolicy }} |
+                            </a>
+                            <a routerLink="/terms">{{ language.footerTerms }}</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<div class="right-fixed-ads hidden-xs">
-    <div class="outer">
-        <div class="middle">
-            <div class="inner-ads-right">
-                <!-- <img src="../../../assets/images/logo.png"> -->
-                <img style="margin-right: 70px;
+    <!-- <div class="right-fixed-ads hidden-xs">
+        <div class="outer" *ngIf="!rightFixedAds || rightFixedAds.length == 0">
+            <div class="middle">
+                <div class="inner-ads-right">
+                    <img style="margin-right: 70px;
                 width: 148px;" src="../../../assets/images/ads.png">
-                <h2 style="width: 150px;
+                    <h2 style="width: 150px;
                margin-right: 81px;
                font-weight: bold;
-               margin-top: 18px;">Place your fixed Ad here</h2>
+               margin-top: 18px;">{{language.placedFixedAd}}</h2>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-4" *ngIf="allAds && allAds.length > 0">
-        <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-4"></app-ad-card>
-    </div>
+        <div class="row mt-4" *ngIf="rightFixedAds && rightFixedAds.length > 0">
+            <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12"
+                [fixed]="'fixed'"></app-ad-card>
+        </div>
+    </div> -->
+
+
+
 </div>

@@ -1,0 +1,5 @@
+<div class="container mt-4 col-md-3">
+    <h4 class="text-center mb-5">Request for ad</h4>
+    <app-ad-card *ngIf="data" [data]="data" [additionalInformation]="additionalInformation"></app-ad-card>
+    <app-not-found *ngIf="!data || data.lenght == 0"></app-not-found>
+</div>

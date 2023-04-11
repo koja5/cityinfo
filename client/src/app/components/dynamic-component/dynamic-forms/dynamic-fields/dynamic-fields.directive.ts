@@ -6,6 +6,7 @@ import { ButtonComponent } from './buttons/button/button.component';
 import { SwitchComponent } from './buttons/switch/switch.component';
 import { ComboboxComponent } from './dropdowns/combobox/combobox.component';
 import { DatepickerComponent } from './inputs/datepicker/datepicker.component';
+import { DatetimepickerComponent } from './inputs/datetimepicker/datetimepicker.component';
 import { NumericTextboxComponent } from './inputs/numeric-textbox/numeric-textbox.component';
 import { TextBoxComponent } from './inputs/text-box/text-box.component';
 import { LabelComponent } from './label/label.component';
@@ -18,6 +19,7 @@ const components: {[type: string]: Type<Field>} = {
   button: ButtonComponent,
   combobox: ComboboxComponent,
   datepicker: DatepickerComponent,
+  datetimepicker: DatetimepickerComponent,
   switch: SwitchComponent
 };
 

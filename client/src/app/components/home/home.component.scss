@@ -173,14 +173,14 @@ nav ul li ul li a {
 
 .left-fixed-ads {
   position: fixed;
-  width: 400px;
+  width: 20%;
   height: 100%;
   z-index: -1;
 }
 
 .right-fixed-ads {
   position: fixed;
-  width: 400px;
+  width: 20%;
   height: 100%;
   right: 0px;
   z-index: -1;
@@ -202,7 +202,7 @@ nav ul li ul li a {
   width: 300px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .nav-list {
     text-align: center;
     margin: auto;
@@ -212,6 +212,27 @@ nav ul li ul li a {
   }
 
   .input-large {
+    width: 100%;
+  }
+
+  .container {
+    position: relative !important;
+    left: 0px !important;
+  }
+}
+
+.main-container {
+  margin: auto;
+}
+
+@media (min-width: 1501px) {
+  .main-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1500px) {
+  .main-container {
     width: 100%;
   }
 }
