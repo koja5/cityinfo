@@ -1,12 +1,13 @@
 {
     "config": [
         {
-            "type": "datepicker",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "start_date",
-            "title": "Start date",
-            "field": "start_date"
+            "hideable": true,
+            "name": "id",
+            "title": "ID",
+            "field": "id"
         },
         {
             "type": "combobox",

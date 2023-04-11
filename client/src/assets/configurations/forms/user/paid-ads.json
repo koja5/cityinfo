@@ -2,12 +2,13 @@
     "config": [
         {
             "type": "textbox",
-            "width": "col-md-12 hide",
+            "width": "col-md-12",
             "class": "e-outline",
             "name": "id",
             "title": "ID",
             "field": "id",
-            "readonly": true
+            "readonly": true,
+            "hideable": true
         },
         {
             "type": "combobox",

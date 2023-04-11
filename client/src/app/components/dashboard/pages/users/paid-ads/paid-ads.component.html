@@ -19,7 +19,7 @@
     </div>
     <div class="row" *ngIf="listOfPaid">
         <div *ngFor="let item of listOfPaid" class="col-md-4">
-            <app-ad-card [data]="item" [showDate]="true"></app-ad-card>
+            <app-ad-card [data]="item" [showDate]="true" [promotion]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
         </div>
     </div>
 
@@ -27,19 +27,19 @@
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
             <div>
-                <app-dynamic-forms [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
+                <app-dynamic-forms *ngIf="changeData&&config" [config]="config" [data]="changeData" [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
             </div>
         </ng-template>
     </ejs-dialog>
 
     <ejs-dialog id='dialogEvent' #dialogEvent showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
-    [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
-    <ng-template #content>
-        <div>
-            <app-dynamic-forms [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
-        </div>
-    </ng-template>
-</ejs-dialog>
+        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+        <ng-template #content>
+            <div>
+                <app-dynamic-forms [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
+            </div>
+        </ng-template>
+    </ejs-dialog>
 
     <!--CARD -->
 

@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   public showHideMenu = '';
   public listOfCities: any;
   public allAds: any = [];
-  public allFixedAds: any;
+  public allFixedAds: any = [];
   public selectedCity: any;
   public language: any;
   public year!: number;
@@ -47,13 +47,19 @@ export class HomeComponent implements OnInit {
     });
 
     if (this.selectedCity) {
-      this.getPaidScrollAdsByCity(this.selectedCity);
-      this.getPaidFixedAdsByCity(this.selectedCity);
-      this.getPaidScrollEventsByCity(this.selectedCity);
+      this.getAllData(this.selectedCity);
+      // this.getPaidAdsByCity(this.selectedCity);
+      // this.getPaidEventsByCity(this.selectedCity);
+      // this.getPaidScrollAdsByCity(this.selectedCity);
+      // this.getPaidFixedAdsByCity(this.selectedCity);
+      // this.getPaidScrollEventsByCity(this.selectedCity);
     } else {
-      this.getPaidScrollAdsByCity('');
-      this.getPaidFixedAdsByCity('');
-      this.getPaidScrollEventsByCity('');
+      this.getAllData('');
+      // this.getPaidAdsByCity('');
+      // this.getPaidEventsByCity('');
+      // this.getPaidScrollAdsByCity('');
+      // this.getPaidFixedAdsByCity('');
+      // this.getPaidScrollEventsByCity('');
     }
   }
 
@@ -70,13 +76,15 @@ export class HomeComponent implements OnInit {
       this.helpService.setLocalStorage('selectedCity', event.target.value);
       this.allAds = [];
       this.allFixedAds = null;
-      this.getPaidScrollAdsByCity(event.target.value);
-      this.getPaidFixedAdsByCity(event.target.value);
-      this.getPaidScrollEventsByCity(event.target.value);
+      this.getAllData(event.target.value);
+      // this.getPaidAdsByCity(event.target.value);
+      // this.getPaidScrollAdsByCity(event.target.value);
+      // this.getPaidFixedAdsByCity(event.target.value);
+      // this.getPaidScrollEventsByCity(event.target.value);
     }
   }
 
-  getPaidScrollAdsByCity(parameter: string) {
+  /*getPaidScrollAdsByCity(parameter: string) {
     this.service
       .callGetMethod('api/getPaidScrollAdsByCity', parameter)
       .subscribe((data: any) => {
@@ -95,6 +103,77 @@ export class HomeComponent implements OnInit {
             });
         }
       });
+  }*/
+
+  getAllData(parameter: string) {
+    this.service
+      .callGetMethod('api/getPaidAdsByCity', parameter)
+      .subscribe((ads: any) => {
+        this.service
+          .callGetMethod('api/getPaidEventsByCity', parameter)
+          .subscribe((events: any) => {
+            console.log(ads);
+            console.log(events);
+            const numberOfFixedPositionForAds =
+              this.getNumberOfFixedPositionForAds(ads);
+            const numberOfFixedPositionForEvents =
+              this.getNumberOfFixedPositionForEvents(events);
+            this.allAds = this.allAds.concat(
+              ads.splice(0, numberOfFixedPositionForAds)
+            );
+            this.allAds = this.allAds.concat(
+              events.splice(0, numberOfFixedPositionForEvents)
+            );
+            this.allAds = this.allAds.concat(ads.splice(0, ads.length));
+            this.allAds = this.allAds.concat(
+              events.splice(0, events.length)
+            );
+          });
+      });
+  }
+
+  getPaidAdsByCity(parameter: string) {
+    this.service
+      .callGetMethod('api/getPaidAdsByCity', parameter)
+      .subscribe((data: any) => {
+        if (this.allAds) {
+          this.allAds = this.allAds.concat(data);
+        } else {
+          this.allAds = data;
+        }
+        this.packForTopPosition();
+        this.packAllOther();
+      });
+  }
+
+  getPaidEventsByCity(parameter: string) {
+    this.service
+      .callGetMethod('api/getPaidEventsByCity', parameter)
+      .subscribe((data: any) => {
+        if (this.allAds) {
+          this.allAds = this.allAds.concat(data);
+        } else {
+          this.allAds = data;
+        }
+        this.packForTopPosition();
+        this.packAllOther();
+      });
+  }
+
+  packForTopPosition() {
+    for (let i = 0; i < this.allAds.length; i++) {
+      if (
+        this.allAds[i].position == 1 &&
+        new Date(this.allAds[i].expired_date) > new Date()
+      ) {
+        this.allFixedAds.push(this.allAds[i]);
+        this.allAds.splice(i, 1);
+      }
+    }
+  }
+
+  packAllOther() {
+    this.allFixedAds = this.allFixedAds.concat(this.allAds);
   }
 
   getPaidFixedAdsByCity(parameter: string) {}
@@ -107,5 +186,25 @@ export class HomeComponent implements OnInit {
           this.allAds = this.allAds.concat(data);
         }
       });
+  }
+
+  getNumberOfFixedPositionForAds(ads: any) {
+    let count = 0;
+    for (let i = 0; i < ads.length; i++) {
+      if (ads[i].position == 1) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  getNumberOfFixedPositionForEvents(events: any) {
+    let count = 0;
+    for (let i = 0; i < events.length; i++) {
+      if (new Date(events[i].expired_date) > new Date()) {
+        count++;
+      }
+    }
+    return count;
   }
 }

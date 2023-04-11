@@ -17,6 +17,7 @@ export class AdCardComponent implements OnInit {
   @Input() public data!: any;
   @Input() public additionalInformation!: PaidAdsModel;
   @Input() public edit: boolean = false;
+  @Input() public promotion: boolean = false;
   @Input() public fixed: string = '';
   @Input() public showDate: boolean = false;
   @Input() public approveDeny: boolean = false;
@@ -25,6 +26,7 @@ export class AdCardComponent implements OnInit {
   public cover: any;
   public showModeButton: boolean = false;
   public language: any;
+  public checkPromoButton = false;
 
   constructor(
     private helpService: HelpService,
@@ -49,6 +51,7 @@ export class AdCardComponent implements OnInit {
         this.cover = '/assets' + data[1];
       }
     }
+    this.checkPromoButtonOption();
   }
 
   editButton() {
@@ -61,6 +64,13 @@ export class AdCardComponent implements OnInit {
   deleteButton() {
     const emitterModel = new EmitterModel();
     emitterModel.operation = ActionsType.delete;
+    emitterModel.data = this.data;
+    this.clickEmitter.emit(emitterModel);
+  }
+
+  promotionButton() {
+    const emitterModel = new EmitterModel();
+    emitterModel.operation = ActionsType.promotion;
     emitterModel.data = this.data;
     this.clickEmitter.emit(emitterModel);
   }
@@ -87,5 +97,13 @@ export class AdCardComponent implements OnInit {
         this.toastr.showError();
       }
     });
+  }
+
+  checkPromoButtonOption() {
+    if(!this.data.expired_date || (this.data.expired_date && new Date(this.data.expired_date) < new Date())) {
+      this.checkPromoButton = true;
+    } else {
+      this.checkPromoButton = false;
+    }
   }
 }

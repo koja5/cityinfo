@@ -12,6 +12,7 @@ export class EventsModel {
     cover?: string;
     cover_old?: string;
     start_date?: Date;
+    start_date_top?: Date;
     expired_date?: Date;
     city?: string;
     position?: string;

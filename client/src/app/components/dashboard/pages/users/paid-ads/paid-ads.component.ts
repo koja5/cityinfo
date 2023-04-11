@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { ToastrComponent } from 'src/app/components/dynamic-component/common/toastr/toastr.component';
 import { FormConfig } from 'src/app/components/dynamic-component/dynamic-forms/models/form-config';
+import { ActionsType } from 'src/app/enums/actions-type';
 import { AdsModel } from 'src/app/models/ads-model';
 import { EmitterModel } from 'src/app/models/emitter-model';
 import { EventsModel } from 'src/app/models/events-model';
@@ -37,6 +38,7 @@ export class PaidAdsComponent implements OnInit {
   public paymentInformation = new PaymentAdsModel();
   public user: any;
   public isClub: boolean = false;
+  public changeData: any;
 
   constructor(
     private service: CallApiService,
@@ -131,12 +133,13 @@ export class PaidAdsComponent implements OnInit {
               };
               let event_date = new EventsModel();
               event_date = {
-                start_date: event.start_date,
+                start_date_top: event.start_date_top,
                 event_draft: event.event_draft,
                 city: event.city,
                 position: event.position,
                 number_of_weeks: event.number_of_weeks,
                 active: 1,
+                id: event.id
               };
               this.paymentInformation = {
                 event_date: event_date,
@@ -184,6 +187,7 @@ export class PaidAdsComponent implements OnInit {
               position: event.position,
               number_of_weeks: event.number_of_weeks,
               active: 1,
+              id: event.id
             };
             this.paymentInformation = {
               ad_date: ad_date,
@@ -219,6 +223,13 @@ export class PaidAdsComponent implements OnInit {
       this.paymentInformation.description =
         this.getPaymentDescription(typeOfAd);
       this.paymentInformation.app_token = this.storageService.getToken();
+
+      if (this.changeData) {
+        this.paymentInformation.action_type = ActionsType.edit;
+      } else {
+        this.paymentInformation.action_type = ActionsType.create;
+      }
+
       if (this.helpService.checkAccountIsClub()) {
         this.service
           .callPostMethod('/api/createEventPayment', this.paymentInformation)
@@ -270,5 +281,28 @@ export class PaidAdsComponent implements OnInit {
 
   setStripeSource(source: stripe.Source) {
     console.log('Stripe Source', source);
+  }
+
+  clickEmitter(event: any) {
+    if (this.config) {
+      if (event.operation == ActionsType.promotion) {
+        this.changeData = event.data;
+        setTimeout(() => {
+          this.dialog.show();
+        }, 50);
+      }
+    } else {
+      this.configurationService
+        .getConfiguration(this.path, this.file)
+        .subscribe((data) => {
+          this.config = data;
+          if (event.operation == ActionsType.promotion) {
+            this.changeData = event.data;
+            setTimeout(() => {
+              this.dialog.show();
+            }, 50);
+          }
+        });
+    }
   }
 }

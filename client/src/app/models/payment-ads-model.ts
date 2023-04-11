@@ -13,6 +13,7 @@ export class PaymentAdsModel {
   price?: number;
   description?: string;
   app_token?: any;
-  ad_date?: PaidAdsModel
-  event_date?: EventsModel
+  ad_date?: PaidAdsModel;
+  event_date?: EventsModel;
+  action_type?: number;
 }
