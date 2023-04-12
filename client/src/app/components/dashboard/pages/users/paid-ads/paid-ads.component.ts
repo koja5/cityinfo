@@ -101,12 +101,7 @@ export class PaidAdsComponent implements OnInit {
     }
   }
 
-  createNewPaidAd() {
-    this.dialog.show();
-    // this.data = new AdsModel();
-  }
-
-  createNewPaidEvent() {
+  createNew() {
     this.dialogEvent.show();
   }
 

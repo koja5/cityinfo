@@ -3,9 +3,9 @@
 <div class="container mt-4">
 
     <div class="text-right mb-4">
-        <button *ngIf="!isClub" class="btn solid login" (click)="createNewPaidAd()"
+        <button *ngIf="!isClub" class="btn solid login" (click)="createNew()"
             style="font-size: 15px">{{language.createNewPaidAd}}</button>
-        <button *ngIf="isClub" class="btn solid login" (click)="createNewPaidEvent()"
+        <button *ngIf="isClub" class="btn solid login" (click)="createNew()"
             style="font-size: 15px">{{language.createNewPaidEvent}}</button>
     </div>
     <div class="outer" *ngIf="!listOfPaid || listOfPaid.length == 0">
