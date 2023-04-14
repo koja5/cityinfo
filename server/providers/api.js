@@ -1236,7 +1236,7 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.expired_date > now() order by p.position asc, p.start_date asc",
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1727,7 +1727,7 @@ router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and e.datetime >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
