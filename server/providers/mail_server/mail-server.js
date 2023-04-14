@@ -6,26 +6,26 @@ var hogan = require("hogan.js");
 var fs = require("fs");
 const logger = require("../config/logger");
 
-/*var smtpTransport = nodemailer.createTransport({
+var smtpTransport = nodemailer.createTransport({
   host: process.env.smtp_host,
   port: process.env.smtp_port,
-  secure: process.env.smtp_secure,
+  secure: false,
   tls: {
-    rejectUnauthorized: process.env.smtp_rejectUnauthorized,
+    rejectUnauthorized: false,
   },
   auth: {
     user: process.env.smtp_user,
     pass: process.env.smtp_pass,
   },
-});*/
-
-var smtpTransport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "kidsnodeoffice@gmail.com",
-    pass: "rvciekpadttcvbwt",
-  },
 });
+
+// var smtpTransport = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "kidsnodeoffice@gmail.com",
+//     pass: "rvciekpadttcvbwt",
+//   },
+// });
 
 router.post("/sendMail", function (req, res) {
   var confirmTemplate = fs.readFileSync(
@@ -34,9 +34,7 @@ router.post("/sendMail", function (req, res) {
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
   var mailOptions = {
-    from: req.body.email
-      ? req.body.email
-      : '"CityInfo"' + process.env.smtp_user,
+    from: '"CityInfo"' + process.env.smtp_user,
     to: req.body.fields["email"] ? req.body.fields["email"] : req.body.email,
     subject: req.body.subject,
     html: compiledTemplate.render(req.body.fields),

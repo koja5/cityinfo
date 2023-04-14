@@ -5,7 +5,7 @@ const mysql = require("mysql");
 const auth = require("./config/auth");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart({
-  uploadDir: "../../CityInfo/client/src/assets/file_upload",
+  uploadDir: process.env.upload_dir,
   auth,
 });
 const logger = require("./config/logger");

@@ -175,9 +175,24 @@ router.get("/activeClub/:email", function (req, res, next) {
         "update users SET active = 1 where sha1(email) = ?",
         [req.params.email],
         function (err, rows) {
-          conn.release();
           if (!err) {
-            return res.redirect("/message/success");
+            conn.query(
+              "select * from users where sha1(email) = ?",
+              [req.params.email],
+              function (err, rows) {
+                conn.release();
+                var option_request = {
+                  url:
+                    process.env.link_api +
+                    "info_approved_club_account_from_admin",
+                  method: "POST",
+                  body: rows[0],
+                  json: true,
+                };
+                request(option_request, function (error, response, body) {});
+                return res.redirect("/message/success");
+              }
+            );
           } else {
             return res.redirect("/message/error");
           }

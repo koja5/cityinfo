@@ -1,7 +1,6 @@
 {
     "activate_mail": {
         "template": "activate_mail.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Activate your account",
         "fields": {
             "title": "Please activate your account!",
@@ -11,7 +10,6 @@
     },
     "activate_mail_for_club": {
         "template": "activate_mail.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Activate your account",
         "fields": {
             "title": "Please activate your account!",
@@ -21,17 +19,26 @@
     },
     "send_request_for_new_created_club_account": {
         "template": "send_request_for_new_created_club_account.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Created new Club account!",
+        "email": "clinicnode@gmail.com",
         "fields": {
             "title": "Created new Club account!",
             "text": "Please check info of new created team account. Information about club you can see below!",
-            "greeting": "Hi"
+            "greeting": "Hi",
+            "buttonText": "Activate club account"
+        }
+    },
+    "info_approved_club_account_from_admin": {
+        "template": "info_approved_club_account_from_admin.hjs",
+        "subject": "Your club account is activated!",
+        "fields": {
+            "title": "Your club account is activated!",
+            "text": "We would like to inform you that your club account is activated now, so you can start with create events for your club!",
+            "greeting": "Hi {firstname}"
         }
     },
     "info_about_changed_user_data": {
         "template": "info_about_changed_user_data.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Your information has been changed!",
         "fields": {
             "title": "Your information has been changed!",
@@ -41,7 +48,6 @@
     },
     "reset_password": {
         "template": "reset_password.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Password recovery request",
         "fields": {
             "title": "Password recovery request",
@@ -51,8 +57,8 @@
     },
     "send_request_for_free_ad": {
         "template": "send_request_for_free_ad.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Received new request for free ad",
+        "email": "clinicnode@gmail.com",
         "fields": {
             "title": "New request for free ad",
             "text": "You received a new request for free ad. Information about ad you can see below.",
@@ -62,7 +68,6 @@
     },
     "info_for_active_free_ad": {
         "template": "info_for_active_free_ad.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Free relationship request",
         "fields": {
             "title": "Free relationship request",
@@ -72,7 +77,6 @@
     },
     "info_for_deny_free_ad": {
         "template": "info_for_deny_free_ad.hjs",
-        "email": "clinicnode@gmail.com",
         "subject": "Deny request for your ad",
         "fields": {
             "title": "Deny request for your ad",

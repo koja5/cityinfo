@@ -77,6 +77,35 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
   });
 });
 
+router.post(
+  "/info_approved_club_account_from_admin",
+  function (req, res, next) {
+    var body = JSON.parse(
+      fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+    );
+    body.info_approved_club_account_from_admin.fields["email"] = req.body.email;
+    body.info_approved_club_account_from_admin.fields["greeting"] =
+      body.info_approved_club_account_from_admin.fields["greeting"].replace(
+        "{firstname}",
+        req.body.firstname
+      );
+    var options = {
+      url: process.env.link_api + "mail-server/sendMail",
+      method: "POST",
+      body: body.info_approved_club_account_from_admin,
+      json: true,
+    };
+    console.log(options);
+    request(options, function (error, response, body) {
+      if (!error) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
+    });
+  }
+);
+
 router.post("/infoForActiveFreeAd", function (req, res, next) {
   var body = JSON.parse(
     fs.readFileSync("./providers/mail_server/config.json", "utf-8")

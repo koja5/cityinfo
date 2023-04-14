@@ -505,11 +505,15 @@ form.forgot-form {
       }*/
 
   .left-panel {
-    grid-row: 1 / 2;
+    position: absolute;
+    width: 100%;
   }
 
   .right-panel {
     grid-row: 3 / 4;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
   }
 
   .right-panel .content,
