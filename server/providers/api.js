@@ -190,7 +190,7 @@ router.get("/activeClub/:email", function (req, res, next) {
                   json: true,
                 };
                 request(option_request, function (error, response, body) {});
-                return res.redirect("/message/success");
+                return res.redirect("/");
               }
             );
           } else {
