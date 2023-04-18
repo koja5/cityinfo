@@ -137,7 +137,7 @@ router.post("/sentLinkToEmailForReset", function (req, res, next) {
   );
   body.reset_password.fields["email"] = req.body.email;
   body.reset_password.fields["link"] =
-    process.env.link_client + "#/forgot-password/" + sha1(req.body.email);
+    process.env.link_client + "forgot-password/" + sha1(req.body.email);
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
@@ -170,7 +170,7 @@ router.post("/sendRequestForFreeAd", function (req, res, next) {
     req.body.number_of_weeks;
   body.send_request_for_free_ad.fields["link"] =
     process.env.link_client +
-    "#/dashboard/superadmin/preview-ad/" +
+    "dashboard/superadmin/preview-ad/" +
     req.body.id;
   var options = {
     url: process.env.link_api + "mail-server/sendMail",
