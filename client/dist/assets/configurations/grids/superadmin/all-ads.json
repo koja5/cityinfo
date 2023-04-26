@@ -224,7 +224,7 @@
             },
             "request": {
                 "type": "GET",
-                "api": "/api/getMyAds",
+                "api": "/api/getAllAdsDraft",
                 "parameters": [],
                 "fields": "",
                 "root": ""
