@@ -203,7 +203,8 @@
         "class": "e-outline",
         "name": "start_date",
         "title": "Start date",
-        "field": "start_date"
+        "field": "start_date",
+        "format": "dd.MM.yyyy"
       },
       {
         "type": "combobox",

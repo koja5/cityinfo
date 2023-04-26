@@ -19,8 +19,8 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./paid-ads.component.scss'],
 })
 export class PaidAdsComponent implements OnInit {
+  @ViewChild('dialogChange') dialogChange!: DialogComponent;
   @ViewChild('dialog') dialog!: DialogComponent;
-  @ViewChild('dialogEvent') dialogEvent!: DialogComponent;
   @ViewChild('card') card!: DialogComponent;
   public path = '/forms/user';
   public file!: string;
@@ -102,7 +102,7 @@ export class PaidAdsComponent implements OnInit {
   }
 
   createNew() {
-    this.dialogEvent.show();
+    this.dialog.show();
   }
 
   submitEmitter(event: any) {
@@ -134,7 +134,7 @@ export class PaidAdsComponent implements OnInit {
                 position: event.position,
                 number_of_weeks: event.number_of_weeks,
                 active: 1,
-                id: event.id
+                id: event.id,
               };
               this.paymentInformation = {
                 event_date: event_date,
@@ -148,7 +148,7 @@ export class PaidAdsComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               this.toastr.showSuccess();
-              this.dialogEvent.hide();
+              this.dialog.hide();
               this.intializeData();
             } else {
               this.toastr.showError();
@@ -182,7 +182,7 @@ export class PaidAdsComponent implements OnInit {
               position: event.position,
               number_of_weeks: event.number_of_weeks,
               active: 1,
-              id: event.id
+              id: event.id,
             };
             this.paymentInformation = {
               ad_date: ad_date,
@@ -231,7 +231,9 @@ export class PaidAdsComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               this.card.hide();
-              this.dialogEvent.hide();
+              setTimeout(() => {
+                this.dialog.hide();
+              }, 20);
               this.toastr.showSuccessCustom(
                 this.language.successfullyPaidAd,
                 ''
@@ -283,7 +285,7 @@ export class PaidAdsComponent implements OnInit {
       if (event.operation == ActionsType.promotion) {
         this.changeData = event.data;
         setTimeout(() => {
-          this.dialog.show();
+          this.dialogChange.show();
         }, 50);
       }
     } else {
@@ -294,7 +296,7 @@ export class PaidAdsComponent implements OnInit {
           if (event.operation == ActionsType.promotion) {
             this.changeData = event.data;
             setTimeout(() => {
-              this.dialog.show();
+              this.dialogChange.show();
             }, 50);
           }
         });

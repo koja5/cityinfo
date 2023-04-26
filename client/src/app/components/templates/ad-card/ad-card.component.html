@@ -14,7 +14,7 @@
                             </svg>
                         </div>
                     </div> -->
-                    <div class="bg-cover bg-center h-56 p-4">
+                    <div class="bg-cover bg-center h-56">
                         <app-loader-content *ngIf="!cover"></app-loader-content>
                         <img *ngIf="cover" [src]="cover">
                     </div>
@@ -147,7 +147,7 @@
     <ejs-dialog id='dialog' #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true"
         width="200px">
         <ng-template #content>
-            <p style="white-space: pre;">{{this.data.description}}</p>
+            <p style="white-space: pre-line;">{{this.data.description}}</p>
         </ng-template>
     </ejs-dialog>
 </body>

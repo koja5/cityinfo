@@ -47,14 +47,18 @@ export class HomeComponent implements OnInit {
     });
 
     if (this.selectedCity) {
-      this.getAllData(this.selectedCity);
+      this.getAllData(
+        'getPaidAdsByCity',
+        'getPaidEventsByCity',
+        this.selectedCity
+      );
       // this.getPaidAdsByCity(this.selectedCity);
       // this.getPaidEventsByCity(this.selectedCity);
       // this.getPaidScrollAdsByCity(this.selectedCity);
       // this.getPaidFixedAdsByCity(this.selectedCity);
       // this.getPaidScrollEventsByCity(this.selectedCity);
     } else {
-      this.getAllData('');
+      this.getAllData('getPaidAdsForAllCity', 'getPaidEventsForAllCity', '');
       // this.getPaidAdsByCity('');
       // this.getPaidEventsByCity('');
       // this.getPaidScrollAdsByCity('');
@@ -76,41 +80,22 @@ export class HomeComponent implements OnInit {
       this.helpService.setLocalStorage('selectedCity', event.target.value);
       this.allAds = [];
       this.allFixedAds = null;
-      this.getAllData(event.target.value);
-      // this.getPaidAdsByCity(event.target.value);
-      // this.getPaidScrollAdsByCity(event.target.value);
-      // this.getPaidFixedAdsByCity(event.target.value);
-      // this.getPaidScrollEventsByCity(event.target.value);
+      this.getAllData(
+        'getPaidAdsByCity',
+        'getPaidEventsByCity',
+        event.target.value
+      );
+    } else {
+      this.getAllData('getPaidAdsForAllCity', 'getPaidEventsForAllCity', '');
     }
   }
 
-  /*getPaidScrollAdsByCity(parameter: string) {
+  getAllData(methodForAds: string, methodForEvents: string, parameter: string) {
     this.service
-      .callGetMethod('api/getPaidScrollAdsByCity', parameter)
-      .subscribe((data: any) => {
-        if (data.length > 0) {
-          this.allAds = this.allAds.concat(data);
-          this.service
-            .callGetMethod('api/getPaidFixedAdsByCity', parameter)
-            .subscribe((data: any) => {
-              if (data.length > 1) {
-                this.allFixedAds = data;
-                if (this.allFixedAds.length % 4 === 3) {
-                  var scrollAd = this.allAds.splice(0, 1);
-                  this.allFixedAds = this.allFixedAds.concat(scrollAd);
-                }
-              }
-            });
-        }
-      });
-  }*/
-
-  getAllData(parameter: string) {
-    this.service
-      .callGetMethod('api/getPaidAdsByCity', parameter)
+      .callGetMethod('api/' + methodForAds, parameter)
       .subscribe((ads: any) => {
         this.service
-          .callGetMethod('api/getPaidEventsByCity', parameter)
+          .callGetMethod('api/' + methodForEvents, parameter)
           .subscribe((events: any) => {
             console.log(ads);
             console.log(events);
@@ -125,9 +110,7 @@ export class HomeComponent implements OnInit {
               events.splice(0, numberOfFixedPositionForEvents)
             );
             this.allAds = this.allAds.concat(ads.splice(0, ads.length));
-            this.allAds = this.allAds.concat(
-              events.splice(0, events.length)
-            );
+            this.allAds = this.allAds.concat(events.splice(0, events.length));
           });
       });
   }

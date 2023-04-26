@@ -693,6 +693,31 @@ router.get("/verificationMailForClub/:email", async (req, res, next) => {
 
 /* ADS DRAFT */
 
+router.get("/getAllAdsDraft", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query("select * from ads_draft", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            console.log(rows);
+            res.json(rows);
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.get("/getMyAds", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -1228,6 +1253,34 @@ router.get("/getPaidFixedAdsByCity/:id", async (req, res, next) => {
   }
 });
 
+router.get("/getPaidAdsForAllCity", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -1486,7 +1539,7 @@ router.get("/getAllPaidAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.*, a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id order by p.id desc",
+          "select p.*, a.cover, a.address, a.map_link, a.phone, a.email, a.description , a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id order by p.id desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1719,6 +1772,34 @@ router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
   }
 });
 
+router.get("/getPaidEventsForAllCity", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.active = 1 and e.datetime >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -1816,13 +1897,15 @@ router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         return res.json(err);
       }
-      req.body.start_date = new Date(req.body.start_date);
+      req.body.start_date = new Date();
       const start_date = new Date(
         JSON.parse(JSON.stringify(req.body.start_date))
       );
       req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
       req.body.id_user = req.body.app_token.user.id;
-      console.log(req.body);
+      if (req.body.start_date_top) {
+        req.body.start_date_top = new Date(req.body.start_date_top);
+      }
       delete req.body.app_token;
       delete req.body.price;
       conn.query(

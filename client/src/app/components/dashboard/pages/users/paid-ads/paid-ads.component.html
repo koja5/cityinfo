@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+    <ejs-dialog id='dialogChange' #dialogChange showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
             <div>
@@ -32,7 +32,7 @@
         </ng-template>
     </ejs-dialog>
 
-    <ejs-dialog id='dialogEvent' #dialogEvent showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+    <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
             <div>
@@ -56,8 +56,8 @@
                     <hr>
                     <div *ngIf="user" class="row">
                         <div class="col-md-12">
-                            <label class="custom-label">{{language.firstname}}</label>
-                            <ejs-textbox cssClass="e-outline" [id]="user.firstname" [(ngModel)]="user.firstname"
+                            <label class="custom-label">{{language.nameOfOrganization}}</label>
+                            <ejs-textbox cssClass="e-outline" [id]="user.nameOfOrganization" [(ngModel)]="user.nameOfOrganization"
                                 name="name"></ejs-textbox>
                         </div>
                         <div class="col-md-12">

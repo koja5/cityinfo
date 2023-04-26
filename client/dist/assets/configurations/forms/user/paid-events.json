@@ -69,7 +69,8 @@
             "class": "e-outline",
             "name": "start_date_top",
             "title": "When you to start event on top?",
-            "field": "start_date_top"
+            "field": "start_date_top",
+            "format": "dd.MM.yyyy"
         },
         {
             "type": "numeric",

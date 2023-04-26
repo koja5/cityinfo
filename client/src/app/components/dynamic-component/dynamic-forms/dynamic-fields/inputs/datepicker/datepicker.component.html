@@ -2,12 +2,12 @@
   <label *ngIf="config.title" class="custom-label">{{ config.title
     }}</label>
   <ejs-datepicker cssClass="{{ config.class }}" [id]="config.name" [formControlName]="config.name"
-    [readonly]="config.readonly!"></ejs-datepicker>
+    [readonly]="config.readonly!" [format]="config.format"></ejs-datepicker>
 </div>
 
 <div *ngIf="config.schedule" [ngClass]="[config.width]" class="form-group">
   <label *ngIf="config.title" class="custom-label">{{ config.title
     }}</label>
   <ejs-datepicker cssClass="{{ config.class }}" [id]="config.name" [value]="config.value"
-    [readonly]="config.readonly!"></ejs-datepicker>
+    [readonly]="config.readonly!" [format]="config.format"></ejs-datepicker>
 </div>

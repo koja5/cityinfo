@@ -62,11 +62,9 @@ export class UserAdsComponent implements OnInit {
           this.listOfDrafts = data as EventsModel[];
         });
     } else {
-      this.service
-        .callGetMethod('api/getMyAds', '')
-        .subscribe((data: any) => {
-          this.listOfDrafts = data as AdsModel[];
-        });
+      this.service.callGetMethod('api/getMyAds', '').subscribe((data: any) => {
+        this.listOfDrafts = data as AdsModel[];
+      });
     }
   }
 
@@ -173,22 +171,35 @@ export class UserAdsComponent implements OnInit {
   createNewAdDraft() {
     this.dialog.show();
     this.data = new AdsModel();
-    this.fillFields();
+    this.fillAdFields();
     this.editButton = false;
   }
 
   createNewEventDraft() {
     this.dialogEvent.show();
-    this.data = new AdsModel();
-    this.fillFields();
+    this.event = new EventsModel();
+    this.fillEventFields();
     this.editButton = false;
   }
 
-  fillFields() {
+  fillAdFields() {
     this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
       if (data) {
         this.data = {
-          name: data[0].firstname,
+          name: data[0].nameOfOrganization,
+          address: data[0].address,
+          phone: data[0].phone,
+          email: data[0].email,
+        };
+      }
+    });
+  }
+
+  fillEventFields() {
+    this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
+      if (data) {
+        this.event = {
+          name: data[0].nameOfOrganization,
           address: data[0].address,
           phone: data[0].phone,
           email: data[0].email,
