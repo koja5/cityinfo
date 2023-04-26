@@ -231,9 +231,8 @@ export class PaidAdsComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               this.card.hide();
-              setTimeout(() => {
-                this.dialog.hide();
-              }, 20);
+              this.dialog.hide();
+              this.dialogChange.hide();
               this.toastr.showSuccessCustom(
                 this.language.successfullyPaidAd,
                 ''
@@ -248,6 +247,7 @@ export class PaidAdsComponent implements OnInit {
             if (data) {
               this.card.hide();
               this.dialog.hide();
+              this.dialogChange.hide();
               this.toastr.showSuccessCustom(
                 this.language.successfullyPaidAd,
                 ''
