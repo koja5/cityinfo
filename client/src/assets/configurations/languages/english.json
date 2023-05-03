@@ -30,7 +30,7 @@
     "dateAndTime": "Datum und Zeit",
     "submitAndPay": "Bestätigen und mit Zahlung fortsetzen",
     "description": "Beschreibung",
-    "uploadCoverImage": "Bilddatei hinaufladen",
+    "uploadCoverImage": "Bilddatei hinaufladen (Verhältnis: 720 x 448)",
     "uploadCoverImageButton": "Bilddatei hinaufladen und speichern",
     "editAd": "Änderungen speichern",
     "myDetails": "My details",
@@ -64,7 +64,7 @@
     "contactUs": "Anrufen",
     "sendMail": "E-Mail",
     "seeLocationOnMap": "Maps",
-    "showMode": "Anzeigemodus",
+    "showMode": "Mehr anzeigen",
     "payForAds": "Bezahlen",
     "approveAd": "Werbung bestätigen",
     "denyAd": "Werbung ablehnen",
@@ -96,7 +96,7 @@
     "clubRegistrationTitle": "Ich möchte einen Accoult als Verein bzw. Veranstalter anlegen und die gratis Services nutzen (die Freigabe des Accounts erfolgt durch den Administrator)",
     "nameOfEvent": "Event Zeile 1",
     "optional": "Optional",
-    "ad": "AD",
+    "ad": "Gesponsert",
     "event": "Event",
     "adTitle": "Das ist eine Werbung!",
     "eventTitle": "Das ist eine Veranstaltung!",
@@ -122,5 +122,8 @@
     "footerTerms": "ABGs",
     "and": "und",
     "agreeText": "Mit der Registrierung akzeptiere ich die",
-    "needToAcceptTermsAndPrivacy": "Mit der Registrierung müssen Sie die ABGs und die Datenschutzbestimmungen akzeptieren!"
+    "needToAcceptTermsAndPrivacy": "Mit der Registrierung müssen Sie die ABGs und die Datenschutzbestimmungen akzeptieren!",
+    "cookieTitle": "THIS WEBSITE USES COOKIES",
+    "cookieMessage": "We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services. You consent to our cookies if you continue to use our website.",
+    "acceptCookieButton": "Accept cookie"
 }

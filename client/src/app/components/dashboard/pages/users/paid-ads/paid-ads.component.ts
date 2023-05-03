@@ -135,6 +135,7 @@ export class PaidAdsComponent implements OnInit {
                 number_of_weeks: event.number_of_weeks,
                 active: 1,
                 id: event.id,
+                datetime: event.datetime
               };
               this.paymentInformation = {
                 event_date: event_date,

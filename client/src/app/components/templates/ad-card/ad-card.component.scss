@@ -198,20 +198,23 @@ a {
 }
 
 .badge-info {
-  width: 97%;
+  width: 105%;
   text-align: end;
+  margin-top: -10px;
+  background: none;
 }
 
 .badge-info span {
-  position: absolute;
-  font-size: 11px;
+  display: inline-table;
+  position: inherit;
+  font-size: 9px !important;
   border-radius: 12px;
-  width: 31px;
+  width: 59px;
   text-align: center;
   height: 12px;
   color: #fff;
   font-weight: bold;
-  font-size: 9px;
+  font-size: 11px;
   cursor: pointer;
 }
 

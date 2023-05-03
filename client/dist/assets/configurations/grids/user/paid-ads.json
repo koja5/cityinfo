@@ -90,7 +90,6 @@
         "title": "ID",
         "width": 70,
         "filterable": true,
-        "hideable": true,
         "filter": "date",
         "type": "number",
         "class": "text-align-right",
@@ -101,7 +100,6 @@
       {
         "title": "Start date",
         "filterable": true,
-        "hideable": true,
         "type": "date",
         "format": "dd.MM.yyyy",
         "class": "text-align-right",
@@ -113,7 +111,6 @@
       {
         "title": "Ads name",
         "filterable": true,
-        "hideable": true,
         "type": "string",
         "class": "text-align-right",
         "field": "ads_name",
@@ -124,7 +121,6 @@
       {
         "title": "City",
         "filterable": true,
-        "hideable": true,
         "type": "string",
         "class": "text-align-right",
         "field": "city_name",
@@ -141,7 +137,8 @@
         "name": "id",
         "title": "ID",
         "field": "id",
-        "readonly": true
+        "readonly": true,
+        "hide": true
       },
       {
         "type": "datepicker",

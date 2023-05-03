@@ -12,8 +12,9 @@ module.exports = class CustomTransport extends Transport {
   initialize() {
     try {
       // fs.writeFileSync(this.filename, [], 'utf8');
+      console.log(__dirname + "/../logs/" + this.filename);
       fs.writeFile(
-        __dirname + "\\..\\logs\\" + this.filename,
+        __dirname + "/../logs/" + this.filename,
         "",
         "utf8",
         function (err) {
@@ -28,14 +29,15 @@ module.exports = class CustomTransport extends Transport {
 
   setup() {
     // This checks if the file exists
-    if (fs.existsSync(__dirname + "\\..\\logs\\" + this.filename)) {
+    if (fs.existsSync(__dirname + "/../logs/" + this.filename)) {
       // The content of the file is checked to know if it is necessary to adapt the array
       try {
         const data = fs.readFile(
-          __dirname + "\\..\\logs\\" + this.filename,
-          "utf8", function(err) {
-              if(err) return err;
-              return true;
+          __dirname + "/../logs/" + this.filename,
+          "utf8",
+          function (err) {
+            if (err) return err;
+            return true;
           }
         );
         // If the content of the file is not an array, it is set
@@ -56,10 +58,14 @@ module.exports = class CustomTransport extends Transport {
   readLog() {
     let data = null;
     try {
-      data = fs.readFileSync(__dirname + "\\..\\logs\\" + this.filename, "utf8", function(err) {
-          if(err) return err;
+      data = fs.readFileSync(
+        __dirname + "/../logs/" + this.filename,
+        "utf8",
+        function (err) {
+          if (err) return err;
           return true;
-      });
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -78,10 +84,16 @@ module.exports = class CustomTransport extends Transport {
     const json = JSON.stringify(arr);
     try {
       // Writing the array again
-      fs.writeFileSync(__dirname + "\\..\\logs\\" + this.filename, json, "utf8", function(err) {
-          if(err) return err;
+      console.log(__dirname + "/../logs/" + this.filename);
+      fs.writeFileSync(
+        __dirname + "/../logs/" + this.filename,
+        json,
+        "utf8",
+        function (err) {
+          if (err) return err;
           return true;
-      });
+        }
+      );
     } catch (error) {
       console.log(error);
     }

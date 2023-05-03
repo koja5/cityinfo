@@ -90,7 +90,6 @@
             "title": "ID",
             "width": 70,
             "filterable": true,
-            "hideable": true,
             "filter": "date",
             "type": "number",
             "class": "text-align-right",
@@ -101,7 +100,6 @@
         {
             "title": "Firstname",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "firstname",
@@ -112,7 +110,6 @@
         {
             "title": "Phone",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "phone",
@@ -123,7 +120,6 @@
         {
             "title": "Mobile",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "mobile",
@@ -134,7 +130,6 @@
         {
             "title": "Address",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "address",
@@ -145,7 +140,6 @@
         {
             "title": "Zip code",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "zip_code",
@@ -156,7 +150,6 @@
         {
             "title": "City",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "city",
@@ -219,7 +212,8 @@
             "name": "id",
             "title": "ID",
             "field": "id",
-            "readonly": true
+            "readonly": true,
+            "hide": true
         },
         {
             "type": "textbox",

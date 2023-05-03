@@ -13,6 +13,7 @@ export class FieldConfig {
   required?: boolean;
   disabled?: boolean;
   readonly?: boolean;
+  hide?: boolean;
   floatLabel?: string;
   name!: string;
   options?: string[];

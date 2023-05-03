@@ -24,7 +24,7 @@
                                 title="{{data.name}}">{{data.name}}
                             </p>
                             <!-- <p class="text-3xl text-gray-900">$750,000</p> -->
-                            <p class="text-gray-700 three-dots" title="{{data.address}}">{{data.address}}
+                            <p class="text-gray-700 three-dots" title="{{data.address}}"><span class="fa fa-map-marker"></span> {{data.address}}
                             </p>
                         </div>
                         <div *ngIf="showDate || data.datetime" class="col-md-6 text-right start-end-date">
@@ -37,7 +37,7 @@
                                 <p class="text-gray-700"><span class="fa fa-calendar"></span> {{data.datetime | date:
                                     'dd.MM.yyyy'}}</p>
                                 <p class="text-gray-700"><span class="fa fa-clock"></span> {{data.datetime | date:
-                                    'hh.mm'}}</p>
+                                    'HH.mm'}}</p>
                             </div>
                         </div>
                     </div>

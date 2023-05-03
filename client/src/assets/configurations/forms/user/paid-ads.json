@@ -8,7 +8,7 @@
             "title": "ID",
             "field": "id",
             "readonly": true,
-            "hideable": true
+            "hide": true
         },
         {
             "type": "combobox",

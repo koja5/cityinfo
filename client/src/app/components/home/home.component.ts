@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -16,11 +17,13 @@ export class HomeComponent implements OnInit {
   public selectedCity: any;
   public language: any;
   public year!: number;
+  public showCookieMessage = false;
 
   constructor(
     private service: CallApiService,
     private helpService: HelpService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,10 @@ export class HomeComponent implements OnInit {
     if (this.helpService.getLocalStorageStringValue('selectedCity')) {
       this.selectedCity =
         this.helpService.getLocalStorageStringValue('selectedCity');
+    }
+
+    if(!this.storageService.getCookie('cookie')) {
+      this.showCookieMessage = true;
     }
   }
 
@@ -189,5 +196,9 @@ export class HomeComponent implements OnInit {
       }
     }
     return count;
+  }
+
+  hideCookieMessage() {
+    this.showCookieMessage = false;
   }
 }

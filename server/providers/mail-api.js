@@ -15,6 +15,7 @@ router.post("/verificationMailAddress", function (req, res, next) {
   body.activate_mail.fields["link"] =
     process.env.link_api + "/verificationMail/" + sha1(req.body.email);
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.activate_mail,
@@ -37,6 +38,7 @@ router.post("/verificationMailAddressForClub", function (req, res, next) {
   body.activate_mail_for_club.fields["link"] =
     process.env.link_api + "/verificationMailForClub/" + sha1(req.body.email);
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.activate_mail_for_club,
@@ -62,7 +64,10 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
 
   body.send_request_for_new_created_club_account.fields["link"] =
     process.env.link_api + "activeClub/" + sha1(req.body.email);
+  body.send_request_for_new_created_club_account.fields["deactive"] =
+    process.env.link_api + "deactiveClub/" + sha1(req.body.email);
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.send_request_for_new_created_club_account,
@@ -77,34 +82,59 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
   });
 });
 
-router.post(
-  "/info_approved_club_account_from_admin",
-  function (req, res, next) {
-    var body = JSON.parse(
-      fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+router.post("/infoApprovedClubAccountFromAdmin", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+  body.info_approved_club_account_from_admin.fields["email"] = req.body.email;
+  body.info_approved_club_account_from_admin.fields["greeting"] =
+    body.info_approved_club_account_from_admin.fields["greeting"].replace(
+      "{firstname}",
+      req.body.firstname
     );
-    body.info_approved_club_account_from_admin.fields["email"] = req.body.email;
-    body.info_approved_club_account_from_admin.fields["greeting"] =
-      body.info_approved_club_account_from_admin.fields["greeting"].replace(
-        "{firstname}",
-        req.body.firstname
-      );
-    var options = {
-      url: process.env.link_api + "mail-server/sendMail",
-      method: "POST",
-      body: body.info_approved_club_account_from_admin,
-      json: true,
-    };
-    console.log(options);
-    request(options, function (error, response, body) {
-      if (!error) {
-        res.json(true);
-      } else {
-        res.json(false);
-      }
-    });
-  }
-);
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMail",
+    method: "POST",
+    body: body.info_approved_club_account_from_admin,
+    json: true,
+  };
+  console.log(options);
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+});
+
+router.post("/infoDeactiveClubAccountFromAdmin", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+  body.info_deactive_club_account_from_admin.fields["email"] = req.body.email;
+  body.info_deactive_club_account_from_admin.fields["greeting"] =
+    body.info_deactive_club_account_from_admin.fields["greeting"].replace(
+      "{firstname}",
+      req.body.firstname
+    );
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMail",
+    method: "POST",
+    body: body.info_deactive_club_account_from_admin,
+    json: true,
+  };
+  console.log(options);
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+});
 
 router.post("/infoForActiveFreeAd", function (req, res, next) {
   var body = JSON.parse(
@@ -117,6 +147,7 @@ router.post("/infoForActiveFreeAd", function (req, res, next) {
       req.body.firstname
     );
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.info_about_changed_user_data,
@@ -139,6 +170,7 @@ router.post("/sentLinkToEmailForReset", function (req, res, next) {
   body.reset_password.fields["link"] =
     process.env.link_client + "forgot-password/" + sha1(req.body.email);
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.reset_password,
@@ -169,10 +201,9 @@ router.post("/sendRequestForFreeAd", function (req, res, next) {
   body.send_request_for_free_ad.fields["number_of_weeks"] =
     req.body.number_of_weeks;
   body.send_request_for_free_ad.fields["link"] =
-    process.env.link_client +
-    "dashboard/superadmin/preview-ad/" +
-    req.body.id;
+    process.env.link_client + "dashboard/superadmin/preview-ad/" + req.body.id;
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.send_request_for_free_ad,
@@ -199,12 +230,13 @@ router.post("/infoForActiveFreeAd", function (req, res, next) {
       req.body.firstname
     );
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.info_for_active_free_ad,
     json: true,
   };
-  console.log(options);
+
   request(options, function (error, response, body) {
     if (!error) {
       res.json(true);
@@ -225,6 +257,7 @@ router.post("/infoForDenyFreeAd", function (req, res, next) {
       req.body.firstname
     );
   var options = {
+    rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
     method: "POST",
     body: body.info_for_deny_free_ad,

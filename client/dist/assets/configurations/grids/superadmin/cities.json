@@ -90,7 +90,6 @@
       "title": "ID",
       "width": 70,
       "filterable": true,
-      "hideable": true,
       "filter": "date",
       "type": "number",
       "class": "text-align-right",
@@ -101,7 +100,6 @@
     {
       "title": "Name",
       "filterable": true,
-      "hideable": true,
       "type": "string",
       "class": "text-align-right",
       "field": "name",
@@ -112,7 +110,6 @@
     {
       "title": "Zip code",
       "filterable": true,
-      "hideable": true,
       "type": "string",
       "class": "text-align-right",
       "field": "zip_code",
@@ -123,7 +120,6 @@
     {
       "title": "District",
       "filterable": true,
-      "hideable": true,
       "type": "string",
       "class": "text-align-right",
       "field": "district",
@@ -140,7 +136,8 @@
       "name": "id",
       "title": "ID",
       "field": "id",
-      "readonly": true
+      "readonly": true,
+      "hide": true
     },
     {
       "type": "textbox",

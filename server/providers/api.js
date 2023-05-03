@@ -29,11 +29,6 @@ var connection = mysql.createPool({
   database: "cityinfo_prod",
 });
 
-connection.getConnection(function (err, conn) {
-  console.log(err);
-  console.log(conn);
-});
-
 /* GET api listing. */
 router.get("/", (req, res) => {
   // res.send("api works");
@@ -44,37 +39,36 @@ router.post("/signUp", async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       conn.query(
         "select * from users where email = ?",
         [req.body.email],
         async function (err, rows, fields) {
           if (err) {
+            conn.release();
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           }
           if (rows.length > 0) {
+            conn.release();
             res.json(false);
           } else {
             req.body.password = sha1(req.body.password);
             req.body.type = 2;
-            if (req.body.is_club) {
-              req.body.active = -1;
-            } else {
-              req.body.active = 0;
-            }
             conn.query(
               "insert into users set ?",
               req.body,
               async function (err) {
+                conn.release();
                 if (err) {
                   logger.log("error", err.sql + ". " + err.sqlMessage);
-                  return res.json(err);
+                  return res.json(false);
                 } else {
                   logger.log("info", "New user create account!");
                   if (req.body.is_club) {
                     var options = {
+                      rejectUnauthorized: false,
                       url:
                         process.env.link_api + "verificationMailAddressForClub",
                       method: "POST",
@@ -83,6 +77,7 @@ router.post("/signUp", async function (req, res, next) {
                     };
 
                     var option_request = {
+                      rejectUnauthorized: false,
                       url:
                         process.env.link_api +
                         "sendInfoForNewCreatedClubAccount",
@@ -96,13 +91,16 @@ router.post("/signUp", async function (req, res, next) {
                     );
                   } else {
                     var options = {
+                      rejectUnauthorized: false,
                       url: process.env.link_api + "verificationMailAddress",
                       method: "POST",
                       body: { email: req.body.email },
                       json: true,
                     };
                   }
-                  request(options, function (error, response, body) {});
+                  request(options, function (error, response, body) {
+                    console.log(error);
+                  });
                   res.json(true);
                 }
               }
@@ -120,20 +118,19 @@ router.post("/login", function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
-      return res.json(err);
+      return res.json(false);
     }
     console.log(sha1(req.body.password));
     conn.query(
       "select * from users WHERE email=? AND password=? AND active = 1",
       [req.body.email, sha1(req.body.password)],
       function (err, rows, fields) {
+        conn.release();
         if (err) {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(err);
         }
-        console.log(rows);
         if (rows.length > 0) {
-          conn.end();
           const token = jwt.sign(
             {
               user: {
@@ -157,6 +154,12 @@ router.post("/login", function (req, res, next) {
             token: token,
           });
         } else {
+          logger.log(
+            "error",
+            `USER: ${
+              req.body.email
+            } is NOT AUTHORIZED at ${new Date().toDateString()}.`
+          );
           return res.json(false);
         }
       }
@@ -182,9 +185,9 @@ router.get("/activeClub/:email", function (req, res, next) {
               function (err, rows) {
                 conn.release();
                 var option_request = {
+                  rejectUnauthorized: false,
                   url:
-                    process.env.link_api +
-                    "info_approved_club_account_from_admin",
+                    process.env.link_api + "infoApprovedClubAccountFromAdmin",
                   method: "POST",
                   body: rows[0],
                   json: true,
@@ -194,6 +197,49 @@ router.get("/activeClub/:email", function (req, res, next) {
               }
             );
           } else {
+            conn.release();
+            return res.redirect("/message/error");
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/deactiveClub/:email", function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update users SET active = 0 where sha1(email) = ?",
+        [req.params.email],
+        function (err, rows) {
+          if (!err) {
+            conn.query(
+              "select * from users where sha1(email) = ?",
+              [req.params.email],
+              function (err, rows) {
+                conn.release();
+                var option_request = {
+                  rejectUnauthorized: false,
+                  url:
+                    process.env.link_api + "infoDeactiveClubAccountFromAdmin",
+                  method: "POST",
+                  body: rows[0],
+                  json: true,
+                };
+                request(option_request, function (error, response, body) {});
+                return res.redirect("/");
+              }
+            );
+          } else {
+            conn.release();
             return res.redirect("/message/error");
           }
         }
@@ -342,12 +388,12 @@ router.post("/createCity", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       conn.query("insert into cities set ?", req.body, async function (err) {
         if (err) {
           logger.log("error", err.sql + ". " + err.sqlMessage);
-          return res.json(err);
+          return res.json(false);
         } else {
           logger.log("info", "Create new city");
           res.json(true);
@@ -449,12 +495,12 @@ router.post("/createUser", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       conn.query("insert into users set ?", req.body, async function (err) {
         if (err) {
           logger.log("error", err.sql + ". " + err.sqlMessage);
-          return res.json(err);
+          return res.json(false);
         } else {
           logger.log("info", "Create new city");
           res.json(true);
@@ -480,6 +526,7 @@ router.post("/updateUser", auth, function (req, res, next) {
           conn.release();
           if (!err) {
             var option_request = {
+              rejectUnauthorized: false,
               url: process.env.link_api + "infoForActiveFreeAd",
               method: "POST",
               body: req.body,
@@ -562,12 +609,12 @@ router.post("/createDistrict", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       conn.query("insert into districts set ?", req.body, async function (err) {
         if (err) {
           logger.log("error", err.sql + ". " + err.sqlMessage);
-          return res.json(err);
+          return res.json(false);
         } else {
           logger.log("info", "Create new city");
           res.json(true);
@@ -671,7 +718,7 @@ router.get("/verificationMailForClub/:email", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "update users set active = 2 where SHA1(email) = ?",
+          "update users set active = 1 where SHA1(email) = ?",
           [req.params.email],
           function (err, rows, fields) {
             conn.release();
@@ -725,6 +772,7 @@ router.get("/getMyAds", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
+        console.log(req.user.user.id);
         conn.query(
           "select * from ads_draft where id_user = ?",
           req.user.user.id,
@@ -812,6 +860,7 @@ router.get("/getEventsDraft", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
+        console.log(req);
         conn.query(
           "select * from events_draft where id_user = ?",
           req.user.user.id,
@@ -955,7 +1004,7 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       req.body.start_date = new Date(req.body.start_date);
       const start_date = new Date(
@@ -970,7 +1019,7 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
         async function (err, rows) {
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Create request for free Ad");
             conn.query(
@@ -983,6 +1032,7 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
                   res.json(err);
                 } else {
                   var options = {
+                    rejectUnauthorized: false,
                     url: process.env.link_api + "sendRequestForFreeAd",
                     method: "POST",
                     body: rows[0],
@@ -1008,7 +1058,7 @@ router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       req.body.start_date = new Date(req.body.start_date);
       const start_date = new Date(
@@ -1025,7 +1075,7 @@ router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Paid new Ad!");
             return res.json(true);
@@ -1043,7 +1093,7 @@ router.post("/updatePaidAdWithoutAuth", async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       req.body.start_date = new Date(req.body.start_date);
       const start_date = new Date(
@@ -1066,7 +1116,7 @@ router.post("/updatePaidAdWithoutAuth", async function (req, res, next) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Paid new for CURRENT EVENT!");
             return res.json(true);
@@ -1443,6 +1493,7 @@ router.post("/activeAd", auth, function (req, res, next) {
           conn.release();
           if (!err) {
             var options = {
+              rejectUnauthorized: false,
               url: process.env.link_api + "infoForActiveFreeAd",
               method: "POST",
               body: req.body,
@@ -1477,6 +1528,7 @@ router.post("/denyAd", auth, function (req, res, next) {
           conn.release();
           if (!err) {
             var options = {
+              rejectUnauthorized: false,
               url: process.env.link_api + "infoForDenyFreeAd",
               method: "POST",
               body: req.body,
@@ -1511,6 +1563,7 @@ router.post("/deletePaidAd", auth, function (req, res, next) {
           conn.release();
           if (!err) {
             var options = {
+              rejectUnauthorized: false,
               url: process.env.link_api + "infoForActiveFreeAd",
               method: "POST",
               body: req.body,
@@ -1655,11 +1708,12 @@ router.post("/createPaidEvent", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
-      var d = new Date();
-      d.setDate(d.getDate() + 1);
-      req.body.start_date = d;
+      // var d = new Date();
+      // d.setDate(d.getDate() + 1);
+      // req.body.start_date = d;
+      req.body.datetime = new Date(req.body.datetime);
       req.body.id_user = req.user.user.id;
       conn.query(
         "insert into paid_events set ?",
@@ -1668,7 +1722,7 @@ router.post("/createPaidEvent", auth, async function (req, res, next) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Create new events!");
             return res.json(true);
@@ -1751,7 +1805,7 @@ router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date > now() and p.expired_date is null order by e.datetime asc",
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date > now() and p.expired_date is null order by p.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1780,7 +1834,7 @@ router.get("/getPaidEventsForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.active = 1 and e.datetime >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1808,7 +1862,7 @@ router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and e.datetime >= now() order by p.position asc, p.expired_date desc, e.datetime asc",
+          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1895,16 +1949,19 @@ router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
-      req.body.start_date = new Date();
-      const start_date = new Date(
-        JSON.parse(JSON.stringify(req.body.start_date))
-      );
-      req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
       req.body.id_user = req.body.app_token.user.id;
+      req.body.datetime = new Date(req.body.datetime);
       if (req.body.start_date_top) {
         req.body.start_date_top = new Date(req.body.start_date_top);
+        const expired_date = new Date(
+          JSON.parse(JSON.stringify(req.body.start_date_top))
+        );
+        req.body.expired_date = addWeeks(
+          expired_date,
+          req.body.number_of_weeks
+        );
       }
       delete req.body.app_token;
       delete req.body.price;
@@ -1915,7 +1972,7 @@ router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Paid new Event!");
             return res.json(true);
@@ -1933,7 +1990,7 @@ router.post("/updatePaidEventWithoutAuth", async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       req.body.start_date_top = new Date(req.body.start_date_top);
       const start_date_top = new Date(
@@ -1958,7 +2015,7 @@ router.post("/updatePaidEventWithoutAuth", async function (req, res, next) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Paid new for CURRENT EVENT!");
             return res.json(true);
@@ -2008,7 +2065,7 @@ router.post("/createPositionPrice", auth, async function (req, res, next) {
     connection.getConnection(async function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
-        return res.json(err);
+        return res.json(false);
       }
       conn.query(
         "insert into position_prices set ?",
@@ -2016,7 +2073,7 @@ router.post("/createPositionPrice", auth, async function (req, res, next) {
         async function (err) {
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
-            return res.json(err);
+            return res.json(false);
           } else {
             logger.log("info", "Create new city");
             res.json(true);

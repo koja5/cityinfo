@@ -25,7 +25,8 @@
             "title": "Created new Club account!",
             "text": "Please check info of new created team account. Information about club you can see below!",
             "greeting": "Hi",
-            "buttonText": "Activate club account"
+            "buttonText": "Activate club account",
+            "buttonTextDeactive": "Deactive club account"
         }
     },
     "info_approved_club_account_from_admin": {
@@ -34,6 +35,15 @@
         "fields": {
             "title": "Your club account is activated!",
             "text": "We would like to inform you that your club account is activated now, so you can start with create events for your club!",
+            "greeting": "Hi {firstname}"
+        }
+    },
+    "info_deactive_club_account_from_admin": {
+        "template": "info_approved_club_account_from_admin.hjs",
+        "subject": "Your club account is deactived!",
+        "fields": {
+            "title": "Your club account is deactived!",
+            "text": "We would like to inform you that your club account is deactived now! You have not met the requirements to create a club account! If there is an error, please contact us!",
             "greeting": "Hi {firstname}"
         }
     },

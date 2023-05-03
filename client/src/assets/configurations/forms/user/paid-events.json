@@ -4,10 +4,10 @@
             "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "hideable": true,
             "name": "id",
             "title": "ID",
-            "field": "id"
+            "field": "id",
+            "hide": true
         },
         {
             "type": "combobox",
@@ -56,6 +56,15 @@
                 "filter": true
             },
             "required": true
+        },
+        {
+            "type": "datetimepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "Date and time",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:mm"
         },
         {
             "type": "label",

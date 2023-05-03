@@ -88,6 +88,6 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.storageService.deleteToken();
     this.storageService.removeAllLocalStorage();
-    this.router.navigate(['/login']);
+    window.open('/login', '_self');
   }
 }

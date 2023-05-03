@@ -62,4 +62,12 @@ export class StorageService {
   deleteToken() {
     this.cookieService.delete('token', '/');
   }
+
+  setCookie(name: string, value: any) {
+    this.cookieService.set(name, value);
+  }
+
+  getCookie(name: string) {
+    return this.cookieService.get(name);
+  }
 }

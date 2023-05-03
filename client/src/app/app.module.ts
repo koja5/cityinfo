@@ -21,6 +21,7 @@ import { TermsComponent } from './components/home/pages/terms/terms.component';
 import { RightOfWithdrawalComponent } from './components/home/pages/right-of-withdrawal/right-of-withdrawal.component';
 import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/privacy-policy.component';
 import { NavigationComponent } from './components/home/parts/navigation/navigation.component';
+import { CookieComponent } from './components/templates/cookie/cookie.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NavigationComponent } from './components/home/parts/navigation/navigati
     RightOfWithdrawalComponent,
     PrivacyPolicyComponent,
     DynamicTextFormComponent,
-    NavigationComponent
+    NavigationComponent,
+    CookieComponent
   ],
   imports: [
     BrowserModule,

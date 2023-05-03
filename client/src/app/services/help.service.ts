@@ -4,6 +4,7 @@ import { StorageService } from './storage.service';
 import { UserType } from '../enums/user-type';
 import { FileType } from '../enums/file-type';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class HelpService {
 
   constructor(
     private storageService: StorageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   postRequestDataParameters(body: any, data: any, parameters: string[]) {
@@ -34,7 +36,11 @@ export class HelpService {
   }
 
   getDecodeToken() {
-    return this.helper.decodeToken(this.storageService.getToken()).user;
+    if (!this.storageService.getToken()) {
+      this.router.navigate(['/login']);
+    } else {
+      return this.helper.decodeToken(this.storageService.getToken()).user;
+    }
   }
 
   setLocalStorage(key: string, value: any) {

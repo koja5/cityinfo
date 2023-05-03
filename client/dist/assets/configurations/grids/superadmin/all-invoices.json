@@ -64,7 +64,6 @@
             "title": "ID",
             "width": 70,
             "filterable": true,
-            "hideable": true,
             "filter": "date",
             "type": "number",
             "class": "text-align-right",
@@ -75,7 +74,6 @@
         {
             "title": "Ads name",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "ads_name",
@@ -86,7 +84,6 @@
         {
             "title": "Start date",
             "filterable": true,
-            "hideable": true,
             "type": "date",
             "format": "dd.MM.yyyy",
             "class": "text-align-right",
@@ -98,7 +95,6 @@
         {
             "title": "Expired date",
             "filterable": true,
-            "hideable": true,
             "type": "date",
             "format": "dd.MM.yyyy",
             "class": "text-align-right",
@@ -110,7 +106,6 @@
         {
             "title": "City",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "city_name",
@@ -121,7 +116,6 @@
         {
             "title": "Number of weeks",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "number_of_weeks",
@@ -132,7 +126,6 @@
         {
             "title": "Price",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "field": "price",
@@ -189,7 +182,6 @@
         {
             "title": "",
             "filterable": true,
-            "hideable": true,
             "type": "string",
             "class": "text-align-right",
             "template": {

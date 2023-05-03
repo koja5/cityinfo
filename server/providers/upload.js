@@ -136,8 +136,6 @@ router.post(
         }
 
         const events = JSON.parse(req.body.additionalData);
-        events.datetime = new Date(events.datetime);
-        console.log(events);
         if (events["cover"]) {
           events["cover_old"] = events["cover"];
         }
