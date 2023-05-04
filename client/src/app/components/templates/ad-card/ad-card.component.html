@@ -1,7 +1,7 @@
 <body class="antialiased bg-gray-200 font-sans mb-4" *ngIf="data">
     <div class="max-w-6xl mx-auto">
         <div>
-            <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 py-6 px-3 card-body" (click)="dialog.show()">
+            <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 py-6 px-3 card-body" (click)="showDetails()">
                 <div
                     class="bg-white shadow-xl rounded-lg overflow-hidden card-item {{data.position == 1 ? 'fixed' : ''}}">
                     <div class="bg-cover bg-center h-55">
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <ejs-dialog id='dialog' #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true"
+    <ejs-dialog #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true"
         width="200px">
         <ng-template #content>
 
