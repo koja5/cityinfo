@@ -890,7 +890,6 @@ router.post("/updateEventDraft", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
-      req.body.datetime = new Date(req.body.datetime);
       conn.query(
         "update events_draft SET ? where id = ?",
         [req.body, req.body.id],

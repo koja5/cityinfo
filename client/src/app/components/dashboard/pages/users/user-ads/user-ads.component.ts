@@ -124,7 +124,6 @@ export class UserAdsComponent implements OnInit {
         additionalData: this.data ? JSON.stringify(this.data) : '',
       },
     ];
-    console.log(args);
 
     setTimeout(() => {
       if (args.currentRequest?.status == 200) {
@@ -132,8 +131,9 @@ export class UserAdsComponent implements OnInit {
         window.location.reload();
       } else {
         this.toastr.showErrorCustom('Not successfuly created new ads draft!');
+        window.location.reload();
       }
-    }, 500);
+    }, 800);
   }
 
   public onUploadBeginEvents(args: UploadingEventArgs) {
@@ -156,8 +156,9 @@ export class UserAdsComponent implements OnInit {
         window.location.reload();
       } else {
         this.toastr.showErrorCustom('Not successfuly created new ads draft!');
+        window.location.reload();
       }
-    }, 500);
+    }, 800);
   }
 
   changesFile(event: any) {
