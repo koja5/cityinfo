@@ -39,6 +39,8 @@ export class PaidAdsComponent implements OnInit {
   public user: any;
   public isClub: boolean = false;
   public changeData: any;
+  public adPreview = false;
+  public loader = false;
 
   constructor(
     private service: CallApiService,
@@ -135,11 +137,12 @@ export class PaidAdsComponent implements OnInit {
                 number_of_weeks: event.number_of_weeks,
                 active: 1,
                 id: event.id,
-                datetime: event.datetime
+                datetime: event.datetime,
               };
               this.paymentInformation = {
                 event_date: event_date,
               };
+              this.adPreview = true;
               this.card.show();
             }
           });
@@ -188,22 +191,11 @@ export class PaidAdsComponent implements OnInit {
             this.paymentInformation = {
               ad_date: ad_date,
             };
+            this.adPreview = true;
             this.card.show();
           }
         });
     }
-  }
-
-  onStripeInvalid(error: Error) {
-    console.log('Validation Error', error);
-  }
-
-  onStripeError(error: Error) {
-    console.error('Stripe error', error);
-  }
-
-  setPaymentMethod(token: stripe.paymentMethod.PaymentMethod) {
-    console.log('Stripe Payment Method', token);
   }
 
   setStripeToken(token: stripe.Token) {
@@ -226,6 +218,7 @@ export class PaidAdsComponent implements OnInit {
         this.paymentInformation.action_type = ActionsType.create;
       }
 
+      this.loader = true;
       if (this.helpService.checkAccountIsClub()) {
         this.service
           .callPostMethod('/api/createEventPayment', this.paymentInformation)
@@ -238,6 +231,7 @@ export class PaidAdsComponent implements OnInit {
                 this.language.successfullyPaidAd,
                 ''
               );
+              this.loader = false;
               this.intializeData();
             }
           });
@@ -253,6 +247,7 @@ export class PaidAdsComponent implements OnInit {
                 this.language.successfullyPaidAd,
                 ''
               );
+              this.loader = false;
               this.intializeData();
             }
           });
@@ -302,5 +297,9 @@ export class PaidAdsComponent implements OnInit {
           }
         });
     }
+  }
+
+  paymentDialogClose() {
+    this.adPreview = false;
   }
 }

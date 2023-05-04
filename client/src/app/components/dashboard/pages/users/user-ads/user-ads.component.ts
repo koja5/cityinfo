@@ -187,7 +187,6 @@ export class UserAdsComponent implements OnInit {
       if (data) {
         this.data = {
           name: data[0].nameOfOrganization,
-          address: data[0].address,
           phone: data[0].phone,
           email: data[0].email,
         };
@@ -200,7 +199,6 @@ export class UserAdsComponent implements OnInit {
       if (data) {
         this.event = {
           name: data[0].nameOfOrganization,
-          address: data[0].address,
           phone: data[0].phone,
           email: data[0].email,
         };

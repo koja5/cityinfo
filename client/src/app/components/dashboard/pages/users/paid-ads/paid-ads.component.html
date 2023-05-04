@@ -19,15 +19,17 @@
     </div>
     <div class="row" *ngIf="listOfPaid">
         <div *ngFor="let item of listOfPaid" class="col-md-4">
-            <app-ad-card [data]="item" [showDate]="true" [promotion]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
+            <app-ad-card [data]="item" [showDate]="true" [promotion]="true"
+                (clickEmitter)="clickEmitter($event)"></app-ad-card>
         </div>
     </div>
 
-    <ejs-dialog id='dialogChange' #dialogChange showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
-        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+    <ejs-dialog id='dialogChange' #dialogChange showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)"
+        showOnInit="true" [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
             <div>
-                <app-dynamic-forms *ngIf="changeData&&config" [config]="config" [data]="changeData" [path]="path" [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
+                <app-dynamic-forms *ngIf="changeData&&config" [config]="config" [data]="changeData" [path]="path"
+                    [file]="file" (submit)="submitEmitter($event)"></app-dynamic-forms>
             </div>
         </ng-template>
     </ejs-dialog>
@@ -43,12 +45,12 @@
 
     <!--CARD -->
 
-    <ejs-dialog id='card' #card showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
-        [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
+    <ejs-dialog id='card' #card showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" (close)="paymentDialogClose()"
+        showOnInit="true" [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
-            <div class="row">
+            <div class="row" *ngIf="!loader">
                 <div class="col-md-6">
-                    <app-ad-card *ngIf="data&&paidAd" [data]="data" [additionalInformation]="paidAd"
+                    <app-ad-card *ngIf="data&&paidAd&&adPreview" [data]="data" [additionalInformation]="paidAd"
                         [approveDenyButton]="false"></app-ad-card>
                 </div>
                 <div class="col-md-6">
@@ -57,8 +59,8 @@
                     <div *ngIf="user" class="row">
                         <div class="col-md-12">
                             <label class="custom-label">{{language.nameOfOrganization}}</label>
-                            <ejs-textbox cssClass="e-outline" [id]="user.nameOfOrganization" [(ngModel)]="user.nameOfOrganization"
-                                name="name"></ejs-textbox>
+                            <ejs-textbox cssClass="e-outline" [id]="user.nameOfOrganization"
+                                [(ngModel)]="user.nameOfOrganization" name="name"></ejs-textbox>
                         </div>
                         <div class="col-md-12">
                             <label class="custom-label">{{language.address}}</label>
@@ -77,8 +79,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <stripe-card #stripeCard (paymentMethodChange)="setPaymentMethod($event)"
-                            (tokenChange)="setStripeToken($event)"
+                        <stripe-card #stripeCard (tokenChange)="setStripeToken($event)"
                             (sourceChange)="setStripeSource($event)"></stripe-card>
                         <div class="text-right">
                             <button class="button-action e-info e-control e-btn e-lib mt-4" type="button"
@@ -86,6 +87,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div *ngIf="loader">
+                <app-loader></app-loader>
             </div>
         </ng-template>
     </ejs-dialog>
