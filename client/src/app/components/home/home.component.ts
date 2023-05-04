@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   public language: any;
   public year!: number;
   public showCookieMessage = false;
+  public loader = false;
 
   constructor(
     private service: CallApiService,
@@ -43,7 +44,7 @@ export class HomeComponent implements OnInit {
         this.helpService.getLocalStorageStringValue('selectedCity');
     }
 
-    if(!this.storageService.getCookie('cookie')) {
+    if (!this.storageService.getCookie('cookie')) {
       this.showCookieMessage = true;
     }
   }
@@ -98,6 +99,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllData(methodForAds: string, methodForEvents: string, parameter: string) {
+    this.loader = true;
     this.service
       .callGetMethod('api/' + methodForAds, parameter)
       .subscribe((ads: any) => {
@@ -118,6 +120,7 @@ export class HomeComponent implements OnInit {
             );
             this.allAds = this.allAds.concat(ads.splice(0, ads.length));
             this.allAds = this.allAds.concat(events.splice(0, events.length));
+            this.loader = false;
           });
       });
   }

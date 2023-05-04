@@ -56,12 +56,15 @@
             <app-ad-card *ngFor="let item of rightFixedAds" [data]="item" class="col-md-12"
                 [fixed]="'fixed'"></app-ad-card>
         </div> -->
-        <div class="main-container">
+        <div *ngIf="loader" style="height: 81vh;">
+            <app-loader></app-loader>
+        </div>
+        <div class="main-container" *ngIf="!loader">
             <!-- <div class="row" *ngIf="allFixedAds && allFixedAds.length > 0">
                 <app-ad-card *ngFor="let item of allFixedAds" [data]="item" class="col-md-3"
                     [fixed]="'fixed'"></app-ad-card>
             </div> -->
-            <div class="row" *ngIf="allAds && allAds.length > 0">
+            <div class="row" style="min-height: 81vh;" *ngIf="allAds && allAds.length > 0">
                 <app-ad-card *ngFor="let item of allAds" [data]="item" class="col-md-3"></app-ad-card>
             </div>
             <div *ngIf="!allAds || allAds.length == 0" class="outer" style="height: 81vh;">
