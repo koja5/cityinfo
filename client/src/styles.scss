@@ -227,11 +227,19 @@ label {
   .e-popup.e-popup-open.e-dialog {
     width: 50% !important;
   }
+
+  .e-popup.e-popup-open.e-dialog.confirm-dialog {
+    width: 400px !important;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
   .e-popup.e-popup-open.e-dialog {
     width: 70% !important;
+  }
+
+  .e-popup.e-popup-open.e-dialog.confirm-dialog {
+    width: 500px !important;
   }
 }
 
@@ -335,4 +343,10 @@ mat-icon {
 
 .text-italic {
   font-style: italic;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+  background: none !important;
 }

@@ -1,9 +1,11 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { ActionsType } from 'src/app/enums/actions-type';
@@ -13,6 +15,9 @@ import { CallApiService } from 'src/app/services/call-api.service';
 import { HelpService } from 'src/app/services/help.service';
 import { ToastrComponent } from '../../dynamic-component/common/toastr/toastr.component';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
+import { DialogConfirmComponent } from '../../common/dialog-confirm/dialog-confirm.component';
+import { DecisionType } from 'src/app/enums/decision-type';
+import { TypeOfComponent } from 'src/app/enums/type-of-component';
 
 @Component({
   selector: 'app-ad-card',
@@ -20,6 +25,7 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
   styleUrls: ['./ad-card.component.scss'],
 })
 export class AdCardComponent implements OnInit {
+  @Input() public type!: TypeOfComponent;
   @Input() public data!: any;
   @Input() public additionalInformation!: PaidAdsModel;
   @Input() public edit: boolean = false;
@@ -29,18 +35,30 @@ export class AdCardComponent implements OnInit {
   @Input() public approveDeny: boolean = false;
   @Input() public approveDenyButton: boolean = true;
   @Input() public showDetailsOnClick: boolean = false;
+  @Input() public showMoreActionButton: boolean = true;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   @ViewChild('dialog') dialog!: DialogComponent;
+  @ViewChild('options') options!: ElementRef;
   public cover: any;
   public showModeButton: boolean = false;
   public language: any;
   public checkPromoButton = false;
+  public optionsVisible = false;
+  public typeOfComponent!: TypeOfComponent;
 
   constructor(
     private helpService: HelpService,
     private service: CallApiService,
-    private toastr: ToastrComponent
-  ) {}
+    private toastr: ToastrComponent,
+    private renderer: Renderer2,
+    public dialogConfirmComponent: DialogConfirmComponent
+  ) {
+    this.renderer.listen('window', 'click', (e: Event) => {
+      if (this.options && e.target !== this.options.nativeElement) {
+        this.optionsVisible = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.language = this.helpService.getLanguage();
@@ -60,6 +78,12 @@ export class AdCardComponent implements OnInit {
       }
     }
     this.checkPromoButtonOption();
+
+    this.dialogConfirmComponent.emitAction.subscribe((data) => {
+      if (data == DecisionType.approve) {
+        this.deleteButton();
+      }
+    });
   }
 
   editButton() {

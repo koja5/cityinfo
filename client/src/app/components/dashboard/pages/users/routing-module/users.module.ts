@@ -13,10 +13,24 @@ import { SharingModule } from 'src/app/sharing.module';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { StripeModule } from 'stripe-angular';
 import { MyInvoicesComponent } from '../my-invoices/my-invoices.component';
-import { DateTimePicker, DateTimePickerAllModule } from '@syncfusion/ej2-angular-calendars';
+import {
+  DateTimePicker,
+  DateTimePickerAllModule,
+} from '@syncfusion/ej2-angular-calendars';
+import { PlacesComponent } from '../places/places.component';
+import { SwitchAllModule } from '@syncfusion/ej2-angular-buttons';
+import { UserEventsComponent } from '../user-events/user-events.component';
+import { PaidEventsComponent } from '../paid-events/paid-events.component';
 
 @NgModule({
-  declarations: [UserAdsComponent, PaidAdsComponent, MyInvoicesComponent],
+  declarations: [
+    UserAdsComponent,
+    PaidAdsComponent,
+    UserEventsComponent,
+    PaidEventsComponent,
+    MyInvoicesComponent,
+    PlacesComponent,
+  ],
   imports: [
     CommonModule,
     UsersRouting,
@@ -29,7 +43,8 @@ import { DateTimePicker, DateTimePickerAllModule } from '@syncfusion/ej2-angular
     StripeModule.forRoot(
       'pk_test_51LhYhHL4uVudLiXA5WwSojoMtx6m0rOM7fufOkPllausovqA0BhBJ0Id0ROuRb336IVLZMjshamhIIOlT1hFOAAS00zH00KnIN'
     ),
-    DateTimePickerAllModule
+    DateTimePickerAllModule,
+    SwitchAllModule,
   ],
   providers: [],
 })

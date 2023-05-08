@@ -65,7 +65,7 @@
                     [fixed]="'fixed'"></app-ad-card>
             </div> -->
             <div class="row" style="min-height: 81vh;" *ngIf="allAds && allAds.length > 0">
-                <app-ad-card *ngFor="let item of allAds" [data]="item" [showDetailsOnClick]="true" class="col-md-3"></app-ad-card>
+                <app-ad-card *ngFor="let item of allAds" [data]="item" [showDetailsOnClick]="true" [showMoreActionButton]="false" class="col-md-3"></app-ad-card>
             </div>
             <div *ngIf="!allAds || allAds.length == 0" class="outer" style="height: 81vh;">
                 <div class="middle">

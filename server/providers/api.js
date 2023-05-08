@@ -966,6 +966,119 @@ router.post("/updatePaidEvent", auth, function (req, res, next) {
 
 /* END EVENTS DRAFT */
 
+/* PLACES */
+
+router.get("/getAllPlaces", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query("select * from places", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            console.log(rows);
+            res.json(rows);
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getMyPlaces", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        console.log(req.user.user.id);
+        conn.query(
+          "select * from places where id_user = ?",
+          req.user.user.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePlace", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update places SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deletePlace", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from places where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END PLACES */
+
 /* PAID ADS */
 
 router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
@@ -976,7 +1089,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select a.*, p.* from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          "select a.*, p.*, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1310,7 +1423,7 @@ router.get("/getPaidAdsForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
+          "select distinct *, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1338,7 +1451,7 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_ads p join ads_draft a on p.ads_draft = a.id where p.city = ? and p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
+          "select distinct *, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1680,7 +1793,7 @@ router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select e.*, p.* from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          "select e.*, p.*, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1804,7 +1917,7 @@ router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.start_date > now() and p.expired_date is null order by p.datetime asc",
+          "select distinct *, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.start_date > now() and p.expired_date is null order by p.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1833,7 +1946,7 @@ router.get("/getPaidEventsForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
+          "select distinct *, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1861,7 +1974,7 @@ router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct * from paid_events p join events_draft e on p.event_draft = e.id where p.city = ? and p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
+          "select distinct *, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();

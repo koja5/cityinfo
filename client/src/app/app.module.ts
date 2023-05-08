@@ -22,6 +22,7 @@ import { RightOfWithdrawalComponent } from './components/home/pages/right-of-wit
 import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/privacy-policy.component';
 import { NavigationComponent } from './components/home/parts/navigation/navigation.component';
 import { CookieComponent } from './components/templates/cookie/cookie.component';
+import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { CookieComponent } from './components/templates/cookie/cookie.component'
     BrowserAnimationsModule,
     CheckBoxModule
   ],
-  providers: [CallApiService],
+  providers: [CallApiService, DialogConfirmComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

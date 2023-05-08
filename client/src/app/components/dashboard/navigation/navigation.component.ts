@@ -28,6 +28,7 @@ export class NavigationComponent implements OnInit {
     },
   ];
   public username!: string;
+  public menuVisible = false;
 
   constructor(
     private configurationService: ConfigurationService,

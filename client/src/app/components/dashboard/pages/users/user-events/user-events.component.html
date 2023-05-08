@@ -1,8 +1,8 @@
 <div class="container mt-4">
 
     <div class="text-right mb-4">
-        <button class="btn solid login" (click)="createNewAdDraft()"
-            style="font-size: 15px">{{language.createNewAdDraft}}</button>
+        <button class="btn solid login" (click)="createNewEventDraft()"
+            style="font-size: 15px">{{language.createNewEventDraft}}</button>
     </div>
     <div class="outer" *ngIf="!listOfDrafts || listOfDrafts.length == 0">
         <div class="middle">
@@ -19,53 +19,52 @@
         </div>
     </div>
 
-    <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
+    <ejs-dialog id='dialogEvent' #dialogEvent showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
             <div class="row">
 
                 <div class="col-md-12">
-                    <label class="custom-label">{{language.nameOfCompany}}</label>
-                    <ejs-textbox cssClass="e-outline" [id]="data.name" [(ngModel)]="data.name"
+                    <label class="custom-label">{{language.nameOfEvent}}</label>
+                    <ejs-textbox cssClass="e-outline" [id]="event.name" [(ngModel)]="event.name"
                         name="name"></ejs-textbox>
                 </div>
                 <div class="col-md-12">
                     <label class="custom-label">{{language.address}}</label>
-                    <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address"
+                    <ejs-textbox cssClass="e-outline" [id]="event.address" [(ngModel)]="event.address"
                         name="address"></ejs-textbox>
                 </div>
 
                 <div class="col-md-12 row m-0 p-0">
 
                     <div class="col-md-6">
-                        <label class="custom-label">{{language.phone}}</label>
-                        <ejs-textbox cssClass="e-outline" [id]="data.phone" [(ngModel)]="data.phone"
+                        <label class="custom-label">{{language.phone}}({{language.optional}})</label>
+                        <ejs-textbox cssClass="e-outline" [id]="event.phone" [(ngModel)]="event.phone"
                             name="phone"></ejs-textbox>
                     </div>
 
                     <div class="col-md-6">
-                        <label class="custom-label">{{language.email}}</label>
-                        <ejs-textbox cssClass="e-outline" [id]="data.email" [(ngModel)]="data.email"
+                        <label class="custom-label">{{language.email}}({{language.optional}})</label>
+                        <ejs-textbox cssClass="e-outline" [id]="event.email" [(ngModel)]="event.email"
                             name="email"></ejs-textbox>
                     </div>
                 </div>
 
-
                 <div class="col-md-12">
                     <label class="custom-label">{{language.mapLink}}({{language.optional}})</label>
-                    <ejs-textbox cssClass="e-outline" [id]="data.map_link" [(ngModel)]="data.map_link"
+                    <ejs-textbox cssClass="e-outline" [id]="event.map_link" [(ngModel)]="event.map_link"
                         name="map_link"></ejs-textbox>
                 </div>
 
                 <div class="col-md-12">
                     <label class="custom-label">{{language.description}}</label>
-                    <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
-                        [(ngModel)]="data.description" name="description"></ejs-textbox>
+                    <ejs-textbox multiline="true" cssClass="e-outline" [id]="event.description"
+                        [(ngModel)]="event.description" name="description"></ejs-textbox>
                 </div>
                 <div class="col-md-12">
                     <label class="custom-label">{{language.uploadCoverImage}}</label>
-                    <ejs-uploader #defaultupload [asyncSettings]="asyncAdsSettings" [autoUpload]="false"
-                        (uploading)="onUploadBegin($event)" (change)="changesFile($event)"
+                    <ejs-uploader #defaultupload [asyncSettings]="asyncEventsSettings" [autoUpload]="false"
+                        (uploading)="onUploadBeginEvents($event)" (change)="changesFile($event)"
                         (removing)="clearingFile($event)" (clearing)="clearingFile($event)"
                         [buttons]="{upload: language.uploadCoverImageButton}"></ejs-uploader>
                 </div>

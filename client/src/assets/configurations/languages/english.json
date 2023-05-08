@@ -98,8 +98,10 @@
     "optional": "Optional",
     "ad": "Gesponsert",
     "event": "Event",
+    "place": "Ort",
     "adTitle": "Das ist eine Werbung!",
     "eventTitle": "Das ist eine Veranstaltung!",
+    "placeTitle": "Dies ist ein Ort!",
     "recoveryTitle": "Passwort zurücksetzen",
     "recoveryText": "Zurücksetzen Ihres Passworts",
     "recoveryPassword": "Neues Passwort eingeben",
@@ -125,5 +127,11 @@
     "needToAcceptTermsAndPrivacy": "Mit der Registrierung müssen Sie die ABGs und die Datenschutzbestimmungen akzeptieren!",
     "cookieTitle": "THIS WEBSITE USES COOKIES",
     "cookieMessage": "We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services. You consent to our cookies if you continue to use our website.",
-    "acceptCookieButton": "Accept cookie"
+    "acceptCookieButton": "Accept cookie",
+    "editPromotion": "Edit promotion",
+    "deletePromotion": "Delete promotion",
+    "approve": "Approve",
+    "cancel": "Cancel",
+    "areYouSureTitle": "Are you sure?",
+    "actionCantBeReturned": "If you delete this data, it cannot be returned!"
 }

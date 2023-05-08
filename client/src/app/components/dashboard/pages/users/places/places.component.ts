@@ -1,36 +1,37 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadingEventArgs } from '@syncfusion/ej2-angular-inputs';
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { getUniqueID } from '@syncfusion/ej2-base';
 import { ToastrComponent } from 'src/app/components/dynamic-component/common/toastr/toastr.component';
+import { ActionsType } from 'src/app/enums/actions-type';
+import { EmitterModel } from 'src/app/models/emitter-model';
+import { PlacesModel } from 'src/app/models/places-model';
 import { UploadModel } from 'src/app/models/upload-model';
-import { AdsModel } from 'src/app/models/ads-model';
+import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
-import { CallApiService } from 'src/app/services/call-api.service';
-import { DialogComponent } from '@syncfusion/ej2-angular-popups';
-import { EmitterModel } from 'src/app/models/emitter-model';
-import { ActionsType } from 'src/app/enums/actions-type';
-import { EventsModel } from 'src/app/models/events-model';
 
 @Component({
-  selector: 'app-user-ads',
-  templateUrl: './user-ads.component.html',
-  styleUrls: ['./user-ads.component.scss'],
+  selector: 'app-places',
+  templateUrl: './places.component.html',
+  styleUrls: ['./places.component.scss'],
 })
-export class UserAdsComponent implements OnInit {
+export class PlacesComponent implements OnInit {
   @ViewChild('dialog') dialog!: DialogComponent;
   public asyncAdsSettings!: Object;
-  public data = new AdsModel();
-  public configAds = new UploadModel();
+  public asyncEventsSettings!: Object;
+  public data = new PlacesModel();
+  public configPlaces = new UploadModel();
   public path = 'upload-config';
-  public file = 'upload-cover-image.json';
-  public listOfDrafts: any;
+  public file = 'upload-cover-image-places.json';
+  public listOfPlaces: any;
   public editButton: boolean = false;
   public dialogPosition: Object = {
     X: 'center',
     Y: 'center',
   };
   public language: any;
+  public isClub: boolean = false;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -49,12 +50,14 @@ export class UserAdsComponent implements OnInit {
   }
 
   intializeData() {
-    this.service.callGetMethod('api/getMyAds', '').subscribe((data: any) => {
-      this.listOfDrafts = data as AdsModel[];
+    this.service.callGetMethod('api/getMyPlaces', '').subscribe((data: any) => {
+      this.listOfPlaces = data as PlacesModel[];
     });
   }
 
   initializeConfig() {
+    this.isClub = this.helpService.checkAccountIsClub();
+
     if (this.helpService.getLanguage()) {
       this.language = this.helpService.getLanguage();
     } else {
@@ -66,16 +69,22 @@ export class UserAdsComponent implements OnInit {
     this.configurationService
       .getConfiguration(this.path, this.file)
       .subscribe((data) => {
-        this.configAds = data;
-        this.initializeAdsSettings();
+        this.configPlaces = data;
+        this.initializePlacesSettings();
       });
   }
 
-  initializeAdsSettings() {
+  initializePlacesSettings() {
     this.asyncAdsSettings = {
-      saveUrl: this.configAds.saveUrl,
-      removeUrl: this.configAds.removeUrl,
+      saveUrl: this.configPlaces.saveUrl,
+      removeUrl: this.configPlaces.removeUrl,
     };
+  }
+
+  createNewPlace() {
+    this.dialog.show();
+    this.data = new PlacesModel();
+    this.editButton = false;
   }
 
   public onUploadBegin(args: UploadingEventArgs) {
@@ -103,6 +112,7 @@ export class UserAdsComponent implements OnInit {
       }
     }, 800);
   }
+
   changesFile(event: any) {
     this.editButton = false;
   }
@@ -111,55 +121,41 @@ export class UserAdsComponent implements OnInit {
     this.editButton = true;
   }
 
-  createNewAdDraft() {
-    this.dialog.show();
-    this.data = new AdsModel();
-    this.fillAdFields();
-    this.editButton = false;
-  }
-
-  fillAdFields() {
-    this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
-      if (data) {
-        this.data = {
-          name: data[0].nameOfOrganization,
-          phone: data[0].phone,
-          email: data[0].email,
-        };
-      }
-    });
-  }
-
   clickEmitter(event: EmitterModel) {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.data = event.data;
+      if (this.data.active) {
+        this.data.active = true;
+      } else {
+        this.data.active = false;
+      }
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
-        .callPostMethod('api/deleteMyAds', this.data)
+        .callPostMethod('api/deletePlace', event.data)
         .subscribe((data) => {
           if (data) {
-            this.dialog.hide();
-            this.toastr.showSuccessCustom('You successfuly delete ads draft!');
+            this.intializeData();
+            this.toastr.showSuccess();
           } else {
             this.dialog.hide();
-            this.toastr.showErrorCustom('Not successfuly delete ads draft!');
+            this.toastr.showError();
           }
         });
     }
   }
 
-  editAd() {
+  editPlace() {
     this.service
-      .callPostMethod('api/updateMyAds', this.data)
+      .callPostMethod('api/updatePlace', this.data)
       .subscribe((data) => {
         if (data) {
           this.dialog.hide();
-          this.toastr.showSuccessCustom('You successfuly update ads draft!');
+          this.toastr.showSuccess();
         } else {
           this.dialog.hide();
-          this.toastr.showErrorCustom('Not successfuly update ads draft!');
+          this.toastr.showError();
         }
       });
   }

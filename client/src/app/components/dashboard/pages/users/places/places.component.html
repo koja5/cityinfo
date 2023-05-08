@@ -1,10 +1,10 @@
 <div class="container mt-4">
 
     <div class="text-right mb-4">
-        <button class="btn solid login" (click)="createNewAdDraft()"
+        <button *ngIf="!isClub" class="btn solid login" (click)="createNewPlace()"
             style="font-size: 15px">{{language.createNewAdDraft}}</button>
     </div>
-    <div class="outer" *ngIf="!listOfDrafts || listOfDrafts.length == 0">
+    <div class="outer" *ngIf="!listOfPlaces || listOfPlaces.length == 0">
         <div class="middle">
             <div class="inner">
                 <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png">
@@ -13,8 +13,8 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="listOfDrafts">
-        <div *ngFor="let item of listOfDrafts" class="col-md-4">
+    <div class="row" *ngIf="listOfPlaces">
+        <div *ngFor="let item of listOfPlaces" class="col-md-4">
             <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
         </div>
     </div>
@@ -62,6 +62,10 @@
                     <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
                         [(ngModel)]="data.description" name="description"></ejs-textbox>
                 </div>
+                <div class="col-md-12 mt-4 mb-4">
+                    <label class="custom-label mr-2">{{language.active}}</label>
+                    <ejs-switch #active [id]="data.active" [(ngModel)]="data.active" name="active"></ejs-switch>
+                </div>
                 <div class="col-md-12">
                     <label class="custom-label">{{language.uploadCoverImage}}</label>
                     <ejs-uploader #defaultupload [asyncSettings]="asyncAdsSettings" [autoUpload]="false"
@@ -69,8 +73,9 @@
                         (removing)="clearingFile($event)" (clearing)="clearingFile($event)"
                         [buttons]="{upload: language.uploadCoverImageButton}"></ejs-uploader>
                 </div>
+
                 <div *ngIf="editButton" class="col-md-12 text-right mt-4">
-                    <button class="btn" (click)="editAd()">{{language.editAd}}</button>
+                    <button class="btn" (click)="editPlace()">{{language.editAd}}</button>
                 </div>
             </div>
         </ng-template>

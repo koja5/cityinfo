@@ -1,10 +1,23 @@
-.logo {
-  position: absolute;
-  top: -40%;
+@media (min-width: 871px) {
+  .logo {
+    position: absolute;
+    top: -40%;
+  }
+
+  .logo img {
+    width: 224px;
+  }
 }
 
-.logo img {
-  width: 224px;
+@media (max-width: 870px) {
+  .logo {
+    position: absolute;
+    top: -5%;
+  }
+
+  .logo img {
+    width: 155px;
+  }
 }
 
 .forms-container {
