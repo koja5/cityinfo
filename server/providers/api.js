@@ -1423,7 +1423,7 @@ router.get("/getPaidAdsForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct *, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
+          "select distinct a.name, a.cover, a.address, a.map_link, a.phone, a.email, a.description, p.position, p.expired_date, p.start_date, c.name as city_name, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1451,7 +1451,7 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct *, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
+          "select distinct a.name, a.cover, a.address, a.map_link, a.phone, a.email, a.description, p.position, p.expired_date, p.start_date, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.expired_date >= now() order by p.position asc, p.start_date asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();
@@ -1946,7 +1946,7 @@ router.get("/getPaidEventsForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct *, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
+          "select distinct e.name, e.cover, e.address, e.map_link, e.phone, e.email, e.description, p.position, p.expired_date, p.datetime, c.name as city_name, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1974,7 +1974,7 @@ router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select distinct *, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
+          "select distinct e.name, e.cover, e.address, e.map_link, e.phone, e.email, e.description, p.position, p.expired_date, p.datetime, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.city = ? and p.active = 1 and p.datetime >= now() order by p.position asc, p.expired_date desc, p.datetime asc",
           [req.params.id],
           function (err, rows, fields) {
             conn.release();

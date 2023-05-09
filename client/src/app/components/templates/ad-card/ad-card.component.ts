@@ -18,6 +18,7 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { DialogConfirmComponent } from '../../common/dialog-confirm/dialog-confirm.component';
 import { DecisionType } from 'src/app/enums/decision-type';
 import { TypeOfComponent } from 'src/app/enums/type-of-component';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-ad-card',
@@ -25,7 +26,7 @@ import { TypeOfComponent } from 'src/app/enums/type-of-component';
   styleUrls: ['./ad-card.component.scss'],
 })
 export class AdCardComponent implements OnInit {
-  @Input() public type!: TypeOfComponent;
+  @Input() public type!: string;
   @Input() public data!: any;
   @Input() public additionalInformation!: PaidAdsModel;
   @Input() public edit: boolean = false;
@@ -44,14 +45,15 @@ export class AdCardComponent implements OnInit {
   public language: any;
   public checkPromoButton = false;
   public optionsVisible = false;
-  public typeOfComponent!: TypeOfComponent;
+  public confirmDialog = false;
 
   constructor(
     private helpService: HelpService,
     private service: CallApiService,
     private toastr: ToastrComponent,
     private renderer: Renderer2,
-    public dialogConfirmComponent: DialogConfirmComponent
+    public dialogConfirmComponent: DialogConfirmComponent,
+    private messageService: MessageService
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.options && e.target !== this.options.nativeElement) {
@@ -145,6 +147,14 @@ export class AdCardComponent implements OnInit {
   showDetails() {
     if (this.showDetailsOnClick) {
       this.dialog.show();
+    }
+  }
+
+  dialogAction(event: any) {
+    if (event == DecisionType.approve) {
+      this.deleteButton();
+    } else {
+      this.confirmDialog = false;
     }
   }
 }

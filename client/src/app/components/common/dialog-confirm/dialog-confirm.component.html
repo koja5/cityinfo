@@ -1,5 +1,23 @@
-<!-- <ejs-dialog id="dialog" #ejDialog isModal="true" showCloseIcon="true">
-    <ng-template #content>
-        <ng-content></ng-content>
+<ejs-dialog #dialog isModal="true" [showCloseIcon]="false" cssClass="confirm-dialog">
+    <ng-template #header>
+        <p>{{language.areYouSureTitle}}</p>
     </ng-template>
-</ejs-dialog> -->
+    <ng-template #content>
+        <div class="delete-content">
+            <img src="./assets/images/trash.png">
+            <h4>{{language.actionCantBeReturned}}</h4>
+        </div>
+    </ng-template>
+    <ng-template #footerTemplate>
+        <div class="footer">
+            <button class="btn btn-info mr-3" (click)="okClick()">
+                <span class="fa fa-check"></span>
+                {{language.yes}}
+            </button>
+            <button class="btn btn-danger" (click)="cancelClick()">
+                <span class="fa fa-times"></span>
+                {{language.no}}
+            </button>
+        </div>
+    </ng-template>
+</ejs-dialog>

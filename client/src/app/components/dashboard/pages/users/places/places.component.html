@@ -1,8 +1,8 @@
 <div class="container mt-4">
 
     <div class="text-right mb-4">
-        <button *ngIf="!isClub" class="btn solid login" (click)="createNewPlace()"
-            style="font-size: 15px">{{language.createNewAdDraft}}</button>
+        <button class="btn solid login" (click)="createNewPlace()"
+            style="font-size: 15px">{{language.createNewPlace}}</button>
     </div>
     <div class="outer" *ngIf="!listOfPlaces || listOfPlaces.length == 0">
         <div class="middle">
@@ -15,7 +15,8 @@
     </div>
     <div class="row" *ngIf="listOfPlaces">
         <div *ngFor="let item of listOfPlaces" class="col-md-4">
-            <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
+            <app-ad-card [data]="item" [edit]="true" [type]="'place'"
+                (clickEmitter)="clickEmitter($event)"></app-ad-card>
         </div>
     </div>
 

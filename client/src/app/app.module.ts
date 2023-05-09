@@ -23,6 +23,7 @@ import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/p
 import { NavigationComponent } from './components/home/parts/navigation/navigation.component';
 import { CookieComponent } from './components/templates/cookie/cookie.component';
 import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
+import { DialogAllModule } from '@syncfusion/ej2-angular-popups';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DialogConfirmComponent } from './components/common/dialog-confirm/dialo
     SharingModule,
     DynamicModule,
     BrowserAnimationsModule,
-    CheckBoxModule
+    CheckBoxModule,
+    DialogAllModule
   ],
   providers: [CallApiService, DialogConfirmComponent],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import { LoaderContentComponent } from './components/dynamic-component/common/lo
 import { AdCardComponent } from './components/templates/ad-card/ad-card.component';
 import { InvoiceComponent } from './components/templates/invoice/invoice.component';
 import { NotFoundComponent } from './components/templates/not-found/not-found.component';
+import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NotFoundComponent } from './components/templates/not-found/not-found.co
     LoaderContentComponent,
     AdCardComponent,
     NotFoundComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    DialogConfirmComponent,
   ],
   imports: [CommonModule, DialogModule],
   exports: [

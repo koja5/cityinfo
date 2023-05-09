@@ -14,7 +14,7 @@
                                 <li>
                                     <hr class="m-0">
                                 </li>
-                                <li><a (click)="dialogConfirmComponent.showDialog()" class="delete-promotion"><i
+                                <li><a (click)="confirmDialog = true" class="delete-promotion"><i
                                             class="fa fa-trash"></i>
                                         {{language.deletePromotion}}</a></li>
                             </ul>
@@ -66,7 +66,7 @@
                                     title="{{language.adTitle}}">{{language.ad}}</span>
                                 <span *ngIf="data.datetime" class="event-badge"
                                     title="{{language.eventTitle}}">{{language.event}}</span>
-                                <span *ngIf="!data.datetime" class="place-badge"
+                                <span *ngIf="type === 'place'" class="place-badge"
                                     title="{{language.placeTitle}}">{{language.placeTitle}}</span>
                             </div>
                         </div>
@@ -153,3 +153,5 @@
         </ng-template>
     </ejs-dialog>
 </body>
+
+<app-dialog-confirm *ngIf="confirmDialog" (emitAction)="dialogAction($event)"></app-dialog-confirm>

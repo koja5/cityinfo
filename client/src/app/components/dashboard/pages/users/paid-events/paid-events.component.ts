@@ -202,16 +202,27 @@ export class PaidEventsComponent implements OnInit {
           this.dialogChange.show();
         }, 50);
       }
-    } else {
+    } else if (event.operation == ActionsType.promotion) {
       this.configurationService
         .getConfiguration(this.path, this.file)
         .subscribe((data) => {
           this.config = data;
-          if (event.operation == ActionsType.promotion) {
-            this.changeData = event.data;
-            setTimeout(() => {
-              this.dialogChange.show();
-            }, 50);
+
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
+        });
+    } else if (event.operation == ActionsType.delete) {
+      this.service
+        .callPostMethod('api/deletePaidEvent', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
           }
         });
     }

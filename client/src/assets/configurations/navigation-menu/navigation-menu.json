@@ -93,8 +93,7 @@
   {
     "title": "Places",
     "rights": [
-      "user",
-      "club"
+      "isClub"
     ],
     "link": "/dashboard/user/places"
   }

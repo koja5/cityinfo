@@ -3,6 +3,7 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { ToastrComponent } from 'src/app/components/dynamic-component/common/toastr/toastr.component';
 import { FormConfig } from 'src/app/components/dynamic-component/dynamic-forms/models/form-config';
 import { ActionsType } from 'src/app/enums/actions-type';
+import { DecisionType } from 'src/app/enums/decision-type';
 import { AdsModel } from 'src/app/models/ads-model';
 import { EmitterModel } from 'src/app/models/emitter-model';
 import { EventsModel } from 'src/app/models/events-model';
@@ -186,16 +187,26 @@ export class PaidAdsComponent implements OnInit {
           this.dialogChange.show();
         }, 50);
       }
-    } else {
+    } else if (event.operation == ActionsType.promotion) {
       this.configurationService
         .getConfiguration(this.path, this.file)
         .subscribe((data) => {
           this.config = data;
-          if (event.operation == ActionsType.promotion) {
-            this.changeData = event.data;
-            setTimeout(() => {
-              this.dialogChange.show();
-            }, 50);
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
+        });
+    } else if (event.operation == ActionsType.delete) {
+      this.service
+        .callPostMethod('api/deletePaidAd', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
           }
         });
     }

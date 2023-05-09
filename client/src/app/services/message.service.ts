@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class MessageService {
   public refreshGrid = new Subject<null>();
+  public showConfirmDialog = new Subject<null>();
   public refreshFormDataAfterUpdate = new Subject<null>();
   public orientation = new Subject<string>();
 
@@ -33,5 +34,13 @@ export class MessageService {
 
   getOrientation(): Observable<string> {
     return this.orientation.asObservable();
+  }
+
+  sendShowConfirmDialog() {
+    this.showConfirmDialog.next(null);
+  }
+
+  getShowConfirmDialog(): Observable<any> {
+    return this.showConfirmDialog.asObservable();
   }
 }
