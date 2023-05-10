@@ -108,11 +108,21 @@
       }
     },
     {
-      "title": "Zip code",
+      "title": "City code",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
-      "field": "zip_code",
+      "field": "city_code",
+      "validation": {
+        "required": true
+      }
+    },
+    {
+      "title": "District code",
+      "filterable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "district_code",
       "validation": {
         "required": true
       }
@@ -123,6 +133,26 @@
       "type": "string",
       "class": "text-align-right",
       "field": "district",
+      "validation": {
+        "required": true
+      }
+    },
+    {
+      "title": "Lat",
+      "filterable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "lat",
+      "validation": {
+        "required": true
+      }
+    },
+    {
+      "title": "Lng",
+      "filterable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "lng",
       "validation": {
         "required": true
       }
@@ -151,9 +181,17 @@
       "type": "textbox",
       "width": "col-md-12",
       "class": "e-outline",
-      "name": "zip_code",
-      "title": "Zip code",
-      "field": "zip_code"
+      "name": "city_code",
+      "title": "City code",
+      "field": "city_code"
+    },
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "district_code",
+      "title": "District code",
+      "field": "district_code"
     },
     {
       "type": "textbox",
@@ -164,28 +202,20 @@
       "field": "district"
     },
     {
-      "type": "combobox",
+      "type": "textbox",
       "width": "col-md-12",
       "class": "e-outline",
-      "name": "district",
-      "title": "District",
-      "field": {
-        "text": "name",
-        "value": "id"
-      },
-      "request": {
-        "type": "GET",
-        "api": "/api/getDistricts",
-        "parameters": [],
-        "fields": "",
-        "root": ""
-      },
-      "placeholder": "Please select kindergarden group",
-      "fieldConfig": {
-        "ignoreAccent": false,
-        "filter": true
-      },
-      "required": true
+      "name": "lat",
+      "title": "Lat",
+      "field": "lat"
+    },
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "lng",
+      "title": "Lng",
+      "field": "lat"
     },
     {
       "type": "button",

@@ -1,0 +1,5 @@
+{
+    "saveUrl": "https://city-info.at/api/upload/createAdsDraft",
+    "requiredBaseData": true,
+    "autoUpload": false
+}
