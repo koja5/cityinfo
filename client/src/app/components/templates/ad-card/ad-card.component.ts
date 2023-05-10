@@ -45,7 +45,10 @@ export class AdCardComponent implements OnInit {
   public language: any;
   public checkPromoButton = false;
   public optionsVisible = false;
-  public confirmDialog = false;
+  public confirmDeleteDialog = false;
+  public confirmCancelPromotion = false;
+  public confirmActivePromotion = false;
+  public dayAWeek!: string;
 
   constructor(
     private helpService: HelpService,
@@ -81,11 +84,12 @@ export class AdCardComponent implements OnInit {
     }
     this.checkPromoButtonOption();
 
-    this.dialogConfirmComponent.emitAction.subscribe((data) => {
-      if (data == DecisionType.approve) {
-        this.deleteButton();
-      }
-    });
+    // this.dialogConfirmComponent.dialogEmitter.subscribe((data) => {
+    //   if (data == DecisionType.approve) {
+    //     this.deleteButton();
+    //   }
+    // });
+    this.getDayFromDate();
   }
 
   editButton() {
@@ -95,16 +99,16 @@ export class AdCardComponent implements OnInit {
     this.clickEmitter.emit(emitterModel);
   }
 
-  deleteButton() {
+  promotionButton() {
     const emitterModel = new EmitterModel();
-    emitterModel.operation = ActionsType.delete;
+    emitterModel.operation = ActionsType.promotion;
     emitterModel.data = this.data;
     this.clickEmitter.emit(emitterModel);
   }
 
-  promotionButton() {
+  emitActionClick(operation: ActionsType) {
     const emitterModel = new EmitterModel();
-    emitterModel.operation = ActionsType.promotion;
+    emitterModel.operation = operation;
     emitterModel.data = this.data;
     this.clickEmitter.emit(emitterModel);
   }
@@ -150,11 +154,34 @@ export class AdCardComponent implements OnInit {
     }
   }
 
-  dialogAction(event: any) {
+  confirmDeleteAction(event: any) {
     if (event == DecisionType.approve) {
-      this.deleteButton();
+      this.emitActionClick(ActionsType.delete);
     } else {
-      this.confirmDialog = false;
+      this.confirmDeleteDialog = false;
+    }
+  }
+
+  confirmCancelPromotionAction(event: any) {
+    if (event == DecisionType.approve) {
+      this.emitActionClick(ActionsType.cancelPromotion);
+    } else {
+      this.confirmCancelPromotion = false;
+    }
+  }
+
+  confirmActivePromotionAction(event: any) {
+    if (event == DecisionType.approve) {
+      this.emitActionClick(ActionsType.activePromotion);
+    } else {
+      this.confirmActivePromotion = false;
+    }
+  }
+
+  getDayFromDate() {
+    if (this.data.datetime) {
+      this.dayAWeek =
+        this.language.daysOfWeek[new Date(this.data.datetime).getDay()];
     }
   }
 }

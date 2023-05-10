@@ -24,7 +24,8 @@ export class PaidAdsComponent implements OnInit {
   @ViewChild('dialog') dialog!: DialogComponent;
   @ViewChild('card') card!: DialogComponent;
   public path = '/forms/user';
-  public file!: string;
+  public file = 'paid-ads.json';
+  public fileChangeDraft = 'paid-ads-draft-change.json';
   public dialogPosition: Object = {
     X: 'center',
     Y: 'center',
@@ -41,6 +42,8 @@ export class PaidAdsComponent implements OnInit {
   public changeData: any;
   public adPreview = false;
   public loader = false;
+  public loaderData = false;
+  public currentOperation!: ActionsType;
 
   constructor(
     private service: CallApiService,
@@ -60,8 +63,10 @@ export class PaidAdsComponent implements OnInit {
   }
 
   intializeData() {
+    this.loaderData = true;
     this.service.callGetMethod('api/getPaidAdsByUser', '').subscribe((data) => {
       this.listOfPaid = data;
+      this.loaderData = false;
     });
   }
 
@@ -83,57 +88,18 @@ export class PaidAdsComponent implements OnInit {
         this.language = data;
       });
     }
-
-    this.file = 'paid-ads.json';
   }
 
   createNew() {
     this.dialog.show();
   }
 
-  submitEmitter(event: any) {
-    this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
-      if (data) {
-        this.user = data[0];
-      }
-    });
-    this.service
-      .callPostMethod('/api/getAdInformationForPayment', event)
-      .subscribe((data: any) => {
-        if (data) {
-          this.data = data[0];
-          this.paidAd = {
-            position: data[0].position,
-            city: data[0].city,
-            number_of_weeks: event.number_of_weeks,
-            price: event.number_of_weeks * data[0].price,
-            start_date: event.start_date,
-            expired_date: data[0].expired_date,
-          };
-          let ad_date = new PaidAdsModel();
-          ad_date = {
-            start_date: event.start_date,
-            ads_draft: event.ads_draft,
-            city: event.city,
-            position: event.position,
-            number_of_weeks: event.number_of_weeks,
-            active: 1,
-            id: event.id,
-          };
-          this.paymentInformation = {
-            ad_date: ad_date,
-          };
-          this.adPreview = true;
-          this.card.show();
-        }
-      });
-  }
-
   setStripeToken(token: stripe.Token) {
     if (token) {
       this.paymentInformation.token = token;
       this.paymentInformation.price = this.paidAd.price;
-      this.paymentInformation.description = this.getPaymentDescription('Ad');
+      this.paymentInformation.description =
+        this.helpService.getPaymentDescription('Ad', this.data, this.user);
       this.paymentInformation.app_token = this.storageService.getToken();
 
       if (this.changeData) {
@@ -158,36 +124,12 @@ export class PaidAdsComponent implements OnInit {
     }
   }
 
-  getPaymentDescription(typeOfAd: string) {
-    return (
-      'CityInfo: Type of Ad: ' +
-      typeOfAd +
-      ', Id: ' +
-      this.data.id +
-      ', Name: ' +
-      this.data.name +
-      ', Customer name: ' +
-      this.user.firstname +
-      ', Email: ' +
-      this.user.email +
-      ', Phone: ' +
-      this.user.phone
-    );
-  }
-
-  setStripeSource(source: stripe.Source) {
-    console.log('Stripe Source', source);
-  }
-
   clickEmitter(event: any) {
-    if (this.config) {
-      if (event.operation == ActionsType.promotion) {
-        this.changeData = event.data;
-        setTimeout(() => {
-          this.dialogChange.show();
-        }, 50);
-      }
-    } else if (event.operation == ActionsType.promotion) {
+    this.config = new FormConfig();
+    this.changeData = null;
+    this.currentOperation = event.operation;
+
+    if (event.operation == ActionsType.promotion) {
       this.configurationService
         .getConfiguration(this.path, this.file)
         .subscribe((data) => {
@@ -209,7 +151,99 @@ export class PaidAdsComponent implements OnInit {
             this.toastr.showError();
           }
         });
+    } else if (event.operation == ActionsType.edit) {
+      this.configurationService
+        .getConfiguration(this.path, this.fileChangeDraft)
+        .subscribe((data) => {
+          this.config = data;
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
+        });
+    } else if (event.operation == ActionsType.cancelPromotion) {
+      event.data.active = 0;
+      this.service
+        .callPostMethod('api/updatePaidAdActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else if (event.operation == ActionsType.activePromotion) {
+      event.data.active = 1;
+      this.service
+        .callPostMethod('api/updatePaidAdActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
     }
+  }
+
+  submitEmitter(event: any) {
+    if (this.currentOperation == ActionsType.promotion) {
+      this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
+        if (data) {
+          this.user = data[0];
+        }
+      });
+      this.service
+        .callPostMethod('/api/getAdInformationForPayment', event)
+        .subscribe((data: any) => {
+          if (data) {
+            this.data = data[0];
+            this.paidAd = {
+              position: data[0].position,
+              city: data[0].city,
+              number_of_weeks: event.number_of_weeks,
+              price: event.number_of_weeks * data[0].price,
+              start_date: event.start_date,
+              expired_date: data[0].expired_date,
+            };
+            let ad_date = new PaidAdsModel();
+            ad_date = {
+              start_date: event.start_date,
+              ads_draft: event.ads_draft,
+              city: event.city,
+              position: event.position,
+              number_of_weeks: event.number_of_weeks,
+              active: 1,
+              id: event.id,
+            };
+            this.paymentInformation = {
+              ad_date: ad_date,
+            };
+            this.adPreview = true;
+            this.card.show();
+          }
+        });
+    } else if (this.currentOperation == ActionsType.edit) {
+      this.service
+        .callPostMethod('api/updatePaidAd', event)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialogChange.hide();
+            this.toastr.showError();
+          }
+        });
+    }
+  }
+
+  setStripeSource(source: stripe.Source) {
+    console.log('Stripe Source', source);
   }
 
   paymentDialogClose() {

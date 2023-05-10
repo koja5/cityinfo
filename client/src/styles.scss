@@ -350,3 +350,7 @@ input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
   background: none !important;
 }
+
+.full-height {
+  height: 90vh;
+}

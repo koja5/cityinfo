@@ -14,8 +14,14 @@
                                 <li>
                                     <hr class="m-0">
                                 </li>
-                                <li><a (click)="confirmDialog = true" class="delete-promotion"><i
-                                            class="fa fa-trash"></i>
+                                <li *ngIf="promotion && data.active"><a (click)="confirmCancelPromotion = true"
+                                        class="delete-promotion"><i class="fa fa-eye-slash"></i>
+                                        {{language.cancelPromotion}}</a></li>
+                                <li *ngIf="promotion && !data.active"><a (click)="confirmActivePromotion = true"
+                                        class="active-promotion"><i class="fa fa-eye"></i>
+                                        {{language.cancelPromotion}}</a></li>
+                                <li *ngIf="promotion"><a (click)="confirmDeleteDialog = true"
+                                        class="delete-promotion font-bold"><i class="fa fa-trash"></i>
                                         {{language.deletePromotion}}</a></li>
                             </ul>
                         </div>
@@ -37,13 +43,9 @@
                                 <div *ngIf="showDate || data.datetime" class="start-end-date">
                                     <div *ngIf="data.datetime">
                                         <h6 class="text-gray-700 display-inline"><span class="fa fa-calendar"></span>
-                                            {{data.datetime |
+                                            {{dayAWeek}} {{data.datetime |
                                             date:
-                                            'dd.MM.yyyy'}}</h6> /
-                                        <h6 class="text-gray-700 display-inline">
-                                            {{data.datetime |
-                                            date:
-                                            'HH:mm'}}</h6>
+                                            'dd.MM.yyyy / HH:mm'}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -68,6 +70,11 @@
                                     title="{{language.eventTitle}}">{{language.event}}</span>
                                 <span *ngIf="type === 'place'" class="place-badge"
                                     title="{{language.placeTitle}}">{{language.placeTitle}}</span>
+                                <span *ngIf="promotion && data.active"
+                                    class="badge-active ml-1">{{language.active}}</span>
+                                <span *ngIf="promotion && !data.active"
+                                    class="badge-inactive ml-1">{{language.inactive}}</span>
+
                             </div>
                         </div>
                     </div>
@@ -94,9 +101,9 @@
                             </p>
                         </div>
                     </div>
-                    <div *ngIf="edit" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
+                    <!-- <div *ngIf="edit" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
                         <button class="btn edit" (click)="editButton()">{{language.edit}}</button>
-                    </div>
+                    </div> -->
                     <div *ngIf="promotion && checkPromoButton"
                         class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100 text-center">
                         <button class="btn edit" (click)="promotionButton()">{{language.promotion}}</button>
@@ -106,6 +113,7 @@
                         <button class="btn edit" (click)="approveAd()">{{language.approveAd}}</button>
                         <button class="btn delete ml-2" (click)="denyAd()">{{language.denyAd}}</button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -154,4 +162,9 @@
     </ejs-dialog>
 </body>
 
-<app-dialog-confirm *ngIf="confirmDialog" (emitAction)="dialogAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmDeleteDialog" [icon]="'trash.png'" [text]="language.actionCantBeReturned"
+    (dialogEmitter)="confirmDeleteAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmCancelPromotion" [icon]="'not-visible.png'" [text]="language.cancelYourPromotionQuestion"
+    (dialogEmitter)="confirmCancelPromotionAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmActivePromotion" [icon]="'visible.png'"  [text]="language.activeYourPromotionQuestion"
+    (dialogEmitter)="confirmActivePromotionAction($event)"></app-dialog-confirm>

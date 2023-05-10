@@ -23,7 +23,8 @@ export class PaidEventsComponent implements OnInit {
   @ViewChild('dialog') dialog!: DialogComponent;
   @ViewChild('card') card!: DialogComponent;
   public path = '/forms/user';
-  public file!: string;
+  public file = 'paid-events.json';
+  public fileChangeDraft = 'paid-events-draft-change.json';
   public dialogPosition: Object = {
     X: 'center',
     Y: 'center',
@@ -40,6 +41,8 @@ export class PaidEventsComponent implements OnInit {
   public changeData: any;
   public adPreview = false;
   public loader = false;
+  public loaderData = false;
+  public currentOperation!: ActionsType;
 
   constructor(
     private service: CallApiService,
@@ -59,10 +62,12 @@ export class PaidEventsComponent implements OnInit {
   }
 
   intializeData() {
+    this.loaderData = true;
     this.service
       .callGetMethod('api/getPaidEventsByUser', '')
       .subscribe((data) => {
         this.listOfPaid = data;
+        this.loaderData = false;
       });
   }
 
@@ -84,7 +89,6 @@ export class PaidEventsComponent implements OnInit {
         this.language = data;
       });
     }
-    this.file = 'paid-events.json';
   }
 
   createNew() {
@@ -92,55 +96,69 @@ export class PaidEventsComponent implements OnInit {
   }
 
   submitEmitter(event: any) {
-    if (event.start_date_top && event.number_of_weeks) {
-      this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
-        if (data) {
-          this.user = data[0];
-        }
-      });
+    if (this.currentOperation == ActionsType.edit) {
       this.service
-        .callPostMethod('/api/getEventInformationForPayment', event)
-        .subscribe((data: any) => {
-          if (data) {
-            this.data = data[0];
-            this.paidAd = {
-              position: data[0].position,
-              city: data[0].city,
-              number_of_weeks: event.number_of_weeks,
-              price: event.number_of_weeks * data[0].price,
-              start_date: event.start_date,
-              expired_date: data[0].expired_date,
-            };
-            let event_date = new EventsModel();
-            event_date = {
-              start_date_top: event.start_date_top,
-              event_draft: event.event_draft,
-              city: event.city,
-              position: event.position,
-              number_of_weeks: event.number_of_weeks,
-              active: 1,
-              id: event.id,
-              datetime: event.datetime,
-            };
-            this.paymentInformation = {
-              event_date: event_date,
-            };
-            this.adPreview = true;
-            this.card.show();
-          }
-        });
-    } else {
-      this.service
-        .callPostMethod('api/createPaidEvent', event)
+        .callPostMethod('api/updatePaidEvent', event)
         .subscribe((data) => {
           if (data) {
-            this.toastr.showSuccess();
-            this.dialog.hide();
             this.intializeData();
+            this.toastr.showSuccess();
           } else {
+            this.dialogChange.hide();
             this.toastr.showError();
           }
         });
+    } else {
+      if (event.start_date_top && event.number_of_weeks) {
+        this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
+          if (data) {
+            this.user = data[0];
+          }
+        });
+        this.service
+          .callPostMethod('/api/getEventInformationForPayment', event)
+          .subscribe((data: any) => {
+            if (data) {
+              this.data = data[0];
+              this.paidAd = {
+                position: data[0].position,
+                city: data[0].city,
+                number_of_weeks: event.number_of_weeks,
+                price: event.number_of_weeks * data[0].price,
+                start_date: event.start_date,
+                expired_date: data[0].expired_date,
+              };
+              let event_date = new EventsModel();
+              event_date = {
+                start_date_top: event.start_date_top,
+                event_draft: event.event_draft,
+                city: event.city,
+                position: event.position,
+                number_of_weeks: event.number_of_weeks,
+                active: 1,
+                id: event.id,
+                datetime: event.datetime,
+              };
+              this.paymentInformation = {
+                event_date: event_date,
+              };
+              this.adPreview = true;
+              this.card.show();
+            }
+          });
+      } else {
+        this.service
+          .callPostMethod('api/createPaidEvent', event)
+          .subscribe((data) => {
+            if (data) {
+              this.toastr.showSuccess();
+              this.dialog.hide();
+              this.intializeData();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      }
     }
   }
 
@@ -148,7 +166,8 @@ export class PaidEventsComponent implements OnInit {
     if (token) {
       this.paymentInformation.token = token;
       this.paymentInformation.price = this.paidAd.price;
-      this.paymentInformation.description = this.getPaymentDescription('Event');
+      this.paymentInformation.description =
+        this.helpService.getPaymentDescription('Event', this.data, this.user);
       this.paymentInformation.app_token = this.storageService.getToken();
 
       if (this.changeData) {
@@ -173,36 +192,15 @@ export class PaidEventsComponent implements OnInit {
     }
   }
 
-  getPaymentDescription(typeOfAd: string) {
-    return (
-      'CityInfo: Type of Event: ' +
-      typeOfAd +
-      ', Id: ' +
-      this.data.id +
-      ', Name: ' +
-      this.data.name +
-      ', Customer name: ' +
-      this.user.firstname +
-      ', Email: ' +
-      this.user.email +
-      ', Phone: ' +
-      this.user.phone
-    );
-  }
-
   setStripeSource(source: stripe.Source) {
     console.log('Stripe Source', source);
   }
 
   clickEmitter(event: any) {
-    if (this.config) {
-      if (event.operation == ActionsType.promotion) {
-        this.changeData = event.data;
-        setTimeout(() => {
-          this.dialogChange.show();
-        }, 50);
-      }
-    } else if (event.operation == ActionsType.promotion) {
+    this.config = new FormConfig();
+    this.changeData = null;
+    this.currentOperation = event.operation;
+    if (event.operation == ActionsType.promotion) {
       this.configurationService
         .getConfiguration(this.path, this.file)
         .subscribe((data) => {
@@ -216,6 +214,42 @@ export class PaidEventsComponent implements OnInit {
     } else if (event.operation == ActionsType.delete) {
       this.service
         .callPostMethod('api/deletePaidEvent', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else if (event.operation == ActionsType.edit) {
+      this.configurationService
+        .getConfiguration(this.path, this.fileChangeDraft)
+        .subscribe((data) => {
+          this.config = data;
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
+        });
+    } else if (event.operation == ActionsType.cancelPromotion) {
+      event.data.active = 0;
+      this.service
+        .callPostMethod('api/updatePaidEventActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else if (event.operation == ActionsType.activePromotion) {
+      event.data.active = 1;
+      this.service
+        .callPostMethod('api/updatePaidEventActive', event.data)
         .subscribe((data) => {
           if (data) {
             this.intializeData();

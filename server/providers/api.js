@@ -937,6 +937,34 @@ router.post("/deleteEventDraft", auth, function (req, res, next) {
   }
 });
 
+router.post("/updatePaidEventActive", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
+      conn.query(
+        "update paid_events SET active = ? where id = ?",
+        [req.body.active, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/updatePaidEvent", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -944,6 +972,40 @@ router.post("/updatePaidEvent", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
+
+      req.body.datetime = convertToDate(req.body.datetime);
+      if (req.body.start_date_top) {
+        req.body.start_date_top = convertToDate(req.body.start_date_top);
+      }
+
+      conn.query(
+        "update paid_events SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePaidEventToActive", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
       conn.query(
         "update paid_events SET active = ? where id = ?",
         [req.body.active, req.body.id],
@@ -1089,7 +1151,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select a.*, p.*, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          "select a.*, p.*, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1257,6 +1319,34 @@ router.post("/updatePaidAd", auth, function (req, res, next) {
       conn.query(
         "update paid_ads SET ? where id = ?",
         [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePaidAdActive", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      req.body.start_date = new Date(req.body.start_date);
+      conn.query(
+        "update paid_ads SET active = ? where id = ?",
+        [req.body.active, req.body.id],
         function (err, rows) {
           conn.release();
           if (!err) {
@@ -1793,7 +1883,7 @@ router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select e.*, p.*, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? and p.active = 1",
+          "select e.*, p.*, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ?",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -2330,4 +2420,8 @@ function decodeToken(token) {
   return jwt.decode(token, process.env.TOKEN_KEY, {
     expiresIn: expiresToken,
   });
+}
+
+function convertToDate(date) {
+  return new Date(date);
 }

@@ -10,10 +10,10 @@ app/**/*.js.map
 
 # dependencies
 client/.env
+client/dist/assets/configurations/
 server/.env
 node_modules/
 bower_components/
-dist/assets/configurations/
 
 # IDEs and editors
 .idea/

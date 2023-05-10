@@ -208,6 +208,14 @@ a {
   background: #5995fd;
 }
 
+.badge-active {
+  background: #46a34f;
+}
+
+.badge-inactive {
+  background: #e10000;
+}
+
 .badge-info {
   width: 99%;
   text-align: end;
@@ -280,4 +288,9 @@ a {
 .delete-promotion,
 .delete-promotion:hover {
   color: #e10000;
+}
+
+.active-promotion,
+.active-promotion:hover {
+  color: #46a34f;
 }

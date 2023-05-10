@@ -31,6 +31,7 @@ export class UserAdsComponent implements OnInit {
     Y: 'center',
   };
   public language: any;
+  public loaderData = false;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -49,8 +50,10 @@ export class UserAdsComponent implements OnInit {
   }
 
   intializeData() {
+    this.loaderData = true;
     this.service.callGetMethod('api/getMyAds', '').subscribe((data: any) => {
       this.listOfDrafts = data as AdsModel[];
+      this.loaderData = false;
     });
   }
 

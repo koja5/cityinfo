@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
@@ -18,7 +19,9 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class DialogConfirmComponent implements OnInit {
   @ViewChild('dialog') public dialog!: DialogComponent;
-  @Output() public emitAction = new EventEmitter<any>();
+  @Output() public dialogEmitter = new EventEmitter<any>();
+  @Input() icon!: string;
+  @Input() text!: string;
   public language: any;
   public DialogObj: any;
 
@@ -51,12 +54,12 @@ export class DialogConfirmComponent implements OnInit {
   }
 
   public okClick(): void {
-    this.emitAction.emit(DecisionType.approve);
+    this.dialogEmitter.emit(DecisionType.approve);
     this.dialog.hide();
   }
 
   public cancelClick(): void {
-    this.emitAction.emit(DecisionType.cancel);
+    this.dialogEmitter.emit(DecisionType.cancel);
     this.dialog.hide();
   }
 }

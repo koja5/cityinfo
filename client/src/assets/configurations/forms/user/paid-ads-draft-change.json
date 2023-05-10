@@ -1,0 +1,122 @@
+{
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "ads_draft",
+            "title": "Ads draft",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getMyAds",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "City",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "position",
+            "title": "position",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getPositionPrices",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select position for your ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date",
+            "title": "Start date",
+            "field": "start_date",
+            "format": "dd.MM.yyyy",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "Number of weeks",
+            "field": "number_of_weeks",
+            "format": "###.##",
+            "min": 1,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "Save",
+            "field": "submitAndPay",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}

@@ -1,0 +1,113 @@
+{
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "event_draft",
+            "title": "Event draft",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getEventsDraft",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of events",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "City",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select city",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "datetimepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "Date and time",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:mm",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "label",
+            "width": "col-md-12 pt-2",
+            "title": "Do you want to increase the visibility of your event?",
+            "text": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra.",
+            "hide": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date_top",
+            "title": "When you to start event on top?",
+            "field": "start_date_top",
+            "format": "dd.MM.yyyy",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "Number of weeks",
+            "field": "number_of_weeks",
+            "format": "###.##",
+            "min": 1,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "Save",
+            "field": "submit",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}

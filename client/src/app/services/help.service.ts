@@ -5,6 +5,8 @@ import { UserType } from '../enums/user-type';
 import { FileType } from '../enums/file-type';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AdsModel } from '../models/ads-model';
+import { UserModel } from '../models/user-model';
 
 @Injectable({
   providedIn: 'root',
@@ -157,6 +159,34 @@ export class HelpService {
         '/' +
         file +
         '.json'
+    );
+  }
+
+  getPaymentDescription(typeOfAd: string, data: AdsModel, user: any) {
+    const language = this.getLanguage();
+    return (
+      language.stripePaymentReceiveType +
+      typeOfAd +
+      ', ' +
+      language.id +
+      ':' +
+      data.id +
+      ', ' +
+      language.name +
+      ':' +
+      data.name +
+      ', ' +
+      language.customerName +
+      ':' +
+      user.firstname +
+      ', ' +
+      language.email +
+      ':' +
+      user.email +
+      ', ' +
+      language.phone +
+      ':' +
+      user.phone
     );
   }
 }

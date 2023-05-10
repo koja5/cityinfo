@@ -71,7 +71,7 @@
         },
         "edit": {
             "type": "POST",
-            "api": "/api/updatePaidEvent",
+            "api": "/api/updatePaidEventToActive",
             "parameters": [],
             "fields": "",
             "root": ""

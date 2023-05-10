@@ -42,8 +42,10 @@
     "city": "Ort / Stadt",
     "numberOfWeeks": "Anzahl der Wochen",
     "active": "Aktiv",
+    "inactive": "Inaktiv",
     "is_club": "Ist ein Verein bzw. Veranstalter",
     "name": "Name",
+    "customerName": "Kundenname",
     "district": "Bezirk",
     "additionalInformation": "Zusätzliche Information",
     "buyer": "Auftraggeber",
@@ -130,11 +132,24 @@
     "acceptCookieButton": "Accept cookie",
     "editPromotion": "Aktion bearbeiten",
     "deletePromotion": "Förderung löschen",
+    "cancelPromotion": "Aktion abbrechen",
     "approve": "Genehmigen",
     "cancel": "Stornieren",
     "areYouSureTitle": "Bist du dir sicher?",
     "actionCantBeReturned": "Wenn Sie diese Daten löschen, können sie nicht zurückgegeben werden!",
+    "cancelYourPromotionQuestion": "Möchten Sie Ihre Aktion stornieren?",
+    "activeYourPromotionQuestion": "Möchten Sie Ihre Aktion erneut aktivieren?",
     "yes": "Ja",
     "no": "Nein",
-    "createNewPlace": "Neuen Ort schaffen"
+    "createNewPlace": "Neuen Ort schaffen",
+    "stripePaymentReceiveType": "CityInfo: Art von:",
+    "daysOfWeek": [
+        "So",
+        "Mo",
+        "Di",
+        "Mi",
+        "Do",
+        "Fr",
+        "Sa"
+    ]
 }

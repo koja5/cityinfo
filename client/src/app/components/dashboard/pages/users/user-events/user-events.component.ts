@@ -31,6 +31,7 @@ export class UserEventsComponent implements OnInit {
     Y: 'center',
   };
   public language: any;
+  public loaderData = false;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -49,10 +50,12 @@ export class UserEventsComponent implements OnInit {
   }
 
   intializeData() {
+    this.loaderData = true;
     this.service
       .callGetMethod('api/getEventsDraft', '')
       .subscribe((data: any) => {
         this.listOfDrafts = data as EventsModel[];
+        this.loaderData = false;
       });
   }
 

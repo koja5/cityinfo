@@ -1,4 +1,8 @@
-<div class="container mt-4">
+<div *ngIf="loaderData" class="full-height">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!loaderData" class="container mt-4">
 
     <div class="text-right mb-4">
         <button class="btn solid login" (click)="createNewEventDraft()"
