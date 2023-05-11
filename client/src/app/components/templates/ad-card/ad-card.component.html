@@ -1,9 +1,9 @@
 <body class="antialiased bg-gray-200 font-sans mb-4" *ngIf="data">
     <div class="max-w-6xl mx-auto">
         <div>
-            <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 py-6 px-3 card-body" (click)="showDetails()">
+            <div class="max-w-sm w-full sm:w-1/2 lg:w-1/3 card-body p-0" (click)="showDetails()">
                 <div
-                    class="bg-white shadow-xl rounded-lg overflow-hidden card-item {{data.position == 1 ? 'fixed' : ''}}">
+                    class="bg-white shadow-xl rounded-lg overflow-hidden card-item {{scaleOnHover ? 'scale' : ''}} {{data.position == 1 ? 'fixed' : ''}}">
                     <div class="more-option">
                         <i *ngIf="showMoreActionButton" #options class="fa fa-ellipsis-v option-button"
                             (click)="optionsVisible = !optionsVisible"></i>
@@ -14,11 +14,14 @@
                                 <li>
                                     <hr class="m-0">
                                 </li>
-                                <li *ngIf="promotion && data.active"><a (click)="confirmCancelPromotion = true"
+                                <li *ngIf="promotion && data.active"><a (click)="confirmDeactiveCampaign = true"
                                         class="delete-promotion"><i class="fa fa-eye-slash"></i>
-                                        {{language.cancelPromotion}}</a></li>
-                                <li *ngIf="promotion && !data.active"><a (click)="confirmActivePromotion = true"
+                                        {{language.deactiveCampaign}}</a></li>
+                                <li *ngIf="promotion && !data.active"><a (click)="confirmActiveCampaign = true"
                                         class="active-promotion"><i class="fa fa-eye"></i>
+                                        {{language.activeCampaign}}</a></li>
+                                <li *ngIf="promotion && data.start_date_top"><a (click)="confirmCancelPromotion = true"
+                                        class="delete-promotion"><i class="fa fa-ban"></i>
                                         {{language.cancelPromotion}}</a></li>
                                 <li *ngIf="promotion"><a (click)="confirmDeleteDialog = true"
                                         class="delete-promotion font-bold"><i class="fa fa-trash"></i>
@@ -32,7 +35,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6 class="uppercase tracking-wide font-bold text-gray-700 three-dots border-t border-gray-300 p-2"
+                            <h6 class="tracking-wide font-bold text-gray-700 three-dots border-t border-gray-300 p-2"
                                 title="{{data.name}}">{{data.name}}
                             </h6>
                             <div class="p-2" style="height: 67px">
@@ -122,7 +125,7 @@
     <ejs-dialog #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true" width="200px"
         [title]="'Test'">
         <ng-template #header>
-            <span style="text-transform: uppercase;">
+            <span>
                 {{data.name}}</span>
         </ng-template>
 
@@ -164,7 +167,11 @@
 
 <app-dialog-confirm *ngIf="confirmDeleteDialog" [icon]="'trash.png'" [text]="language.actionCantBeReturned"
     (dialogEmitter)="confirmDeleteAction($event)"></app-dialog-confirm>
-<app-dialog-confirm *ngIf="confirmCancelPromotion" [icon]="'not-visible.png'" [text]="language.cancelYourPromotionQuestion"
+<app-dialog-confirm *ngIf="confirmDeactiveCampaign" [icon]="'not-visible.png'"
+    [text]="language.deactiveYourCampaignQuestion"
+    (dialogEmitter)="confirmDeactiveCampaignAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmActiveCampaign" [icon]="'visible.png'" [text]="language.activeYourCampaignQuestion"
+    (dialogEmitter)="confirmActiveCampaignAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmCancelPromotion" [icon]="'cancel-promotion.png'"
+    [text]="language.cancelYourPromotionQuestion"
     (dialogEmitter)="confirmCancelPromotionAction($event)"></app-dialog-confirm>
-<app-dialog-confirm *ngIf="confirmActivePromotion" [icon]="'visible.png'"  [text]="language.activeYourPromotionQuestion"
-    (dialogEmitter)="confirmActivePromotionAction($event)"></app-dialog-confirm>

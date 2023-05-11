@@ -33,6 +33,7 @@ export class PlacesComponent implements OnInit {
   public language: any;
   public isClub: boolean = false;
   public loaderData = false;
+  public cities: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -52,9 +53,21 @@ export class PlacesComponent implements OnInit {
 
   intializeData() {
     this.loaderData = true;
+
+    this.getMyPlaces();
+    this.getCities();
+  }
+
+  getMyPlaces() {
     this.service.callGetMethod('api/getMyPlaces', '').subscribe((data: any) => {
       this.listOfPlaces = data as PlacesModel[];
       this.loaderData = false;
+    });
+  }
+
+  getCities() {
+    this.service.callGetMethod('api/getCities', '').subscribe((data: any) => {
+      this.cities = data;
     });
   }
 
@@ -154,6 +167,7 @@ export class PlacesComponent implements OnInit {
       .callPostMethod('api/updatePlace', this.data)
       .subscribe((data) => {
         if (data) {
+          this.getMyPlaces();
           this.dialog.hide();
           this.toastr.showSuccess();
         } else {

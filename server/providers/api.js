@@ -1064,7 +1064,7 @@ router.get("/getMyPlaces", auth, async (req, res, next) => {
       } else {
         console.log(req.user.user.id);
         conn.query(
-          "select * from places where id_user = ?",
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where id_user = ?",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1092,6 +1092,9 @@ router.post("/updatePlace", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
+
+      delete req.body.city_name;
+
       conn.query(
         "update places SET ? where id = ?",
         [req.body, req.body.id],
@@ -2220,6 +2223,32 @@ router.post("/updatePaidEventWithoutAuth", async function (req, res, next) {
             return res.json(false);
           } else {
             logger.log("info", "Paid new for CURRENT EVENT!");
+            return res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/cancelPromotionForEvent", async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(false);
+      }
+      conn.query(
+        "update paid_events set start_date_top = NULL, number_of_weeks = NULL, expired_date = NULL where id = ?",
+        req.body.id,
+        async function (err, rows) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(false);
+          } else {
             return res.json(true);
           }
         }

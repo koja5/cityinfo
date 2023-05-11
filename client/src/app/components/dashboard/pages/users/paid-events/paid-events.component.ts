@@ -233,7 +233,7 @@ export class PaidEventsComponent implements OnInit {
             this.dialogChange.show();
           }, 50);
         });
-    } else if (event.operation == ActionsType.cancelPromotion) {
+    } else if (event.operation == ActionsType.deactiveCampaign) {
       event.data.active = 0;
       this.service
         .callPostMethod('api/updatePaidEventActive', event.data)
@@ -246,10 +246,22 @@ export class PaidEventsComponent implements OnInit {
             this.toastr.showError();
           }
         });
-    } else if (event.operation == ActionsType.activePromotion) {
+    } else if (event.operation == ActionsType.activeCampaign) {
       event.data.active = 1;
       this.service
         .callPostMethod('api/updatePaidEventActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else if (event.operation == ActionsType.cancelPromotion) {
+      this.service
+        .callPostMethod('api/cancelPromotionForEvent', event.data)
         .subscribe((data) => {
           if (data) {
             this.intializeData();

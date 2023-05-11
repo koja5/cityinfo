@@ -37,6 +37,7 @@ export class AdCardComponent implements OnInit {
   @Input() public approveDenyButton: boolean = true;
   @Input() public showDetailsOnClick: boolean = false;
   @Input() public showMoreActionButton: boolean = true;
+  @Input() public scaleOnHover: boolean = false;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   @ViewChild('dialog') dialog!: DialogComponent;
   @ViewChild('options') options!: ElementRef;
@@ -46,8 +47,9 @@ export class AdCardComponent implements OnInit {
   public checkPromoButton = false;
   public optionsVisible = false;
   public confirmDeleteDialog = false;
+  public confirmDeactiveCampaign = false;
+  public confirmActiveCampaign = false;
   public confirmCancelPromotion = false;
-  public confirmActivePromotion = false;
   public dayAWeek!: string;
 
   constructor(
@@ -162,19 +164,27 @@ export class AdCardComponent implements OnInit {
     }
   }
 
+  confirmDeactiveCampaignAction(event: any) {
+    if (event == DecisionType.approve) {
+      this.emitActionClick(ActionsType.deactiveCampaign);
+    } else {
+      this.confirmDeactiveCampaign = false;
+    }
+  }
+
+  confirmActiveCampaignAction(event: any) {
+    if (event == DecisionType.approve) {
+      this.emitActionClick(ActionsType.activeCampaign);
+    } else {
+      this.confirmActiveCampaign = false;
+    }
+  }
+
   confirmCancelPromotionAction(event: any) {
     if (event == DecisionType.approve) {
       this.emitActionClick(ActionsType.cancelPromotion);
     } else {
       this.confirmCancelPromotion = false;
-    }
-  }
-
-  confirmActivePromotionAction(event: any) {
-    if (event == DecisionType.approve) {
-      this.emitActionClick(ActionsType.activePromotion);
-    } else {
-      this.confirmActivePromotion = false;
     }
   }
 

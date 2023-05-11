@@ -2,7 +2,7 @@ export class PlacesModel {
   id?: number;
   id_user?: number;
   name?: string;
-  address?: string;
+  city?: number;
   map_link?: string;
   phone?: string;
   email?: string;

@@ -22,6 +22,7 @@ import { SwitchAllModule } from '@syncfusion/ej2-angular-buttons';
 import { UserEventsComponent } from '../user-events/user-events.component';
 import { PaidEventsComponent } from '../paid-events/paid-events.component';
 import { DialogConfirmComponent } from 'src/app/components/common/dialog-confirm/dialog-confirm.component';
+import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DialogConfirmComponent } from 'src/app/components/common/dialog-confirm
     ),
     DateTimePickerAllModule,
     SwitchAllModule,
+    ComboBoxAllModule
   ],
   providers: [],
 })

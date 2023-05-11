@@ -133,12 +133,15 @@
     "editPromotion": "Aktion bearbeiten",
     "deletePromotion": "Förderung löschen",
     "cancelPromotion": "Aktion abbrechen",
+    "deactiveCampaign": "Deaktive Kampagne",
+    "activeCampaign": "Aktive Kampagne",
     "approve": "Genehmigen",
     "cancel": "Stornieren",
     "areYouSureTitle": "Bist du dir sicher?",
     "actionCantBeReturned": "Wenn Sie diese Daten löschen, können sie nicht zurückgegeben werden!",
-    "cancelYourPromotionQuestion": "Möchten Sie Ihre Aktion stornieren?",
-    "activeYourPromotionQuestion": "Möchten Sie Ihre Aktion erneut aktivieren?",
+    "deactiveYourCampaignQuestion": "Möchten Sie Ihre Aktion stornieren?",
+    "activeYourCampaignQuestion": "Möchten Sie Ihre Aktion erneut aktivieren?",
+    "cancelYourPromotionQuestion": "Möchten Sie Ihre Aktion stornieren? Wenn Sie stornieren, müssen Sie für die TOP-Sichtbarkeit erneut bezahlen.",
     "yes": "Ja",
     "no": "Nein",
     "createNewPlace": "Neuen Ort schaffen",
@@ -151,5 +154,6 @@
         "Do",
         "Fr",
         "Sa"
-    ]
+    ],
+    "selectNameOfCity": "Select name of city"
 }

@@ -124,8 +124,8 @@ p {
   transition: 0.5s all ease-in-out;
 }
 
-.card-item:hover {
-  transform: scale(1.1);
+.scale:hover {
+  transform: scale(1.03);
 }
 
 .card-icon {
@@ -240,7 +240,7 @@ a {
 .three-dots {
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 310px;
+  width: 355px;
   height: 3.2em;
   white-space: nowrap;
   cursor: pointer;

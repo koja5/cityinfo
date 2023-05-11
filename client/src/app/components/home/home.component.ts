@@ -60,18 +60,8 @@ export class HomeComponent implements OnInit {
         'getPaidEventsByCity',
         this.selectedCity
       );
-      // this.getPaidAdsByCity(this.selectedCity);
-      // this.getPaidEventsByCity(this.selectedCity);
-      // this.getPaidScrollAdsByCity(this.selectedCity);
-      // this.getPaidFixedAdsByCity(this.selectedCity);
-      // this.getPaidScrollEventsByCity(this.selectedCity);
     } else {
       this.getAllData('getPaidAdsForAllCity', 'getPaidEventsForAllCity', '');
-      // this.getPaidAdsByCity('');
-      // this.getPaidEventsByCity('');
-      // this.getPaidScrollAdsByCity('');
-      // this.getPaidFixedAdsByCity('');
-      // this.getPaidScrollEventsByCity('');
     }
   }
 
@@ -84,8 +74,8 @@ export class HomeComponent implements OnInit {
   }
 
   changeCity(event: any) {
+    this.helpService.setLocalStorage('selectedCity', event.target.value);
     if (event.target.value != '') {
-      this.helpService.setLocalStorage('selectedCity', event.target.value);
       this.allAds = [];
       this.allFixedAds = null;
       this.getAllData(

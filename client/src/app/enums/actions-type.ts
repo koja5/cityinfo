@@ -3,6 +3,8 @@ export enum ActionsType {
     edit = 2,
     delete = 3,
     promotion = 4,
-    cancelPromotion = 5,
-    activePromotion = 6
+    deactiveCampaign = 5,
+    activeCampaign = 6,
+    cancelPromotion = 7,
+    activePromotion = 8
 }

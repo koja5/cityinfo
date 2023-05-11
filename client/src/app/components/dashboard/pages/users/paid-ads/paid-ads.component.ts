@@ -161,7 +161,7 @@ export class PaidAdsComponent implements OnInit {
             this.dialogChange.show();
           }, 50);
         });
-    } else if (event.operation == ActionsType.cancelPromotion) {
+    } else if (event.operation == ActionsType.deactiveCampaign) {
       event.data.active = 0;
       this.service
         .callPostMethod('api/updatePaidAdActive', event.data)
@@ -174,7 +174,7 @@ export class PaidAdsComponent implements OnInit {
             this.toastr.showError();
           }
         });
-    } else if (event.operation == ActionsType.activePromotion) {
+    } else if (event.operation == ActionsType.activeCampaign) {
       event.data.active = 1;
       this.service
         .callPostMethod('api/updatePaidAdActive', event.data)
@@ -191,7 +191,19 @@ export class PaidAdsComponent implements OnInit {
   }
 
   submitEmitter(event: any) {
-    if (this.currentOperation == ActionsType.promotion) {
+    if (this.currentOperation == ActionsType.edit) {
+      this.service
+        .callPostMethod('api/updatePaidAd', event)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialogChange.hide();
+            this.toastr.showError();
+          }
+        });
+    } else {
       this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
         if (data) {
           this.user = data[0];
@@ -225,18 +237,6 @@ export class PaidAdsComponent implements OnInit {
             };
             this.adPreview = true;
             this.card.show();
-          }
-        });
-    } else if (this.currentOperation == ActionsType.edit) {
-      this.service
-        .callPostMethod('api/updatePaidAd', event)
-        .subscribe((data) => {
-          if (data) {
-            this.intializeData();
-            this.toastr.showSuccess();
-          } else {
-            this.dialogChange.hide();
-            this.toastr.showError();
           }
         });
     }

@@ -56,6 +56,13 @@
     "link": "/dashboard/superadmin/all-invoices"
   },
   {
+    "title": "Places",
+    "rights": [
+      "isClub"
+    ],
+    "link": "/dashboard/user/places"
+  },
+  {
     "title": "My ads",
     "rights": [
       "user"
@@ -63,18 +70,18 @@
     "link": "/dashboard/user/my-ads"
   },
   {
-    "title": "My events",
-    "rights": [
-      "user"
-    ],
-    "link": "/dashboard/user/my-events"
-  },
-  {
     "title": "Paid ads",
     "rights": [
       "user"
     ],
     "link": "/dashboard/user/paid-ads"
+  },
+  {
+    "title": "My events",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-events"
   },
   {
     "title": "Paid events",
@@ -89,12 +96,5 @@
       "user"
     ],
     "link": "/dashboard/user/my-invoices"
-  },
-  {
-    "title": "Places",
-    "rights": [
-      "isClub"
-    ],
-    "link": "/dashboard/user/places"
   }
 ]

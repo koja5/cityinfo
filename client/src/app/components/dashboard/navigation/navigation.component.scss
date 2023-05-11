@@ -81,8 +81,9 @@ img {
     }
 
     &:hover,
-    &:focus {
-      color: var(--bg-round-b);
+    &:focus,
+    &:active {
+      color: var(--btn-color);
     }
   }
 }
@@ -129,7 +130,8 @@ img {
   }
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:active {
     border-color: var(--c-accent-primary);
     color: var(--c-accent-primary);
   }
@@ -152,7 +154,8 @@ img {
   }
 
   &:focus,
-  &:hover {
+  &:hover,
+  &:active {
     background-color: var(--c-background-tertiary);
     color: var(--c-accent-primary);
   }
