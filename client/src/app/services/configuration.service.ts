@@ -19,7 +19,7 @@ export class ConfigurationService {
 
   getLanguage(language?: string) {
     return this.http.get(
-      '../../assets/configurations/languages/english.json'
+      '../../assets/configurations/languages/germany.json'
     );
   }
 

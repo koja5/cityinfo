@@ -19,6 +19,7 @@ import { DialogConfirmComponent } from '../../common/dialog-confirm/dialog-confi
 import { DecisionType } from 'src/app/enums/decision-type';
 import { TypeOfComponent } from 'src/app/enums/type-of-component';
 import { MessageService } from 'src/app/services/message.service';
+import { CardType } from 'src/app/enums/card-type';
 
 @Component({
   selector: 'app-ad-card',
@@ -95,17 +96,15 @@ export class AdCardComponent implements OnInit {
   }
 
   editButton() {
-    const emitterModel = new EmitterModel();
-    emitterModel.operation = ActionsType.edit;
-    emitterModel.data = this.data;
-    this.clickEmitter.emit(emitterModel);
+    this.emitActionClick(ActionsType.edit);
+  }
+
+  createDuplicate() {
+    this.emitActionClick(ActionsType.createDuplicate);
   }
 
   promotionButton() {
-    const emitterModel = new EmitterModel();
-    emitterModel.operation = ActionsType.promotion;
-    emitterModel.data = this.data;
-    this.clickEmitter.emit(emitterModel);
+    this.emitActionClick(ActionsType.promotion);
   }
 
   emitActionClick(operation: ActionsType) {
@@ -193,5 +192,9 @@ export class AdCardComponent implements OnInit {
       this.dayAWeek =
         this.language.daysOfWeek[new Date(this.data.datetime).getDay()];
     }
+  }
+
+  getCardTypePlace(){
+    return CardType.place;
   }
 }

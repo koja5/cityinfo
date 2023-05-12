@@ -1142,6 +1142,65 @@ router.post("/deletePlace", auth, function (req, res, next) {
   }
 });
 
+router.get("/getPlacesByCity/:id", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        console.log(req.user.user.id);
+        conn.query(
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where c.id = ? and p.active = 1",
+          req.params.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getPlacesForAllCity", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        console.log(req.user.user.id);
+        conn.query(
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 /* END PLACES */
 
 /* PAID ADS */
@@ -1187,9 +1246,11 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
       const start_date = new Date(
         JSON.parse(JSON.stringify(req.body.start_date))
       );
-      req.body.number_of_weeks = 2;
       req.body.expired_date = addWeeks(start_date, req.body.number_of_weeks);
       req.body.id_user = req.user.user.id;
+      if (req.body.id) {
+        delete req.body.id;
+      }
       conn.query(
         "insert into paid_ads set ?",
         req.body,
@@ -1245,6 +1306,9 @@ router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
       req.body.id_user = req.body.app_token.user.id;
       delete req.body.app_token;
       delete req.body.price;
+      if (req.body.id) {
+        delete req.body.id;
+      }
       conn.query(
         "insert into paid_ads set ?",
         req.body,
@@ -1280,15 +1344,9 @@ router.post("/updatePaidAdWithoutAuth", async function (req, res, next) {
       req.body.id_user = req.body.app_token.user.id;
       req.body.position = 1;
       delete req.body.app_token;
-      delete req.body.price;
       conn.query(
-        "update paid_ads set start_date = ?, number_of_weeks = ?, expired_date = ? where id = ?",
-        [
-          req.body.start_date,
-          req.body.number_of_weeks,
-          req.body.expired_date,
-          req.body.id,
-        ],
+        "update paid_ads set ? where id = ?",
+        [req.body, req.body.id],
         async function (err, rows) {
           conn.release();
           if (err) {
@@ -1915,9 +1973,6 @@ router.post("/createPaidEvent", auth, async function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         return res.json(false);
       }
-      // var d = new Date();
-      // d.setDate(d.getDate() + 1);
-      // req.body.start_date = d;
       req.body.datetime = new Date(req.body.datetime);
       req.body.id_user = req.user.user.id;
       conn.query(
@@ -2170,6 +2225,9 @@ router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
       }
       delete req.body.app_token;
       delete req.body.price;
+      if (req.body.id) {
+        delete req.body.id;
+      }
       conn.query(
         "insert into paid_events set ?",
         req.body,
@@ -2197,25 +2255,20 @@ router.post("/updatePaidEventWithoutAuth", async function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         return res.json(false);
       }
-      req.body.start_date_top = new Date(req.body.start_date_top);
-      const start_date_top = new Date(
+      req.body.start_date_top = convertToDate(req.body.start_date_top);
+      const start_date_top = convertToDate(
         JSON.parse(JSON.stringify(req.body.start_date_top))
       );
       req.body.expired_date = addWeeks(
         start_date_top,
         req.body.number_of_weeks
       );
+      req.body.datetime = convertToDate(req.body.datetime);
       req.body.id_user = req.body.app_token.user.id;
       delete req.body.app_token;
-      delete req.body.price;
       conn.query(
-        "update paid_events set start_date_top = ?, number_of_weeks = ?, expired_date = ?, position = 1 where id = ?",
-        [
-          req.body.start_date_top,
-          req.body.number_of_weeks,
-          req.body.expired_date,
-          req.body.id,
-        ],
+        "update paid_events set ?, position = 1 where id = ?",
+        [req.body, req.body.id],
         async function (err, rows) {
           conn.release();
           if (err) {

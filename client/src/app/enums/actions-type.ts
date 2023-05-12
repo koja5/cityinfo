@@ -6,5 +6,5 @@ export enum ActionsType {
     deactiveCampaign = 5,
     activeCampaign = 6,
     cancelPromotion = 7,
-    activePromotion = 8
+    createDuplicate = 8
 }

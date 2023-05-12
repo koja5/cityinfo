@@ -167,10 +167,17 @@ export class PaidEventsComponent implements OnInit {
       this.paymentInformation.token = token;
       this.paymentInformation.price = this.paidAd.price;
       this.paymentInformation.description =
-        this.helpService.getPaymentDescription('Event', this.data, this.user);
+        this.helpService.getPaymentDescription(
+          this.language.event,
+          this.data,
+          this.user
+        );
       this.paymentInformation.app_token = this.storageService.getToken();
 
-      if (this.changeData) {
+      if (
+        this.changeData &&
+        this.currentOperation != ActionsType.createDuplicate
+      ) {
         this.paymentInformation.action_type = ActionsType.edit;
       } else {
         this.paymentInformation.action_type = ActionsType.create;
@@ -224,8 +231,18 @@ export class PaidEventsComponent implements OnInit {
           }
         });
     } else if (event.operation == ActionsType.edit) {
+      let file = '';
+      if (
+        event.data.expired_date &&
+        new Date(event.data.expired_date) > new Date()
+      ) {
+        file = this.fileChangeDraft;
+      } else {
+        file = this.file;
+        this.currentOperation = ActionsType.promotion;
+      }
       this.configurationService
-        .getConfiguration(this.path, this.fileChangeDraft)
+        .getConfiguration(this.path, file)
         .subscribe((data) => {
           this.config = data;
           this.changeData = event.data;
@@ -270,6 +287,16 @@ export class PaidEventsComponent implements OnInit {
             this.dialog.hide();
             this.toastr.showError();
           }
+        });
+    } else if (event.operation == ActionsType.createDuplicate) {
+      this.configurationService
+        .getConfiguration(this.path, this.file)
+        .subscribe((data) => {
+          this.config = data;
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
         });
     }
   }

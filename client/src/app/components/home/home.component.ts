@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   public listOfCities: any;
   public allAds: any = [];
   public allFixedAds: any = [];
+  public allData: any;
   public selectedCity: any;
   public language: any;
   public year!: number;
@@ -50,18 +51,22 @@ export class HomeComponent implements OnInit {
   }
 
   initializeData() {
-    this.service.callGetMethod('api/getCities', '').subscribe((data) => {
-      this.listOfCities = data;
-    });
+    this.getAllCities();
 
     if (this.selectedCity) {
       this.getAllData(
         'getPaidAdsByCity',
         'getPaidEventsByCity',
+        'getPlacesByCity',
         this.selectedCity
       );
     } else {
-      this.getAllData('getPaidAdsForAllCity', 'getPaidEventsForAllCity', '');
+      this.getAllData(
+        'getPaidAdsForAllCity',
+        'getPaidEventsForAllCity',
+        'getPlacesForAllCity',
+        ''
+      );
     }
   }
 
@@ -81,14 +86,25 @@ export class HomeComponent implements OnInit {
       this.getAllData(
         'getPaidAdsByCity',
         'getPaidEventsByCity',
+        'getPlacesByCity',
         event.target.value
       );
     } else {
-      this.getAllData('getPaidAdsForAllCity', 'getPaidEventsForAllCity', '');
+      this.getAllData(
+        'getPaidAdsForAllCity',
+        'getPaidEventsForAllCity',
+        'getPlacesForAllCity',
+        ''
+      );
     }
   }
 
-  getAllData(methodForAds: string, methodForEvents: string, parameter: string) {
+  getAllData(
+    methodForAds: string,
+    methodForEvents: string,
+    methodForPlaces: string,
+    parameter: string
+  ) {
     this.loader = true;
     this.service
       .callGetMethod('api/' + methodForAds, parameter)
@@ -96,8 +112,6 @@ export class HomeComponent implements OnInit {
         this.service
           .callGetMethod('api/' + methodForEvents, parameter)
           .subscribe((events: any) => {
-            console.log(ads);
-            console.log(events);
             const numberOfFixedPositionForAds =
               this.getNumberOfFixedPositionForAds(ads);
             const numberOfFixedPositionForEvents =
@@ -110,9 +124,21 @@ export class HomeComponent implements OnInit {
             );
             this.allAds = this.allAds.concat(ads.splice(0, ads.length));
             this.allAds = this.allAds.concat(events.splice(0, events.length));
-            this.loader = false;
+            this.service
+              .callGetMethod('api/' + methodForPlaces, parameter)
+              .subscribe((place) => {
+                this.allData = place;
+                this.allData = this.allData.concat(this.allAds);
+                this.loader = false;
+              });
           });
       });
+  }
+
+  getAllCities() {
+    this.service.callGetMethod('api/getCities', '').subscribe((data) => {
+      this.listOfCities = data;
+    });
   }
 
   getPaidAdsByCity(parameter: string) {

@@ -11,5 +11,6 @@ export class AdsModel {
     cover_old?: string;
     start_date?: Date;
     expired_date?: Date;
+    start_date_top?: Date;
     token?: any;
 }

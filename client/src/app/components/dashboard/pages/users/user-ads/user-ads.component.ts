@@ -144,10 +144,10 @@ export class UserAdsComponent implements OnInit {
         .subscribe((data) => {
           if (data) {
             this.dialog.hide();
-            this.toastr.showSuccessCustom('You successfuly delete ads draft!');
+            this.toastr.showSuccess();
           } else {
             this.dialog.hide();
-            this.toastr.showErrorCustom('Not successfuly delete ads draft!');
+            this.toastr.showError();
           }
         });
     }
@@ -159,10 +159,10 @@ export class UserAdsComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.dialog.hide();
-          this.toastr.showSuccessCustom('You successfuly update ads draft!');
+          this.toastr.showSuccess();
         } else {
           this.dialog.hide();
-          this.toastr.showErrorCustom('Not successfuly update ads draft!');
+          this.toastr.showError();
         }
       });
   }

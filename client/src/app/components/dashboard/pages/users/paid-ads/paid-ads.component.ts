@@ -99,10 +99,10 @@ export class PaidAdsComponent implements OnInit {
       this.paymentInformation.token = token;
       this.paymentInformation.price = this.paidAd.price;
       this.paymentInformation.description =
-        this.helpService.getPaymentDescription('Ad', this.data, this.user);
+        this.helpService.getPaymentDescription(this.language.ad, this.data, this.user);
       this.paymentInformation.app_token = this.storageService.getToken();
 
-      if (this.changeData) {
+      if (this.changeData && this.currentOperation != ActionsType.createDuplicate) {
         this.paymentInformation.action_type = ActionsType.edit;
       } else {
         this.paymentInformation.action_type = ActionsType.create;
@@ -143,17 +143,21 @@ export class PaidAdsComponent implements OnInit {
       this.service
         .callPostMethod('api/deletePaidAd', event.data)
         .subscribe((data) => {
-          if (data) {
-            this.intializeData();
-            this.toastr.showSuccess();
-          } else {
-            this.dialog.hide();
-            this.toastr.showError();
-          }
+          this.initializeAfterResponse(data);
         });
     } else if (event.operation == ActionsType.edit) {
+      let file = '';
+      if (
+        event.data.expired_date &&
+        new Date(event.data.expired_date) > new Date()
+      ) {
+        file = this.fileChangeDraft;
+      } else {
+        file = this.file;
+        this.currentOperation = ActionsType.promotion;
+      }
       this.configurationService
-        .getConfiguration(this.path, this.fileChangeDraft)
+        .getConfiguration(this.path, file)
         .subscribe((data) => {
           this.config = data;
           this.changeData = event.data;
@@ -166,26 +170,24 @@ export class PaidAdsComponent implements OnInit {
       this.service
         .callPostMethod('api/updatePaidAdActive', event.data)
         .subscribe((data) => {
-          if (data) {
-            this.intializeData();
-            this.toastr.showSuccess();
-          } else {
-            this.dialog.hide();
-            this.toastr.showError();
-          }
+          this.initializeAfterResponse(data);
         });
     } else if (event.operation == ActionsType.activeCampaign) {
       event.data.active = 1;
       this.service
         .callPostMethod('api/updatePaidAdActive', event.data)
         .subscribe((data) => {
-          if (data) {
-            this.intializeData();
-            this.toastr.showSuccess();
-          } else {
-            this.dialog.hide();
-            this.toastr.showError();
-          }
+          this.initializeAfterResponse(data);
+        });
+    } else if (event.operation == ActionsType.createDuplicate) {
+      this.configurationService
+        .getConfiguration(this.path, this.file)
+        .subscribe((data) => {
+          this.config = data;
+          this.changeData = event.data;
+          setTimeout(() => {
+            this.dialogChange.show();
+          }, 50);
         });
     }
   }
@@ -195,13 +197,7 @@ export class PaidAdsComponent implements OnInit {
       this.service
         .callPostMethod('api/updatePaidAd', event)
         .subscribe((data) => {
-          if (data) {
-            this.intializeData();
-            this.toastr.showSuccess();
-          } else {
-            this.dialogChange.hide();
-            this.toastr.showError();
-          }
+          this.initializeAfterResponse(data);
         });
     } else {
       this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
@@ -239,6 +235,16 @@ export class PaidAdsComponent implements OnInit {
             this.card.show();
           }
         });
+    }
+  }
+
+  initializeAfterResponse(data: any) {
+    if (data) {
+      this.intializeData();
+      this.toastr.showSuccess();
+    } else {
+      this.dialogChange.hide();
+      this.toastr.showError();
     }
   }
 

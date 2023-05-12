@@ -11,6 +11,9 @@
                             <ul>
                                 <li><a (click)="editButton()"><i class="fa fa-edit"></i> {{language.editPromotion}}</a>
                                 </li>
+                                <li *ngIf="promotion"><a (click)="createDuplicate()"><i class="fa fa-clone"></i>
+                                        {{language.createDuplicate}}</a>
+                                </li>
                                 <li>
                                     <hr class="m-0">
                                 </li>
@@ -69,9 +72,11 @@
                             <div class="badge-info">
                                 <span *ngIf="(data.start_date || data.expired_date) && !data.datetime" class="ad-badge"
                                     title="{{language.adTitle}}">{{language.ad}}</span>
-                                <span *ngIf="data.datetime" class="event-badge"
+                                <span *ngIf="data.datetime && data.position != 1" class="event-badge"
                                     title="{{language.eventTitle}}">{{language.event}}</span>
-                                <span *ngIf="type === 'place'" class="place-badge"
+                                <span *ngIf="data.datetime && data.position == 1" class="event-badge"
+                                    title="{{language.eventTitle}}">{{language.eventPayed}}</span>
+                                <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
                                     title="{{language.placeTitle}}">{{language.placeTitle}}</span>
                                 <span *ngIf="promotion && data.active"
                                     class="badge-active ml-1">{{language.active}}</span>

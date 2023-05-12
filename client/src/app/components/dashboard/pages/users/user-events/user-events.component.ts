@@ -140,7 +140,6 @@ export class UserEventsComponent implements OnInit {
       this.editButton = true;
       this.event = event.data;
       this.dialogEvent.show();
-    } else if (event.operation === ActionsType.delete) {
     }
   }
 
@@ -150,10 +149,10 @@ export class UserEventsComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.dialogEvent.hide();
-          this.toastr.showSuccessCustom('You successfuly update ads draft!');
+          this.toastr.showSuccess();
         } else {
           this.dialogEvent.hide();
-          this.toastr.showErrorCustom('Not successfuly update ads draft!');
+          this.toastr.showError();
         }
       });
   }
