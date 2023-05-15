@@ -1,55 +1,55 @@
 [
   {
-    "title": "Users",
+    "title": "Kunden",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/users"
   },
   {
-    "title": "Cities",
+    "title": "Orte",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/cities"
   },
   {
-    "title": "Districts",
+    "title": "Bezirke",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/districts"
   },
   {
-    "title": "Prices",
+    "title": "Preise",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/position-prices"
   },
   {
-    "title": "Request ads",
+    "title": "Zu bestätigen",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/request-ads"
   },
   {
-    "title": "All ads",
+    "title": "Werbung",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/all-ads"
   },
   {
-    "title": "All events",
+    "title": "Events",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/all-events"
   },
   {
-    "title": "All invoices",
+    "title": "Rechnungen",
     "rights": [
       "superadmin"
     ],
@@ -63,35 +63,35 @@
     "link": "/dashboard/user/places"
   },
   {
-    "title": "My ads",
+    "title": "Werbe-Vorlagen",
     "rights": [
       "user"
     ],
     "link": "/dashboard/user/my-ads"
   },
   {
-    "title": "Paid ads",
+    "title": "Meine-Werbung",
     "rights": [
       "user"
     ],
     "link": "/dashboard/user/paid-ads"
   },
   {
-    "title": "My events",
+    "title": "Event-Vorlagen",
     "rights": [
       "user"
     ],
     "link": "/dashboard/user/my-events"
   },
   {
-    "title": "Paid events",
+    "title": "Meine Events",
     "rights": [
       "user"
     ],
     "link": "/dashboard/user/paid-events"
   },
   {
-    "title": "My invoice",
+    "title": "Rechnungen",
     "rights": [
       "user"
     ],
