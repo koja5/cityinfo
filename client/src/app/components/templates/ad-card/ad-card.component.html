@@ -23,7 +23,7 @@
                                 <li *ngIf="promotion && !data.active"><a (click)="confirmActiveCampaign = true"
                                         class="active-promotion"><i class="fa fa-eye"></i>
                                         {{language.activeCampaign}}</a></li>
-                                <li *ngIf="promotion && !checkPromoButton"><a (click)="confirmCancelPromotion = true"
+                                <li *ngIf="promotion && !checkPromoButton && data.start_date_top"><a (click)="confirmCancelPromotion = true"
                                         class="delete-promotion"><i class="fa fa-ban"></i>
                                         {{language.cancelPromotion}}</a></li>
                                 <li *ngIf="promotion"><a (click)="confirmDeleteDialog = true"
