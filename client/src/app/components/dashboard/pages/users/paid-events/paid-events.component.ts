@@ -35,7 +35,7 @@ export class PaidEventsComponent implements OnInit {
   public config!: FormConfig;
   cardCaptureReady = false;
   public data = new AdsModel();
-  public paidAd = new PaidAdsModel();
+  public additionalEventInformation: any;
   public paymentInformation = new PaymentAdsModel();
   public user: any;
   public changeData: any;
@@ -120,14 +120,15 @@ export class PaidEventsComponent implements OnInit {
           .subscribe((data: any) => {
             if (data) {
               this.data = data[0];
-              this.paidAd = {
+              this.additionalEventInformation = {
                 position: data[0].position,
                 city: data[0].city,
                 number_of_weeks: event.number_of_weeks,
                 price: event.number_of_weeks * data[0].price,
-                start_date: event.start_date,
-                expired_date: data[0].expired_date,
+                start_date: event.start_date_top,
+                expired_date: this.helpService.addWeeks(event.start_date_top, event.number_of_weeks)
               };
+
               let event_date = new EventsModel();
               event_date = {
                 start_date_top: event.start_date_top,
@@ -165,7 +166,7 @@ export class PaidEventsComponent implements OnInit {
   setStripeToken(token: stripe.Token) {
     if (token) {
       this.paymentInformation.token = token;
-      this.paymentInformation.price = this.paidAd.price;
+      this.paymentInformation.price = this.additionalEventInformation.price;
       this.paymentInformation.description =
         this.helpService.getPaymentDescription(
           this.language.event,

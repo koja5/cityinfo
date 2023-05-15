@@ -61,6 +61,10 @@ const port = process.env.PORT || "3001";
 app.set("port", port);
 const server = http.createServer(app);
 
+// Keep alive connections
+server.keepAliveTimeout = (60 * 1000) + 1000;
+server.headersTimeout = (60 * 1000) + 2000;
+
 server.listen(port, () => console.log(`API running on localhost:${port}`));
 
 //chat

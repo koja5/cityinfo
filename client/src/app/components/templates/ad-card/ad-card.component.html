@@ -23,7 +23,7 @@
                                 <li *ngIf="promotion && !data.active"><a (click)="confirmActiveCampaign = true"
                                         class="active-promotion"><i class="fa fa-eye"></i>
                                         {{language.activeCampaign}}</a></li>
-                                <li *ngIf="promotion && data.start_date_top"><a (click)="confirmCancelPromotion = true"
+                                <li *ngIf="promotion && !checkPromoButton"><a (click)="confirmCancelPromotion = true"
                                         class="delete-promotion"><i class="fa fa-ban"></i>
                                         {{language.cancelPromotion}}</a></li>
                                 <li *ngIf="promotion"><a (click)="confirmDeleteDialog = true"
@@ -96,11 +96,11 @@
                             <p class="text-sm text-gray-700">{{language.city}}:
                                 {{additionalInformation.city}}
                             </p>
-                            <p *ngIf="additionalInformation.start_date" class="text-sm text-gray-700">
+                            <p class="text-sm text-gray-700">
                                 {{language.startDate}}:
                                 {{additionalInformation.start_date | date: 'dd.MM.yyyy'}}
                             </p>
-                            <p *ngIf="additionalInformation.expired_date" class="text-sm text-gray-700">
+                            <p class="text-sm text-gray-700">
                                 {{language.expiredDate}}:
                                 {{additionalInformation.expired_date | date: 'dd.MM.yyyy'}}
                             </p>

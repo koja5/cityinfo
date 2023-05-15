@@ -40,9 +40,13 @@ export class HomeComponent implements OnInit {
       this.helpService.setLanguage(data);
     });
 
-    if (this.helpService.getLocalStorageStringValue('selectedCity')) {
-      this.selectedCity =
-        this.helpService.getLocalStorageStringValue('selectedCity');
+    if (
+      this.helpService.getLocalStorageStringValue('selectedCity') != 'null' &&
+      this.helpService.getLocalStorageStringValue('selectedCity') != 'undefined'
+    ) {
+      this.selectedCity = Number(
+        this.helpService.getLocalStorageStringValue('selectedCity')
+      );
     }
 
     if (!this.storageService.getCookie('cookie')) {
@@ -79,15 +83,15 @@ export class HomeComponent implements OnInit {
   }
 
   changeCity(event: any) {
-    this.helpService.setLocalStorage('selectedCity', event.target.value);
-    if (event.target.value != '') {
+    this.helpService.setLocalStorage('selectedCity', event.value);
+    if (event.value) {
       this.allAds = [];
       this.allFixedAds = null;
       this.getAllData(
         'getPaidAdsByCity',
         'getPaidEventsByCity',
         'getPlacesByCity',
-        event.target.value
+        event.value
       );
     } else {
       this.getAllData(
@@ -105,6 +109,7 @@ export class HomeComponent implements OnInit {
     methodForPlaces: string,
     parameter: string
   ) {
+    this.allData = null;
     this.loader = true;
     this.service
       .callGetMethod('api/' + methodForAds, parameter)

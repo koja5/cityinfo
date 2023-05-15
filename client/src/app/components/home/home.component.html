@@ -9,13 +9,26 @@
                     <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
                 </div>
                 <ul class="nav-list {{showHideMenu}}">
-                    <li>
+                    <!-- <li>
                         <select class="combobox input-large form-control" name="normal" (change)="changeCity($event)">
                             <option value="" selected="selected" [selected]="selectedCity == '' ? true : false">
                                 {{language.selectState}}</option>
                             <option *ngFor="let item of listOfCities" value="{{item.id}}"
                                 [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
                         </select>
+                    </li> -->
+                    <li class="select-city">
+                        <ejs-combobox *ngIf="listOfCities" [cssClass]="'e-outline'" [id]="selectedCity"
+                            [dataSource]="listOfCities" [fields]="{text: 'name', value: 'id'}"
+                            [(ngModel)]="selectedCity" [value]="selectedCity" [placeholder]="language.selectNameOfCity"
+                            [allowFiltering]="true" [itemTemplate]='itemTemplate' (change)="changeCity($event)">
+                            <ng-template #itemTemplate="" let-data>
+                                <span>{{data.name}}</span> <span style="float: right">{{data.district}}</span>
+                            </ng-template>
+                            <ng-template *ngIf="listOfCities" #noRecordsTemplate>
+                                <span class="norecord"> {{language?.noRecords}}</span>
+                            </ng-template>
+                        </ejs-combobox>
                     </li>
 
                     <li><a class="btn transparent" routerLink="/login"><i class="fa fa-arrow-right"

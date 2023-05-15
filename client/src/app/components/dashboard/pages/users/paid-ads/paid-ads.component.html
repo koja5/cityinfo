@@ -50,7 +50,7 @@
         <ng-template #content>
             <div class="row" *ngIf="!loader">
                 <div class="col-md-6">
-                    <app-ad-card *ngIf="data&&paidAd&&adPreview" [data]="data" [additionalInformation]="paidAd"
+                    <app-ad-card *ngIf="data&&additionalAdInformation&&adPreview" [data]="data" [additionalInformation]="additionalAdInformation"
                         [approveDenyButton]="false"></app-ad-card>
                 </div>
                 <div class="col-md-6">

@@ -202,7 +202,7 @@ nav ul li ul li a {
   width: 300px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 800px) {
   .nav-list {
     text-align: center;
     margin: auto;
@@ -239,4 +239,24 @@ nav ul li ul li a {
 
 .card-item:hover {
   transform: scale(1.04);
+}
+
+.select-city .e-input-group {
+  border-radius: 49px;
+}
+
+@media (min-width: 769px) {
+  .select-city {
+    margin: 13px 13px 0px 0px;
+  }
+
+  .select-city ejs-combobox {
+    width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .select-city ejs-combobox {
+    width: 100%;
+  }
 }

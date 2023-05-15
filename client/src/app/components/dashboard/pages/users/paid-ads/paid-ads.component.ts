@@ -36,7 +36,7 @@ export class PaidAdsComponent implements OnInit {
   public config!: FormConfig;
   cardCaptureReady = false;
   public data = new AdsModel();
-  public paidAd = new PaidAdsModel();
+  public additionalAdInformation = new PaidAdsModel();
   public paymentInformation = new PaymentAdsModel();
   public user: any;
   public changeData: any;
@@ -97,7 +97,7 @@ export class PaidAdsComponent implements OnInit {
   setStripeToken(token: stripe.Token) {
     if (token) {
       this.paymentInformation.token = token;
-      this.paymentInformation.price = this.paidAd.price;
+      this.paymentInformation.price = this.additionalAdInformation.price;
       this.paymentInformation.description =
         this.helpService.getPaymentDescription(this.language.ad, this.data, this.user);
       this.paymentInformation.app_token = this.storageService.getToken();
@@ -210,7 +210,7 @@ export class PaidAdsComponent implements OnInit {
         .subscribe((data: any) => {
           if (data) {
             this.data = data[0];
-            this.paidAd = {
+            this.additionalAdInformation = {
               position: data[0].position,
               city: data[0].city,
               number_of_weeks: event.number_of_weeks,
@@ -218,6 +218,7 @@ export class PaidAdsComponent implements OnInit {
               start_date: event.start_date,
               expired_date: data[0].expired_date,
             };
+
             let ad_date = new PaidAdsModel();
             ad_date = {
               start_date: event.start_date,

@@ -52,8 +52,8 @@
         <ng-template #content>
             <div class="row" *ngIf="!loader">
                 <div class="col-md-6">
-                    <app-ad-card *ngIf="data&&paidAd&&adPreview" [data]="data" [additionalInformation]="paidAd"
-                        [approveDenyButton]="false"></app-ad-card>
+                    <app-ad-card *ngIf="data&&additionalEventInformation&&adPreview" [data]="data"
+                        [additionalInformation]="additionalEventInformation" [approveDenyButton]="false"></app-ad-card>
                 </div>
                 <div class="col-md-6">
                     <h3 clas="text-center">{{language.cardInformation}}</h3>
