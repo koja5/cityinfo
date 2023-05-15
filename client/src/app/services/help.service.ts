@@ -192,6 +192,9 @@ export class HelpService {
 
   addWeeks(date: Date, weeks: number) {
     const newDate = new Date(JSON.parse(JSON.stringify(date)));
+    if (date instanceof Date === false) {
+      date = new Date(date);
+    }
     newDate.setDate(date.getDate() + 7 * weeks);
     return newDate;
   }
