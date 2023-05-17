@@ -65,7 +65,9 @@
             <app-loader></app-loader>
         </div>
         <div class="main-container" *ngIf="!loader" style="min-height: 81vh;">
-
+            <div class="text-right" *ngIf="allData.length > 0">
+                <p class="custom-label">Ukupno za prikaz: {{allData.length}}</p>
+            </div>
             <div class="row" *ngIf="allData && allData.length > 0">
                 <app-ad-card *ngFor="let item of allData" [data]="item" [showDetailsOnClick]="true"
                     [showMoreActionButton]="false" [scaleOnHover]="true"

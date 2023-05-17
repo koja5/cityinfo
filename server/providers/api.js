@@ -120,7 +120,6 @@ router.post("/login", function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       return res.json(false);
     }
-    console.log(sha1(req.body.password));
     conn.query(
       "select * from users WHERE email=? AND password=? AND active = 1",
       [req.body.email, sha1(req.body.password)],
@@ -252,7 +251,6 @@ router.get("/deactiveClub/:email", function (req, res, next) {
 });
 
 router.post("/recoveryPassword", function (req, res, next) {
-  console.log(req.body);
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -348,7 +346,6 @@ router.post("/changePersonalInfo", auth, function (req, res, next) {
         if (!err) {
           res.json(true);
         } else {
-          console.log(err);
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);
         }
@@ -595,7 +592,6 @@ router.get("/getDistricts", auth, async (req, res, next) => {
             logger.log("error", err.sql + ". " + err.sqlMessage);
             res.json(err);
           } else {
-            console.log(rows);
             res.json(rows);
           }
         });
@@ -756,7 +752,6 @@ router.get("/getAllAdsDraft", auth, async (req, res, next) => {
             logger.log("error", err.sql + ". " + err.sqlMessage);
             res.json(err);
           } else {
-            console.log(rows);
             res.json(rows);
           }
         });
@@ -775,7 +770,6 @@ router.get("/getMyAds", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req.user.user.id);
         conn.query(
           "select * from ads_draft where id_user = ?",
           req.user.user.id,
@@ -785,7 +779,6 @@ router.get("/getMyAds", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -863,7 +856,6 @@ router.get("/getEventsDraft", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req);
         conn.query(
           "select * from events_draft where id_user = ?",
           req.user.user.id,
@@ -873,7 +865,6 @@ router.get("/getEventsDraft", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1048,7 +1039,6 @@ router.get("/getAllPlaces", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1068,7 +1058,6 @@ router.get("/getMyPlaces", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req.user.user.id);
         conn.query(
           "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where id_user = ?",
           req.user.user.id,
@@ -1078,7 +1067,6 @@ router.get("/getMyPlaces", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1164,7 +1152,6 @@ router.get("/getPlacesByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1192,7 +1179,6 @@ router.get("/getPlacesForAllCity", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1225,7 +1211,6 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1239,7 +1224,6 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
 });
 
 router.post("/createPaidAd", auth, async function (req, res, next) {
-  console.log(auth);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -1295,7 +1279,6 @@ router.post("/createPaidAd", auth, async function (req, res, next) {
 });
 
 router.post("/createPaidAdWithoutAuth", async function (req, res, next) {
-  console.log(req.body);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -1471,7 +1454,6 @@ router.get("/getPaidScrollAds", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1499,7 +1481,6 @@ router.get("/getPaidFixedAds", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1528,7 +1509,6 @@ router.get("/getPaidScrollAdsByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1557,7 +1537,6 @@ router.get("/getPaidFixedAdsByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1585,7 +1564,6 @@ router.get("/getPaidAdsForAllCity", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1614,7 +1592,6 @@ router.get("/getPaidAdsByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1642,7 +1619,6 @@ router.get("/getRequestAds", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1671,7 +1647,6 @@ router.get("/getRequestAdById/:id", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1704,7 +1679,6 @@ router.post("/getAdInformationForPayment", auth, async (req, res, next) => {
                 "select * from position_prices where id = ?",
                 [req.body.position],
                 function (err, position, fields) {
-                  console.log(position);
                   if (err) {
                     conn.release();
                     logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -1727,7 +1701,6 @@ router.post("/getAdInformationForPayment", auth, async (req, res, next) => {
                             new Date(req.body.start_date),
                             req.body.number_of_weeks
                           );
-                          console.log(data);
                           res.json(data);
                         }
                       }
@@ -1866,7 +1839,6 @@ router.get("/getAllPaidAds", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1894,7 +1866,6 @@ router.get("/getAllInvoices", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1923,7 +1894,6 @@ router.get("/getMyInvoices", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1956,7 +1926,6 @@ router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -1970,7 +1939,6 @@ router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
 });
 
 router.post("/createPaidEvent", auth, async function (req, res, next) {
-  console.log(req.body);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -2014,7 +1982,6 @@ router.get("/getAllPaidEvents", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -2077,7 +2044,6 @@ router.get("/getPaidScrollEventsByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -2105,7 +2071,6 @@ router.get("/getPaidEventsForAllCity", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -2134,7 +2099,6 @@ router.get("/getPaidEventsByCity/:id", async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -2166,7 +2130,6 @@ router.post("/getEventInformationForPayment", auth, async (req, res, next) => {
               conn.query(
                 "select * from position_prices where id = 1",
                 function (err, position, fields) {
-                  console.log(position);
                   if (err) {
                     conn.release();
                     logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -2208,7 +2171,6 @@ router.post("/getEventInformationForPayment", auth, async (req, res, next) => {
 });
 
 router.post("/createPaidEventWithoutAuth", async function (req, res, next) {
-  console.log(req.body);
   try {
     connection.getConnection(async function (err, conn) {
       if (err) {
@@ -2335,7 +2297,6 @@ router.get("/getPositionPrices", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              console.log(rows);
               res.json(rows);
             }
           }
@@ -2440,7 +2401,6 @@ router.post("/createAdPayment", (req, res, next) => {
     },
     (err, charge) => {
       if (err) {
-        console.log(err);
         next(err);
       }
 
@@ -2477,7 +2437,6 @@ router.post("/createEventPayment", (req, res, next) => {
     },
     (err, charge) => {
       if (err) {
-        console.log(err);
         next(err);
       }
       req.body.event_date["app_token"] = decodeToken(req.body.app_token);
@@ -2513,17 +2472,16 @@ router.post("/calculateRange", auth, function (req, res, next) {
         "select * from cities where id != ?",
         req.body.city,
         function (err, cities) {
-          conn.release();
           let items = [];
           if (!err) {
             cities.forEach(function (item, i, array) {
               if (
-                calculateDistance(46.756807, 12.52862, item.lat, item.lng, 5)
+                calculateDistance(46.756807, 12.52862, item.lat, item.lng, 1000)
               ) {
                 items.push(item);
               }
             });
-            res.json(items);
+            getPaidEventsForListOfCities(items, res, conn);
           } else {
             logger.log("error", `${err.sql}. ${err.sqlMessage}`);
             res.json(false);
@@ -2560,7 +2518,63 @@ function calculateDistance(lat1, lon1, lat2, lon2, distance) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const d = R * c; // in
-  if (d <= distance) {
+  if (d / 1000 <= distance) {
     return true;
   }
+}
+
+function getPaidEventsForListOfCities(cities, res, conn) {
+  let events = [];
+  let differentConditionCity = "and ";
+  let differentConditionCityForPlace = "and ";
+  cities.forEach(function (item, i, array) {
+    differentConditionCity += "p.city = " + item.id;
+    differentConditionCityForPlace += "c.id = " + item.id;
+    if (i < cities.length - 1) {
+      differentConditionCity += " or ";
+      differentConditionCityForPlace += " or ";
+    }
+  });
+  conn.query(
+    "select distinct a.name, a.cover, a.address, a.map_link, a.phone, a.email, a.description, p.position, p.expired_date, p.start_date, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.active = 1 and p.expired_date >= now()" +
+      differentConditionCity +
+      " order by p.position asc, p.start_date asc",
+    function (err, ads, fields) {
+      if (err) {
+        return false;
+      } else {
+        conn.query(
+          "select distinct e.name, e.cover, e.address, e.map_link, e.phone, e.email, e.description, p.position, p.expired_date, p.datetime, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.active = 1 and p.datetime >= now() " +
+            differentConditionCity +
+            " order by p.position asc, p.datetime asc, p.expired_date desc",
+          function (err, events, fields) {
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1 " +
+                  differentConditionCityForPlace,
+                function (err, places, fields) {
+                  conn.release();
+                  if (err) {
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    const body = {
+                      ads: ads,
+                      events: events,
+                      places: places,
+                    };
+                    console.log(body);
+                    res.json(body);
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    }
+  );
 }

@@ -32,6 +32,14 @@ export class HomeComponent implements OnInit {
     this.year = new Date().getFullYear();
     this.initializeConfig();
     this.initializeData();
+    const body = {
+      city: 1892,
+    };
+    this.service
+      .callPostMethod('/api/calculateRange', body)
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   initializeConfig() {
