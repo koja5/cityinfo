@@ -22,9 +22,14 @@
     "createNewEventDraft": "Event-Vorlage erstellen",
     "createNewPaidAd": "Werbe-Kampagne starten",
     "createNewPaidEvent": "Event anlegen",
-    "noHaveYetPaidStaff": "You don't have yet paid staff!",
-    "noHaveAdYet": "Sie haben keine Werbe-Vorlagen!",
-    "createNewOneAd": "Erstellen Sie einfach eine!",
+    "noHaveDraftAdYet": "Sie haben keine Werbe-Vorlagen!",
+    "createNewOneDraftAd": "Erstellen Sie einfach eine!",
+    "noHavePaidAdYet": "Sie haben keine Werbe-Vorlagen!",
+    "createNewOnePaidAd": "Erstellen Sie einfach eine!",
+    "noHaveDraftEventYet": "Sie haben keine Werbe-Vorlagen!",
+    "createNewOneDraftEvent": "Erstellen Sie einfach eine!",
+    "noHavePaidEventYet": "Sie haben keine Werbe-Vorlagen!",
+    "createNewOnePaidEvent": "Erstellen Sie einfach eine!",
     "nameOfCompany": "Firmenname",
     "address": "Adresse",
     "mapLink": "Positions-Link von Google Maps",
@@ -159,5 +164,13 @@
         "Fr",
         "Sa"
     ],
-    "selectNameOfCity": "Wählen Sie den Namen der Stadt aus"
+    "selectNameOfCity": "Wählen Sie den Namen der Stadt aus",
+    "adDraftTitle": "Anzeigenentwurf",
+    "startDateTitle": "Startdatum",
+    "save": "Speichern",
+    "eventDraft": "Veranstaltungsentwurf",
+    "eventAdditionalDescribeTitle": "Möchten Sie die Sichtbarkeit Ihrer Veranstaltung erhöhen?",
+    "eventAdditionalDescribeText": "Wenn Sie möchten, dass Ihre Anzeige ganz oben in der Suche erscheint, geben Sie das Datum ein, ab dem sie geschaltet werden soll, sowie die Anzahl der Wochen und erhöhen Sie die Sichtbarkeit, indem Sie einen Aufpreis zahlen.",
+    "eventStartDateTopPromotion": "Wann soll die Veranstaltung oben beginnen?",
+    "nameOfPlace": "Name des Ortes"
 }

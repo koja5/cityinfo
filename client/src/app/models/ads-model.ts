@@ -12,5 +12,6 @@ export class AdsModel {
     start_date?: Date;
     expired_date?: Date;
     start_date_top?: Date;
+    number_of_weeks?: number;
     token?: any;
 }

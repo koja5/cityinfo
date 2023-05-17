@@ -125,7 +125,6 @@ export class UserAdsComponent implements OnInit {
     this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
       if (data) {
         this.data = {
-          name: data[0].nameOfOrganization,
           phone: data[0].phone,
           email: data[0].email,
         };

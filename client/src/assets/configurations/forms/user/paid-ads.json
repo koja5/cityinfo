@@ -15,7 +15,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "ads_draft",
-            "title": "Ads draft",
+            "title": "adDraftTitle",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -39,7 +39,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "City",
+            "title": "city",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -87,7 +87,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "start_date",
-            "title": "Start date",
+            "title": "startDateTitle",
             "field": "start_date",
             "format": "dd.MM.yyyy"
         },
@@ -96,7 +96,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "Number of weeks",
+            "title": "numberOfWeeks",
             "field": "number_of_weeks",
             "format": "###.##",
             "min": 1
@@ -106,7 +106,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submitAndPay",
             "positionClass": "position-end mt-3 col-md-12"
         }

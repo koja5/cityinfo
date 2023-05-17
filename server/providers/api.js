@@ -366,15 +366,18 @@ router.get("/getCities", async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from cities", function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            res.json(rows);
+        conn.query(
+          "select * from cities order by name asc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
           }
-        });
+        );
       }
     });
   } catch (ex) {
@@ -1037,16 +1040,19 @@ router.get("/getAllPlaces", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from places", function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            console.log(rows);
-            res.json(rows);
+        conn.query(
+          "select p.*, c.name as city_name from places p join cities c on p.city = c.id",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              console.log(rows);
+              res.json(rows);
+            }
           }
-        });
+        );
       }
     });
   } catch (ex) {
@@ -2496,6 +2502,41 @@ router.post("/createEventPayment", (req, res, next) => {
   );
 });
 
+router.post("/calculateRange", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "select * from cities where id != ?",
+        req.body.city,
+        function (err, cities) {
+          conn.release();
+          let items = [];
+          if (!err) {
+            cities.forEach(function (item, i, array) {
+              if (
+                calculateDistance(46.756807, 12.52862, item.lat, item.lng, 5)
+              ) {
+                items.push(item);
+              }
+            });
+            res.json(items);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 function decodeToken(token) {
   return jwt.decode(token, process.env.TOKEN_KEY, {
     expiresIn: expiresToken,
@@ -2504,4 +2545,22 @@ function decodeToken(token) {
 
 function convertToDate(date) {
   return new Date(date);
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2, distance) {
+  const R = 6371e3; // metres
+  const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const d = R * c; // in
+  if (d <= distance) {
+    return true;
+  }
 }

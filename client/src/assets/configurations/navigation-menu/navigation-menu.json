@@ -58,6 +58,13 @@
   {
     "title": "Places",
     "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-places"
+  },
+  {
+    "title": "Places",
+    "rights": [
       "isClub"
     ],
     "link": "/dashboard/user/places"

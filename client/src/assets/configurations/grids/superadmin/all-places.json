@@ -1,0 +1,305 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/getAllPlaces",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSize": 10
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": false
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "contextMenuItems": [
+        "AutoFit",
+        "AutoFitAll",
+        "SortAscending",
+        "SortDescending",
+        "Copy",
+        "Edit",
+        "Delete",
+        "Save",
+        "Cancel",
+        "FirstPage",
+        "PrevPage",
+        "LastPage",
+        "NextPage",
+        "Group",
+        "Ungroup"
+    ],
+    "toolbar": [
+        "Edit",
+        "Delete",
+        "Print",
+        "Search"
+    ],
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": false,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+        "edit": {
+            "type": "POST",
+            "api": "/api/updatePlace",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        },
+        "delete": {
+            "type": "POST",
+            "api": "/api/deletePlace",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "ID",
+            "width": 70,
+            "filterable": true,
+            "filter": "date",
+            "type": "number",
+            "class": "text-align-right",
+            "field": "id",
+            "isPrimaryKey": true,
+            "allowEditing": false
+        },
+        {
+            "title": "Name",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "name",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "City",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "city_name",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "Map link",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "map_link",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "Phone",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "phone",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "Email",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "Description",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "description",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "Active",
+            "template": {
+                "choices": [
+                    {
+                        "field": "active",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-danger'>Inactive</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Deny</span>"
+                    }
+                ]
+            },
+            "field": "active"
+        }
+    ],
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12 hide",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "id_user",
+            "title": "user",
+            "field": {
+                "text": "email",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getUsers",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of ads",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12 hide",
+            "class": "e-outline",
+            "name": "name",
+            "title": "name",
+            "field": "name"
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "city",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "Please select name of city",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "map_link",
+            "title": "map_link",
+            "field": "map_link"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "phone",
+            "title": "phone",
+            "field": "phone"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "email",
+            "title": "email",
+            "field": "email"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "description",
+            "title": "description",
+            "field": "description"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "type",
+            "title": "type",
+            "field": "type",
+            "hide": true
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12 mt-4",
+            "class": "e-outline",
+            "name": "active",
+            "title": "Active",
+            "field": "active"
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "Save",
+            "field": "submit",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}

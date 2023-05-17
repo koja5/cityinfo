@@ -9,6 +9,7 @@ import { PositionPriceComponent } from '../position-price/position-price.compone
 import { PreviewAdComponent } from '../preview-ad/preview-ad.component';
 import { RequestAdsComponent } from '../request-ads/request-ads.component';
 import { UsersComponent } from '../users/users.component';
+import { AllPlacesComponent } from '../all-places/all-places.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'all-invoices',
     component: AllInvoicesComponent,
+  },
+  {
+    path: 'all-places',
+    component: AllPlacesComponent,
   },
 ];
 

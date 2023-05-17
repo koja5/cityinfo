@@ -13,9 +13,21 @@ import { PreviewAdComponent } from '../preview-ad/preview-ad.component';
 import { SharingModule } from 'src/app/sharing.module';
 import { AllInvoicesComponent } from '../all-invoices/all-invoices.component';
 import { AllEventsComponent } from '../all-events/all-events.component';
+import { AllPlacesComponent } from '../all-places/all-places.component';
 
 @NgModule({
-  declarations: [CitiesComponent, UsersComponent, DistrictsComponent, PositionPriceComponent, RequestAdsComponent, AllAdsComponent, PreviewAdComponent, AllInvoicesComponent, AllEventsComponent],
+  declarations: [
+    CitiesComponent,
+    UsersComponent,
+    DistrictsComponent,
+    PositionPriceComponent,
+    RequestAdsComponent,
+    AllAdsComponent,
+    PreviewAdComponent,
+    AllInvoicesComponent,
+    AllEventsComponent,
+    AllPlacesComponent,
+  ],
   imports: [CommonModule, SuperadminRouting, DynamicModule, SharingModule],
   providers: [],
 })

@@ -23,7 +23,8 @@
                             [(ngModel)]="selectedCity" [value]="selectedCity" [placeholder]="language.selectNameOfCity"
                             [allowFiltering]="true" [itemTemplate]='itemTemplate' (change)="changeCity($event)">
                             <ng-template #itemTemplate="" let-data>
-                                <span>{{data.name}}</span> <span style="float: right">{{data.district}}</span>
+                                <span>{{data.name}}</span> <span style="float: right"
+                                    class="hidden-xs">{{data.district}}</span>
                             </ng-template>
                             <ng-template *ngIf="listOfCities" #noRecordsTemplate>
                                 <span class="norecord"> {{language?.noRecords}}</span>
@@ -67,7 +68,8 @@
 
             <div class="row" *ngIf="allData && allData.length > 0">
                 <app-ad-card *ngFor="let item of allData" [data]="item" [showDetailsOnClick]="true"
-                    [showMoreActionButton]="false" [scaleOnHover]="true" class="col-md-3"></app-ad-card>
+                    [showMoreActionButton]="false" [scaleOnHover]="true"
+                    class="col-lg-3 col-md-4 col-sm-6 col-xs-12"></app-ad-card>
             </div>
             <div *ngIf="!allData || allData.length == 0" class="outer" style="height: 81vh;">
                 <div class="middle">

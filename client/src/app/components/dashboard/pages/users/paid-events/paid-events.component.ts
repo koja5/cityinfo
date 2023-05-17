@@ -96,7 +96,11 @@ export class PaidEventsComponent implements OnInit {
   }
 
   submitEmitter(event: any) {
-    if (this.currentOperation == ActionsType.edit) {
+    if (
+      this.currentOperation == ActionsType.edit &&
+      !event.start_date_top &&
+      !event.number_of_weeks
+    ) {
       this.service
         .callPostMethod('api/updatePaidEvent', event)
         .subscribe((data) => {
@@ -126,7 +130,10 @@ export class PaidEventsComponent implements OnInit {
                 number_of_weeks: event.number_of_weeks,
                 price: event.number_of_weeks * data[0].price,
                 start_date: event.start_date_top,
-                expired_date: this.helpService.addWeeks(event.start_date_top, event.number_of_weeks)
+                expired_date: this.helpService.addWeeks(
+                  event.start_date_top,
+                  event.number_of_weeks
+                ),
               };
 
               let event_date = new EventsModel();
@@ -240,7 +247,6 @@ export class PaidEventsComponent implements OnInit {
         file = this.fileChangeDraft;
       } else {
         file = this.file;
-        this.currentOperation = ActionsType.promotion;
       }
       this.configurationService
         .getConfiguration(this.path, file)

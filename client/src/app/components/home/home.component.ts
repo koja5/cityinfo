@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     });
 
     if (
+      this.helpService.getLocalStorageStringValue('selectedCity') &&
       this.helpService.getLocalStorageStringValue('selectedCity') != 'null' &&
       this.helpService.getLocalStorageStringValue('selectedCity') != 'undefined'
     ) {

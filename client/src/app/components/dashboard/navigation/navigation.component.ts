@@ -90,5 +90,6 @@ export class NavigationComponent implements OnInit {
     this.storageService.deleteToken();
     this.storageService.removeAllLocalStorage();
     window.open('/#/login', '_self');
+    window.location.reload();
   }
 }

@@ -127,7 +127,6 @@ export class UserEventsComponent implements OnInit {
     this.service.callGetMethod('api/getMe', '').subscribe((data: any) => {
       if (data) {
         this.event = {
-          name: data[0].nameOfOrganization,
           phone: data[0].phone,
           email: data[0].email,
         };
