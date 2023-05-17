@@ -5,7 +5,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "hide": true
         },
@@ -14,7 +14,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "event_draft",
-            "title": "Event draft",
+            "title": "eventDraft",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -38,7 +38,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "City",
+            "title": "city",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -62,22 +62,22 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "datetime",
-            "title": "Date and time",
+            "title": "dateAndTime",
             "field": "datetime",
             "format": "dd.MM.yyyy / HH:mm"
         },
         {
             "type": "label",
             "width": "col-md-12 pt-2",
-            "title": "Do you want to increase the visibility of your event?",
-            "text": "If you want your ad to be at the very top of the search, enter the date from when you want it to be displayed and how many weeks and increase its visibility by paying extra."
+            "title": "eventAdditionalDescribeTitle",
+            "text": "eventAdditionalDescribeText"
         },
         {
             "type": "datepicker",
             "width": "col-md-12",
             "class": "e-outline",
             "name": "start_date_top",
-            "title": "When you to start event on top?",
+            "title": "eventStartDateTopPromotion",
             "field": "start_date_top",
             "format": "dd.MM.yyyy"
         },
@@ -86,7 +86,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "Number of weeks",
+            "title": "numberOfWeeks",
             "field": "number_of_weeks",
             "format": "###.##",
             "min": 1
@@ -96,7 +96,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }
