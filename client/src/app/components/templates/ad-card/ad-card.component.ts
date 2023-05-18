@@ -140,8 +140,10 @@ export class AdCardComponent implements OnInit {
 
   checkPromoButtonOption() {
     if (
-      !this.data.expired_date ||
-      (this.data.expired_date && new Date(this.data.expired_date) < new Date())
+      (this.data && !this.data.expired_date) ||
+      (this.data &&
+        this.data.expired_date &&
+        new Date(this.data.expired_date) < new Date())
     ) {
       this.checkPromoButton = true;
     } else {
@@ -188,13 +190,13 @@ export class AdCardComponent implements OnInit {
   }
 
   getDayFromDate() {
-    if (this.data.datetime) {
+    if (this.data && this.data.datetime) {
       this.dayAWeek =
         this.language.daysOfWeek[new Date(this.data.datetime).getDay()];
     }
   }
 
-  getCardTypePlace(){
+  getCardTypePlace() {
     return CardType.place;
   }
 }

@@ -771,7 +771,7 @@ router.get("/getMyAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from ads_draft where id_user = ?",
+          "select * from ads_draft where id_user = ? order by name asc",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -857,7 +857,7 @@ router.get("/getEventsDraft", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from events_draft where id_user = ?",
+          "select * from events_draft where id_user = ? order by name asc",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1059,7 +1059,7 @@ router.get("/getMyPlaces", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where id_user = ?",
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where id_user = ? order by p.name asc",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1203,7 +1203,7 @@ router.get("/getPaidAdsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select a.*, p.*, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ?",
+          "select a.*, p.*, c.name as city_name from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id where p.id_user = ? order by p.start_date desc",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -1918,7 +1918,7 @@ router.get("/getPaidEventsByUser", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select e.*, p.*, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ?",
+          "select e.*, p.*, c.name as city_name from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id where p.id_user = ? order by p.datetime desc",
           req.user.user.id,
           function (err, rows, fields) {
             conn.release();
@@ -2461,7 +2461,7 @@ router.post("/createEventPayment", (req, res, next) => {
   );
 });
 
-router.post("/calculateRange", auth, function (req, res, next) {
+router.post("/calculateRange", function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -2470,13 +2470,19 @@ router.post("/calculateRange", auth, function (req, res, next) {
       }
       conn.query(
         "select * from cities where id != ?",
-        req.body.city,
+        req.body.id,
         function (err, cities) {
           let items = [];
           if (!err) {
             cities.forEach(function (item, i, array) {
               if (
-                calculateDistance(46.756807, 12.52862, item.lat, item.lng, 1000)
+                calculateRange(
+                  req.body.lat,
+                  req.body.lng,
+                  item.lat,
+                  item.lng,
+                  req.body.range
+                )
               ) {
                 items.push(item);
               }
@@ -2505,7 +2511,7 @@ function convertToDate(date) {
   return new Date(date);
 }
 
-function calculateDistance(lat1, lon1, lat2, lon2, distance) {
+function calculateRange(lat1, lon1, lat2, lon2, range) {
   const R = 6371e3; // metres
   const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
   const φ2 = (lat2 * Math.PI) / 180;
@@ -2518,7 +2524,7 @@ function calculateDistance(lat1, lon1, lat2, lon2, distance) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const d = R * c; // in
-  if (d / 1000 <= distance) {
+  if (d / 1000 <= range) {
     return true;
   }
 }

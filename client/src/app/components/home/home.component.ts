@@ -15,11 +15,52 @@ export class HomeComponent implements OnInit {
   public allAds: any = [];
   public allFixedAds: any = [];
   public allData: any;
+  public selectedCityId: any;
   public selectedCity: any;
   public language: any;
   public year!: number;
   public showCookieMessage = false;
   public loader = false;
+  public value: number = 30;
+  public rangeValue: any;
+  public ranges = [
+    {
+      text: '5 km',
+      value: 5,
+    },
+    {
+      text: '10 km',
+      value: 10,
+    },
+    {
+      text: '15 km',
+      value: 15,
+    },
+    {
+      text: '20 km',
+      value: 20,
+    },
+    {
+      text: '25 km',
+      value: 25,
+    },
+    {
+      text: '50 km',
+      value: 50,
+    },
+  ];
+
+  // public tooltip: Object = {
+  //   placement: 'Before',
+  //   isVisible: true,
+  //   showOn: 'Always',
+  // };
+  // public ticks: Object = {
+  //   placement: 'After',
+  //   largeStep: 20,
+  //   smallStep: 10,
+  //   showSmallTicks: true,
+  // };
 
   constructor(
     private service: CallApiService,
@@ -35,11 +76,6 @@ export class HomeComponent implements OnInit {
     const body = {
       city: 1892,
     };
-    this.service
-      .callPostMethod('/api/calculateRange', body)
-      .subscribe((data) => {
-        console.log(data);
-      });
   }
 
   initializeConfig() {
@@ -53,25 +89,32 @@ export class HomeComponent implements OnInit {
       this.helpService.getLocalStorageStringValue('selectedCity') != 'null' &&
       this.helpService.getLocalStorageStringValue('selectedCity') != 'undefined'
     ) {
-      this.selectedCity = Number(
-        this.helpService.getLocalStorageStringValue('selectedCity')
-      );
+      this.selectedCity = this.helpService.getLocalStorage('selectedCity');
+      this.selectedCityId = this.selectedCity.id;
     }
 
     if (!this.storageService.getCookie('cookie')) {
       this.showCookieMessage = true;
+    }
+
+    if (this.helpService.getLocalStorageStringValue('range')) {
+      this.rangeValue = Number(
+        this.helpService.getLocalStorageStringValue('range')
+      );
     }
   }
 
   initializeData() {
     this.getAllCities();
 
-    if (this.selectedCity) {
+    if (this.selectedCityId && this.rangeValue) {
+      this.setNewRange({ value: this.rangeValue });
+    } else if (this.selectedCityId) {
       this.getAllData(
         'getPaidAdsByCity',
         'getPaidEventsByCity',
         'getPlacesByCity',
-        this.selectedCity
+        this.selectedCityId
       );
     } else {
       this.getAllData(
@@ -92,15 +135,47 @@ export class HomeComponent implements OnInit {
   }
 
   changeCity(event: any) {
-    this.helpService.setLocalStorage('selectedCity', event.value);
-    if (event.value) {
+    if (event.value == null) {
+      this.helpService.removeLocalStorageItem('range');
+      this.rangeValue = null;
+    }
+    this.selectedCity = event.itemData;
+    this.helpService.setLocalStorage(
+      'selectedCity',
+      JSON.stringify(event.itemData)
+    );
+    if (this.rangeValue) {
+      this.setNewRange({ value: this.rangeValue });
+    } else {
+      this.showEntriesForSelectedCity(event.value);
+    }
+  }
+
+  setNewRange(event: any) {
+    this.selectedCity['range'] = event.value;
+    this.rangeValue = event.value;
+    this.helpService.setLocalStorage('range', this.rangeValue);
+    this.loader = true;
+    this.service
+      .callPostMethod('/api/calculateRange', this.selectedCity)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.packAdsAndEvents(data.ads, data.events);
+        this.allData = data.places;
+        this.allData = this.allData.concat(this.allAds);
+        this.loader = false;
+      });
+  }
+
+  showEntriesForSelectedCity(value: any) {
+    if (value) {
       this.allAds = [];
       this.allFixedAds = null;
       this.getAllData(
         'getPaidAdsByCity',
         'getPaidEventsByCity',
         'getPlacesByCity',
-        event.value
+        value
       );
     } else {
       this.getAllData(
@@ -126,18 +201,8 @@ export class HomeComponent implements OnInit {
         this.service
           .callGetMethod('api/' + methodForEvents, parameter)
           .subscribe((events: any) => {
-            const numberOfFixedPositionForAds =
-              this.getNumberOfFixedPositionForAds(ads);
-            const numberOfFixedPositionForEvents =
-              this.getNumberOfFixedPositionForEvents(events);
-            this.allAds = this.allAds.concat(
-              ads.splice(0, numberOfFixedPositionForAds)
-            );
-            this.allAds = this.allAds.concat(
-              events.splice(0, numberOfFixedPositionForEvents)
-            );
-            this.allAds = this.allAds.concat(ads.splice(0, ads.length));
-            this.allAds = this.allAds.concat(events.splice(0, events.length));
+            this.packAdsAndEvents(ads, events);
+
             this.service
               .callGetMethod('api/' + methodForPlaces, parameter)
               .subscribe((place) => {
@@ -147,6 +212,22 @@ export class HomeComponent implements OnInit {
               });
           });
       });
+  }
+
+  packAdsAndEvents(ads: any, events: any) {
+    this.allAds = [];
+    const numberOfFixedPositionForAds =
+      this.getNumberOfFixedPositionForAds(ads);
+    const numberOfFixedPositionForEvents =
+      this.getNumberOfFixedPositionForEvents(events);
+    this.allAds = this.allAds.concat(
+      ads.splice(0, numberOfFixedPositionForAds)
+    );
+    this.allAds = this.allAds.concat(
+      events.splice(0, numberOfFixedPositionForEvents)
+    );
+    this.allAds = this.allAds.concat(ads.splice(0, ads.length));
+    this.allAds = this.allAds.concat(events.splice(0, events.length));
   }
 
   getAllCities() {

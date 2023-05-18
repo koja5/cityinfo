@@ -173,5 +173,6 @@
     "eventAdditionalDescribeTitle": "Möchten Sie die Sichtbarkeit Ihrer Veranstaltung erhöhen?",
     "eventAdditionalDescribeText": "Wenn Sie möchten, dass Ihre Anzeige ganz oben in der Suche erscheint, geben Sie das Datum ein, ab dem sie geschaltet werden soll, sowie die Anzahl der Wochen und erhöhen Sie die Sichtbarkeit, indem Sie einen Aufpreis zahlen.",
     "eventStartDateTopPromotion": "Wann soll die Veranstaltung oben beginnen?",
-    "nameOfPlace": "Name des Ortes"
+    "nameOfPlace": "Name des Ortes",
+    "selectRange": "Bereich auswählen"
 }

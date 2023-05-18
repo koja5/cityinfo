@@ -17,16 +17,27 @@
                                 [selected]="selectedCity == item.id ? true : false">{{item.name}}</option>
                         </select>
                     </li> -->
-                    <li class="select-city">
-                        <ejs-combobox *ngIf="listOfCities" [cssClass]="'e-outline'" [id]="selectedCity"
+                    <li class="select-option">
+                        <ejs-combobox *ngIf="listOfCities" [cssClass]="'e-outline'" [id]="selectedCityId"
                             [dataSource]="listOfCities" [fields]="{text: 'name', value: 'id'}"
-                            [(ngModel)]="selectedCity" [value]="selectedCity" [placeholder]="language.selectNameOfCity"
-                            [allowFiltering]="true" [itemTemplate]='itemTemplate' (change)="changeCity($event)">
+                            [(ngModel)]="selectedCityId" [value]="selectedCityId"
+                            [placeholder]="language.selectNameOfCity" [allowFiltering]="true"
+                            [itemTemplate]='itemTemplate' (change)="changeCity($event)">
                             <ng-template #itemTemplate="" let-data>
                                 <span>{{data.name}}</span> <span style="float: right"
                                     class="hidden-xs">{{data.district}}</span>
                             </ng-template>
                             <ng-template *ngIf="listOfCities" #noRecordsTemplate>
+                                <span class="norecord"> {{language?.noRecords}}</span>
+                            </ng-template>
+                        </ejs-combobox>
+                    </li>
+
+                    <li class="select-option select-range" *ngIf="selectedCityId">
+                        <ejs-combobox [cssClass]="'e-outline'" [id]="rangeValue" [dataSource]="ranges"
+                            [fields]="{text: 'text', value: 'value'}" [(ngModel)]="rangeValue"
+                            [placeholder]="language.selectRange" [allowFiltering]="true" (change)="setNewRange($event)">
+                            <ng-template *ngIf="ranges" #noRecordsTemplate>
                                 <span class="norecord"> {{language?.noRecords}}</span>
                             </ng-template>
                         </ejs-combobox>

@@ -52,8 +52,16 @@ export class HelpService {
     );
   }
 
+  getLocalStorage(key: string) {
+    return JSON.parse(localStorage.getItem(key) ?? '{}');
+  }
+
   getLocalStorageStringValue(key: string) {
     return localStorage.getItem(key);
+  }
+
+  removeLocalStorageItem(key: string) {
+    localStorage.removeItem(key);
   }
 
   getHeightForGridWithoutPx(partOfTab?: boolean) {

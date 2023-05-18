@@ -241,22 +241,28 @@ nav ul li ul li a {
   transform: scale(1.04);
 }
 
-.select-city .e-input-group {
+.select-option .e-input-group{
   border-radius: 49px;
 }
 
 @media (min-width: 769px) {
-  .select-city {
+  .select-option {
     margin: 13px 13px 0px 0px;
+    /*margin-left: 15px;
+    display: inline-block;*/
   }
 
-  .select-city ejs-combobox {
+  .select-option ejs-combobox {
     width: 400px;
+  }
+
+  .select-range ejs-combobox {
+    width: 200px;
   }
 }
 
 @media (max-width: 768px) {
-  .select-city ejs-combobox {
+  .select-option ejs-combobox {
     width: 100%;
   }
 }

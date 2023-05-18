@@ -25,6 +25,7 @@ import { CookieComponent } from './components/templates/cookie/cookie.component'
 import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
 import { DialogAllModule } from '@syncfusion/ej2-angular-popups';
 import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
+import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,9 @@ import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
     BrowserAnimationsModule,
     CheckBoxModule,
     DialogAllModule,
-    ComboBoxAllModule
+    ComboBoxAllModule,
+    SliderModule,
+    TextBoxAllModule
   ],
   providers: [CallApiService, DialogConfirmComponent],
   bootstrap: [AppComponent]
