@@ -87,7 +87,7 @@
     },
     "columns": [
         {
-            "title": "ID",
+            "title": "id",
             "width": 70,
             "filterable": true,
             "filter": "date",
@@ -98,7 +98,7 @@
             "allowEditing": false
         },
         {
-            "title": "Start date",
+            "title": "startDate",
             "filterable": true,
             "type": "date",
             "format": "dd.MM.yyyy",
@@ -109,7 +109,7 @@
             }
         },
         {
-            "title": "Ads name",
+            "title": "ads_name",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -119,7 +119,7 @@
             }
         },
         {
-            "title": "City",
+            "title": "city",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -129,7 +129,7 @@
             }
         },
         {
-            "title": "Active",
+            "title": "active",
             "template": {
                 "choices": [
                     {
@@ -155,7 +155,7 @@
             "field": "active"
         },
         {
-            "title": "Position",
+            "title": "position",
             "template": {
                 "choices": [
                     {
@@ -173,6 +173,56 @@
                 ]
             },
             "field": "position"
+        },
+        {
+            "title": "firstname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "firstname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "lastname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientEmail",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientPhone",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_phone",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientMobile",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_mobile",
+            "validation": {
+                "required": true
+            }
         },
         {
             "title": "",
