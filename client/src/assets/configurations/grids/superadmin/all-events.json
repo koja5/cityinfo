@@ -349,7 +349,7 @@
         },
         {
             "type": "numeric",
-            "width": "col-md-6",
+            "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
             "title": "numberOfWeeks",
