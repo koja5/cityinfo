@@ -2469,8 +2469,7 @@ router.post("/calculateRange", function (req, res, next) {
         res.json(err);
       }
       conn.query(
-        "select * from cities where id != ?",
-        req.body.id,
+        "select * from cities",
         function (err, cities) {
           let items = [];
           if (!err) {
