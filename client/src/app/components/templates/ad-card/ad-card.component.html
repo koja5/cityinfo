@@ -17,16 +17,19 @@
                                 <li>
                                     <hr class="m-0">
                                 </li>
-                                <li *ngIf="promotion && data.active"><a (click)="confirmDeactiveCampaign = true"
-                                        class="delete-promotion"><i class="fa fa-eye-slash"></i>
+                                <li *ngIf="(promotion || type == 'place') && data.active"><a
+                                        (click)="confirmDeactiveCampaign = true" class="delete-promotion"><i
+                                            class="fa fa-eye-slash"></i>
                                         {{language.deactiveCampaign}}</a></li>
-                                <li *ngIf="promotion && !data.active"><a (click)="confirmActiveCampaign = true"
-                                        class="active-promotion"><i class="fa fa-eye"></i>
+                                <li *ngIf="(promotion || type == 'place') && !data.active"><a
+                                        (click)="confirmActiveCampaign = true" class="active-promotion"><i
+                                            class="fa fa-eye"></i>
                                         {{language.activeCampaign}}</a></li>
-                                <li *ngIf="promotion && !checkPromoButton && data.start_date_top"><a (click)="confirmCancelPromotion = true"
-                                        class="delete-promotion"><i class="fa fa-ban"></i>
+                                <li *ngIf="promotion && !checkPromoButton && data.start_date_top"><a
+                                        (click)="confirmCancelPromotion = true" class="delete-promotion"><i
+                                            class="fa fa-ban"></i>
                                         {{language.cancelPromotion}}</a></li>
-                                <li *ngIf="promotion"><a (click)="confirmDeleteDialog = true"
+                                <li *ngIf="(promotion || type == 'place')"><a (click)="confirmDeleteDialog = true"
                                         class="delete-promotion font-bold"><i class="fa fa-trash"></i>
                                         {{language.deletePromotion}}</a></li>
                             </ul>
@@ -78,9 +81,9 @@
                                     title="{{language.eventTitle}}">{{language.eventPayed}}</span>
                                 <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
                                     title="{{language.placeTitle}}">{{language.placeTitle}}</span>
-                                <span *ngIf="promotion && data.active"
+                                <span *ngIf="(promotion || type === 'place') && data.active"
                                     class="badge-active ml-1">{{language.active}}</span>
-                                <span *ngIf="promotion && !data.active"
+                                <span *ngIf="(promotion || type === 'place') && !data.active"
                                     class="badge-inactive ml-1">{{language.inactive}}</span>
 
                             </div>

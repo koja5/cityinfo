@@ -877,6 +877,30 @@ router.get("/getEventsDraft", auth, async (req, res, next) => {
   }
 });
 
+router.get("/getAllEventsDraft", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query("select * from events_draft", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            res.json(rows);
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/updateEventDraft", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -1032,7 +1056,7 @@ router.get("/getAllPlaces", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, c.name as city_name from places p join cities c on p.city = c.id",
+          "select p.*, c.name as city_name, u.firstname, u.lastname, u.nameOfOrganization, u.email as 'client_email', u.phone as 'client_phone', u.mobile as 'client_mobile' from places p join cities c on p.city = c.id join users u on p.id_user = u.id",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1092,6 +1116,33 @@ router.post("/updatePlace", auth, function (req, res, next) {
       conn.query(
         "update places SET ? where id = ?",
         [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/updatePlaceActive", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update places SET active = ? where id = ?",
+        [req.body.active, req.body.id],
         function (err, rows) {
           conn.release();
           if (!err) {
@@ -1832,7 +1883,7 @@ router.get("/getAllPaidAds", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, a.cover, a.address, a.map_link, a.phone, a.email, a.description , a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id order by p.id desc",
+          "select p.*, a.cover, a.address, a.map_link, a.phone, a.email, a.description , a.name as 'ads_name', c.name as 'city_name', pp.name as 'position_name', pp.price, u.firstname, u.lastname, u.nameOfOrganization, u.email as 'client_email', u.phone as 'client_phone', u.mobile as 'client_mobile' from paid_ads p join ads_draft a on p.ads_draft = a.id join cities c on p.city = c.id join position_prices pp on p.position = pp.id join users u on a.id_user = u.id order by p.id desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1975,7 +2026,7 @@ router.get("/getAllPaidEvents", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select e.*, p.*, e.name as 'event_name', c.name as 'city_name' from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id order by p.id desc",
+          "select e.*, p.*, e.name as 'event_name', c.name as 'city_name', u.firstname, u.lastname, u.nameOfOrganization, u.email as 'client_email', u.phone as 'client_phone', u.mobile as 'client_mobile' from paid_events p join events_draft e on p.event_draft = e.id join cities c on p.city = c.id join users u on e.id_user = u.id order by p.id desc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -2260,7 +2311,7 @@ router.post("/cancelPromotionForEvent", async function (req, res, next) {
         return res.json(false);
       }
       conn.query(
-        "update paid_events set start_date_top = NULL, number_of_weeks = NULL, expired_date = NULL where id = ?",
+        "update paid_events set start_date_top = NULL, number_of_weeks = NULL, expired_date = NULL, position = 2 where id = ?",
         req.body.id,
         async function (err, rows) {
           conn.release();
@@ -2468,31 +2519,28 @@ router.post("/calculateRange", function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
-      conn.query(
-        "select * from cities",
-        function (err, cities) {
-          let items = [];
-          if (!err) {
-            cities.forEach(function (item, i, array) {
-              if (
-                calculateRange(
-                  req.body.lat,
-                  req.body.lng,
-                  item.lat,
-                  item.lng,
-                  req.body.range
-                )
-              ) {
-                items.push(item);
-              }
-            });
-            getPaidEventsForListOfCities(items, res, conn);
-          } else {
-            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
-            res.json(false);
-          }
+      conn.query("select * from cities", function (err, cities) {
+        let items = [];
+        if (!err) {
+          cities.forEach(function (item, i, array) {
+            if (
+              calculateRange(
+                req.body.lat,
+                req.body.lng,
+                item.lat,
+                item.lng,
+                req.body.range
+              )
+            ) {
+              items.push(item);
+            }
+          });
+          getPaidEventsForListOfCities(items, res, conn);
+        } else {
+          logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+          res.json(false);
         }
-      );
+      });
     });
   } catch (ex) {
     logger.log("error", err.sql + ". " + err.sqlMessage);

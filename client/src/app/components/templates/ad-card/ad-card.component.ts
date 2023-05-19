@@ -27,7 +27,7 @@ import { CardType } from 'src/app/enums/card-type';
   styleUrls: ['./ad-card.component.scss'],
 })
 export class AdCardComponent implements OnInit {
-  @Input() public type!: string;
+  @Input() public type!: any;
   @Input() public data!: any;
   @Input() public additionalInformation!: PaidAdsModel;
   @Input() public edit: boolean = false;

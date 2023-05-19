@@ -159,6 +159,32 @@ export class PlacesComponent implements OnInit {
             this.toastr.showError();
           }
         });
+    } else if (event.operation == ActionsType.deactiveCampaign) {
+      event.data.active = 0;
+      this.service
+        .callPostMethod('api/updatePlaceActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else if (event.operation == ActionsType.activeCampaign) {
+      event.data.active = 1;
+      this.service
+        .callPostMethod('api/updatePlaceActive', event.data)
+        .subscribe((data) => {
+          if (data) {
+            this.intializeData();
+            this.toastr.showSuccess();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
     }
   }
 

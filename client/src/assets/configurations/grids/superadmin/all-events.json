@@ -71,7 +71,7 @@
         },
         "edit": {
             "type": "POST",
-            "api": "/api/updatePaidEventToActive",
+            "api": "/api/updatePaidEvent",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -102,7 +102,7 @@
             "type": "date",
             "format": "dd.MM.yyyy",
             "class": "text-align-right",
-            "field": "start_date",
+            "field": "datetime",
             "validation": {
                 "required": true
             }
@@ -128,7 +128,27 @@
             }
         },
         {
-            "title": "Active",
+            "title": "position",
+            "template": {
+                "choices": [
+                    {
+                        "field": "position",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Fixed</span>"
+                    },
+                    {
+                        "field": "position",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Scroll</span>"
+                    }
+                ]
+            },
+            "field": "position"
+        },
+        {
+            "title": "active",
             "template": {
                 "choices": [
                     {
@@ -154,6 +174,56 @@
             "field": "active"
         },
         {
+            "title": "firstname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "firstname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "lastname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientEmail",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientPhone",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_phone",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientMobile",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_mobile",
+            "validation": {
+                "required": true
+            }
+        },
+        {
             "title": "",
             "filterable": true,
             "type": "string",
@@ -173,17 +243,124 @@
             "width": "col-md-12 hide",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "readonly": true,
             "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "event_draft",
+            "title": "eventDraft",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getAllEventsDraft",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedEventDraft",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "city",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedCity",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "position",
+            "title": "position",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getPositionPrices",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedPosition",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "startDate",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:MM"
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "start_date_top",
+            "title": "eventStartDateTopPromotion",
+            "field": "",
+            "format": "dd.MM.yyyy"
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "expired_date",
+            "title": "expiredDate",
+            "field": "expired_date",
+            "format": "dd.MM.yyyy"
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "numberOfWeeks",
+            "field": "number_of_weeks"
         },
         {
             "type": "switch",
             "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "active",
-            "title": "Active",
+            "title": "active",
             "field": "active"
         },
         {

@@ -48,19 +48,11 @@ export class HomeComponent implements OnInit {
       text: '50 km',
       value: 50,
     },
+    {
+      text: '100 km',
+      value: 100,
+    },
   ];
-
-  // public tooltip: Object = {
-  //   placement: 'Before',
-  //   isVisible: true,
-  //   showOn: 'Always',
-  // };
-  // public ticks: Object = {
-  //   placement: 'After',
-  //   largeStep: 20,
-  //   smallStep: 10,
-  //   showSmallTicks: true,
-  // };
 
   constructor(
     private service: CallApiService,
@@ -97,7 +89,11 @@ export class HomeComponent implements OnInit {
       this.showCookieMessage = true;
     }
 
-    if (this.helpService.getLocalStorageStringValue('range')) {
+    if (
+      this.helpService.getLocalStorageStringValue('range') &&
+      this.helpService.getLocalStorageStringValue('range') != 'null' &&
+      this.helpService.getLocalStorageStringValue('range') != 'undefined'
+    ) {
       this.rangeValue = Number(
         this.helpService.getLocalStorageStringValue('range')
       );

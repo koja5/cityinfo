@@ -39,14 +39,14 @@
         {
             "type": "label",
             "width": "col-md-12",
-            "title": "Change personal info"
+            "title": "changePersonalInfo"
         },
         {
             "type": "textbox",
             "width": "col-md-12 hide",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "readonly": true
         },
@@ -55,7 +55,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "nameOfOrganization",
-            "title": "Company or club name",
+            "title": "nameOfCompany",
             "field": "nameOfOrganization"
         },
         {
@@ -63,7 +63,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "email",
-            "title": "Email",
+            "title": "email",
             "field": "email"
         },
         {
@@ -71,7 +71,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "phone",
-            "title": "Phone",
+            "title": "phone",
             "field": "phone"
         },
         {
@@ -79,7 +79,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "mobile",
-            "title": "Mobile",
+            "title": "mobile",
             "field": "mobile"
         },
         {
@@ -87,7 +87,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "address",
-            "title": "Address",
+            "title": "address",
             "field": "address"
         },
         {
@@ -95,7 +95,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "zip_code",
-            "title": "Zip code",
+            "title": "zip_code",
             "field": "zip_code"
         },
         {
@@ -103,7 +103,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "city",
-            "title": "City",
+            "title": "city",
             "field": "city"
         },
         {
@@ -111,7 +111,7 @@
             "width": "col-md-6",
             "class": "e-outline",
             "name": "firstname",
-            "title": "Firstname",
+            "title": "firstname",
             "field": "firstname"
         },
         {
@@ -119,7 +119,7 @@
             "width": "col-md-6",
             "class": "e-outline",
             "name": "lastname",
-            "title": "Lastname",
+            "title": "lastname",
             "field": "lastname"
         },
         {
@@ -127,7 +127,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "vat",
-            "title": "VAT",
+            "title": "vat",
             "field": "vat"
         },
         {
@@ -135,7 +135,7 @@
             "width": "col-md-12",
             "class": "e-info  button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

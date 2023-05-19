@@ -36,7 +36,8 @@
                     <li class="select-option select-range" *ngIf="selectedCityId">
                         <ejs-combobox [cssClass]="'e-outline'" [id]="rangeValue" [dataSource]="ranges"
                             [fields]="{text: 'text', value: 'value'}" [(ngModel)]="rangeValue"
-                            [placeholder]="language.selectRange" [allowFiltering]="true" (change)="setNewRange($event)">
+                            [placeholder]="language.selectRange" [allowCustom]="true"
+                            (change)="setNewRange($event)">
                             <ng-template *ngIf="ranges" #noRecordsTemplate>
                                 <span class="norecord"> {{language?.noRecords}}</span>
                             </ng-template>
