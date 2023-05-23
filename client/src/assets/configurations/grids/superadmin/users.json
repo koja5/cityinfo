@@ -98,7 +98,7 @@
             "allowEditing": false
         },
         {
-            "title": "Firstname",
+            "title": "firstname",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -108,7 +108,27 @@
             }
         },
         {
-            "title": "Phone",
+            "title": "lastname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "email",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "phone",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -118,7 +138,7 @@
             }
         },
         {
-            "title": "Mobile",
+            "title": "mobile",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -128,7 +148,7 @@
             }
         },
         {
-            "title": "Address",
+            "title": "address",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -138,7 +158,7 @@
             }
         },
         {
-            "title": "Zip code",
+            "title": "zip_code",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -148,7 +168,7 @@
             }
         },
         {
-            "title": "City",
+            "title": "city",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -158,7 +178,7 @@
             }
         },
         {
-            "title": "Active",
+            "title": "active",
             "template": {
                 "choices": [
                     {
@@ -190,7 +210,7 @@
             "field": "active"
         },
         {
-            "title": "Club",
+            "title": "club",
             "template": {
                 "choices": [
                     {
@@ -198,10 +218,16 @@
                         "value": 1,
                         "operator": "==",
                         "html": "<span class='e-badge e-badge-info'>Club</span>"
+                    },
+                    {
+                        "field": "is_club",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Company</span>"
                     }
                 ]
             },
-            "field": "active"
+            "field": "is_club"
         }
     ],
     "config": [
@@ -217,35 +243,34 @@
         },
         {
             "type": "textbox",
-            "width": "col-md-12",
+            "width": "col-md-6",
             "class": "e-outline",
             "name": "firstname",
-            "title": "Firstname",
+            "title": "firstname",
             "field": "firstname"
         },
         {
             "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
-            "name": "email",
-            "title": "Email",
-            "field": "email"
+            "name": "lastname",
+            "title": "lastname",
+            "field": "lastname"
         },
         {
-            "type": "password",
+            "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
-            "name": "password",
-            "title": "Password",
-            "field": "password",
-            "readonly": true
+            "name": "email",
+            "title": "email",
+            "field": "email"
         },
         {
             "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
             "name": "phone",
-            "title": "Phone",
+            "title": "phone",
             "field": "phone"
         },
         {
@@ -253,31 +278,31 @@
             "width": "col-md-6",
             "class": "e-outline",
             "name": "mobile",
-            "title": "Mobile",
+            "title": "mobile",
             "field": "mobile"
         },
         {
             "type": "textbox",
-            "width": "col-md-4",
+            "width": "col-md-6",
             "class": "e-outline",
             "name": "address",
-            "title": "Address",
+            "title": "address",
             "field": "address"
         },
         {
             "type": "textbox",
-            "width": "col-md-4",
+            "width": "col-md-6",
             "class": "e-outline",
             "name": "zip_code",
-            "title": "Zip code",
+            "title": "zip_code",
             "field": "zip_code"
         },
         {
             "type": "textbox",
-            "width": "col-md-4",
+            "width": "col-md-6",
             "class": "e-outline",
             "name": "city",
-            "title": "City",
+            "title": "city",
             "field": "city"
         },
         {
@@ -285,7 +310,7 @@
             "width": "col-md-12 mt-2",
             "class": "e-outline",
             "name": "active",
-            "title": "Active",
+            "title": "active",
             "field": "active"
         },
         {
@@ -293,7 +318,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "is_club",
-            "title": "Is club?",
+            "title": "club",
             "field": "is_club"
         },
         {
@@ -301,7 +326,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

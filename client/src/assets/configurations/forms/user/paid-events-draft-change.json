@@ -26,7 +26,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of events",
+            "placeholder": "selectNameOfEventDraft",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -38,7 +38,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "city",
+            "title": "cityForEvent",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -50,7 +50,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select city",
+            "placeholder": "selectNameOfCityForEvent",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -64,7 +64,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "datetime",
-            "title": "dateAndTime",
+            "title": "dateAndTimeForEvent",
             "field": "datetime",
             "format": "dd.MM.yyyy / HH:mm",
             "readonly": true,
@@ -93,7 +93,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "numberOfWeeks",
+            "title": "numberOfWeeksForEvent",
             "field": "number_of_weeks",
             "format": "###.##",
             "min": 1,

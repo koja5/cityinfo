@@ -86,7 +86,7 @@
     },
     "columns": [
         {
-            "title": "ID",
+            "title": "id",
             "width": 70,
             "filterable": true,
             "filter": "date",
@@ -97,7 +97,7 @@
             "allowEditing": false
         },
         {
-            "title": "Start date",
+            "title": "start_date",
             "filterable": true,
             "type": "date",
             "format": "dd.MM.yyyy",
@@ -108,7 +108,7 @@
             }
         },
         {
-            "title": "Ads name",
+            "title": "event",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "title": "City",
+            "title": "city",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -349,7 +349,7 @@
         },
         {
             "type": "numeric",
-            "width": "col-md-6",
+            "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
             "title": "numberOfWeeks",
@@ -368,7 +368,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

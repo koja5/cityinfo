@@ -1,79 +1,79 @@
 {
     "activate_mail": {
         "template": "activate_mail.hjs",
-        "subject": "Activate your account",
+        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
         "fields": {
-            "title": "Please activate your account!",
-            "text": "You have successfully created an account, please use the link below to confirm your email and after that you can successfully log in!",
-            "buttonText": "Activate your account"
+            "title": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
+            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei CityInfo angelegt. Um Ihr konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
+            "buttonText": "Hier anklicken, um Ihr Konto zu aktivieren"
         }
     },
     "activate_mail_for_club": {
         "template": "activate_mail.hjs",
-        "subject": "Activate your account",
+        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
         "fields": {
-            "title": "Please activate your account!",
-            "text": "You have successfully created an account, please use the link below to confirm your email and after that, your account will be additionally checked by an administrator! Reson for this is because you created CLUB account, which has some free options on platform, so we need to be sure that you data is really correct.",
-            "buttonText": "Activate your account"
+            "title": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
+            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei CityInfo angelegt. Um Ihr konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
+            "buttonText": "Hier anklicken, um Ihre Konto zu aktivieren"
         }
     },
     "send_request_for_new_created_club_account": {
         "template": "send_request_for_new_created_club_account.hjs",
-        "subject": "Created new Club account!",
-        "email": "clinicnode@gmail.com",
+        "subject": "Ein neues Club-Konto wurde angelegt!",
+        "email": "albert.sprung@gmail.com",
         "fields": {
-            "title": "Created new Club account!",
-            "text": "Please check info of new created team account. Information about club you can see below!",
-            "greeting": "Hi",
-            "buttonText": "Activate club account",
-            "buttonTextDeactive": "Deactive club account"
+            "title": "Ein neues Club-Konto wurde angelegt!",
+            "text": "",
+            "greeting": "Sehr geehrter Administrator",
+            "buttonText": "Konto aktivieren",
+            "buttonTextDeactive": "Konto deaktivieren"
         }
     },
     "info_approved_club_account_from_admin": {
         "template": "info_approved_club_account_from_admin.hjs",
-        "subject": "Your club account is activated!",
+        "subject": "Ihr Club-Konto wurde aktiviert!",
         "fields": {
-            "title": "Your club account is activated!",
-            "text": "We would like to inform you that your club account is activated now, so you can start with create events for your club!",
-            "greeting": "Hi {firstname}"
+            "title": "Ihr Club-Konto wurde aktiviert!",
+            "text": "Herzlich Willkommen. Ihr Club-Konto wurde aktiviert. Sie können jetzt Veranstaltungen erstellen!",
+            "greeting": "Liebe/r {firstname}"
         }
     },
     "info_deactive_club_account_from_admin": {
         "template": "info_approved_club_account_from_admin.hjs",
-        "subject": "Your club account is deactived!",
+        "subject": "Ihr Clubkonto ist deaktiviert!",
         "fields": {
-            "title": "Your club account is deactived!",
-            "text": "We would like to inform you that your club account is deactived now! You have not met the requirements to create a club account! If there is an error, please contact us!",
-            "greeting": "Hi {firstname}"
+            "title": "Ihr Club-Konto wurde deaktiviert!",
+            "text": "Herzlich Willkommen. Ihr Club-Konto wurde deaktiviert. Bitte wenden Sie sich an office@bci.social!",
+            "greeting": "Liebe/r {firstname}"
         }
     },
     "info_about_changed_user_data": {
         "template": "info_about_changed_user_data.hjs",
-        "subject": "Your information has been changed!",
+        "subject": "Konto wurde geändert!",
         "fields": {
-            "title": "Your information has been changed!",
-            "text": "We would like to inform you that the information on your account has been changed. This may mean that your access to the platform or some of the other data has been changed.",
-            "greeting": "Hi {firstname}"
+            "title": "Konto wurde geändert!",
+            "text": "Wir möchten Sie informieren, dass bei Ihrem Konto Änderungen durchgeführt wurden. Das bedeutet, dass Ihr Zugriff auf CityInfo oder andere Zugriffe geändert wurden.",
+            "greeting": "Liebe/r {firstname}"
         }
     },
     "reset_password": {
         "template": "reset_password.hjs",
-        "subject": "Password recovery request",
+        "subject": "Passwort zurücksetzen wurde angefordert",
         "fields": {
-            "title": "Password recovery request",
-            "text": "You have requested a password reset. By clicking on the link below, you will receive a form for entering a new password for your profile!",
-            "buttonText": "Reset password"
+            "title": "Passwort zurücksetzen wurde angefordert",
+            "text": "Sie haben die Zurücksetzung Ihres Passwortes angefordert. Durch Anklickes des Links unten setzen Sie Ihr Passwort zurück. Falls sie die Zurücksetzung nicht beantragt haben, können Sie dieses E-Mail einfach löschen!",
+            "buttonText": "Passwort zurücksetzen"
         }
     },
     "send_request_for_free_ad": {
         "template": "send_request_for_free_ad.hjs",
-        "subject": "Received new request for free ad",
-        "email": "clinicnode@gmail.com",
+        "subject": "Anfrage für gratis Werbung",
+        "email": "albert.sprung@gmail.com",
         "fields": {
-            "title": "New request for free ad",
-            "text": "You received a new request for free ad. Information about ad you can see below.",
-            "greeting": "Hi",
-            "buttonText": "Preview requested ad"
+            "title": "Anfrage für gratis Werbung",
+            "text": "Anfrage für eine gratis Werbung. Weitere Details siehe unten.",
+            "greeting": "Sehr geehrter Administrator",
+            "buttonText": "Vorschau der Werbung"
         }
     },
     "info_for_active_free_ad": {

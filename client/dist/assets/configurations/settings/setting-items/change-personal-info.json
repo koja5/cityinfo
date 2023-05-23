@@ -55,7 +55,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "nameOfOrganization",
-            "title": "nameOfCompany",
+            "title": "nameOfCompanyForSettings",
             "field": "nameOfOrganization"
         },
         {

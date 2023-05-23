@@ -87,7 +87,7 @@
     },
     "columns": [
         {
-            "title": "ID",
+            "title": "id",
             "width": 70,
             "filterable": true,
             "filter": "date",
@@ -98,7 +98,7 @@
             "allowEditing": false
         },
         {
-            "title": "Name",
+            "title": "name",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -124,7 +124,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "name",
-            "title": "Name",
+            "title": "name",
             "field": "name"
         },
         {
@@ -132,7 +132,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

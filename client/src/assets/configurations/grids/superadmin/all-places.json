@@ -79,7 +79,7 @@
     },
     "columns": [
         {
-            "title": "ID",
+            "title": "id",
             "width": 70,
             "filterable": true,
             "filter": "date",
@@ -90,7 +90,7 @@
             "allowEditing": false
         },
         {
-            "title": "Name",
+            "title": "name",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -100,7 +100,7 @@
             }
         },
         {
-            "title": "City",
+            "title": "city",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -110,7 +110,7 @@
             }
         },
         {
-            "title": "Map link",
+            "title": "mapLink",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -120,7 +120,7 @@
             }
         },
         {
-            "title": "Phone",
+            "title": "phone",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -130,7 +130,7 @@
             }
         },
         {
-            "title": "Email",
+            "title": "email",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -140,7 +140,7 @@
             }
         },
         {
-            "title": "Description",
+            "title": "description",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -150,7 +150,7 @@
             }
         },
         {
-            "title": "Active",
+            "title": "active",
             "template": {
                 "choices": [
                     {
@@ -232,7 +232,7 @@
             "width": "col-md-12 hide",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "readonly": true,
             "hide": true
@@ -347,7 +347,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

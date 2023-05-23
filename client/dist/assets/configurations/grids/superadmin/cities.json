@@ -87,7 +87,7 @@
   },
   "columns": [
     {
-      "title": "ID",
+      "title": "id",
       "width": 70,
       "filterable": true,
       "filter": "date",
@@ -98,7 +98,7 @@
       "allowEditing": false
     },
     {
-      "title": "Name",
+      "title": "name",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -108,27 +108,7 @@
       }
     },
     {
-      "title": "City code",
-      "filterable": true,
-      "type": "string",
-      "class": "text-align-right",
-      "field": "city_code",
-      "validation": {
-        "required": true
-      }
-    },
-    {
-      "title": "District code",
-      "filterable": true,
-      "type": "string",
-      "class": "text-align-right",
-      "field": "district_code",
-      "validation": {
-        "required": true
-      }
-    },
-    {
-      "title": "District",
+      "title": "district",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -138,7 +118,7 @@
       }
     },
     {
-      "title": "Lat",
+      "title": "lat",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -148,7 +128,7 @@
       }
     },
     {
-      "title": "Lng",
+      "title": "lng",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -164,7 +144,7 @@
       "width": "col-md-12 hide",
       "class": "e-outline",
       "name": "id",
-      "title": "ID",
+      "title": "id",
       "field": "id",
       "readonly": true,
       "hide": true
@@ -174,31 +154,15 @@
       "width": "col-md-12",
       "class": "e-outline",
       "name": "name",
-      "title": "Name",
+      "title": "name",
       "field": "name"
     },
     {
       "type": "textbox",
       "width": "col-md-12",
       "class": "e-outline",
-      "name": "city_code",
-      "title": "City code",
-      "field": "city_code"
-    },
-    {
-      "type": "textbox",
-      "width": "col-md-12",
-      "class": "e-outline",
-      "name": "district_code",
-      "title": "District code",
-      "field": "district_code"
-    },
-    {
-      "type": "textbox",
-      "width": "col-md-12",
-      "class": "e-outline",
       "name": "district",
-      "title": "District",
+      "title": "district",
       "field": "district"
     },
     {
@@ -206,7 +170,7 @@
       "width": "col-md-12",
       "class": "e-outline",
       "name": "lat",
-      "title": "Lat",
+      "title": "lat",
       "field": "lat"
     },
     {
@@ -214,7 +178,7 @@
       "width": "col-md-12",
       "class": "e-outline",
       "name": "lng",
-      "title": "Lng",
+      "title": "lng",
       "field": "lat"
     },
     {
@@ -222,7 +186,7 @@
       "width": "col-md-12",
       "class": "e-info button-action",
       "name": "submit",
-      "title": "Save",
+      "title": "save",
       "field": "submit",
       "positionClass": "position-end mt-3 col-md-12"
     }

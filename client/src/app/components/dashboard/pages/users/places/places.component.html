@@ -36,10 +36,10 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label class="custom-label">{{language.city}}</label>
+                    <label class="custom-label">{{language.cityForPlace}}</label>
                     <ejs-combobox [cssClass]="'e-outline'" [id]="data.city" [dataSource]="cities"
                         [fields]="{text: 'name', value: 'id'}" [(ngModel)]="data.city"
-                        [placeholder]="language.selectNameOfCity" [allowFiltering]="true">
+                        [placeholder]="language.selectNameOfCityForPlace" [allowFiltering]="true">
                         <ng-template *ngIf="cities" #noRecordsTemplate>
                             <span class="norecord"> {{language?.noRecords}}</span>
                         </ng-template>
@@ -86,7 +86,7 @@
                 </div>
 
                 <div *ngIf="editButton" class="col-md-12 text-right mt-4">
-                    <button class="btn" (click)="editPlace()">{{language.editAd}}</button>
+                    <button class="btn" (click)="editPlace()">{{language.editPlace}}</button>
                 </div>
             </div>
         </ng-template>

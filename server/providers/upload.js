@@ -235,6 +235,8 @@ router.post(
 
         if (events["cover_old"]) {
           delete events["cover_old"];
+          delete events["city_name"];
+          console.log(events);
           conn.query(
             "update places set ? where id = ?",
             [events, events.id],

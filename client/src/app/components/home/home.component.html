@@ -23,7 +23,7 @@
                             [(ngModel)]="selectedCityId" [value]="selectedCityId"
                             [placeholder]="language.selectNameOfCity" [allowFiltering]="true"
                             [itemTemplate]='itemTemplate' (change)="changeCity($event)">
-                            <ng-template #itemTemplate="" let-data>
+                            <ng-template #itemTemplate let-data >
                                 <span>{{data.name}}</span> <span style="float: right"
                                     class="hidden-xs">{{data.district}}</span>
                             </ng-template>
@@ -36,8 +36,7 @@
                     <li class="select-option select-range" *ngIf="selectedCityId">
                         <ejs-combobox [cssClass]="'e-outline'" [id]="rangeValue" [dataSource]="ranges"
                             [fields]="{text: 'text', value: 'value'}" [(ngModel)]="rangeValue"
-                            [placeholder]="language.selectRange" [allowCustom]="true"
-                            (change)="setNewRange($event)">
+                            [placeholder]="language.selectRange" [allowCustom]="true" (change)="setNewRange($event)">
                             <ng-template *ngIf="ranges" #noRecordsTemplate>
                                 <span class="norecord"> {{language?.noRecords}}</span>
                             </ng-template>

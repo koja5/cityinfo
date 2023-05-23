@@ -5,7 +5,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "readonly": true,
             "hide": true
@@ -27,7 +27,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of ads",
+            "placeholder": "selectNameOfAdDraft",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -39,7 +39,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "city",
+            "title": "cityForAd",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -51,7 +51,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of ads",
+            "placeholder": "selectNameOfCityForAd",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -75,7 +75,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select position for your ads",
+            "placeholder": "selectPositionForAd",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -87,7 +87,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "start_date",
-            "title": "startDateTitle",
+            "title": "startDateTitleForAd",
             "field": "start_date",
             "format": "dd.MM.yyyy"
         },
@@ -96,7 +96,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "numberOfWeeks",
+            "title": "numberOfWeeksForAd",
             "field": "number_of_weeks",
             "format": "###.##",
             "min": 1

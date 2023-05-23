@@ -87,7 +87,7 @@
   },
   "columns": [
     {
-      "title": "ID",
+      "title": "id",
       "width": 70,
       "filterable": true,
       "filter": "date",
@@ -98,7 +98,7 @@
       "allowEditing": false
     },
     {
-      "title": "Name",
+      "title": "name",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -118,7 +118,7 @@
       }
     },
     {
-      "title": "Price",
+      "title": "price",
       "filterable": true,
       "type": "string",
       "class": "text-align-right",
@@ -134,7 +134,7 @@
       "width": "col-md-12 hide",
       "class": "e-outline",
       "name": "id",
-      "title": "ID",
+      "title": "id",
       "field": "id",
       "readonly": true,
       "hide": true
@@ -144,7 +144,7 @@
       "width": "col-md-12",
       "class": "e-outline",
       "name": "name",
-      "title": "Name",
+      "title": "name",
       "field": "name"
     },
     {
@@ -153,7 +153,7 @@
       "class": "e-outline",
       "multiline": true,
       "name": "comment",
-      "title": "Comment",
+      "title": "comment",
       "field": "comment"
     },
     {
@@ -161,7 +161,7 @@
       "width": "col-md-12",
       "class": "e-outline",
       "name": "price",
-      "title": "Price",
+      "title": "price",
       "field": "price"
     },
     {
@@ -169,7 +169,7 @@
       "width": "col-md-12",
       "class": "e-info button-action",
       "name": "submit",
-      "title": "Save",
+      "title": "save",
       "field": "submit",
       "positionClass": "position-end mt-3 col-md-12"
     }

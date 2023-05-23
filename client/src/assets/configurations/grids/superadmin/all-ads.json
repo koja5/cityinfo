@@ -244,7 +244,7 @@
             "width": "col-md-12 hide",
             "class": "e-outline",
             "name": "id",
-            "title": "ID",
+            "title": "id",
             "field": "id",
             "readonly": true,
             "hide": true
@@ -254,7 +254,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "start_date",
-            "title": "Start date",
+            "title": "start_date",
             "field": "start_date",
             "format": "dd.MM.yyyy"
         },
@@ -263,7 +263,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "ads_draft",
-            "title": "Ads draft",
+            "title": "ads_draft",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -287,7 +287,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "City",
+            "title": "city",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -335,7 +335,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "Number of weeks",
+            "title": "numberOfWeeks",
             "field": "number_of_weeks",
             "format": "###.##",
             "min": 1
@@ -345,7 +345,7 @@
             "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "active",
-            "title": "Active",
+            "title": "active",
             "field": "active"
         },
         {
@@ -353,7 +353,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "Save",
+            "title": "save",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }
