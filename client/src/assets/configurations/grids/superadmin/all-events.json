@@ -297,6 +297,21 @@
             "required": true
         },
         {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "startDate",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:MM"
+        },
+        {
+            "type": "label",
+            "width": "col-md-12 pt-2",
+            "title": "eventAdditionalDescribeTitle",
+            "text": "eventAdditionalDescribeText"
+        },
+        {
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
@@ -324,27 +339,9 @@
             "type": "datepicker",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "datetime",
-            "title": "startDate",
-            "field": "datetime",
-            "format": "dd.MM.yyyy / HH:MM"
-        },
-        {
-            "type": "datepicker",
-            "width": "col-md-6",
-            "class": "e-outline",
             "name": "start_date_top",
             "title": "eventStartDateTopPromotion",
-            "field": "",
-            "format": "dd.MM.yyyy"
-        },
-        {
-            "type": "datepicker",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "expired_date",
-            "title": "expiredDate",
-            "field": "expired_date",
+            "field": "start_date_top",
             "format": "dd.MM.yyyy"
         },
         {
