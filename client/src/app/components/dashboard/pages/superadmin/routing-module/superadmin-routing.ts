@@ -10,6 +10,7 @@ import { PreviewAdComponent } from '../preview-ad/preview-ad.component';
 import { RequestAdsComponent } from '../request-ads/request-ads.component';
 import { UsersComponent } from '../users/users.component';
 import { AllPlacesComponent } from '../all-places/all-places.component';
+import { CategoriesComponent } from '../categories/categories.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: 'all-places',
     component: AllPlacesComponent,
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent,
   },
 ];
 

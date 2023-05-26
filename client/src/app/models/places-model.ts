@@ -7,6 +7,7 @@ export class PlacesModel {
   phone?: string;
   email?: string;
   description?: string;
+  category: any;
   cover?: string;
   cover_old?: string;
   token?: any;

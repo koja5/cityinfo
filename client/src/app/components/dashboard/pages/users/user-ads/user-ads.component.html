@@ -17,9 +17,10 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="listOfDrafts">
+    <div class="row" *ngIf="listOfDrafts&&categories">
         <div *ngFor="let item of listOfDrafts" class="col-md-4">
-            <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"></app-ad-card>
+            <app-ad-card [data]="item" [edit]="true" (clickEmitter)="clickEmitter($event)"
+                [categories]="categories"></app-ad-card>
         </div>
     </div>
 
@@ -65,6 +66,16 @@
                     <label class="custom-label">{{language.description}}</label>
                     <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
                         [(ngModel)]="data.description" name="description"></ejs-textbox>
+                </div>
+                <div class="col-md-12">
+                    <label class="custom-label">{{language.category}}</label>
+                    <ejs-multiselect [cssClass]="'e-outline'" [id]="data.category" [dataSource]="categories"
+                        [fields]="{text: 'name', value: 'id'}" [(ngModel)]="data.category"
+                        [placeholder]="language.selectNameOfCategoryForPlace" [allowFiltering]="true">
+                        <ng-template *ngIf="categories" #noRecordsTemplate>
+                            <span class="norecord"> {{language?.noRecords}}</span>
+                        </ng-template>
+                    </ejs-multiselect>
                 </div>
                 <div class="col-md-12">
                     <label class="custom-label">{{language.uploadCoverImage}}</label>

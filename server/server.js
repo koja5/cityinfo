@@ -8,7 +8,8 @@ const api = require("./providers/api");
 const mailApi = require("./providers/mail-api");
 const mailServer = require("./providers/mail_server/mail-server");
 const upload = require("./providers/upload");
-const sqlDatabase = require('./providers/config/sql-database');
+const sqlDatabase = require("./providers/config/sql-database");
+const schedule = require("node-schedule");
 sqlDatabase.connect();
 
 const express = require("express");
@@ -62,14 +63,13 @@ app.set("port", port);
 const server = http.createServer(app);
 
 // Keep alive connections
-server.keepAliveTimeout = (60 * 1000) + 1000;
-server.headersTimeout = (60 * 1000) + 2000;
+server.keepAliveTimeout = 60 * 1000 + 1000;
+server.headersTimeout = 60 * 1000 + 2000;
 
 server.listen(port, () => console.log(`API running on localhost:${port}`));
 
-//chat
-
-//chat END
-
 // AUTOMATE WORK
 
+schedule.scheduleJob("15 36 23 * * *", function () {
+  // createChildrenInvoice();
+});

@@ -39,6 +39,7 @@ export class AdCardComponent implements OnInit {
   @Input() public showDetailsOnClick: boolean = false;
   @Input() public showMoreActionButton: boolean = true;
   @Input() public scaleOnHover: boolean = false;
+  @Input() public categories: any;
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   @ViewChild('dialog') dialog!: DialogComponent;
   @ViewChild('options') options!: ElementRef;
@@ -52,6 +53,7 @@ export class AdCardComponent implements OnInit {
   public confirmActiveCampaign = false;
   public confirmCancelPromotion = false;
   public dayAWeek!: string;
+  public categoryName!: string;
 
   constructor(
     private helpService: HelpService,
@@ -93,6 +95,7 @@ export class AdCardComponent implements OnInit {
     //   }
     // });
     this.getDayFromDate();
+    this.convertCategoryToRealName();
   }
 
   editButton() {
@@ -198,5 +201,23 @@ export class AdCardComponent implements OnInit {
 
   getCardTypePlace() {
     return CardType.place;
+  }
+
+  convertCategoryToRealName() {
+    if (this.data.category) {
+      let item = [];
+      for (let j = 0; j < this.data.category.length; j++) {
+        item.push(this.getNameOfCategory(this.data.category[j]));
+      }
+      this.categoryName = item.toString();
+    }
+  }
+
+  getNameOfCategory(category: number) {
+    for (let i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == category) {
+        return this.categories[i].name;
+      }
+    }
   }
 }

@@ -41,7 +41,9 @@ router.post(
           ads["cover_old"] = ads["cover"];
         }
         ads["cover"] = req.files.UploadFiles.path;
-
+        if (ads.category) {
+          ads.category = ads.category.toString();
+        }
         if (ads["cover_old"]) {
           delete ads["cover_old"];
           conn.query(
@@ -140,7 +142,9 @@ router.post(
           events["cover_old"] = events["cover"];
         }
         events["cover"] = req.files.UploadFiles.path;
-
+        if (events.category) {
+          events.category = events.category.toString();
+        }
         if (events["cover_old"]) {
           delete events["cover_old"];
           conn.query(
@@ -232,6 +236,7 @@ router.post(
           events["cover_old"] = events["cover"];
         }
         events["cover"] = req.files.UploadFiles.path;
+        events.category = events.category.toString();
 
         if (events["cover_old"]) {
           delete events["cover_old"];

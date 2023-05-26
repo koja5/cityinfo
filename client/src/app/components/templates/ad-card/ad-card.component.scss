@@ -216,6 +216,14 @@ a {
   background: #e10000;
 }
 
+.badge-category {
+  background: #0053c1;
+}
+
+.badge-category-container {
+  padding: 0px 8px 0px 8px;
+}
+
 .badge-info {
   width: 99%;
   text-align: end;
@@ -223,7 +231,14 @@ a {
   background: none;
 }
 
-.badge-info span {
+.category-info {
+  width: 99%;
+  margin-top: -20px;
+  background: none;
+}
+
+.badge-info span,
+.category-info span {
   display: initial;
   position: inherit;
   font-size: 9px !important;

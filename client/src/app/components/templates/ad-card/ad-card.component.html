@@ -72,20 +72,25 @@
                                     date: 'dd.MM.yyyy'}}
                                 </p>
                             </div>
-                            <div class="badge-info">
-                                <span *ngIf="(data.start_date || data.expired_date) && !data.datetime" class="ad-badge"
-                                    title="{{language.adTitle}}">{{language.ad}}</span>
-                                <span *ngIf="data.datetime && data.position != 1" class="event-badge"
-                                    title="{{language.eventTitle}}">{{language.event}}</span>
-                                <span *ngIf="data.datetime && data.position == 1" class="event-badge"
-                                    title="{{language.eventTitle}}">{{language.eventPayed}}</span>
-                                <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
-                                    title="{{language.placeTitle}}">{{language.placeTitle}}</span>
-                                <span *ngIf="(promotion || type === 'place') && data.active"
-                                    class="badge-active ml-1">{{language.active}}</span>
-                                <span *ngIf="(promotion || type === 'place') && !data.active"
-                                    class="badge-inactive ml-1">{{language.inactive}}</span>
-
+                            <div class="row badge-category-container">
+                                <div class="category-info col-md-4">
+                                    <span *ngIf="categoryName" class="badge-category"
+                                        title="{{categoryName}}">{{categoryName}}</span>
+                                </div>
+                                <div class="badge-info col-md-8">
+                                    <span *ngIf="(data.start_date || data.expired_date) && !data.datetime"
+                                        class="ad-badge" title="{{language.adTitle}}">{{language.ad}}</span>
+                                    <span *ngIf="data.datetime && data.position != 1" class="event-badge"
+                                        title="{{language.eventTitle}}">{{language.event}}</span>
+                                    <span *ngIf="data.datetime && data.position == 1" class="event-badge"
+                                        title="{{language.eventTitle}}">{{language.eventPayed}}</span>
+                                    <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
+                                        title="{{language.placeTitle}}">{{language.placeTitle}}</span>
+                                    <span *ngIf="(promotion || type === 'place') && data.active"
+                                        class="badge-active ml-1">{{language.active}}</span>
+                                    <span *ngIf="(promotion || type === 'place') && !data.active"
+                                        class="badge-inactive ml-1">{{language.inactive}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

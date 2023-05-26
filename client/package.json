@@ -44,6 +44,7 @@
     "file-saver": "^2.0.5",
     "i": "^0.3.7",
     "ngx-cookie-service": "^15.0.0",
+    "ngx-image-cropper": "^6.3.4",
     "ngx-toastr": "^13.2.1",
     "npm": "^9.6.0",
     "rxjs": "~7.5.0",

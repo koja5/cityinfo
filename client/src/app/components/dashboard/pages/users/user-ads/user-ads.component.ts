@@ -32,6 +32,7 @@ export class UserAdsComponent implements OnInit {
   };
   public language: any;
   public loaderData = false;
+  public categories: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -50,10 +51,24 @@ export class UserAdsComponent implements OnInit {
   }
 
   intializeData() {
+    this.getMyAds();
+    this.getCategories();
+  }
+
+  getMyAds() {
     this.loaderData = true;
     this.service.callGetMethod('api/getMyAds', '').subscribe((data: any) => {
       this.listOfDrafts = data as AdsModel[];
+      this.listOfDrafts = this.helpService.convertStringToIntegerArray(
+        this.listOfDrafts
+      );
       this.loaderData = false;
+    });
+  }
+
+  getCategories() {
+    this.service.callGetMethod('api/getCategories', '').subscribe((data) => {
+      this.categories = data;
     });
   }
 
@@ -157,6 +172,7 @@ export class UserAdsComponent implements OnInit {
       .callPostMethod('api/updateMyAds', this.data)
       .subscribe((data) => {
         if (data) {
+          this.getMyAds();
           this.dialog.hide();
           this.toastr.showSuccess();
         } else {

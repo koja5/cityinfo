@@ -14,6 +14,7 @@ import { SharingModule } from 'src/app/sharing.module';
 import { AllInvoicesComponent } from '../all-invoices/all-invoices.component';
 import { AllEventsComponent } from '../all-events/all-events.component';
 import { AllPlacesComponent } from '../all-places/all-places.component';
+import { CategoriesComponent } from '../categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AllPlacesComponent } from '../all-places/all-places.component';
     AllInvoicesComponent,
     AllEventsComponent,
     AllPlacesComponent,
+    CategoriesComponent,
   ],
   imports: [CommonModule, SuperadminRouting, DynamicModule, SharingModule],
   providers: [],

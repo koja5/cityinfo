@@ -32,6 +32,7 @@ export class UserEventsComponent implements OnInit {
   };
   public language: any;
   public loaderData = false;
+  public categories: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -50,13 +51,27 @@ export class UserEventsComponent implements OnInit {
   }
 
   intializeData() {
+    this.getEventsDraft();
+    this.getCategories();
+  }
+
+  getEventsDraft() {
     this.loaderData = true;
     this.service
       .callGetMethod('api/getEventsDraft', '')
       .subscribe((data: any) => {
         this.listOfDrafts = data as EventsModel[];
+        this.listOfDrafts = this.helpService.convertStringToIntegerArray(
+          this.listOfDrafts
+        );
         this.loaderData = false;
       });
+  }
+
+  getCategories() {
+    this.service.callGetMethod('api/getCategories', '').subscribe((data) => {
+      this.categories = data;
+    });
   }
 
   initializeConfig() {
@@ -97,15 +112,14 @@ export class UserEventsComponent implements OnInit {
         additionalData: this.event ? JSON.stringify(this.event) : '',
       },
     ];
-    setTimeout(() => {
-      if (args.currentRequest?.status == 200) {
-        this.toastr.showSuccess();
-        window.location.reload();
-      } else {
-        this.toastr.showError();
-        window.location.reload();
-      }
-    }, 800);
+    
+    if (args.currentRequest?.status == 200) {
+      this.toastr.showSuccess();
+      // window.location.reload();
+    } else {
+      this.toastr.showError();
+      // window.location.reload();
+    }
   }
 
   changesFile(event: any) {
@@ -147,6 +161,7 @@ export class UserEventsComponent implements OnInit {
       .callPostMethod('api/updateEventDraft', this.event)
       .subscribe((data) => {
         if (data) {
+          this.getEventsDraft();
           this.dialogEvent.hide();
           this.toastr.showSuccess();
         } else {

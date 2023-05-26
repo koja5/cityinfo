@@ -206,4 +206,16 @@ export class HelpService {
     newDate.setDate(date.getDate() + 7 * weeks);
     return newDate;
   }
+
+  convertStringToIntegerArray(data: any) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].category) {
+        data[i].category = data[i].category.split(',');
+        for (let j = 0; j < data[i].category.length; j++) {
+          data[i].category[j] = Number(data[i].category[j]);
+        }
+      }
+    }
+    return data;
+  }
 }

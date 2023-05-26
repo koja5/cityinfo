@@ -461,6 +461,117 @@ router.post("/deleteCity", auth, function (req, res, next) {
 
 /* END CITIES */
 
+/* CATEGORIES */
+
+router.get("/getCategories", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from categories order by name asc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createCategory", auth, async function (req, res, next) {
+  try {
+    connection.getConnection(async function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        return res.json(false);
+      }
+      conn.query(
+        "insert into categories set ?",
+        req.body,
+        async function (err) {
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            return res.json(false);
+          } else {
+            logger.log("info", "Create new city");
+            res.json(true);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    logger.log("error", err);
+  }
+});
+
+router.post("/updateCategory", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "update categories SET ? where id = ?",
+        [req.body, req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/deleteCategory", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      conn.query(
+        "delete from categories where id = ?",
+        [req.body.id],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+/* END CITIES */
+
 /* USERS */
 
 router.get("/getUsers", auth, async (req, res, next) => {
@@ -798,6 +909,9 @@ router.post("/updateMyAds", auth, function (req, res, next) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       }
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
+      }
       conn.query(
         "update ads_draft SET ? where id = ?",
         [req.body, req.body.id],
@@ -907,6 +1021,9 @@ router.post("/updateEventDraft", auth, function (req, res, next) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
+      }
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
       }
       conn.query(
         "update events_draft SET ? where id = ?",
@@ -1111,6 +1228,7 @@ router.post("/updatePlace", auth, function (req, res, next) {
         res.json(err);
       }
 
+      req.body.category = req.body.category.toString();
       delete req.body.city_name;
 
       conn.query(
