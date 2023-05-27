@@ -10,6 +10,7 @@ const multipartMiddleware = multipart({
 });
 const logger = require("./config/logger");
 const path = require("path");
+const uploader = require("./uploader");
 
 module.exports = router;
 
@@ -313,3 +314,5 @@ router.post(
     }
   }
 );
+
+router.post("/uploadCoverImage", uploader.upload);

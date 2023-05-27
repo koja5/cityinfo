@@ -11,6 +11,8 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitterModel } from 'src/app/models/emitter-model';
 import { ActionsType } from 'src/app/enums/actions-type';
 import { EventsModel } from 'src/app/models/events-model';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-events',
@@ -33,12 +35,14 @@ export class UserEventsComponent implements OnInit {
   public language: any;
   public loaderData = false;
   public categories: any;
+  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
 
   constructor(
     private configurationService: ConfigurationService,
     private helpService: HelpService,
     private toastr: ToastrComponent,
-    private service: CallApiService
+    private service: CallApiService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -112,7 +116,7 @@ export class UserEventsComponent implements OnInit {
         additionalData: this.event ? JSON.stringify(this.event) : '',
       },
     ];
-    
+
     if (args.currentRequest?.status == 200) {
       this.toastr.showSuccess();
       // window.location.reload();
@@ -169,5 +173,90 @@ export class UserEventsComponent implements OnInit {
           this.toastr.showError();
         }
       });
+  }
+
+  /* CROPPER */
+
+  imgChangeEvt: any = '';
+  cropImgPreview: any = '';
+  onFileChange(event: any): void {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    console.log(e);
+    this.cropImgPreview = e.base64;
+  }
+  imgLoad() {}
+  initCropper() {}
+
+  imgFailed() {}
+
+  saveEntry() {
+    this.event.cover =
+      this.coverPath +
+      this.cropImgPreview.substring(this.cropImgPreview.length - 15) +
+      '.png';
+    if (!this.editButton) {
+      this.service
+        .callPostMethod('api/createEventDraft', this.event)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialogEvent.hide();
+            this.toastr.showError();
+          }
+        });
+    } else {
+      this.service
+        .callPostMethod('api/updateEventDraft', this.event)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialogEvent.hide();
+            this.toastr.showError();
+          }
+        });
+    }
+  }
+
+  uploadCoverImage() {
+    const formData: FormData = new FormData();
+
+    const imageName =
+      this.coverPath +
+      this.cropImgPreview.substring(this.cropImgPreview.length - 15) +
+      '.png';
+    const imageBlob = this.dataURItoBlob(
+      this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+    );
+    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+
+    formData.append('file', imageFile);
+
+    this.service
+      .callPostMethod('/api/upload/uploadCoverImage', formData)
+      .subscribe((data) => {
+        if (data) {
+          this.getEventsDraft();
+          this.dialogEvent.hide();
+          this.toastr.showSuccess();
+        } else {
+          this.dialogEvent.hide();
+          this.toastr.showError();
+        }
+      });
+  }
+
+  dataURItoBlob(dataURI: any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
   }
 }

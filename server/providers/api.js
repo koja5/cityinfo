@@ -1015,6 +1015,37 @@ router.get("/getAllEventsDraft", auth, async (req, res, next) => {
   }
 });
 
+router.post("/createEventDraft", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
+      }
+      req.body.id_user = req.user.user.id;
+      conn.query(
+        "insert into events_draft SET ?",
+        [req.body],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/updateEventDraft", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {

@@ -78,15 +78,30 @@
                     </ejs-multiselect>
                 </div>
 
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <label class="custom-label">{{language.uploadCoverImage}}</label>
                     <ejs-uploader #defaultupload [asyncSettings]="asyncEventsSettings" [autoUpload]="false"
                         (uploading)="onUploadBeginEvents($event)" (change)="changesFile($event)"
                         (removing)="clearingFile($event)" (clearing)="clearingFile($event)"
                         [buttons]="{upload: language.uploadCoverImageButton}"></ejs-uploader>
+                </div> -->
+
+                <div class="col-md-12">
+                    <input type="file" (change)="onFileChange($event)" />
                 </div>
-                <div *ngIf="editButton" class="col-md-12 text-right mt-4">
-                    <button class="btn" (click)="editAd()">{{language.editAd}}</button>
+                <div class="col-md-8">
+                    <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
+                        [resizeToWidth]="256" format="png" (imageCropped)="cropImg($event!)" (imageLoaded)="imgLoad()"
+                        (cropperReady)="initCropper()" (loadImageFailed)="imgFailed()">
+                    </image-cropper>
+                </div>
+                <div class="col-md-4">
+                    <h6>Image Preview</h6>
+                    <img [src]="cropImgPreview" />
+                </div>
+
+                <div class="col-md-12 text-right mt-4">
+                    <button class="btn" (click)="saveEntry()">{{language.editAd}}</button>
                 </div>
             </div>
         </ng-template>
