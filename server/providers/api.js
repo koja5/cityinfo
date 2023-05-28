@@ -1056,6 +1056,7 @@ router.post("/updateEventDraft", auth, function (req, res, next) {
       if (req.body.category) {
         req.body.category = req.body.category.toString();
       }
+      console.log(req.body);
       conn.query(
         "update events_draft SET ? where id = ?",
         [req.body, req.body.id],

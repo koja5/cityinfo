@@ -40,6 +40,7 @@
     "@syncfusion/ej2-angular-splitbuttons": "^19.3.53",
     "@syncfusion/ej2-base": "^19.2.47",
     "@syncfusion/ej2-schedule": "^19.2.60",
+    "angular2-uuid": "^1.1.1",
     "bootstrap": "^4.5.0",
     "file-saver": "^2.0.5",
     "i": "^0.3.7",

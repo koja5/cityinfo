@@ -13,6 +13,7 @@ import { ActionsType } from 'src/app/enums/actions-type';
 import { EventsModel } from 'src/app/models/events-model';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { HttpClient, HttpRequest } from '@angular/common/http';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-user-events',
@@ -36,6 +37,9 @@ export class UserEventsComponent implements OnInit {
   public loaderData = false;
   public categories: any;
   public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverImage!: string;
+  public imgChangeEvt!: string;
+  public cropImgPreview!: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -156,29 +160,13 @@ export class UserEventsComponent implements OnInit {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.event = event.data;
+      this.coverImage = '.\\assets' + event.data.cover.split('\\assets')[1];
       this.dialogEvent.show();
     }
   }
 
-  editAd() {
-    this.service
-      .callPostMethod('api/updateEventDraft', this.event)
-      .subscribe((data) => {
-        if (data) {
-          this.getEventsDraft();
-          this.dialogEvent.hide();
-          this.toastr.showSuccess();
-        } else {
-          this.dialogEvent.hide();
-          this.toastr.showError();
-        }
-      });
-  }
-
   /* CROPPER */
 
-  imgChangeEvt: any = '';
-  cropImgPreview: any = '';
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
@@ -192,10 +180,7 @@ export class UserEventsComponent implements OnInit {
   imgFailed() {}
 
   saveEntry() {
-    this.event.cover =
-      this.coverPath +
-      this.cropImgPreview.substring(this.cropImgPreview.length - 15) +
-      '.png';
+    this.event.cover = this.coverPath + UUID.UUID() + '.png';
     if (!this.editButton) {
       this.service
         .callPostMethod('api/createEventDraft', this.event)
@@ -224,14 +209,12 @@ export class UserEventsComponent implements OnInit {
   uploadCoverImage() {
     const formData: FormData = new FormData();
 
-    const imageName =
-      this.coverPath +
-      this.cropImgPreview.substring(this.cropImgPreview.length - 15) +
-      '.png';
     const imageBlob = this.dataURItoBlob(
       this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
     );
-    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+    const imageFile = new File([imageBlob], this.event.cover!, {
+      type: 'image/png',
+    });
 
     formData.append('file', imageFile);
 

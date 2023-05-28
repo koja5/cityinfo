@@ -199,5 +199,6 @@
     "selectNameOfCityForEvent": "Wählen Sie den Namen des Ortes aus",
     "cityForEvent": "Stadt",
     "dateAndTimeForEvent": "Datum und Zeit",
-    "numberOfWeeksForEvent": "Anzahl der Wochen"
+    "numberOfWeeksForEvent": "Anzahl der Wochen",
+    "chooseCoverImage": "Wählen Sie ein Titelbild"
 }
