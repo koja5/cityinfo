@@ -11,6 +11,8 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitterModel } from 'src/app/models/emitter-model';
 import { ActionsType } from 'src/app/enums/actions-type';
 import { EventsModel } from 'src/app/models/events-model';
+import { UUID } from 'angular2-uuid';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-user-ads',
@@ -33,6 +35,10 @@ export class UserAdsComponent implements OnInit {
   public language: any;
   public loaderData = false;
   public categories: any;
+  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverImage!: string;
+  public imgChangeEvt!: string;
+  public cropImgPreview!: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -151,6 +157,7 @@ export class UserAdsComponent implements OnInit {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.data = event.data;
+      this.coverImage = '.\\assets' + event.data.cover.split('\\assets')[1];
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
@@ -167,9 +174,61 @@ export class UserAdsComponent implements OnInit {
     }
   }
 
-  editAd() {
+  /* CROPPER */
+
+  onFileChange(event: any): void {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    console.log(e);
+    this.cropImgPreview = e.base64;
+  }
+  imgLoad() {}
+  initCropper() {}
+
+  imgFailed() {}
+
+  saveEntry() {
+    this.data.cover = this.coverPath + UUID.UUID() + '.png';
+    if (!this.editButton) {
+      this.service
+        .callPostMethod('api/createMyAds', this.data)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else {
+      this.service
+        .callPostMethod('api/updateMyAds', this.data)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    }
+  }
+
+  uploadCoverImage() {
+    const formData: FormData = new FormData();
+
+    const imageBlob = this.helpService.dataURItoBlob(
+      this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+    );
+    const imageFile = new File([imageBlob], this.data.cover!, {
+      type: 'image/png',
+    });
+
+    formData.append('file', imageFile);
+
     this.service
-      .callPostMethod('api/updateMyAds', this.data)
+      .callPostMethod('/api/upload/uploadCoverImage', formData)
       .subscribe((data) => {
         if (data) {
           this.getMyAds();

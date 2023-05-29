@@ -118,6 +118,16 @@
       }
     },
     {
+      "title": "region",
+      "filterable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "region",
+      "validation": {
+        "required": true
+      }
+    },
+    {
       "title": "lat",
       "filterable": true,
       "type": "string",
@@ -133,6 +143,16 @@
       "type": "string",
       "class": "text-align-right",
       "field": "lng",
+      "validation": {
+        "required": true
+      }
+    },
+    {
+      "title": "zip_code",
+      "filterable": true,
+      "type": "string",
+      "class": "text-align-right",
+      "field": "zip_code",
       "validation": {
         "required": true
       }
@@ -169,6 +189,14 @@
       "type": "textbox",
       "width": "col-md-12",
       "class": "e-outline",
+      "name": "region",
+      "title": "region",
+      "field": "region"
+    },
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
       "name": "lat",
       "title": "lat",
       "field": "lat"
@@ -180,6 +208,14 @@
       "name": "lng",
       "title": "lng",
       "field": "lat"
+    },
+    {
+      "type": "textbox",
+      "width": "col-md-12",
+      "class": "e-outline",
+      "name": "zip_code",
+      "title": "zip_code",
+      "field": "zip_code"
     },
     {
       "type": "button",

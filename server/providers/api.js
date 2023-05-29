@@ -902,6 +902,37 @@ router.get("/getMyAds", auth, async (req, res, next) => {
   }
 });
 
+router.post("/createMyAds", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
+      }
+      req.body.id_user = req.user.user.id;
+      conn.query(
+        "insert into ads_draft SET ?",
+        [req.body],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            res.json(true);
+          } else {
+            logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            res.json(false);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.post("/updateMyAds", auth, function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
@@ -1056,7 +1087,6 @@ router.post("/updateEventDraft", auth, function (req, res, next) {
       if (req.body.category) {
         req.body.category = req.body.category.toString();
       }
-      console.log(req.body);
       conn.query(
         "update events_draft SET ? where id = ?",
         [req.body, req.body.id],
@@ -1245,6 +1275,34 @@ router.get("/getMyPlaces", auth, async (req, res, next) => {
           }
         );
       }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/createPlace", auth, function (req, res, next) {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
+      req.body.category = req.body.category.toString();
+      req.body.id_user = req.user.user.id;
+      delete req.body.city_name;
+
+      conn.query("insert into places SET ?", [req.body], function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+          res.json(false);
+        }
+      });
     });
   } catch (ex) {
     logger.log("error", err.sql + ". " + err.sqlMessage);

@@ -68,10 +68,10 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label class="custom-label">{{language.category}}</label>
+                    <label class="custom-label">{{language.categoryForEvent}}</label>
                     <ejs-multiselect [cssClass]="'e-outline'" [id]="event.category" [dataSource]="categories"
                         [fields]="{text: 'name', value: 'id'}" [(ngModel)]="event.category"
-                        [placeholder]="language.selectNameOfCategoryForPlace" [allowFiltering]="true">
+                        [placeholder]="language.selectNameOfCategoryForEvent" [allowFiltering]="true">
                         <ng-template *ngIf="categories" #noRecordsTemplate>
                             <span class="norecord"> {{language?.noRecords}}</span>
                         </ng-template>
@@ -87,19 +87,20 @@
                 </div> -->
 
 
-                <div class="col-md-12 text-center mt-2 mb-2" *ngIf="coverImage && !cropImgPreview">
-                    <img [src]="coverImage" style="width: 200px;" />
-                </div>
-                <div class="col-md-12 mt-2 mb-2">
-                    <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="true" [aspectRatio]="4 / 3"
-                        format="png" (imageCropped)="cropImg($event!)" (imageLoaded)="imgLoad()"
-                        (cropperReady)="initCropper()" (loadImageFailed)="imgFailed()">
-                    </image-cropper>
-                </div>
-
 
                 <div class="col-md-12 col-md-12 text-center">
                     <div class="box">
+                        <div class="col-md-12 text-center mt-2 mb-2" *ngIf="coverImage && !cropImgPreview">
+                            <img [src]="coverImage" style="width: 200px;" />
+                        </div>
+                        <div class="col-md-12 mt-2 mb-2">
+                            <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="true"
+                                [aspectRatio]="4 / 3" format="png" (imageCropped)="cropImg($event!)"
+                                (imageLoaded)="imgLoad()" (cropperReady)="initCropper()"
+                                (loadImageFailed)="imgFailed()">
+                            </image-cropper>
+                        </div>
+
                         <input type="file" (change)="onFileChange($event)" name="file-1[]" id="file-1"
                             class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
                         <label for="file-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"

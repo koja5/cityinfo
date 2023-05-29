@@ -32,8 +32,10 @@
     "noHavePaidEventYet": "Sie haben keine Event erstellt!",
     "createNewOnePaidEvent": "Erstellen Sie einfach eine!",
     "nameOfCompany": "Werbetext",
-   "address": "Adresse",
+    "nameOfCompanyForSettings": "Werbetext",
+    "address": "Adresse",
     "mapLink": "Positions-Link von Google Maps",
+    "mapLinkForPlaces": "Positions-Link von Google Maps",
     "phone": "Telefon",
     "dateAndTime": "Datum und Zeit",
     "submitAndPay": "Bestätigen und mit Zahlung fortsetzen",
@@ -170,7 +172,7 @@
     "selectNameOfCity": "Wählen Sie den Namen des Ortes aus",
     "cityForPlace": "Ort / Stadt",
     "editPlace": "Ort bearbeiten",
-   "adDraftTitle": "Anzeigenentwurf",
+    "adDraftTitle": "Anzeigenentwurf",
     "startDateTitle": "Startdatum",
     "save": "Speichern",
     "eventDraft": "Veranstaltungsentwurf",
@@ -200,5 +202,11 @@
     "cityForEvent": "Stadt",
     "dateAndTimeForEvent": "Datum und Zeit",
     "numberOfWeeksForEvent": "Anzahl der Wochen",
-    "chooseCoverImage": "Wählen Sie ein Titelbild"
+    "chooseCoverImage": "Wählen Sie ein Titelbild",
+    "categoryForPlace": "Kategorie",
+    "selectNameOfCategoryForPlace": "Kategorie für Ort auswählen",
+    "categoryForAd": "Kategorie",
+    "selectNameOfCategoryForAd": "Kategorie für Ort auswählen",
+    "categoryForEvent": "Kategorie",
+    "selectNameOfCategoryForEvent": "Kategorie für Ort auswählen"
 }

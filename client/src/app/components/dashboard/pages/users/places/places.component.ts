@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadingEventArgs } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { getUniqueID } from '@syncfusion/ej2-base';
+import { UUID } from 'angular2-uuid';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ToastrComponent } from 'src/app/components/dynamic-component/common/toastr/toastr.component';
 import { ActionsType } from 'src/app/enums/actions-type';
 import { EmitterModel } from 'src/app/models/emitter-model';
@@ -35,6 +37,10 @@ export class PlacesComponent implements OnInit {
   public loaderData = false;
   public cities: any;
   public categories: any;
+  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverImage!: string;
+  public imgChangeEvt!: string;
+  public cropImgPreview!: any;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -157,6 +163,7 @@ export class PlacesComponent implements OnInit {
       } else {
         this.data.active = false;
       }
+      this.coverImage = '.\\assets' + event.data.cover.split('\\assets')[1];
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
@@ -202,6 +209,73 @@ export class PlacesComponent implements OnInit {
   editPlace() {
     this.service
       .callPostMethod('api/updatePlace', this.data)
+      .subscribe((data) => {
+        if (data) {
+          this.getMyPlaces();
+          this.dialog.hide();
+          this.toastr.showSuccess();
+        } else {
+          this.dialog.hide();
+          this.toastr.showError();
+        }
+      });
+  }
+
+  /* CROPPER */
+
+  onFileChange(event: any): void {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    console.log(e);
+    this.cropImgPreview = e.base64;
+  }
+  imgLoad() {}
+  initCropper() {}
+
+  imgFailed() {}
+
+  saveEntry() {
+    this.data.cover = this.coverPath + UUID.UUID() + '.png';
+    if (!this.editButton) {
+      this.service
+        .callPostMethod('api/createPlace', this.data)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    } else {
+      this.service
+        .callPostMethod('api/updatePlace', this.data)
+        .subscribe((data) => {
+          if (data) {
+            this.uploadCoverImage();
+          } else {
+            this.dialog.hide();
+            this.toastr.showError();
+          }
+        });
+    }
+  }
+
+  uploadCoverImage() {
+    const formData: FormData = new FormData();
+
+    const imageBlob = this.helpService.dataURItoBlob(
+      this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+    );
+    const imageFile = new File([imageBlob], this.data.cover!, {
+      type: 'image/png',
+    });
+
+    formData.append('file', imageFile);
+
+    this.service
+      .callPostMethod('/api/upload/uploadCoverImage', formData)
       .subscribe((data) => {
         if (data) {
           this.getMyPlaces();

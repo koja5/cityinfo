@@ -209,7 +209,7 @@ export class UserEventsComponent implements OnInit {
   uploadCoverImage() {
     const formData: FormData = new FormData();
 
-    const imageBlob = this.dataURItoBlob(
+    const imageBlob = this.helpService.dataURItoBlob(
       this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
     );
     const imageFile = new File([imageBlob], this.event.cover!, {
@@ -230,16 +230,5 @@ export class UserEventsComponent implements OnInit {
           this.toastr.showError();
         }
       });
-  }
-
-  dataURItoBlob(dataURI: any) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/png' });
-    return blob;
   }
 }
