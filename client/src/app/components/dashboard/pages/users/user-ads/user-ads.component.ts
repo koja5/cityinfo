@@ -35,7 +35,7 @@ export class UserAdsComponent implements OnInit {
   public language: any;
   public loaderData = false;
   public categories: any;
-  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverPath = './assets/file_upload/';
   public coverImage!: string;
   public imgChangeEvt!: string;
   public cropImgPreview!: any;
