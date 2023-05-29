@@ -28,7 +28,7 @@
     "link": "/dashboard/superadmin/position-prices"
   },
   {
-    "title": "Zu bestätigen",
+    "title": "Zu best채tigen",
     "rights": [
       "superadmin"
     ],
@@ -56,21 +56,14 @@
     "link": "/dashboard/superadmin/all-invoices"
   },
   {
-    "title": "Places",
+    "title": "Freizeitorte",
     "rights": [
       "superadmin"
     ],
     "link": "/dashboard/superadmin/all-places"
   },
   {
-    "title": "Kategorien",
-    "rights": [
-      "superadmin"
-    ],
-    "link": "/dashboard/superadmin/categories"
-  },
-  {
-    "title": "Places",
+    "title": "Freizeitorte",
     "rights": [
       "isClub"
     ],
