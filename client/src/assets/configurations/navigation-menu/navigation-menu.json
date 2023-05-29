@@ -63,6 +63,13 @@
     "link": "/dashboard/superadmin/all-places"
   },
   {
+    "title": "Kategorien",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/categories"
+  },
+  {
     "title": "Freizeitorte",
     "rights": [
       "isClub"
