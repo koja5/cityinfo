@@ -18,7 +18,7 @@ import {
   DateTimePickerAllModule,
 } from '@syncfusion/ej2-angular-calendars';
 import { PlacesComponent } from '../places/places.component';
-import { SwitchAllModule } from '@syncfusion/ej2-angular-buttons';
+import { CheckBoxAllModule, SwitchAllModule } from '@syncfusion/ej2-angular-buttons';
 import { UserEventsComponent } from '../user-events/user-events.component';
 import { PaidEventsComponent } from '../paid-events/paid-events.component';
 import { DialogConfirmComponent } from 'src/app/components/common/dialog-confirm/dialog-confirm.component';
@@ -50,7 +50,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     SwitchAllModule,
     ComboBoxAllModule,
     MultiSelectAllModule,
-    ImageCropperModule
+    ImageCropperModule,
+    CheckBoxAllModule
   ],
   providers: [],
 })

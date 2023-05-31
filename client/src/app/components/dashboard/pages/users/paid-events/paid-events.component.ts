@@ -43,6 +43,7 @@ export class PaidEventsComponent implements OnInit {
   public loader = false;
   public loaderData = false;
   public currentOperation!: ActionsType;
+  public acceptTermsAndPrivacy!: boolean;
 
   constructor(
     private service: CallApiService,

@@ -418,3 +418,23 @@ input:-webkit-autofill:focus {
   border-color: var(--btn-color) !important;
   box-shadow: none !important;
 }
+
+.required {
+  color: red;
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+.remove-image-icon button {
+  position: absolute;
+  right: 4px;
+  z-index: 6;
+  border-radius: 50%;
+  padding: 7px;
+  border: none;
+  background: red;
+  color: #fff;
+  width: 35px;
+  height: 35px;
+  top: -11px;
+}

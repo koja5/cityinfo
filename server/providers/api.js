@@ -471,7 +471,7 @@ router.get("/getCategories", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from categories order by name asc",
+          "select * from categories order by sequence asc",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -1290,7 +1290,9 @@ router.post("/createPlace", auth, function (req, res, next) {
         res.json(err);
       }
 
-      req.body.category = req.body.category.toString();
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
+      }
       req.body.id_user = req.user.user.id;
       delete req.body.city_name;
 
@@ -1318,7 +1320,9 @@ router.post("/updatePlace", auth, function (req, res, next) {
         res.json(err);
       }
 
-      req.body.category = req.body.category.toString();
+      if (req.body.category) {
+        req.body.category = req.body.category.toString();
+      }
       delete req.body.city_name;
 
       conn.query(

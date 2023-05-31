@@ -83,8 +83,22 @@
                     <div class="mt-4">
                         <stripe-card #stripeCard (tokenChange)="setStripeToken($event)"
                             (sourceChange)="setStripeSource($event)"></stripe-card>
+
+                        <div class="mt-5 mb-2" style="display: inline-flex;">
+                            <ejs-checkbox name="termsAndPrivacy" [(ngModel)]="acceptTermsAndPrivacy"></ejs-checkbox>
+                            <label class="custom-label color-blue ml-2 m-0">
+                                {{
+                                language.agreeTermsAndPrivacyForDashboard }}
+                                <a routerLink="/terms" target="_blank" class="signup-term-link">{{ language.footerTerms
+                                    }}</a>
+                                {{ language.and }}
+                                <a routerLink="/privacy-policy" target="_blank" class="signup-term-link">{{
+                                    language.footerPrivacyPolicy }}</a> <span class="required"
+                                    title="{{language.required}}">*</span></label>
+                        </div>
+
                         <div class="text-right">
-                            <button class="button-action e-info e-control e-btn e-lib mt-4" type="button"
+                            <button class="button-action e-info e-control e-btn e-lib mt-4" type="button" [disabled]="!acceptTermsAndPrivacy"
                                 (click)="stripeCard.createToken()">{{language.payForAds}}</button>
                         </div>
                     </div>

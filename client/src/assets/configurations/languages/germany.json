@@ -138,6 +138,8 @@
     "footerTerms": "ABGs",
     "and": "und",
     "agreeText": "Mit der Registrierung akzeptiere ich die",
+    "agreeTermsAndPrivacyForDashboard": "Mit dem Eintrag akzeptiere ich das",
+    "imageWarranty": "I acknowledge that the image I post is mine or I have full rights to use it.",
     "needToAcceptTermsAndPrivacy": "Mit der Registrierung müssen Sie die ABGs und die Datenschutzbestimmungen akzeptieren!",
     "cookieTitle": "DIESE WEBSITE VERWENDET COOKIES",
     "cookieMessage": "Wir verwenden Cookies, um Inhalte und Anzeigen zu personalisieren, Funktionen für soziale Medien bereitzustellen und unseren Datenverkehr zu analysieren. Wir geben auch Informationen über Ihre Nutzung unserer Website an unsere SocialMedia-, Werbe- und Analysepartner weiter, die diese möglicherweise mit anderen Informationen kombinieren, die Sie ihnen zur Verfügung gestellt haben oder die sie durch Ihre Nutzung ihrer Dienste gesammelt haben. Sie stimmen unseren Cookies zu, wenn Sie unsere Website weiterhin nutzen.",
@@ -171,6 +173,8 @@
     "selectNameOfCityForPlace": "Wählen Sie den Namen des Ortes aus",
     "selectNameOfCity": "Wählen Sie den Namen des Ortes aus",
     "cityForPlace": "Ort / Stadt",
+    "uploadPicture": "Bild für Ort hochladen",
+    "needToFillAllDataWithRedStar": "Alle Daten müssen mit einem roten Stern gefüllt werden",
     "editPlace": "Ort bearbeiten",
     "adDraftTitle": "Anzeigenentwurf",
     "startDateTitle": "Startdatum",
@@ -208,5 +212,7 @@
     "categoryForAd": "Kategorie",
     "selectNameOfCategoryForAd": "Kategorie für Ort auswählen",
     "categoryForEvent": "Kategorie",
-    "selectNameOfCategoryForEvent": "Kategorie für Ort auswählen"
+    "selectNameOfCategoryForEvent": "Kategorie für Ort auswählen",
+    "sequence": "Sequenzen",
+    "required": "erforderlich"
 }

@@ -37,10 +37,12 @@ export class PlacesComponent implements OnInit {
   public loaderData = false;
   public cities: any;
   public categories: any;
-  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverPath = './assets/file_upload/';
   public coverImage!: string;
   public imgChangeEvt!: string;
   public cropImgPreview!: any;
+  public acceptTermsAndPrivacy!: boolean;
+  public imageWarranty!: boolean;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -163,7 +165,7 @@ export class PlacesComponent implements OnInit {
       } else {
         this.data.active = false;
       }
-      this.coverImage = '.\\assets' + event.data.cover.split('\\assets')[1];
+      this.coverImage = event.data.cover;
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
@@ -186,7 +188,6 @@ export class PlacesComponent implements OnInit {
             this.intializeData();
             this.toastr.showSuccess();
           } else {
-            this.dialog.hide();
             this.toastr.showError();
           }
         });
@@ -199,7 +200,6 @@ export class PlacesComponent implements OnInit {
             this.intializeData();
             this.toastr.showSuccess();
           } else {
-            this.dialog.hide();
             this.toastr.showError();
           }
         });
@@ -215,7 +215,6 @@ export class PlacesComponent implements OnInit {
           this.dialog.hide();
           this.toastr.showSuccess();
         } else {
-          this.dialog.hide();
           this.toastr.showError();
         }
       });
@@ -227,16 +226,25 @@ export class PlacesComponent implements OnInit {
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
-    console.log(e);
     this.cropImgPreview = e.base64;
+    this.coverImage = this.cropImgPreview;
   }
   imgLoad() {}
   initCropper() {}
 
   imgFailed() {}
 
+  removeImage() {
+    this.cropImgPreview = null;
+    this.imgChangeEvt = '';
+    this.coverImage = '';
+  }
+
   saveEntry() {
-    this.data.cover = this.coverPath + UUID.UUID() + '.png';
+    if (this.cropImgPreview) {
+      this.data.cover = this.coverPath + UUID.UUID() + '.png';
+    }
+
     if (!this.editButton) {
       this.service
         .callPostMethod('api/createPlace', this.data)
@@ -244,7 +252,6 @@ export class PlacesComponent implements OnInit {
           if (data) {
             this.uploadCoverImage();
           } else {
-            this.dialog.hide();
             this.toastr.showError();
           }
         });
@@ -255,7 +262,6 @@ export class PlacesComponent implements OnInit {
           if (data) {
             this.uploadCoverImage();
           } else {
-            this.dialog.hide();
             this.toastr.showError();
           }
         });
@@ -263,28 +269,35 @@ export class PlacesComponent implements OnInit {
   }
 
   uploadCoverImage() {
-    const formData: FormData = new FormData();
+    if (this.cropImgPreview) {
+      const formData: FormData = new FormData();
 
-    const imageBlob = this.helpService.dataURItoBlob(
-      this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
-    );
-    const imageFile = new File([imageBlob], this.data.cover!, {
-      type: 'image/png',
-    });
-
-    formData.append('file', imageFile);
-
-    this.service
-      .callPostMethod('/api/upload/uploadCoverImage', formData)
-      .subscribe((data) => {
-        if (data) {
-          this.getMyPlaces();
-          this.dialog.hide();
-          this.toastr.showSuccess();
-        } else {
-          this.dialog.hide();
-          this.toastr.showError();
-        }
+      const imageBlob = this.helpService.dataURItoBlob(
+        this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+      );
+      const imageFile = new File([imageBlob], this.data.cover!, {
+        type: 'image/png',
       });
+
+      formData.append('file', imageFile);
+
+      this.service
+        .callPostMethod('/api/upload/uploadCoverImage', formData)
+        .subscribe((data) => {
+          if (data) {
+            this.getMyPlaces();
+            this.dialog.hide();
+            this.toastr.showSuccess();
+          } else {
+            this.toastr.showError();
+          }
+        });
+    } else {
+      this.getMyPlaces();
+      this.dialog.hide();
+      this.toastr.showSuccess();
+    }
+    this.imgChangeEvt = '';
+    this.cropImgPreview = null;
   }
 }

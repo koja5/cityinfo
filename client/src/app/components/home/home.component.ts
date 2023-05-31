@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   public loader = false;
   public value: number = 30;
   public rangeValue: any;
+  public categories: any;
   public ranges = [
     {
       text: '5 km',
@@ -102,6 +103,7 @@ export class HomeComponent implements OnInit {
 
   initializeData() {
     this.getAllCities();
+    this.getCategories();
 
     if (this.selectedCityId && this.rangeValue) {
       this.setNewRange({ value: this.rangeValue });
@@ -208,6 +210,12 @@ export class HomeComponent implements OnInit {
               });
           });
       });
+  }
+
+  getCategories() {
+    this.service.callGetMethod('api/getCategories', '').subscribe((data) => {
+      this.categories = data;
+    });
   }
 
   packAdsAndEvents(ads: any, events: any) {

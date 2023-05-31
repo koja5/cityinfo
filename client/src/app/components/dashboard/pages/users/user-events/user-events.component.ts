@@ -36,10 +36,12 @@ export class UserEventsComponent implements OnInit {
   public language: any;
   public loaderData = false;
   public categories: any;
-  public coverPath = '..\\..\\CityInfo\\client\\src\\assets\\file_upload\\';
+  public coverPath = './assets/file_upload/';
   public coverImage!: string;
   public imgChangeEvt!: string;
   public cropImgPreview!: any;
+  public acceptTermsAndPrivacy!: boolean;
+  public imageWarranty!: boolean;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -160,7 +162,7 @@ export class UserEventsComponent implements OnInit {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.event = event.data;
-      this.coverImage = '.\\assets' + event.data.cover.split('\\assets')[1];
+      this.coverImage = event.data.cover;
       this.dialogEvent.show();
     }
   }
@@ -171,16 +173,25 @@ export class UserEventsComponent implements OnInit {
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
-    console.log(e);
     this.cropImgPreview = e.base64;
+    this.coverImage = this.cropImgPreview;
   }
   imgLoad() {}
   initCropper() {}
 
   imgFailed() {}
 
+  removeImage() {
+    this.cropImgPreview = null;
+    this.imgChangeEvt = '';
+    this.coverImage = '';
+  }
+
   saveEntry() {
-    this.event.cover = this.coverPath + UUID.UUID() + '.png';
+    if (this.cropImgPreview) {
+      this.event.cover = this.coverPath + UUID.UUID() + '.png';
+    }
+
     if (!this.editButton) {
       this.service
         .callPostMethod('api/createEventDraft', this.event)
@@ -188,7 +199,6 @@ export class UserEventsComponent implements OnInit {
           if (data) {
             this.uploadCoverImage();
           } else {
-            this.dialogEvent.hide();
             this.toastr.showError();
           }
         });
@@ -199,7 +209,6 @@ export class UserEventsComponent implements OnInit {
           if (data) {
             this.uploadCoverImage();
           } else {
-            this.dialogEvent.hide();
             this.toastr.showError();
           }
         });
@@ -207,28 +216,35 @@ export class UserEventsComponent implements OnInit {
   }
 
   uploadCoverImage() {
-    const formData: FormData = new FormData();
+    if (this.cropImgPreview) {
+      const formData: FormData = new FormData();
 
-    const imageBlob = this.helpService.dataURItoBlob(
-      this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
-    );
-    const imageFile = new File([imageBlob], this.event.cover!, {
-      type: 'image/png',
-    });
-
-    formData.append('file', imageFile);
-
-    this.service
-      .callPostMethod('/api/upload/uploadCoverImage', formData)
-      .subscribe((data) => {
-        if (data) {
-          this.getEventsDraft();
-          this.dialogEvent.hide();
-          this.toastr.showSuccess();
-        } else {
-          this.dialogEvent.hide();
-          this.toastr.showError();
-        }
+      const imageBlob = this.helpService.dataURItoBlob(
+        this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+      );
+      const imageFile = new File([imageBlob], this.event.cover!, {
+        type: 'image/png',
       });
+
+      formData.append('file', imageFile);
+
+      this.service
+        .callPostMethod('/api/upload/uploadCoverImage', formData)
+        .subscribe((data) => {
+          if (data) {
+            this.getEventsDraft();
+            this.dialogEvent.hide();
+            this.toastr.showSuccess();
+          } else {
+            this.toastr.showError();
+          }
+        });
+    } else {
+      this.getEventsDraft();
+      this.dialogEvent.hide();
+      this.toastr.showSuccess();
+    }
+    this.imgChangeEvt = '';
+    this.cropImgPreview = null;
   }
 }

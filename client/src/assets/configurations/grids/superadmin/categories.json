@@ -106,6 +106,16 @@
             "validation": {
                 "required": true
             }
+        },
+        {
+            "title": "sequence",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "sequence",
+            "validation": {
+                "required": true
+            }
         }
     ],
     "config": [
@@ -126,6 +136,14 @@
             "name": "name",
             "title": "name",
             "field": "name"
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "sequence",
+            "title": "sequence",
+            "field": "sequence"
         },
         {
             "type": "button",
