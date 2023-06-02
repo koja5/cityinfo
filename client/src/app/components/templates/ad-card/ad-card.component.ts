@@ -207,8 +207,10 @@ export class AdCardComponent implements OnInit {
     if (this.data.category) {
       let item = [];
       let categories = [];
-      if (typeof this.data.categories === 'string') {
+      if (typeof this.data.category === 'string') {
         categories = this.data.category.split(',');
+      } else {
+        categories = this.data.category;
       }
       for (let j = 0; j < categories.length; j++) {
         item.push(this.getNameOfCategory(Number(categories[j])));
