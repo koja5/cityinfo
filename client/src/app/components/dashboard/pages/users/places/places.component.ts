@@ -3,6 +3,12 @@ import { UploadingEventArgs } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { getUniqueID } from '@syncfusion/ej2-base';
 import { UUID } from 'angular2-uuid';
+import {
+  DOC_ORIENTATION,
+  DataUrl,
+  NgxImageCompressService,
+  UploadResponse,
+} from 'ngx-image-compress';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ToastrComponent } from 'src/app/components/dynamic-component/common/toastr/toastr.component';
 import { ActionsType } from 'src/app/enums/actions-type';
@@ -49,7 +55,8 @@ export class PlacesComponent implements OnInit {
     private configurationService: ConfigurationService,
     private helpService: HelpService,
     private toastr: ToastrComponent,
-    private service: CallApiService
+    private service: CallApiService,
+    private imageCompress: NgxImageCompressService
   ) {}
 
   ngOnInit(): void {
@@ -228,10 +235,16 @@ export class PlacesComponent implements OnInit {
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
+  
   cropImg(e: ImageCroppedEvent) {
-    this.cropImgPreview = e.base64;
-    this.coverImage = this.cropImgPreview;
+    this.imageCompress
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+      .then((result: DataUrl) => {
+        this.coverImage = result;
+        this.cropImgPreview = result;
+      });
   }
+
   imgLoad() {}
   initCropper() {}
 
@@ -247,6 +260,8 @@ export class PlacesComponent implements OnInit {
     if (this.cropImgPreview) {
       this.data.cover = this.coverPath + UUID.UUID() + '.png';
     }
+
+    console.log(this.imageCompress.byteCount(this.data.cover!));
 
     if (!this.editButton) {
       this.service
@@ -303,5 +318,33 @@ export class PlacesComponent implements OnInit {
     }
     this.imgChangeEvt = '';
     this.cropImgPreview = null;
+  }
+
+  compressFile() {
+    return this.imageCompress
+      .uploadFile()
+      .then(({ image, orientation, fileName }: UploadResponse) => {
+        console.log('File Name:', fileName);
+        console.log(
+          `Original: ${image.substring(0, 50)}... (${image.length} characters)`
+        );
+        console.log('Size in bytes was:', this.imageCompress.byteCount(image));
+
+        this.imageCompress
+          .compressFile(image, orientation, 50, 50)
+          .then((result: DataUrl) => {
+            console.log(
+              `Compressed: ${result.substring(0, 50)}... (${
+                result.length
+              } characters)`
+            );
+            console.log(
+              'Size in bytes is now:',
+              this.imageCompress.byteCount(result)
+            );
+            this.imgChangeEvt = result;
+            return result;
+          });
+      });
   }
 }

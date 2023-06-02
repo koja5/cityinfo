@@ -6,7 +6,7 @@ import { FileType } from '../enums/file-type';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AdsModel } from '../models/ads-model';
-import { UserModel } from '../models/user-model';
+
 
 @Injectable({
   providedIn: 'root',

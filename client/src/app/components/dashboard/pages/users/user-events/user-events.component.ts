@@ -14,6 +14,11 @@ import { EventsModel } from 'src/app/models/events-model';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { UUID } from 'angular2-uuid';
+import {
+  DOC_ORIENTATION,
+  DataUrl,
+  NgxImageCompressService,
+} from 'ngx-image-compress';
 
 @Component({
   selector: 'app-user-events',
@@ -49,7 +54,8 @@ export class UserEventsComponent implements OnInit {
     private helpService: HelpService,
     private toastr: ToastrComponent,
     private service: CallApiService,
-    private http: HttpClient
+    private http: HttpClient,
+    private imageCompress: NgxImageCompressService
   ) {}
 
   ngOnInit(): void {
@@ -175,10 +181,16 @@ export class UserEventsComponent implements OnInit {
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
+
   cropImg(e: ImageCroppedEvent) {
-    this.cropImgPreview = e.base64;
-    this.coverImage = this.cropImgPreview;
+    this.imageCompress
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+      .then((result: DataUrl) => {
+        this.coverImage = result;
+        this.cropImgPreview = result;
+      });
   }
+
   imgLoad() {}
   initCropper() {}
 

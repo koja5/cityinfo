@@ -13,6 +13,11 @@ import { ActionsType } from 'src/app/enums/actions-type';
 import { EventsModel } from 'src/app/models/events-model';
 import { UUID } from 'angular2-uuid';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import {
+  DOC_ORIENTATION,
+  DataUrl,
+  NgxImageCompressService,
+} from 'ngx-image-compress';
 
 @Component({
   selector: 'app-user-ads',
@@ -47,7 +52,8 @@ export class UserAdsComponent implements OnInit {
     private configurationService: ConfigurationService,
     private helpService: HelpService,
     private toastr: ToastrComponent,
-    private service: CallApiService
+    private service: CallApiService,
+    private imageCompress: NgxImageCompressService
   ) {}
 
   ngOnInit(): void {
@@ -183,10 +189,16 @@ export class UserAdsComponent implements OnInit {
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
+
   cropImg(e: ImageCroppedEvent) {
-    this.cropImgPreview = e.base64;
-    this.coverImage = this.cropImgPreview;
+    this.imageCompress
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+      .then((result: DataUrl) => {
+        this.coverImage = result;
+        this.cropImgPreview = result;
+      });
   }
+
   imgLoad() {}
   initCropper() {}
 
