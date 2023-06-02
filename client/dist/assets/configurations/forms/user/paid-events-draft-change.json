@@ -1,0 +1,113 @@
+{
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "event_draft",
+            "title": "eventDraft",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getEventsDraft",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectNameOfEventDraft",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "cityForEvent",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectNameOfCityForEvent",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "datetimepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "dateAndTimeForEvent",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:mm",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "label",
+            "width": "col-md-12 pt-2",
+            "title": "eventAdditionalDescribeTitle",
+            "text": "eventAdditionalDescribeText",
+            "hide": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date_top",
+            "title": "eventStartDateTopPromotion",
+            "field": "start_date_top",
+            "format": "dd.MM.yyyy",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "numberOfWeeksForEvent",
+            "field": "number_of_weeks",
+            "format": "###.##",
+            "min": 1,
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "saveEvent",
+            "field": "submit",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}
