@@ -65,7 +65,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "position",
-            "title": "position",
+            "title": "positionForAd",
             "field": {
                 "text": "name",
                 "value": "id"

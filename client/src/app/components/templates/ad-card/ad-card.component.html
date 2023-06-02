@@ -178,13 +178,14 @@
     </ejs-dialog>
 </body>
 
-<app-dialog-confirm *ngIf="confirmDeleteDialog" [icon]="'trash.png'" [text]="language.actionCantBeReturned"
-    (dialogEmitter)="confirmDeleteAction($event)"></app-dialog-confirm>
-<app-dialog-confirm *ngIf="confirmDeactiveCampaign" [icon]="'not-visible.png'"
+<app-dialog-confirm *ngIf="confirmDeleteDialog" [icon]="'trash.png'" [title]="language.deleteDialogTitle"
+    [text]="language.actionCantBeReturned" (dialogEmitter)="confirmDeleteAction($event)"></app-dialog-confirm>
+<app-dialog-confirm *ngIf="confirmDeactiveCampaign" [icon]="'not-visible.png'" [title]="language.deactiveDialogTitle"
     [text]="language.deactiveYourCampaignQuestion"
     (dialogEmitter)="confirmDeactiveCampaignAction($event)"></app-dialog-confirm>
-<app-dialog-confirm *ngIf="confirmActiveCampaign" [icon]="'visible.png'" [text]="language.activeYourCampaignQuestion"
+<app-dialog-confirm *ngIf="confirmActiveCampaign" [icon]="'visible.png'" [title]="language.activeDialogTitle"
+    [text]="language.activeYourCampaignQuestion"
     (dialogEmitter)="confirmActiveCampaignAction($event)"></app-dialog-confirm>
-<app-dialog-confirm *ngIf="confirmCancelPromotion" [icon]="'cancel-promotion.png'"
+<app-dialog-confirm *ngIf="confirmCancelPromotion" [icon]="'cancel-promotion.png'" [title]="language.cancelDialogTitle"
     [text]="language.cancelYourPromotionQuestion"
     (dialogEmitter)="confirmCancelPromotionAction($event)"></app-dialog-confirm>

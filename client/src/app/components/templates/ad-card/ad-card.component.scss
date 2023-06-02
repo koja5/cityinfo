@@ -233,8 +233,17 @@ a {
 
 .category-info {
   width: 99%;
-  margin-top: -20px;
+  margin-top: -16px;
   background: none;
+}
+
+.category-info span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 165px;
+  height: 16px !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
 }
 
 .badge-info span,
@@ -250,6 +259,7 @@ a {
   font-weight: bold;
   cursor: pointer;
   padding: 2px 5px;
+  white-space: nowrap;
 }
 
 .three-dots {

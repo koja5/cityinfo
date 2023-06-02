@@ -242,7 +242,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "id_user",
-            "title": "user",
+            "title": "userForPlace",
             "field": {
                 "text": "email",
                 "value": "id"
@@ -254,7 +254,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of ads",
+            "placeholder": "selectUserForPlace",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -266,7 +266,7 @@
             "width": "col-md-12 hide",
             "class": "e-outline",
             "name": "name",
-            "title": "name",
+            "title": "nameForPlace",
             "field": "name"
         },
         {
@@ -274,7 +274,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "city",
+            "title": "cityForPlace",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -286,7 +286,7 @@
                 "fields": "",
                 "root": ""
             },
-            "placeholder": "Please select name of city",
+            "placeholder": "selectNameOfCityForPlace",
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
@@ -298,7 +298,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "map_link",
-            "title": "map_link",
+            "title": "mapLinkForPlaces",
             "field": "map_link"
         },
         {
@@ -306,7 +306,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "phone",
-            "title": "phone",
+            "title": "phoneForPlace",
             "field": "phone"
         },
         {
@@ -314,7 +314,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "email",
-            "title": "email",
+            "title": "emailForPlace",
             "field": "email"
         },
         {
@@ -322,7 +322,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "description",
-            "title": "description",
+            "title": "descriptionForPlace",
             "field": "description"
         },
         {
@@ -330,7 +330,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "type",
-            "title": "type",
+            "title": "typeForPlace",
             "field": "type",
             "hide": true
         },
@@ -339,7 +339,7 @@
             "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "active",
-            "title": "Active",
+            "title": "activeForPlace",
             "field": "active"
         },
         {
@@ -347,7 +347,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "save",
+            "title": "savePlace",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

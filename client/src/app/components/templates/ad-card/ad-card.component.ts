@@ -206,8 +206,9 @@ export class AdCardComponent implements OnInit {
   convertCategoryToRealName() {
     if (this.data.category) {
       let item = [];
-      for (let j = 0; j < this.data.category.length; j++) {
-        item.push(this.getNameOfCategory(this.data.category[j]));
+      let categories = this.data.category.split(',');
+      for (let j = 0; j < categories.length; j++) {
+        item.push(this.getNameOfCategory(Number(categories[j])));
       }
       this.categoryName = item.toString();
     }

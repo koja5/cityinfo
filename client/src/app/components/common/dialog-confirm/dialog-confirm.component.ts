@@ -21,6 +21,7 @@ export class DialogConfirmComponent implements OnInit {
   @ViewChild('dialog') public dialog!: DialogComponent;
   @Output() public dialogEmitter = new EventEmitter<any>();
   @Input() icon!: string;
+  @Input() title!: string;
   @Input() text!: string;
   public language: any;
   public DialogObj: any;

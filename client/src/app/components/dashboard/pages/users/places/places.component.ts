@@ -34,6 +34,7 @@ export class PlacesComponent implements OnInit {
   };
   public language: any;
   public isClub: boolean = false;
+  public loader = false;
   public loaderData = false;
   public cities: any;
   public categories: any;
@@ -119,6 +120,8 @@ export class PlacesComponent implements OnInit {
   createNewPlace() {
     this.dialog.show();
     this.data = new PlacesModel();
+    this.imgChangeEvt = '';
+    this.coverImage = '';
     this.editButton = false;
   }
 
@@ -280,10 +283,11 @@ export class PlacesComponent implements OnInit {
       });
 
       formData.append('file', imageFile);
-
+      this.loader = true;
       this.service
         .callPostMethod('/api/upload/uploadCoverImage', formData)
         .subscribe((data) => {
+          this.loader = false;
           if (data) {
             this.getMyPlaces();
             this.dialog.hide();

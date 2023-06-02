@@ -33,6 +33,7 @@ export class UserAdsComponent implements OnInit {
     Y: 'center',
   };
   public language: any;
+  public loader = false;
   public loaderData = false;
   public categories: any;
   public coverPath = './assets/file_upload/';
@@ -140,6 +141,8 @@ export class UserAdsComponent implements OnInit {
   createNewAdDraft() {
     this.dialog.show();
     this.data = new AdsModel();
+    this.imgChangeEvt = '';
+    this.coverImage = '';
     this.fillAdFields();
     this.editButton = false;
   }
@@ -236,10 +239,13 @@ export class UserAdsComponent implements OnInit {
 
       formData.append('file', imageFile);
 
+      this.loader = true;
+
       this.service
         .callPostMethod('/api/upload/uploadCoverImage', formData)
         .subscribe((data) => {
           if (data) {
+            this.loader = false;
             this.getMyAds();
             this.dialog.hide();
             this.toastr.showSuccess();

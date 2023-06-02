@@ -97,7 +97,7 @@
             "allowEditing": false
         },
         {
-            "title": "start_date",
+            "title": "startDateTitleForEvent",
             "filterable": true,
             "type": "date",
             "format": "dd.MM.yyyy",
@@ -108,7 +108,7 @@
             }
         },
         {
-            "title": "event",
+            "title": "nameForEvent",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "title": "city",
+            "title": "cityForEvent",
             "filterable": true,
             "type": "string",
             "class": "text-align-right",
@@ -128,7 +128,7 @@
             }
         },
         {
-            "title": "position",
+            "title": "positionForEvent",
             "template": {
                 "choices": [
                     {
@@ -148,7 +148,7 @@
             "field": "position"
         },
         {
-            "title": "active",
+            "title": "activeForEvent",
             "template": {
                 "choices": [
                     {
@@ -253,7 +253,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "event_draft",
-            "title": "eventDraft",
+            "title": "nameForEvent",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -277,7 +277,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "city",
-            "title": "city",
+            "title": "cityForEvent",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -301,7 +301,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "datetime",
-            "title": "startDate",
+            "title": "startDateTitleForEvent",
             "field": "datetime",
             "format": "dd.MM.yyyy / HH:MM"
         },
@@ -316,7 +316,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "position",
-            "title": "position",
+            "title": "positionForEvent",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -349,7 +349,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "number_of_weeks",
-            "title": "numberOfWeeks",
+            "title": "numberOfWeeksForEvent",
             "field": "number_of_weeks"
         },
         {
@@ -357,7 +357,7 @@
             "width": "col-md-12 mt-4",
             "class": "e-outline",
             "name": "active",
-            "title": "active",
+            "title": "activeForEvent",
             "field": "active"
         },
         {
@@ -365,7 +365,7 @@
             "width": "col-md-12",
             "class": "e-info button-action",
             "name": "submit",
-            "title": "save",
+            "title": "saveEvent",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

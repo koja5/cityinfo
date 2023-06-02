@@ -63,7 +63,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "email",
-            "title": "email",
+            "title": "emailForSettings",
             "field": "email"
         },
         {
@@ -71,7 +71,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "phone",
-            "title": "phone",
+            "title": "phoneForSettings",
             "field": "phone"
         },
         {
@@ -79,7 +79,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "mobile",
-            "title": "mobile",
+            "title": "mobileForSettings",
             "field": "mobile"
         },
         {
@@ -87,7 +87,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "address",
-            "title": "address",
+            "title": "addressForSettings",
             "field": "address"
         },
         {
@@ -95,7 +95,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "zip_code",
-            "title": "zip_code",
+            "title": "zipCodeForSettings",
             "field": "zip_code"
         },
         {
@@ -103,7 +103,7 @@
             "width": "col-md-4",
             "class": "e-outline",
             "name": "city",
-            "title": "city",
+            "title": "cityForSettings",
             "field": "city"
         },
         {
@@ -111,7 +111,7 @@
             "width": "col-md-6",
             "class": "e-outline",
             "name": "firstname",
-            "title": "firstname",
+            "title": "firstnameForSettings",
             "field": "firstname"
         },
         {
@@ -119,7 +119,7 @@
             "width": "col-md-6",
             "class": "e-outline",
             "name": "lastname",
-            "title": "lastname",
+            "title": "lastnameForSettings",
             "field": "lastname"
         },
         {
@@ -127,7 +127,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "vat",
-            "title": "vat",
+            "title": "vatForSettings",
             "field": "vat"
         },
         {
@@ -135,7 +135,7 @@
             "width": "col-md-12",
             "class": "e-info  button-action",
             "name": "submit",
-            "title": "save",
+            "title": "saveForSettings",
             "field": "submit",
             "positionClass": "position-end mt-3 col-md-12"
         }

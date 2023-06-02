@@ -27,16 +27,18 @@
     <ejs-dialog id='dialog' #dialog showCloseIcon='true' (beforeOpen)="onBeforeOpen($event)" showOnInit="true"
         [visible]="false" [isModal]="true" [position]="dialogPosition" width="300px">
         <ng-template #content>
-            <form #myForm="ngForm">
+            <app-loader *ngIf="loader"></app-loader>
+
+            <form #myForm="ngForm" *ngIf="!loader">
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="custom-label">{{language.nameOfCompany}} <span class="required"
+                        <label class="custom-label">{{language.nameForAd}} <span class="required"
                                 title="{{language.required}}">*</span></label>
                         <ejs-textbox cssClass="e-outline" [id]="data.name" [(ngModel)]="data.name" name="name"
                             required></ejs-textbox>
                     </div>
                     <div class="col-md-12">
-                        <label class="custom-label">{{language.address}} <span class="required"
+                        <label class="custom-label">{{language.addressForAd}} <span class="required"
                                 title="{{language.required}}">*</span></label>
                         <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address" name="address"
                             required></ejs-textbox>
@@ -45,13 +47,13 @@
                     <div class="col-md-12 row m-0 p-0">
 
                         <div class="col-md-6">
-                            <label class="custom-label">{{language.phone}}</label>
+                            <label class="custom-label">{{language.phoneForAd}}</label>
                             <ejs-textbox cssClass="e-outline" [id]="data.phone" [(ngModel)]="data.phone"
                                 name="phone"></ejs-textbox>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="custom-label">{{language.email}}</label>
+                            <label class="custom-label">{{language.emailForAd}}</label>
                             <ejs-textbox cssClass="e-outline" [id]="data.email" [(ngModel)]="data.email"
                                 name="email"></ejs-textbox>
                         </div>
@@ -59,13 +61,13 @@
 
 
                     <div class="col-md-12">
-                        <label class="custom-label">{{language.mapLink}}({{language.optional}})</label>
+                        <label class="custom-label">{{language.mapLinkForAd}}({{language.optional}})</label>
                         <ejs-textbox cssClass="e-outline" [id]="data.map_link" [(ngModel)]="data.map_link"
                             name="map_link"></ejs-textbox>
                     </div>
 
                     <div class="col-md-12">
-                        <label class="custom-label">{{language.description}} <span class="required"
+                        <label class="custom-label">{{language.descriptionForAd}} <span class="required"
                                 title="{{language.required}}">*</span></label>
                         <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
                             [(ngModel)]="data.description" name="description" required></ejs-textbox>
@@ -90,8 +92,9 @@
 
 
                     <div class="col-md-12 col-md-12 text-center">
+                        <label class="custom-label text-left">{{language.uploadPictureForAd}} <span class="required"
+                                title="{{language.required}}">*</span></label>
                         <div class="box">
-
                             <div class="col-md-12 text-center mt-2 mb-2" *ngIf="coverImage && !cropImgPreview">
                                 <img [src]="coverImage" style="width: 400px;" />
                             </div>
@@ -111,7 +114,7 @@
                                     viewBox="0 0 20 17">
                                     <path
                                         d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
-                                </svg> <span>{{language.chooseCoverImage}}&hellip;</span></label>
+                                </svg> <span>{{language.chooseCoverImageForAd}}&hellip;</span></label>
                         </div>
 
                     </div>
@@ -121,7 +124,7 @@
                             <ejs-checkbox name="termsAndPrivacy" [(ngModel)]="acceptTermsAndPrivacy"></ejs-checkbox>
                             <label class="custom-label color-blue ml-2 m-0">
                                 {{
-                                language.agreeTermsAndPrivacyForDashboard }}
+                                language.agreeTermsAndPrivacyForAd }}
                                 <a routerLink="/terms" target="_blank" class="signup-term-link">{{ language.footerTerms
                                     }}</a>
                                 {{ language.and }}
@@ -132,7 +135,7 @@
                         <div style="display: inline-flex;">
                             <ejs-checkbox name="imageWarranty" [(ngModel)]="imageWarranty"></ejs-checkbox>
                             <label class="custom-label color-blue ml-2 m-0">
-                                {{language.imageWarranty}} <span class="required"
+                                {{language.imageWarrantyForAd}} <span class="required"
                                     title="{{language.required}}">*</span></label>
                         </div>
                     </div>
@@ -140,7 +143,7 @@
                     <div class="col-md-12 text-right mt-4"
                         [title]="!myForm.valid || !coverImage || !acceptTermsAndPrivacy || !imageWarranty ? language.needToFillAllDataWithRedStar : ''">
                         <button class="btn" (click)="saveEntry()"
-                            [disabled]="!myForm.valid || !coverImage || !acceptTermsAndPrivacy || !imageWarranty">{{language.editAd}}</button>
+                            [disabled]="!myForm.valid || !coverImage || !acceptTermsAndPrivacy || !imageWarranty">{{language.adButton}}</button>
                     </div>
                 </div>
             </form>
