@@ -38,10 +38,9 @@
                             required></ejs-textbox>
                     </div>
                     <div class="col-md-12">
-                        <label class="custom-label">{{language.addressForAd}} <span class="required"
-                                title="{{language.required}}">*</span></label>
-                        <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address" name="address"
-                            required></ejs-textbox>
+                        <label class="custom-label">{{language.addressForAd}} </label>
+                        <ejs-textbox cssClass="e-outline" [id]="data.address" [(ngModel)]="data.address"
+                            name="address"></ejs-textbox>
                     </div>
 
                     <div class="col-md-12 row m-0 p-0">
@@ -71,16 +70,6 @@
                                 title="{{language.required}}">*</span></label>
                         <ejs-textbox multiline="true" cssClass="e-outline" [id]="data.description"
                             [(ngModel)]="data.description" name="description" required></ejs-textbox>
-                    </div>
-                    <div class="col-md-12">
-                        <label class="custom-label">{{language.categoryForAd}}</label>
-                        <ejs-multiselect [cssClass]="'e-outline'" [id]="data.category" name="category"
-                            [dataSource]="categories" [fields]="{text: 'name', value: 'id'}" [(ngModel)]="data.category"
-                            [placeholder]="language.selectNameOfCategoryForAd" [allowFiltering]="true">
-                            <ng-template *ngIf="categories" #noRecordsTemplate>
-                                <span class="norecord"> {{language?.noRecords}}</span>
-                            </ng-template>
-                        </ejs-multiselect>
                     </div>
                     <!-- <div class="col-md-12">
                     <label class="custom-label">{{language.uploadCoverImage}}</label>
