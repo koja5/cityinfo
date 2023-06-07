@@ -39,10 +39,10 @@ import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
     PrivacyPolicyComponent,
     DynamicTextFormComponent,
     NavigationComponent,
-    CookieComponent
+    CookieComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'CityInfo' }),
     RouterModule,
     CommonModule,
     FormsModule,
@@ -55,9 +55,9 @@ import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
     DialogAllModule,
     ComboBoxAllModule,
     SliderModule,
-    TextBoxAllModule
+    TextBoxAllModule,
   ],
   providers: [CallApiService, DialogConfirmComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

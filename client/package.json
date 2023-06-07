@@ -10,7 +10,11 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
+    "serve:ssr": "node dist/server",
+    "build:client-and-server-bundles": "ng build && ng run CityInfo:server",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,
   "dependencies": {
@@ -24,8 +28,11 @@
     "@angular/material": "^11.2.13",
     "@angular/platform-browser": "~13.3.11",
     "@angular/platform-browser-dynamic": "~13.3.11",
+    "@angular/platform-server": "^16.0.4",
     "@angular/router": "~13.3.11",
     "@auth0/angular-jwt": "^5.1.2",
+    "@nguniversal/express-engine": "^16.0.2",
+    "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "@syncfusion/ej2": "^19.2.47",
     "@syncfusion/ej2-angular-buttons": "^19.2.47",
     "@syncfusion/ej2-angular-calendars": "^19.2.60",
@@ -51,6 +58,7 @@
     "npm": "^9.6.0",
     "rxjs": "~7.5.0",
     "stripe-angular": "^1.9.1",
+    "ts-loader": "^9.4.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
