@@ -47,24 +47,28 @@ const routes: Routes = [
   },
   {
     path: 'impressum',
-    component: ImpressumComponent
+    component: ImpressumComponent,
   },
   {
     path: 'right-of-withdrawal',
-    component: RightOfWithdrawalComponent
+    component: RightOfWithdrawalComponent,
   },
   {
     path: 'terms',
-    component: TermsComponent
+    component: TermsComponent,
   },
   {
     path: 'privacy-policy',
-    component: PrivacyPolicyComponent
-  }
+    component: PrivacyPolicyComponent,
+  },
 ];
 
 @NgModule({
-  imports: [],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
