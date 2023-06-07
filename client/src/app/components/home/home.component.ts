@@ -66,9 +66,6 @@ export class HomeComponent implements OnInit {
     this.year = new Date().getFullYear();
     this.initializeConfig();
     this.initializeData();
-    const body = {
-      city: 1892,
-    };
   }
 
   initializeConfig() {
