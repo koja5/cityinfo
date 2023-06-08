@@ -42,7 +42,7 @@ import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
     CookieComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     RouterModule,
     CommonModule,
     FormsModule,

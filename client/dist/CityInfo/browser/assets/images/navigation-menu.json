@@ -1,0 +1,79 @@
+[
+  {
+    "title": "Users",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/users"
+  },
+  {
+    "title": "Cities",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/cities"
+  },
+  {
+    "title": "Districts",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/districts"
+  },
+  {
+    "title": "Prices",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/position-prices"
+  },
+  {
+    "title": "Request ads",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/request-ads"
+  },
+  {
+    "title": "All ads",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-ads"
+  },
+  {
+    "title": "All events",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-events"
+  },
+  {
+    "title": "All invoices",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-invoices"
+  },
+  {
+    "title": "My ads",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-ads"
+  },
+  {
+    "title": "Paid ads",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/paid-ads"
+  },
+  {
+    "title": "My invoice",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-invoices"
+  }
+]
