@@ -37,7 +37,7 @@
                     </div>
                     <div class="bg-cover bg-center h-55">
                         <app-loader-content *ngIf="!cover"></app-loader-content>
-                        <img *ngIf="cover" [src]="cover">
+                        <img *ngIf="cover" [src]="cover" decoding="async" loading="lazy" fetchpriority="low">
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -136,7 +136,7 @@
     </div>
 
     <ejs-dialog #dialog showCloseIcon='true' showOnInit="true" [visible]="false" [isModal]="true" width="200px"
-        [title]="'Test'">
+        (close)="closeDialog()">
         <ng-template #header>
             <span>
                 {{data.name}}</span>

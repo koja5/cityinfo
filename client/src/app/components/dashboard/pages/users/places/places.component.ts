@@ -45,7 +45,7 @@ export class PlacesComponent implements OnInit {
   public cities: any;
   public categories: any;
   public coverPath = './assets/file_upload/';
-  public coverImage!: string;
+  public coverImage!: any;
   public imgChangeEvt!: string;
   public cropImgPreview!: any;
   public acceptTermsAndPrivacy!: boolean;
@@ -237,12 +237,16 @@ export class PlacesComponent implements OnInit {
   }
   
   cropImg(e: ImageCroppedEvent) {
-    this.imageCompress
-      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
-      .then((result: DataUrl) => {
-        this.coverImage = result;
-        this.cropImgPreview = result;
-      });
+    // this.imageCompress
+    //   .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+    //   .then((result: DataUrl) => {
+    //     this.coverImage = result;
+    //     this.cropImgPreview = result;
+    //   });
+
+    
+    this.coverImage = e.base64;
+    this.cropImgPreview = e.base64;
   }
 
   imgLoad() {}

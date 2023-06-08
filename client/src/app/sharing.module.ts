@@ -8,6 +8,7 @@ import { AdCardComponent } from './components/templates/ad-card/ad-card.componen
 import { InvoiceComponent } from './components/templates/invoice/invoice.component';
 import { NotFoundComponent } from './components/templates/not-found/not-found.component';
 import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
+import { DialogInformationComponent } from './components/common/dialog-information/dialog-information.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { DialogConfirmComponent } from './components/common/dialog-confirm/dialo
     NotFoundComponent,
     InvoiceComponent,
     DialogConfirmComponent,
+    DialogInformationComponent
+    
   ],
   imports: [CommonModule, DialogModule],
   exports: [

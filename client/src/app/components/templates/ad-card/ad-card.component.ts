@@ -20,6 +20,7 @@ import { DecisionType } from 'src/app/enums/decision-type';
 import { TypeOfComponent } from 'src/app/enums/type-of-component';
 import { MessageService } from 'src/app/services/message.service';
 import { CardType } from 'src/app/enums/card-type';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ad-card',
@@ -61,7 +62,9 @@ export class AdCardComponent implements OnInit {
     private toastr: ToastrComponent,
     private renderer: Renderer2,
     public dialogConfirmComponent: DialogConfirmComponent,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private meta: Meta,
+    private title: Title
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.options && e.target !== this.options.nativeElement) {
@@ -156,8 +159,17 @@ export class AdCardComponent implements OnInit {
 
   showDetails() {
     if (this.showDetailsOnClick) {
+      this.title.setTitle(this.data.name);
+      this.meta.updateTag({
+        name: 'description',
+        content: this.data.description,
+      });
       this.dialog.show();
     }
+  }
+
+  closeDialog() {
+    this.title.setTitle('City-Info');
   }
 
   confirmDeleteAction(event: any) {
