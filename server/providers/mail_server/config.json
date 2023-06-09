@@ -93,5 +93,22 @@
             "text": "Your request for a free ad on the www.city-info.at portal has been deny. We can't approve this type of ad. You have not met the requirements for approval of a free ad.",
             "greeting": "Hi {firstname}"
         }
+    },
+    "send_request_to_check_place": {
+        "template": "send_request_to_check_place.hjs",
+        "subject": "Neu geschaffener Ort zur Kontrolle!",
+        "email": "webaj.info@gmail.com",
+        "fields": {
+            "title": "Neu geschaffener Ort zur Kontrolle!",
+            "text": "Dem System wurde ein neuer Ort hinzugefügt. Sie können die Ortsinformationen unten überprüfen.",
+            "greeting": "Sehr geehrter Administrator",
+            "buttonActive": "Aktiv",
+            "buttonNameOfLocation": "Name des Standorts nicht angemessen",
+            "buttonPicture": "Bild nicht ausreichend",
+            "buttonDescription": "Beschreibungstext nicht angemessen",
+            "buttonMapsPosition": "Karten-Position nicht ausreichend",
+            "buttonSamePlace": "Derselbe Ort existiert bereits",
+            "buttonOther": "Anderer Grund"
+        }
     }
 }

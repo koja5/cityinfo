@@ -235,7 +235,7 @@ export class PlacesComponent implements OnInit {
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
-  
+
   cropImg(e: ImageCroppedEvent) {
     this.imageCompress
       .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
@@ -260,8 +260,6 @@ export class PlacesComponent implements OnInit {
     if (this.cropImgPreview) {
       this.data.cover = this.coverPath + UUID.UUID() + '.png';
     }
-
-    console.log(this.imageCompress.byteCount(this.data.cover!));
 
     if (!this.editButton) {
       this.service

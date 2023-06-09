@@ -1296,11 +1296,34 @@ router.post("/createPlace", auth, function (req, res, next) {
       req.body.id_user = req.user.user.id;
       delete req.body.city_name;
 
+      req.body["email"] = "webaj.info@gmail.com";
       conn.query("insert into places SET ?", [req.body], function (err, rows) {
-        conn.release();
         if (!err) {
-          res.json(true);
+          console.log(rows.insertId);
+          conn.query(
+            "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.id = ?",
+            [rows.insertId],
+            function (err, place) {
+              console.log(place);
+              conn.release();
+              if (!err) {
+                var option_request = {
+                  rejectUnauthorized: false,
+                  url: process.env.link_api + "sendRequestToCheckPlace",
+                  method: "POST",
+                  body: place[0],
+                  json: true,
+                };
+                request(option_request, function (error, response, body) {});
+                res.json(true);
+              } else {
+                logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+                res.json(false);
+              }
+            }
+          );
         } else {
+          conn.release();
           logger.log("error", `${err.sql}. ${err.sqlMessage}`);
           res.json(false);
         }

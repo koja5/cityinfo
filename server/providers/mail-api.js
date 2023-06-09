@@ -272,3 +272,37 @@ router.post("/infoForDenyFreeAd", function (req, res, next) {
     }
   });
 });
+
+router.post("/sendRequestToCheckPlace", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+
+  body.send_request_to_check_place.fields["cover"] =
+    process.env.link_client + req.body.cover.split("./")[1];
+  console.log(body.send_request_to_check_place.fields["cover"]);
+  body.send_request_to_check_place.fields["name"] = req.body.name;
+  body.send_request_to_check_place.fields["city_name"] = req.body.city_name;
+  body.send_request_to_check_place.fields["phone"] = req.body.phone;
+  body.send_request_to_check_place.fields["place_email"] = req.body.email;
+  body.send_request_to_check_place.fields["description"] = req.body.description;
+  body.send_request_to_check_place.fields["map_link"] = req.body.map_link;
+
+  body.send_request_to_check_place.fields["activePlace"] =
+    process.env.link_api + "activePlace/1/Message";
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMailWithAttachment",
+    method: "POST",
+    body: body.send_request_to_check_place,
+    json: true,
+  };
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+  res.json(true);
+});

@@ -57,4 +57,41 @@ router.post("/sendMail", function (req, res) {
   });
 });
 
+router.post("/sendMailWithAttachment", function (req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./providers/mail_server/templates/" + req.body.template,
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+  var mailOptions = {
+    from: '"CityInfo"' + process.env.smtp_user,
+    to: req.body.fields["email"] ? req.body.fields["email"] : req.body.email,
+    subject: req.body.subject,
+    attachments: [
+      {
+        filename: "place.png",
+        path: req.body.fields["cover"],
+        cid: "img",
+      },
+    ],
+    html: compiledTemplate.render(req.body.fields),
+  };
+
+  smtpTransport.sendMail(mailOptions, function (error, response) {
+    console.log(error);
+    if (error) {
+      logger.log("error", `${req.body.email}: ${error}`);
+      res.end(false);
+    } else {
+      logger.log(
+        "info",
+        `Sent mail to: ${
+          req.body.fields["email"] ? req.body.fields["email"] : req.body.email
+        }`
+      );
+      res.end(true);
+    }
+  });
+});
+
 module.exports = router;
