@@ -114,7 +114,6 @@
     "send_info_to_customer_for_place": {
         "template": "send_info_to_customer_for_place.hjs",
         "subject": "CityInfo - Ort",
-        "email": "webaj.info@gmail.com",
         "fields": {
             "title": "CityInfo - Ort",
             "greeting": "Hi {firstname}",

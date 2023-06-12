@@ -212,7 +212,7 @@ export class UserAdsComponent implements OnInit {
 
   saveEntry() {
     if (this.cropImgPreview) {
-      this.data.cover = this.coverPath + UUID.UUID() + '.png';
+      this.data.cover = this.coverPath + UUID.UUID() + '.webp';
     }
 
     if (!this.editButton) {

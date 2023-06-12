@@ -1295,8 +1295,6 @@ router.post("/createPlace", auth, function (req, res, next) {
       }
       req.body.id_user = req.user.user.id;
       delete req.body.city_name;
-
-      req.body["email"] = "webaj.info@gmail.com";
       conn.query("insert into places SET ?", [req.body], function (err, rows) {
         if (!err) {
           conn.query(

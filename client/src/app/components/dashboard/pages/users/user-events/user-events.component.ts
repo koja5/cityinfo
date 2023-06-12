@@ -204,7 +204,7 @@ export class UserEventsComponent implements OnInit {
 
   saveEntry() {
     if (this.cropImgPreview) {
-      this.event.cover = this.coverPath + UUID.UUID() + '.png';
+      this.event.cover = this.coverPath + UUID.UUID() + '.webp';
     }
 
     if (!this.editButton) {
