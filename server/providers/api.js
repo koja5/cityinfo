@@ -1299,12 +1299,10 @@ router.post("/createPlace", auth, function (req, res, next) {
       req.body["email"] = "webaj.info@gmail.com";
       conn.query("insert into places SET ?", [req.body], function (err, rows) {
         if (!err) {
-          console.log(rows.insertId);
           conn.query(
             "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.id = ?",
             [rows.insertId],
             function (err, place) {
-              console.log(place);
               conn.release();
               if (!err) {
                 var option_request = {
@@ -1466,6 +1464,105 @@ router.get("/getPlacesForAllCity", async (req, res, next) => {
               res.json(err);
             } else {
               res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/activePlace/:id/:customText", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update places SET active = 1 where id = ?",
+          req.params.id,
+          function (err, rows, fields) {
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select p.*, c.name as 'city_name', u.firstname, u.email as 'user_email' from places p join cities c on p.city = c.id join users u on p.id_user = u.id where p.id = ?",
+                req.params.id,
+                function (err, rows, fields) {
+                  conn.release();
+                  if (err) {
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    console.log(rows[0]);
+                    rows[0]["customText"] = req.params.customText;
+                    var options = {
+                      rejectUnauthorized: false,
+                      url: process.env.link_api + "sendInfoToCustomerForPlace",
+                      method: "POST",
+                      body: rows[0],
+                      json: true,
+                    };
+                    request(options, function (error, response, body) {});
+                    res.redirect(process.env.link_client + "message/success");
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/deactivePlace/:id/:customText", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update places SET active = 0 where id = ?",
+          req.params.id,
+          function (err, rows, fields) {
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              conn.release();
+              res.json(err);
+            } else {
+              conn.query(
+                "select p.*, c.name as 'city_name', u.firstname, u.email as 'user_email' from places p join cities c on p.city = c.id join users u on p.id_user = u.id where p.id = ?",
+                req.params.id,
+                function (err, rows, fields) {
+                  conn.release();
+                  if (err) {
+                    logger.log("error", err.sql + ". " + err.sqlMessage);
+                    res.json(err);
+                  } else {
+                    console.log(rows[0]);
+                    rows[0]["customText"] = req.params.customText;
+                    var options = {
+                      rejectUnauthorized: false,
+                      url: process.env.link_api + "sendInfoToCustomerForPlace",
+                      method: "POST",
+                      body: rows[0],
+                      json: true,
+                    };
+                    request(options, function (error, response, body) {});
+                    res.redirect(process.env.link_client + "message/success");
+                  }
+                }
+              );
             }
           }
         );

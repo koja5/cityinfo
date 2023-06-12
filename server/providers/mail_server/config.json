@@ -110,5 +110,21 @@
             "buttonSamePlace": "Derselbe Ort existiert bereits",
             "buttonOther": "Anderer Grund"
         }
+    },
+    "send_info_to_customer_for_place": {
+        "template": "send_info_to_customer_for_place.hjs",
+        "subject": "CityInfo - Ort",
+        "email": "webaj.info@gmail.com",
+        "fields": {
+            "title": "CityInfo - Ort",
+            "greeting": "Hi {firstname}",
+            "activePlaceText": "Der Ort, den Sie kürzlich hinzugefügt haben, wurde von einem Administrator genehmigt.",
+            "deactivePlaceNameOfLocationText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da der Standort nicht gut ist!",
+            "deactivePlacePictureText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da das Bild nicht gut ist!",
+            "deactivePlaceDescriptionText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da die Beschreibung nicht gut ist!",
+            "deactivePlaceMapsPositionText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da die Position auf der Karte nicht gut ist!",
+            "deactivePlaceSamePlaceText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da es einen identischen oder ähnlichen Ort gibt!",
+            "deactivePlaceOtherText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert. Der Grund ist nicht bekannt. Sie können uns kontaktieren, wenn Sie weitere Hilfe benötigen."
+        }
     }
 }

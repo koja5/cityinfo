@@ -289,12 +289,95 @@ router.post("/sendRequestToCheckPlace", function (req, res, next) {
   body.send_request_to_check_place.fields["map_link"] = req.body.map_link;
 
   body.send_request_to_check_place.fields["activePlace"] =
-    process.env.link_api + "activePlace/1/Message";
+    process.env.link_api + "activePlace/" + req.body.id + "/activePlaceText";
+
+  body.send_request_to_check_place.fields["deactivePlaceNameOfLocation"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceNameOfLocationText";
+
+  body.send_request_to_check_place.fields["deactivePlacePicture"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlacePictureText";
+
+  body.send_request_to_check_place.fields["deactivePlacePicture"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlacePictureText";
+
+  body.send_request_to_check_place.fields["deactivePlaceDescription"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceDescriptionText";
+
+  body.send_request_to_check_place.fields["deactivePlaceMapsPosition"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceMapsPositionText";
+
+  body.send_request_to_check_place.fields["deactivePlaceSamePlace"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceSamePlaceText";
+
+  body.send_request_to_check_place.fields["deactivePlaceOther"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceOtherText";
+
   var options = {
     rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMailWithAttachment",
     method: "POST",
     body: body.send_request_to_check_place,
+    json: true,
+  };
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+  res.json(true);
+});
+
+router.post("/sendInfoToCustomerForPlace", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+
+  body.send_info_to_customer_for_place.fields["greeting"] =
+    body.send_info_to_customer_for_place.fields["greeting"].replace(
+      "{firstname}",
+      req.body.firstname
+    );
+  body.send_info_to_customer_for_place.fields["text"] =
+    body.send_info_to_customer_for_place.fields[req.body.customText];
+  body.send_info_to_customer_for_place.fields["email"] = req.body.user_email;
+  body.send_info_to_customer_for_place.fields["cover"] =
+    process.env.link_client + req.body.cover.split("./")[1];
+  body.send_info_to_customer_for_place.fields["name"] = req.body.name;
+  body.send_info_to_customer_for_place.fields["city_name"] = req.body.city_name;
+  body.send_info_to_customer_for_place.fields["phone"] = req.body.phone;
+  body.send_info_to_customer_for_place.fields["place_email"] = req.body.email;
+  body.send_info_to_customer_for_place.fields["description"] =
+    req.body.description;
+  body.send_info_to_customer_for_place.fields["map_link"] = req.body.map_link;
+
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMailWithAttachment",
+    method: "POST",
+    body: body.send_info_to_customer_for_place,
     json: true,
   };
   request(options, function (error, response, body) {

@@ -187,48 +187,6 @@
                       </table>
                     </td>
                   </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{activePlace}}"
-                      style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonActive}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlaceNameOfLocation}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonNameOfLocation}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlacePicture}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonPicture}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlaceDescription}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonDescription}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlaceMapsPosition}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonMapsPosition}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlaceSamePlace}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonSamePlace}}</a>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <a
-                      href="{{deactivePlaceOther}}"
-                      style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px; cursor: pointer;"
-                    >{{buttonOther}}</a>
-                  </tr>
                   <tr>
                     <td style="height:40px;">&nbsp;</td>
                   </tr>
