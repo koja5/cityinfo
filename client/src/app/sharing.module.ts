@@ -9,6 +9,7 @@ import { InvoiceComponent } from './components/templates/invoice/invoice.compone
 import { NotFoundComponent } from './components/templates/not-found/not-found.component';
 import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
 import { DialogInformationComponent } from './components/common/dialog-information/dialog-information.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -19,17 +20,16 @@ import { DialogInformationComponent } from './components/common/dialog-informati
     NotFoundComponent,
     InvoiceComponent,
     DialogConfirmComponent,
-    DialogInformationComponent
-    
+    DialogInformationComponent,
   ],
-  imports: [CommonModule, DialogModule],
+  imports: [CommonModule, DialogModule, LazyLoadImageModule],
   exports: [
     LoaderComponent,
     LoaderSvgComponent,
     LoaderContentComponent,
     AdCardComponent,
     NotFoundComponent,
-    InvoiceComponent
+    InvoiceComponent,
   ],
   providers: [],
   bootstrap: [],

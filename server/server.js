@@ -10,6 +10,7 @@ const mailServer = require("./providers/mail_server/mail-server");
 const upload = require("./providers/upload");
 const sqlDatabase = require("./providers/config/sql-database");
 const schedule = require("node-schedule");
+const compression = require("compression");
 sqlDatabase.connect();
 
 const express = require("express");
@@ -19,6 +20,7 @@ const router = express.Router();
 const app = express();
 
 app.use(express.json());
+app.use(compression());
 
 module.exports = app;
 

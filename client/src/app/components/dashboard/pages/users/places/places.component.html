@@ -11,7 +11,7 @@
     <div class="outer" *ngIf="!listOfPlaces || listOfPlaces.length == 0">
         <div class="middle">
             <div class="inner">
-                <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png">
+                <img style="width: 310px;" src="../../../assets/images/no-data-for-user.png" alt="no-data-for-user">
                 <h4>{{language.noHaveAdYet}}</h4>
                 <h5>{{language.createNewOneAd}}</h5>
             </div>
@@ -95,7 +95,7 @@
                         <div class="box">
 
                             <div class="col-md-12 text-center mt-2 mb-2" *ngIf="coverImage && !cropImgPreview">
-                                <img [src]="coverImage" style="width: 400px;" />
+                                <img [src]="coverImage" style="width: 400px;" alt="cover"/>
                             </div>
 
                             <div class="col-md-12 mt-2 mb-2" *ngIf="imgChangeEvt">

@@ -37,7 +37,7 @@
                     </div>
                     <div class="bg-cover bg-center h-55">
                         <app-loader-content *ngIf="!cover"></app-loader-content>
-                        <img *ngIf="cover" [src]="cover" decoding="async" loading="lazy" fetchpriority="low">
+                        <img *ngIf="cover" [lazyLoad]="cover" decoding="async" loading="lazy" fetchpriority="low" alt="cover">
                     </div>
                     <div class="row">
                         <div class="col-md-12">
