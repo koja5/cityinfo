@@ -40,9 +40,13 @@
                         <img *ngIf="cover" [lazyLoad]="cover" decoding="async" loading="lazy" fetchpriority="low"
                             [alt]="cover" (onStateChange)="myCallbackFunction($event)" class="{{imagePreview}}">
 
-                        <ngx-skeleton-loader *ngIf="skeleton" class="image-cover"
+                        <!-- <ngx-skeleton-loader *ngIf="skeleton" class="image-cover"
                             [theme]="{ height: '230px' }">
-                        </ngx-skeleton-loader>
+                        </ngx-skeleton-loader> -->
+
+                        <div style="height: 230px; width: 100%;" *ngIf="skeleton">
+                            <app-loader-content></app-loader-content>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">

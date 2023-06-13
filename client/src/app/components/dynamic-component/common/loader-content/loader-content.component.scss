@@ -13,7 +13,13 @@ svg {
   margin: 0 auto;
 }
 
-/* loader-content 6 */
+.loader svg {
+  height: 100px;
+  width: 25px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+}
 
 /* Loader 5 */
 .loader-5 {
@@ -175,7 +181,7 @@ svg {
   margin: auto;
   width: 8px;
   height: 8px;
-  background: #2B4A77;
+  background: #2b4a77;
   border-radius: 50%;
   -webkit-animation: loader-5-5 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   animation: loader-5-5 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
