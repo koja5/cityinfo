@@ -29,6 +29,7 @@ export class PlacesComponent implements OnInit {
   public asyncAdsSettings!: Object;
   public asyncEventsSettings!: Object;
   public data = new PlacesModel();
+  public currentData = new PlacesModel();
   public configPlaces = new UploadModel();
   public path = 'upload-config';
   public file = 'upload-cover-image-places.json';
@@ -176,6 +177,7 @@ export class PlacesComponent implements OnInit {
         this.data.active = false;
       }
       this.coverImage = event.data.cover;
+      this.currentData = JSON.parse(JSON.stringify(event.data));
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
@@ -257,30 +259,32 @@ export class PlacesComponent implements OnInit {
   }
 
   saveEntry() {
-    if (this.cropImgPreview) {
-      this.data.cover = this.coverPath + UUID.UUID() + '.webp';
-    }
+    if (JSON.stringify(this.currentData) != JSON.stringify(this.data)) {
+      if (this.cropImgPreview) {
+        this.data.cover = this.coverPath + UUID.UUID() + '.webp';
+      }
 
-    if (!this.editButton) {
-      this.service
-        .callPostMethod('api/createPlace', this.data)
-        .subscribe((data) => {
-          if (data) {
-            this.uploadCoverImage();
-          } else {
-            this.toastr.showError();
-          }
-        });
-    } else {
-      this.service
-        .callPostMethod('api/updatePlace', this.data)
-        .subscribe((data) => {
-          if (data) {
-            this.uploadCoverImage();
-          } else {
-            this.toastr.showError();
-          }
-        });
+      if (!this.editButton) {
+        this.service
+          .callPostMethod('api/createPlace', this.data)
+          .subscribe((data) => {
+            if (data) {
+              this.uploadCoverImage();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      } else {
+        this.service
+          .callPostMethod('api/updatePlace', this.data)
+          .subscribe((data) => {
+            if (data) {
+              this.uploadCoverImage();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      }
     }
   }
 
