@@ -243,7 +243,6 @@ export class AdCardComponent implements OnInit {
   }
 
   myCallbackFunction(event: StateChange) {
-    console.log(event.reason);
     switch (event.reason) {
       case 'setup':
         this.skeleton = true;

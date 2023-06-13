@@ -97,7 +97,7 @@
     "send_request_to_check_place": {
         "template": "send_request_to_check_place.hjs",
         "subject": "Neu geschaffener Ort zur Kontrolle!",
-        "email": "webaj.info@gmail.com",
+        "email": "albert.sprung@gmail.com",
         "fields": {
             "title": "Neu geschaffener Ort zur Kontrolle!",
             "text": "Dem System wurde ein neuer Ort hinzugefügt. Sie können die Ortsinformationen unten überprüfen.",
@@ -114,7 +114,7 @@
     "send_request_to_check_place_update": {
         "template": "send_request_to_check_place.hjs",
         "subject": "Daten für einen Ort ändern!",
-        "email": "webaj.info@gmail.com",
+        "email": "albert.sprung@gmail.com",
         "fields": {
             "title": "Daten für einen Ort ändern!",
             "text": "Der Benutzer hat die Informationen für den Ort geändert. Die neuen Informationen können Sie unten einsehen.",
