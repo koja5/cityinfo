@@ -126,7 +126,7 @@ export class AdCardComponent implements OnInit {
   approveAd() {
     this.service
       .callPostMethod('/api/activeAd', this.data)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         if (data) {
           this.toastr.showSuccess();
           this.additionalInformation.active = 1;
@@ -137,7 +137,7 @@ export class AdCardComponent implements OnInit {
   }
 
   denyAd() {
-    this.service.callPostMethod('/api/denyAd', this.data).subscribe((data) => {
+    this.service.callPostMethod('/api/denyAd', this.data).subscribe((data: any) => {
       if (data) {
         this.toastr.showSuccess();
         this.additionalInformation.active = -1;
