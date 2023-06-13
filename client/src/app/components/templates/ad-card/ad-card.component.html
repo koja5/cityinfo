@@ -41,7 +41,7 @@
                             [alt]="cover" (onStateChange)="myCallbackFunction($event)" class="{{imagePreview}}">
 
                         <ngx-skeleton-loader *ngIf="skeleton" class="image-cover"
-                            [theme]="{ height: '230px', 'margin-bottom': '0' }">
+                            [theme]="{ background: '#a0ccf7', height: '230px' }">
                         </ngx-skeleton-loader>
                     </div>
                     <div class="row">
@@ -180,7 +180,7 @@
                 </div>
             </div>
 
-            
+
         </ng-template>
     </ejs-dialog>
 </body>

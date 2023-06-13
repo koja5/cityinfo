@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -67,7 +68,8 @@ export class AdCardComponent implements OnInit {
     public dialogConfirmComponent: DialogConfirmComponent,
     private messageService: MessageService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private cdRef: ChangeDetectorRef
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (this.options && e.target !== this.options.nativeElement) {
@@ -251,25 +253,33 @@ export class AdCardComponent implements OnInit {
       case 'observer-emit':
         this.skeleton = false;
         this.imagePreview = '';
+        this.cdRef.detectChanges();
         break;
       case 'start-loading':
         this.skeleton = true;
         this.imagePreview = 'hide';
         break;
       case 'mount-image':
-        // The image has been loaded successfully so lets put it into the DOM
+        this.skeleton = false;
+        this.imagePreview = '';
+        this.cdRef.detectChanges();
         break;
       case 'loading-succeeded':
-        // The image has successfully been loaded and placed into the DOM
+        this.skeleton = false;
+        this.imagePreview = '';
+        this.cdRef.detectChanges();
         break;
       case 'loading-failed':
-        this.skeleton = true;
-        this.imagePreview = 'hide';
+        this.skeleton = false;
+        this.imagePreview = '';
+        this.cdRef.detectChanges();
         break;
       case 'finally':
         this.skeleton = false;
         this.imagePreview = '';
+        this.cdRef.detectChanges();
         break;
     }
+
   }
 }
