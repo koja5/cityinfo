@@ -26,7 +26,6 @@ import { DialogConfirmComponent } from './components/common/dialog-confirm/dialo
 import { DialogAllModule } from '@syncfusion/ej2-angular-popups';
 import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
-import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [

@@ -1342,17 +1342,26 @@ router.post("/updatePlace", auth, function (req, res, next) {
       if (req.body.category) {
         req.body.category = req.body.category.toString();
       }
+      const place = JSON.parse(JSON.stringify(req.body));
       delete req.body.city_name;
 
       conn.query(
         "update places SET ? where id = ?",
         [req.body, req.body.id],
         function (err, rows) {
-          conn.release();
           if (!err) {
+            var option_request = {
+              rejectUnauthorized: false,
+              url: process.env.link_api + "sendRequestToCheckPlaceUpdate",
+              method: "POST",
+              body: place,
+              json: true,
+            };
+            request(option_request, function (error, response, body) {});
             res.json(true);
           } else {
             logger.log("error", `${err.sql}. ${err.sqlMessage}`);
+            conn.release();
             res.json(false);
           }
         }
@@ -1377,6 +1386,14 @@ router.post("/updatePlaceActive", auth, function (req, res, next) {
         function (err, rows) {
           conn.release();
           if (!err) {
+            var option_request = {
+              rejectUnauthorized: false,
+              url: process.env.link_api + "sendRequestToCheckPlaceUpdate",
+              method: "POST",
+              body: req.body,
+              json: true,
+            };
+            request(option_request, function (error, response, body) {});
             res.json(true);
           } else {
             logger.log("error", `${err.sql}. ${err.sqlMessage}`);

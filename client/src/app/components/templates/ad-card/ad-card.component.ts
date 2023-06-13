@@ -21,6 +21,7 @@ import { TypeOfComponent } from 'src/app/enums/type-of-component';
 import { MessageService } from 'src/app/services/message.service';
 import { CardType } from 'src/app/enums/card-type';
 import { Meta, Title } from '@angular/platform-browser';
+import { StateChange } from 'ng-lazyload-image';
 
 @Component({
   selector: 'app-ad-card',
@@ -55,6 +56,8 @@ export class AdCardComponent implements OnInit {
   public confirmCancelPromotion = false;
   public dayAWeek!: string;
   public categoryName!: string;
+  public skeleton = true;
+  public imagePreview = '';
 
   constructor(
     private helpService: HelpService,
@@ -236,6 +239,38 @@ export class AdCardComponent implements OnInit {
       if (this.categories[i].id == category) {
         return this.categories[i].name;
       }
+    }
+  }
+
+  myCallbackFunction(event: StateChange) {
+    console.log(event.reason);
+    switch (event.reason) {
+      case 'setup':
+        this.skeleton = true;
+        this.imagePreview = 'hide';
+        break;
+      case 'observer-emit':
+        this.skeleton = false;
+        this.imagePreview = '';
+        break;
+      case 'start-loading':
+        this.skeleton = true;
+        this.imagePreview = 'hide';
+        break;
+      case 'mount-image':
+        // The image has been loaded successfully so lets put it into the DOM
+        break;
+      case 'loading-succeeded':
+        // The image has successfully been loaded and placed into the DOM
+        break;
+      case 'loading-failed':
+        this.skeleton = true;
+        this.imagePreview = 'hide';
+        break;
+      case 'finally':
+        this.skeleton = false;
+        this.imagePreview = '';
+        break;
     }
   }
 }

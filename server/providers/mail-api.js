@@ -280,7 +280,6 @@ router.post("/sendRequestToCheckPlace", function (req, res, next) {
 
   body.send_request_to_check_place.fields["cover"] =
     process.env.link_client + req.body.cover.split("./")[1];
-  console.log(body.send_request_to_check_place.fields["cover"]);
   body.send_request_to_check_place.fields["name"] = req.body.name;
   body.send_request_to_check_place.fields["city_name"] = req.body.city_name;
   body.send_request_to_check_place.fields["phone"] = req.body.phone;
@@ -338,6 +337,88 @@ router.post("/sendRequestToCheckPlace", function (req, res, next) {
     url: process.env.link_api + "mail-server/sendMailWithAttachment",
     method: "POST",
     body: body.send_request_to_check_place,
+    json: true,
+  };
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+  res.json(true);
+});
+
+router.post("/sendRequestToCheckPlaceUpdate", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+
+  body.send_request_to_check_place_update.fields["cover"] =
+    process.env.link_client + req.body.cover.split("./")[1];
+  body.send_request_to_check_place_update.fields["name"] = req.body.name;
+  body.send_request_to_check_place_update.fields["city_name"] =
+    req.body.city_name;
+  body.send_request_to_check_place_update.fields["phone"] = req.body.phone;
+  body.send_request_to_check_place_update.fields["place_email"] =
+    req.body.email;
+  body.send_request_to_check_place_update.fields["description"] =
+    req.body.description;
+  body.send_request_to_check_place_update.fields["map_link"] =
+    req.body.map_link;
+
+  body.send_request_to_check_place_update.fields["activePlace"] =
+    process.env.link_api + "activePlace/" + req.body.id + "/activePlaceText";
+
+  body.send_request_to_check_place_update.fields[
+    "deactivePlaceNameOfLocation"
+  ] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceNameOfLocationText";
+
+  body.send_request_to_check_place_update.fields["deactivePlacePicture"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlacePictureText";
+
+  body.send_request_to_check_place_update.fields["deactivePlacePicture"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlacePictureText";
+
+  body.send_request_to_check_place_update.fields["deactivePlaceDescription"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceDescriptionText";
+
+  body.send_request_to_check_place_update.fields["deactivePlaceMapsPosition"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceMapsPositionText";
+
+  body.send_request_to_check_place_update.fields["deactivePlaceSamePlace"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceSamePlaceText";
+
+  body.send_request_to_check_place_update.fields["deactivePlaceOther"] =
+    process.env.link_api +
+    "deactivePlace/" +
+    req.body.id +
+    "/deactivePlaceOtherText";
+
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMailWithAttachment",
+    method: "POST",
+    body: body.send_request_to_check_place_update,
     json: true,
   };
   request(options, function (error, response, body) {

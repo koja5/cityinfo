@@ -97,10 +97,27 @@
     "send_request_to_check_place": {
         "template": "send_request_to_check_place.hjs",
         "subject": "Neu geschaffener Ort zur Kontrolle!",
-        "email": "albert.sprung@gmail.com",
+        "email": "webaj.info@gmail.com",
         "fields": {
             "title": "Neu geschaffener Ort zur Kontrolle!",
             "text": "Dem System wurde ein neuer Ort hinzugefügt. Sie können die Ortsinformationen unten überprüfen.",
+            "greeting": "Sehr geehrter Administrator",
+            "buttonActive": "Aktiv",
+            "buttonNameOfLocation": "Name des Standorts nicht angemessen",
+            "buttonPicture": "Bild nicht ausreichend",
+            "buttonDescription": "Beschreibungstext nicht angemessen",
+            "buttonMapsPosition": "Karten-Position nicht ausreichend",
+            "buttonSamePlace": "Derselbe Ort existiert bereits",
+            "buttonOther": "Anderer Grund"
+        }
+    },
+    "send_request_to_check_place_update": {
+        "template": "send_request_to_check_place.hjs",
+        "subject": "Daten für einen Ort ändern!",
+        "email": "webaj.info@gmail.com",
+        "fields": {
+            "title": "Daten für einen Ort ändern!",
+            "text": "Der Benutzer hat die Informationen für den Ort geändert. Die neuen Informationen können Sie unten einsehen.",
             "greeting": "Sehr geehrter Administrator",
             "buttonActive": "Aktiv",
             "buttonNameOfLocation": "Name des Standorts nicht angemessen",

@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/templates/not-found/not-found.co
 import { DialogConfirmComponent } from './components/common/dialog-confirm/dialog-confirm.component';
 import { DialogInformationComponent } from './components/common/dialog-information/dialog-information.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,12 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     DialogConfirmComponent,
     DialogInformationComponent,
   ],
-  imports: [CommonModule, DialogModule, LazyLoadImageModule],
+  imports: [
+    CommonModule,
+    DialogModule,
+    LazyLoadImageModule,
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
+  ],
   exports: [
     LoaderComponent,
     LoaderSvgComponent,
