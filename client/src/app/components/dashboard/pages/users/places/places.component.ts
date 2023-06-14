@@ -238,7 +238,7 @@ export class PlacesComponent implements OnInit {
 
   cropImg(e: ImageCroppedEvent) {
     this.imageCompress
-      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 70)
       .then((result: DataUrl) => {
         this.coverImage = result;
         this.cropImgPreview = result;
@@ -289,10 +289,13 @@ export class PlacesComponent implements OnInit {
       const formData: FormData = new FormData();
 
       const imageBlob = this.helpService.dataURItoBlob(
-        this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+        this.cropImgPreview.replace(
+          /^data:image\/(png|jpeg|jpg|webp);base64,/,
+          ''
+        )
       );
       const imageFile = new File([imageBlob], this.data.cover!, {
-        type: 'image/png',
+        type: 'image/webp',
       });
 
       formData.append('file', imageFile);

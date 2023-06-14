@@ -159,7 +159,35 @@
                 </p>
             </div>
 
-            <div class="flex p-4 border-t border-gray-300 text-gray-700 contact">
+            <div class="control-section template-carousel-section mt-4">
+                <div class="col-lg-12 content-wrapper">
+                    <div class="carousel-sample">
+                        <ejs-carousel #carousel cssClass="templateCarousel" [animationEffect]="carouselAnimation">
+
+                            <ng-template #indicatorsTemplate let-data>
+                                <div class="indicator">
+                                    <img alt="image" [src]="getThumpImage(data.index)"
+                                        style="height:100%;width:100%;" />
+                                </div>
+                            </ng-template>
+                            <e-carousel-items>
+
+                                <e-carousel-item *ngFor="let item of galery">
+                                    <ng-template #template>
+                                        <figure class="img-container">
+                                            <img src="{{item}}" alt="cardinal" style="height:100%;width:100%;" />
+                                        </figure>
+                                    </ng-template>
+                                </e-carousel-item>
+
+                            </e-carousel-items>
+                        </ejs-carousel>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="flex p-4 border-t border-b border-gray-300 text-gray-700 contact">
                 <div *ngIf="data.phone" class="flex-1  items-center">
                     <a href="tel:{{data.phone}}">
                         <span class="fa fa-phone new-row"></span>
@@ -179,66 +207,6 @@
                     {{language.noContactInformationAvailable}}
                 </div>
             </div>
-
-            <!-- <div class="control-section default-carousel-section">
-                <div class="col-lg-12 content-wrapper">
-                    <div class="carousel-sample">
-                        <ejs-carousel cssClass="default-carousel">
-                            <e-carousel-items>
-                                <e-carousel-item>
-                                    <ng-template #template>
-                                        <figure class="img-container">
-                                            <img src="./assets/file_upload/1CIJgx09XjwX1IqaXLjNwpcX.jpg" alt="bridge"
-                                                style="height:100%;width:100%;" />
-                                            <figcaption class="img-caption">Golden Gate Bridge, San Francisco
-                                            </figcaption>
-                                        </figure>
-                                    </ng-template>
-                                </e-carousel-item>
-                                <e-carousel-item>
-                                    <ng-template #template>
-                                        <figure class="img-container">
-                                            <img src="./assets/file_upload/5SNd8wWFxUCyzxUT4_NXTbqa.png" alt="spring_trees"
-                                                style="height:100%;width:100%;" />
-                                            <figcaption class="img-caption">Spring Flower Trees</figcaption>
-                                        </figure>
-                                    </ng-template>
-                                </e-carousel-item>
-                                <e-carousel-item>
-                                    <ng-template #template>
-                                        <figure class="img-container">
-                                            <img src="./assets/file_upload/9tnEKItxXpC0wsr5mxMQVKe-.jpg" alt="waterfall"
-                                                style="height:100%;width:100%;" />
-                                            <figcaption class="img-caption">Oddadalen Waterfalls, Norway</figcaption>
-                                        </figure>
-                                    </ng-template>
-                                </e-carousel-item>
-                                <e-carousel-item>
-                                    <ng-template #template>
-                                        <figure class="img-container">
-                                            <img src="./assets/carousel/images/sea.jpg" alt="sea"
-                                                style="height:100%;width:100%;" />
-                                            <figcaption class="img-caption">Anse Source d'Argent, Seychelles
-                                            </figcaption>
-                                        </figure>
-                                    </ng-template>
-                                </e-carousel-item>
-                                <e-carousel-item>
-                                    <ng-template #template>
-                                        <figure class="img-container">
-                                            <img src="./assets/carousel/images/rocks.jpeg" alt="rocks"
-                                                style="height:100%;width:100%;" />
-                                            <figcaption class="img-caption">Stonehenge, England</figcaption>
-                                        </figure>
-                                    </ng-template>
-                                </e-carousel-item>
-                            </e-carousel-items>
-                        </ejs-carousel>
-                    </div>
-                </div>
-            </div> -->
-
-
         </ng-template>
     </ejs-dialog>
 </body>

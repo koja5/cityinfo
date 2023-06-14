@@ -103,7 +103,7 @@
                                     <button (click)="removeImage()"><span class="fa fa-times"></span></button>
                                 </div>
                                 <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="true"
-                                    [aspectRatio]="4 / 3" format="png" (imageCropped)="cropImg($event!)"
+                                    [aspectRatio]="4 / 3" format="webp" (imageCropped)="cropImg($event!)"
                                     (imageLoaded)="imgLoad()" (cropperReady)="initCropper()"
                                     (loadImageFailed)="imgFailed()">
                                 </image-cropper>
