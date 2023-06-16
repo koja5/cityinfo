@@ -95,7 +95,7 @@
                         <div class="box">
 
                             <div class="col-md-12 text-center mt-2 mb-2" *ngIf="coverImage && !cropImgPreview">
-                                <img [src]="coverImage" style="width: 400px;" alt="cover" />
+                                <img [src]="coverImage" class="cover-image" alt="cover" />
                             </div>
 
                             <div class="col-md-12 mt-2 mb-2" *ngIf="imgChangeEvt">
@@ -124,8 +124,8 @@
                             <div *ngIf="multipleImagesUrl" class="multiple-image row">
                                 <div *ngFor="let item of multipleImagesUrl; let i = index">
                                     <img [src]="sanitize(item)">
-                                    <!-- <button (click)="removeImageFromGallery(i)"><span
-                                            class="fa fa-times"></span></button> -->
+                                    <button (click)="removeImageFromGallery(i)"><span
+                                            class="fa fa-times"></span></button>
                                 </div>
                             </div>
 

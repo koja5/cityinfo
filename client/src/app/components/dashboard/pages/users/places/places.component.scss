@@ -70,3 +70,13 @@
   height: 25px;
   position: absolute;
 }
+
+@media (max-width: 768px) {
+  .cover-image {
+    width: 90% !important;
+  }
+}
+
+.cover-image {
+  width: 60%;
+}

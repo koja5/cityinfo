@@ -51,10 +51,12 @@ export class PlacesComponent implements OnInit {
   public imgChangeEvt!: string;
   public multipleImages: any[] = [];
   public multipleImagesUrl: any[] = [];
+  public newMultipleImagesUrl: any[] = [];
   public cropImgPreview!: any;
   public acceptTermsAndPrivacy!: boolean;
   public imageWarranty!: boolean;
-  public newUploadPath: any = [];
+  public newUploadPath!: string;
+  public multiImageChanges = false;
 
   constructor(
     private configurationService: ConfigurationService,
@@ -253,6 +255,7 @@ export class PlacesComponent implements OnInit {
         this.multipleImagesUrl.push(URL.createObjectURL(item));
       }
     }
+    this.multiImageChanges = true;
   }
 
   submitMultiple() {
@@ -299,21 +302,30 @@ export class PlacesComponent implements OnInit {
   }
 
   saveEntry() {
-    if (JSON.stringify(this.currentData) != JSON.stringify(this.data)) {
+    if (
+      JSON.stringify(this.currentData) != JSON.stringify(this.data) ||
+      this.multiImageChanges
+    ) {
       if (this.cropImgPreview) {
         this.data.cover = this.coverPath + UUID.UUID() + '.webp';
       }
 
-      if (this.multipleImagesUrl && this.multipleImagesUrl.length) {
-        const oldGallery = this.data.gallery;
-        this.data.gallery = this.helpService.generateGalleryPath(
-          this.multipleImagesUrl
-        );
-        /*this.newUploadPath = this.helpService.compareOldAndNewGalleryPath(
-        oldGallery,
-        this.data.gallery
-      );*/
+      this.newUploadPath = this.helpService.generateGalleryPath(
+        this.multipleImages
+      );
+
+      if (this.data.gallery) {
+        this.data.gallery += this.newUploadPath;
+      } else {
+        this.data.gallery = this.newUploadPath;
       }
+
+      // if (this.multipleImagesUrl && this.multipleImagesUrl.length) {
+      //   const oldGallery = this.data.gallery;
+      //   this.data.gallery = this.helpService.generateGalleryPath(
+      //     this.multipleImagesUrl
+      //   );
+      // }
 
       if (!this.editButton) {
         this.service
@@ -379,7 +391,7 @@ export class PlacesComponent implements OnInit {
   }
 
   uploadGalleryImage() {
-    let gallery = this.helpService.getImagesForGallery(this.data.gallery);
+    let gallery = this.helpService.getImagesForGallery(this.newUploadPath);
     if (gallery.length) {
       const formData = new FormData();
 
@@ -396,13 +408,9 @@ export class PlacesComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
         });
-    } else {
-      this.getMyPlaces();
-      this.dialog.hide();
-      this.toastr.showSuccess();
     }
-    this.imgChangeEvt = '';
-    this.cropImgPreview = null;
+    this.multipleImages = [];
+    this.multipleImagesUrl = [];
   }
 
   compressFile() {

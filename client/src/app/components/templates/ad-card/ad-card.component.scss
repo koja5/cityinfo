@@ -389,6 +389,12 @@ a {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .img-container {
+    height: 100% !important;
+  }
+}
+
 .img-container {
   height: 53vh;
   margin: 0px !important;

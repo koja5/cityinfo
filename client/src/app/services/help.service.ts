@@ -267,8 +267,10 @@ export class HelpService {
   }
 
   getImagesForGallery(gallery: any) {
-    let elements = gallery.split(';');
-    elements.pop();
-    return elements;
+    if (gallery) {
+      let elements = gallery.split(';');
+      elements.pop();
+      return elements;
+    } else return [];
   }
 }
