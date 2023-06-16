@@ -4,10 +4,28 @@ const fs = require("fs");
 
 const upload = async (req, res) => {
   try {
-    await uploadFile(req, res);
+    await uploadFile.uploadFileMiddleware(req, res);
 
     if (req.file == undefined) {
       return res.status(400).send({ message: "Please upload a file!" });
+    }
+
+    res.status(200).send({
+      message: "Uploaded the file successfully: ",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: `Could not upload the file:. ${err}`,
+    });
+  }
+};
+
+const uploadMultiple = async (req, res) => {
+  try {
+    await uploadFile.uploadFilesMultiple(req, res);
+
+    if (req.files == undefined) {
+      return res.status(400).send({ message: "Please upload a files!" });
     }
 
     res.status(200).send({
@@ -58,6 +76,7 @@ const download = (req, res) => {
 
 module.exports = {
   upload,
+  uploadMultiple,
   getListFiles,
   download,
 };

@@ -159,7 +159,7 @@
                 </p>
             </div>
 
-            <div class="control-section template-carousel-section mt-4">
+            <div *ngIf="gallery && gallery.length" class="control-section template-carousel-section mt-4">
                 <div class="col-lg-12 content-wrapper">
                     <div class="carousel-sample">
                         <ejs-carousel #carousel cssClass="templateCarousel" [animationEffect]="carouselAnimation">
@@ -172,7 +172,7 @@
                             </ng-template>
                             <e-carousel-items>
 
-                                <e-carousel-item *ngFor="let item of galery">
+                                <e-carousel-item *ngFor="let item of gallery">
                                     <ng-template #template>
                                         <figure class="img-container">
                                             <img src="{{item}}" alt="cardinal" style="height:100%;width:100%;" />

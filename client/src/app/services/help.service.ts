@@ -6,13 +6,14 @@ import { FileType } from '../enums/file-type';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AdsModel } from '../models/ads-model';
-
+import { UUID } from 'angular2-uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HelpService {
   helper = new JwtHelperService();
+  public galleryPath = './assets/file_upload/gallery/';
 
   constructor(
     private storageService: StorageService,
@@ -228,5 +229,46 @@ export class HelpService {
     }
     const blob = new Blob([int8Array], { type: 'image/webp' });
     return blob;
+  }
+
+  generateGalleryPath(gallery: any) {
+    let path = '';
+    for (let i = 0; i < gallery.length; i++) {
+      path += this.galleryPath + UUID.UUID() + '.webp';
+      path += ';';
+    }
+    return path;
+  }
+
+  compareOldAndNewGalleryPath(oldGalleryPath: any, newGalleryPath: any) {
+    const oldGallery = this.getImagesForGallery(oldGalleryPath);
+    const newGallery = this.getImagesForGallery(newGalleryPath);
+    let diffPaths = [];
+
+    if (newGallery.length == 1) {
+      diffPaths.push(newGallery);
+    } else {
+      for (let i = 0; i < newGallery.length; i++) {
+        let ind = 0;
+        for (let j = 0; j < oldGallery.length; j++) {
+          if (newGallery[i] === oldGallery[j]) {
+            oldGallery.split(j, 1);
+            ind = 1;
+            break;
+          }
+          if (ind) {
+            break;
+          }
+          diffPaths.push(newGallery[i]);
+        }
+      }
+    }
+    return diffPaths;
+  }
+
+  getImagesForGallery(gallery: any) {
+    let elements = gallery.split(';');
+    elements.pop();
+    return elements;
   }
 }

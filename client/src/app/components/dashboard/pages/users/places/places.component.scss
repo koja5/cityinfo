@@ -47,18 +47,26 @@
   /* 4px */
 }
 
-.inputfile-1 + label {
-  color: #f1e5e6;
-  background-color: #797e85;
-}
-
-.inputfile-1:focus + label,
-.inputfile-1.has-focus + label,
-.inputfile-1 + label:hover {
-  background-color: #797e85;
-}
-
 .box {
   border: 1px dashed;
   padding: 22px;
+}
+
+.multiple-image div {
+  margin: 5px;
+}
+
+.multiple-image div img {
+  width: 190px;
+  border-radius: 10px;
+}
+
+.multiple-image button {
+  margin-left: -20px;
+  background: #b9b9b9;
+  border-radius: 17px;
+  border: none;
+  width: 25px;
+  height: 25px;
+  position: absolute;
 }

@@ -60,11 +60,7 @@ export class AdCardComponent implements OnInit {
   public categoryName!: string;
   public skeleton = true;
   public imagePreview = '';
-  public galery = [
-    './assets/file_upload/56d574db-5bcd-de9a-acb1-b42e2b0715a9.png',
-    './assets/file_upload/_69t_pounXDZ0fdKpMnjAVz9.jpg',
-    './assets/file_upload/9tnEKItxXpC0wsr5mxMQVKe-.jpg',
-  ];
+  public gallery: any;
 
   constructor(
     private helpService: HelpService,
@@ -109,6 +105,9 @@ export class AdCardComponent implements OnInit {
     // });
     this.getDayFromDate();
     this.convertCategoryToRealName();
+    if (this.data.gallery && this.data.gallery.length > 0) {
+      this.gallery = this.helpService.getImagesForGallery(this.data.gallery);
+    }
   }
 
   editButton() {
@@ -284,6 +283,6 @@ export class AdCardComponent implements OnInit {
   }
 
   public getThumpImage(index: number): string {
-    return this.galery[index];
+    return this.gallery[index];
   }
 }
