@@ -23,6 +23,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { CardType } from 'src/app/enums/card-type';
 import { Meta, Title } from '@angular/platform-browser';
 import { StateChange } from 'ng-lazyload-image';
+import { CarouselAnimationEffect } from '@syncfusion/ej2-angular-navigations';
 
 @Component({
   selector: 'app-ad-card',
@@ -46,6 +47,7 @@ export class AdCardComponent implements OnInit {
   @Output() clickEmitter: EventEmitter<any> = new EventEmitter();
   @ViewChild('dialog') dialog!: DialogComponent;
   @ViewChild('options') options!: ElementRef;
+  public carouselAnimation: CarouselAnimationEffect = 'Fade';
   public cover: any;
   public showModeButton: boolean = false;
   public language: any;
@@ -59,6 +61,7 @@ export class AdCardComponent implements OnInit {
   public categoryName!: string;
   public skeleton = true;
   public imagePreview = '';
+  public gallery: any;
 
   constructor(
     private helpService: HelpService,
@@ -104,6 +107,9 @@ export class AdCardComponent implements OnInit {
     // });
     this.getDayFromDate();
     this.convertCategoryToRealName();
+    if (this.data.gallery && this.data.gallery.length > 0) {
+      this.gallery = this.helpService.getImagesForGallery(this.data.gallery);
+    }
   }
 
   editButton() {
@@ -128,7 +134,7 @@ export class AdCardComponent implements OnInit {
   approveAd() {
     this.service
       .callPostMethod('/api/activeAd', this.data)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         if (data) {
           this.toastr.showSuccess();
           this.additionalInformation.active = 1;
@@ -139,14 +145,16 @@ export class AdCardComponent implements OnInit {
   }
 
   denyAd() {
-    this.service.callPostMethod('/api/denyAd', this.data).subscribe((data) => {
-      if (data) {
-        this.toastr.showSuccess();
-        this.additionalInformation.active = -1;
-      } else {
-        this.toastr.showError();
-      }
-    });
+    this.service
+      .callPostMethod('/api/denyAd', this.data)
+      .subscribe((data: any) => {
+        if (data) {
+          this.toastr.showSuccess();
+          this.additionalInformation.active = -1;
+        } else {
+          this.toastr.showError();
+        }
+      });
   }
 
   checkPromoButtonOption() {
@@ -281,5 +289,9 @@ export class AdCardComponent implements OnInit {
         break;
     }
 
+  }
+
+  public getThumpImage(index: number): string {
+    return this.gallery[index];
   }
 }

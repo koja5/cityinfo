@@ -18,6 +18,7 @@ import { UploadModel } from 'src/app/models/upload-model';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-places',
@@ -48,16 +49,20 @@ export class PlacesComponent implements OnInit {
   public coverPath = './assets/file_upload/';
   public coverImage!: string;
   public imgChangeEvt!: string;
+  public multipleImages: any[] = [];
+  public multipleImagesUrl: any[] = [];
   public cropImgPreview!: any;
   public acceptTermsAndPrivacy!: boolean;
   public imageWarranty!: boolean;
+  public newUploadPath: any = [];
 
   constructor(
     private configurationService: ConfigurationService,
     private helpService: HelpService,
     private toastr: ToastrComponent,
     private service: CallApiService,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -171,6 +176,9 @@ export class PlacesComponent implements OnInit {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.data = event.data;
+      this.multipleImagesUrl = this.helpService.getImagesForGallery(
+        event.data.gallery
+      );
       if (this.data.active) {
         this.data.active = true;
       } else {
@@ -238,9 +246,32 @@ export class PlacesComponent implements OnInit {
     this.imgChangeEvt = event;
   }
 
+  onFileChangeMultiple(event: any): void {
+    if (event.target.files.length > 0) {
+      for (let item of event.target.files) {
+        this.multipleImages.push(item);
+        this.multipleImagesUrl.push(URL.createObjectURL(item));
+      }
+    }
+  }
+
+  submitMultiple() {
+    const formData = new FormData();
+
+    for (let item of this.multipleImages) {
+      formData.append('files', item);
+    }
+
+    this.service
+      .callPostMethod('/api/upload/uploadMultiple', formData)
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
   cropImg(e: ImageCroppedEvent) {
     this.imageCompress
-      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 50)
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 70)
       .then((result: DataUrl) => {
         this.coverImage = result;
         this.cropImgPreview = result;
@@ -258,10 +289,30 @@ export class PlacesComponent implements OnInit {
     this.coverImage = '';
   }
 
+  removeImageFromGallery(index: number) {
+    this.multipleImages.splice(index, 1);
+    this.data.gallery = this.data.gallery?.replace(
+      this.multipleImagesUrl[index] + ';',
+      ''
+    );
+    this.multipleImagesUrl.splice(index, 1);
+  }
+
   saveEntry() {
     if (JSON.stringify(this.currentData) != JSON.stringify(this.data)) {
       if (this.cropImgPreview) {
         this.data.cover = this.coverPath + UUID.UUID() + '.webp';
+      }
+
+      if (this.multipleImagesUrl && this.multipleImagesUrl.length) {
+        const oldGallery = this.data.gallery;
+        this.data.gallery = this.helpService.generateGalleryPath(
+          this.multipleImagesUrl
+        );
+        /*this.newUploadPath = this.helpService.compareOldAndNewGalleryPath(
+        oldGallery,
+        this.data.gallery
+      );*/
       }
 
       if (!this.editButton) {
@@ -270,6 +321,7 @@ export class PlacesComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               this.uploadCoverImage();
+              this.uploadGalleryImage();
             } else {
               this.toastr.showError();
             }
@@ -280,6 +332,7 @@ export class PlacesComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               this.uploadCoverImage();
+              this.uploadGalleryImage();
             } else {
               this.toastr.showError();
             }
@@ -293,10 +346,13 @@ export class PlacesComponent implements OnInit {
       const formData: FormData = new FormData();
 
       const imageBlob = this.helpService.dataURItoBlob(
-        this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
+        this.cropImgPreview.replace(
+          /^data:image\/(png|jpeg|jpg|webp);base64,/,
+          ''
+        )
       );
       const imageFile = new File([imageBlob], this.data.cover!, {
-        type: 'image/png',
+        type: 'image/webp',
       });
 
       formData.append('file', imageFile);
@@ -312,6 +368,33 @@ export class PlacesComponent implements OnInit {
           } else {
             this.toastr.showError();
           }
+        });
+    } else {
+      this.getMyPlaces();
+      this.dialog.hide();
+      this.toastr.showSuccess();
+    }
+    this.imgChangeEvt = '';
+    this.cropImgPreview = null;
+  }
+
+  uploadGalleryImage() {
+    let gallery = this.helpService.getImagesForGallery(this.data.gallery);
+    if (gallery.length) {
+      const formData = new FormData();
+
+      for (let i = 0; i < this.multipleImages.length; i++) {
+        const imageFile = new File([this.multipleImages[i]], gallery![i], {
+          type: 'image/webp',
+        });
+
+        formData.append('files', imageFile);
+      }
+
+      this.service
+        .callPostMethod('/api/upload/uploadMultiple', formData)
+        .subscribe((data) => {
+          console.log(data);
         });
     } else {
       this.getMyPlaces();
@@ -348,5 +431,9 @@ export class PlacesComponent implements OnInit {
             return result;
           });
       });
+  }
+
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }

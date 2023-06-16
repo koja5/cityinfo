@@ -11,6 +11,7 @@ import { DialogConfirmComponent } from './components/common/dialog-confirm/dialo
 import { DialogInformationComponent } from './components/common/dialog-information/dialog-information.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { CarouselModule } from "@syncfusion/ej2-angular-navigations";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     DialogModule,
     LazyLoadImageModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
+    CarouselModule
   ],
   exports: [
     LoaderComponent,

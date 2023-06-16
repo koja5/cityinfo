@@ -316,3 +316,4 @@ router.post(
 );
 
 router.post("/uploadCoverImage", uploader.upload);
+router.post("/uploadMultiple", uploader.uploadMultiple);

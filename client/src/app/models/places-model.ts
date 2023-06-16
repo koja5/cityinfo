@@ -10,6 +10,9 @@ export class PlacesModel {
   category: any;
   cover?: string;
   cover_old?: string;
+  gallery?: string;
+  gallery_old?: string;
   token?: any;
   active?: boolean;
+  active_gallery?: boolean;
 }
