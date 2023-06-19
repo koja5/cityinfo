@@ -280,6 +280,7 @@ export class AdCardComponent implements OnInit {
       case 'loading-failed':
         this.skeleton = false;
         this.imagePreview = '';
+        this.cover = "./assets/images/no-photo-available.png"
         this.cdRef.detectChanges();
         break;
       case 'finally':
