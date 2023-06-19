@@ -8,6 +8,10 @@ import { join } from 'path';
 import 'localstorage-polyfill';
 
 import { AppServerModule } from './src/main.server';
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const apiProxy = createProxyMiddleware('/api/getPaidAdsForAllCity/', {
+  target: 'http://localhost:3001/api/getPaidAdsForAllCity/',
+});
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -53,9 +57,26 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env['PORT'] || 4000;
+  console.log(port);
 
   // Start up the Node server
   const server = app();
+
+  server.use(apiProxy);
+
+  server.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+  });
+
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });

@@ -31,7 +31,7 @@ var connection = mysql.createPool({
 
 /* GET api listing. */
 router.get("/", (req, res) => {
-  // res.send("api works");
+  res.send("api works");
 });
 
 router.post("/signUp", async function (req, res, next) {
