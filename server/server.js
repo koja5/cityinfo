@@ -54,10 +54,10 @@ app.use("/api", mailApi);
 app.use("/api/mail-server", mailServer);
 app.use("/api/upload", upload);
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist/CityInfo/browser")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/src/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/CityInfo/browser/index.html"));
 });
 
 const port = process.env.PORT || "3001";
