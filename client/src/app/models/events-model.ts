@@ -12,6 +12,8 @@ export class EventsModel {
   category?: any;
   cover?: string;
   cover_old?: string;
+  gallery?: string;
+  gallery_old?: string;
   start_date?: Date;
   start_date_top?: Date;
   expired_date?: Date;

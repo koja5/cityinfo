@@ -18,6 +18,7 @@ import {
   DataUrl,
   NgxImageCompressService,
 } from 'ngx-image-compress';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-ads',
@@ -28,6 +29,7 @@ export class UserAdsComponent implements OnInit {
   @ViewChild('dialog') dialog!: DialogComponent;
   public asyncAdsSettings!: Object;
   public data = new AdsModel();
+  public currentData = new AdsModel();
   public configAds = new UploadModel();
   public path = 'upload-config';
   public file = 'upload-cover-image.json';
@@ -44,16 +46,22 @@ export class UserAdsComponent implements OnInit {
   public coverPath = './assets/file_upload/';
   public coverImage!: string;
   public imgChangeEvt!: string;
+  public multipleImages: any[] = [];
+  public multipleImagesUrl: any[] = [];
+  public newMultipleImagesUrl: any[] = [];
   public cropImgPreview!: any;
   public acceptTermsAndPrivacy!: boolean;
   public imageWarranty!: boolean;
+  public newUploadPath!: string;
+  public multiImageChanges = false;
 
   constructor(
     private configurationService: ConfigurationService,
     private helpService: HelpService,
     private toastr: ToastrComponent,
     private service: CallApiService,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -168,7 +176,12 @@ export class UserAdsComponent implements OnInit {
     if (event.operation === ActionsType.edit) {
       this.editButton = true;
       this.data = event.data;
+      this.multipleImagesUrl = this.helpService.getImagesForGallery(
+        event.data.gallery
+      );
+
       this.coverImage = event.data.cover;
+      this.currentData = JSON.parse(JSON.stringify(event.data));
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
@@ -199,6 +212,16 @@ export class UserAdsComponent implements OnInit {
       });
   }
 
+  onFileChangeMultiple(event: any): void {
+    if (event.target.files.length > 0) {
+      for (let item of event.target.files) {
+        this.multipleImages.push(item);
+        this.multipleImagesUrl.push(URL.createObjectURL(item));
+      }
+    }
+    this.multiImageChanges = true;
+  }
+
   imgLoad() {}
   initCropper() {}
 
@@ -210,31 +233,57 @@ export class UserAdsComponent implements OnInit {
     this.coverImage = '';
   }
 
-  saveEntry() {
-    if (this.cropImgPreview) {
-      this.data.cover = this.coverPath + UUID.UUID() + '.webp';
-    }
+  removeImageFromGallery(index: number) {
+    this.multipleImages.splice(index, 1);
+    this.data.gallery = this.data.gallery?.replace(
+      this.multipleImagesUrl[index] + ';',
+      ''
+    );
+    this.multipleImagesUrl.splice(index, 1);
+  }
 
-    if (!this.editButton) {
-      this.service
-        .callPostMethod('api/createMyAds', this.data)
-        .subscribe((data) => {
-          if (data) {
-            this.uploadCoverImage();
-          } else {
-            this.toastr.showError();
-          }
-        });
-    } else {
-      this.service
-        .callPostMethod('api/updateMyAds', this.data)
-        .subscribe((data) => {
-          if (data) {
-            this.uploadCoverImage();
-          } else {
-            this.toastr.showError();
-          }
-        });
+  saveEntry() {
+    if (
+      JSON.stringify(this.currentData) != JSON.stringify(this.data) ||
+      this.multiImageChanges
+    ) {
+      if (this.cropImgPreview) {
+        this.data.cover = this.coverPath + UUID.UUID() + '.webp';
+      }
+
+      this.newUploadPath = this.helpService.generateGalleryPath(
+        this.multipleImages
+      );
+
+      if (this.data.gallery) {
+        this.data.gallery += this.newUploadPath;
+      } else {
+        this.data.gallery = this.newUploadPath;
+      }
+
+      if (!this.editButton) {
+        this.service
+          .callPostMethod('api/createMyAds', this.data)
+          .subscribe((data) => {
+            if (data) {
+              this.uploadCoverImage();
+              this.uploadGalleryImage();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      } else {
+        this.service
+          .callPostMethod('api/updateMyAds', this.data)
+          .subscribe((data) => {
+            if (data) {
+              this.uploadCoverImage();
+              this.uploadGalleryImage();
+            } else {
+              this.toastr.showError();
+            }
+          });
+      }
     }
   }
 
@@ -243,7 +292,10 @@ export class UserAdsComponent implements OnInit {
       const formData: FormData = new FormData();
 
       const imageBlob = this.helpService.dataURItoBlob(
-        this.cropImgPreview.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, '')
+        this.cropImgPreview.replace(
+          /^data:image\/(png|jpeg|jpg|webp);base64,/,
+          ''
+        )
       );
       const imageFile = new File([imageBlob], this.data.cover!, {
         type: 'image/webp',
@@ -272,5 +324,15 @@ export class UserAdsComponent implements OnInit {
     }
     this.imgChangeEvt = '';
     this.cropImgPreview = null;
+  }
+
+  uploadGalleryImage() {
+    this.service.uploadMultipleImage(this.multipleImages, this.newUploadPath);
+    this.multipleImages = [];
+    this.multipleImagesUrl = [];
+  }
+
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }

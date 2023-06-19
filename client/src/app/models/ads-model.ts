@@ -10,6 +10,8 @@ export class AdsModel {
   category?: any;
   cover?: string;
   cover_old?: string;
+  gallery?: string;
+  gallery_old?: string;
   start_date?: Date;
   expired_date?: Date;
   start_date_top?: Date;

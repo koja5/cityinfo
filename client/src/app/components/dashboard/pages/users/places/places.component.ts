@@ -248,6 +248,15 @@ export class PlacesComponent implements OnInit {
     this.imgChangeEvt = event;
   }
 
+  cropImg(e: ImageCroppedEvent) {
+    this.imageCompress
+      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 70)
+      .then((result: DataUrl) => {
+        this.coverImage = result;
+        this.cropImgPreview = result;
+      });
+  }
+
   onFileChangeMultiple(event: any): void {
     if (event.target.files.length > 0) {
       for (let item of event.target.files) {
@@ -256,29 +265,6 @@ export class PlacesComponent implements OnInit {
       }
     }
     this.multiImageChanges = true;
-  }
-
-  submitMultiple() {
-    const formData = new FormData();
-
-    for (let item of this.multipleImages) {
-      formData.append('files', item);
-    }
-
-    this.service
-      .callPostMethod('/api/upload/uploadMultiple', formData)
-      .subscribe((data) => {
-        console.log(data);
-      });
-  }
-
-  cropImg(e: ImageCroppedEvent) {
-    this.imageCompress
-      .compressFile(e.base64!, DOC_ORIENTATION.Default, 50, 70)
-      .then((result: DataUrl) => {
-        this.coverImage = result;
-        this.cropImgPreview = result;
-      });
   }
 
   imgLoad() {}
@@ -319,13 +305,6 @@ export class PlacesComponent implements OnInit {
       } else {
         this.data.gallery = this.newUploadPath;
       }
-
-      // if (this.multipleImagesUrl && this.multipleImagesUrl.length) {
-      //   const oldGallery = this.data.gallery;
-      //   this.data.gallery = this.helpService.generateGalleryPath(
-      //     this.multipleImagesUrl
-      //   );
-      // }
 
       if (!this.editButton) {
         this.service
@@ -391,24 +370,7 @@ export class PlacesComponent implements OnInit {
   }
 
   uploadGalleryImage() {
-    let gallery = this.helpService.getImagesForGallery(this.newUploadPath);
-    if (gallery.length) {
-      const formData = new FormData();
-
-      for (let i = 0; i < this.multipleImages.length; i++) {
-        const imageFile = new File([this.multipleImages[i]], gallery![i], {
-          type: 'image/webp',
-        });
-
-        formData.append('files', imageFile);
-      }
-
-      this.service
-        .callPostMethod('/api/upload/uploadMultiple', formData)
-        .subscribe((data) => {
-          console.log(data);
-        });
-    }
+    this.service.uploadMultipleImage(this.multipleImages, this.newUploadPath);
     this.multipleImages = [];
     this.multipleImagesUrl = [];
   }
@@ -417,12 +379,6 @@ export class PlacesComponent implements OnInit {
     return this.imageCompress
       .uploadFile()
       .then(({ image, orientation, fileName }: UploadResponse) => {
-        console.log('File Name:', fileName);
-        console.log(
-          `Original: ${image.substring(0, 50)}... (${image.length} characters)`
-        );
-        console.log('Size in bytes was:', this.imageCompress.byteCount(image));
-
         this.imageCompress
           .compressFile(image, orientation, 50, 50)
           .then((result: DataUrl) => {

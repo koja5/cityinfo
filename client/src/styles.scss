@@ -123,7 +123,6 @@ label {
   margin-bottom: 0.5rem;
 }
 
-
 * {
   padding: 0;
   margin: 0;
@@ -442,4 +441,87 @@ input:-webkit-autofill:focus {
 
 button:focus {
   outline: none !important;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  max-width: 80%;
+  font-size: 0.8rem;
+  /* 20px */
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.625rem 1.1rem;
+  /* 10px 20px */
+}
+
+.no-js .inputfile + label {
+  display: none;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+  /* pointer-events: none; */
+  /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  margin-top: -0.25em;
+  /* 4px */
+  margin-right: 0.25em;
+  /* 4px */
+}
+
+.box {
+  border: 1px dashed;
+  padding: 22px;
+}
+
+.multiple-image div {
+  margin: 5px;
+}
+
+.multiple-image div img {
+  width: 190px;
+  border-radius: 10px;
+}
+
+.multiple-image button {
+  margin-left: -20px;
+  background: #b9b9b9;
+  border-radius: 17px;
+  border: none;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .cover-image {
+    width: 90% !important;
+  }
+}
+
+.cover-image {
+  width: 60%;
 }

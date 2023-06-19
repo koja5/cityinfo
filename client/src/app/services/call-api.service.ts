@@ -112,4 +112,23 @@ export class CallApiService {
       responseType: 'blob',
     });
   }
+
+  uploadMultipleImage(multipleImages: any, newUploadPath: string) {
+    let gallery = this.helpService.getImagesForGallery(newUploadPath);
+    if (gallery.length) {
+      const formData = new FormData();
+
+      for (let i = 0; i < multipleImages.length; i++) {
+        const imageFile = new File([multipleImages[i]], gallery![i], {
+          type: 'image/webp',
+        });
+
+        formData.append('files', imageFile);
+      }
+
+      this.callPostMethod('/api/upload/uploadMultiple', formData).subscribe(
+        (data) => {}
+      );
+    }
+  }
 }
