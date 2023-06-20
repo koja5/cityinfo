@@ -1,0 +1,114 @@
+[
+  {
+    "title": "Kunden",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/users"
+  },
+  {
+    "title": "Orte",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/cities"
+  },
+  {
+    "title": "Bezirke",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/districts"
+  },
+  {
+    "title": "Preise",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/position-prices"
+  },
+  {
+    "title": "Zu best채tigen",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/request-ads"
+  },
+  {
+    "title": "Werbung",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-ads"
+  },
+  {
+    "title": "Events",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-events"
+  },
+  {
+    "title": "Rechnungen",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-invoices"
+  },
+  {
+    "title": "Freizeitorte",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/all-places"
+  },
+  {
+    "title": "Kategorien",
+    "rights": [
+      "superadmin"
+    ],
+    "link": "/dashboard/superadmin/categories"
+  },
+  {
+    "title": "Freizeitorte",
+    "rights": [
+      "isClub"
+    ],
+    "link": "/dashboard/user/places"
+  },
+  {
+    "title": "Werbe-Vorlagen",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-ads"
+  },
+  {
+    "title": "Meine-Werbung",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/paid-ads"
+  },
+  {
+    "title": "Event-Vorlagen",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-events"
+  },
+  {
+    "title": "Meine Events",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/paid-events"
+  },
+  {
+    "title": "Rechnungen",
+    "rights": [
+      "user"
+    ],
+    "link": "/dashboard/user/my-invoices"
+  }
+]

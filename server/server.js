@@ -60,6 +60,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/CityInfo/browser/index.html"));
 });*/
 
+require('child_process').fork('../client/dist/CityInfo/server/main.js');
+
 const port = process.env.PORT || "3001";
 app.set("port", port);
 const server = http.createServer(app);

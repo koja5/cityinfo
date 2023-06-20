@@ -9,13 +9,29 @@ import 'localstorage-polyfill';
 
 import { AppServerModule } from './src/main.server';
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const apiProxy = createProxyMiddleware('/api/getPaidAdsForAllCity/', {
-  target: 'http://localhost:3001/api/getPaidAdsForAllCity/',
+const apiProxy = createProxyMiddleware('/api/*', {
+  target: 'http://city-info.at:3001',
 });
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
+
+  server.use(apiProxy);
+
+  server.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+  });
+
   const distFolder = join(process.cwd(), 'dist/CityInfo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
@@ -62,23 +78,8 @@ function run(): void {
   // Start up the Node server
   const server = app();
 
-  server.use(apiProxy);
-
-  server.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-      'Access-Control-Allow-Methods',
-      'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-    );
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  });
-
   server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on http://city-info.at:${port}`);
   });
 }
 
