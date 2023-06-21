@@ -273,4 +273,16 @@ export class HelpService {
       return elements;
     } else return [];
   }
+
+  convertCoverPath(cover: string) {
+    if (!cover) {
+      return '../../../../assets/images/no-photo-available.png';
+    } else {
+      let data = cover.split('/assets');
+      if (data.length == 1) {
+        data = cover.split('\\assets');
+      }
+      return '/assets' + data[1];
+    }
+  }
 }

@@ -12,6 +12,8 @@ import { ImpressumComponent } from './components/home/pages/impressum/impressum.
 import { RightOfWithdrawalComponent } from './components/home/pages/right-of-withdrawal/right-of-withdrawal.component';
 import { TermsComponent } from './components/home/pages/terms/terms.component';
 import { PrivacyPolicyComponent } from './components/home/pages/privacy-policy/privacy-policy.component';
+import { ViewComponent } from './components/common/view/view.component';
+import { NotFoundComponent } from './components/templates/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,14 @@ const routes: Routes = [
     path: 'privacy-policy',
     component: PrivacyPolicyComponent,
   },
+  {
+    path: 'view/:id',
+    component: ViewComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

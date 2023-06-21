@@ -88,15 +88,7 @@ export class AdCardComponent implements OnInit {
         this.showModeButton = true;
       }
 
-      if (!this.data.cover) {
-        this.cover = '../../../../assets/images/no-photo-available.png';
-      } else {
-        let data = this.data.cover.split('/assets');
-        if (data.length == 1) {
-          data = this.data.cover.split('\\assets');
-        }
-        this.cover = '/assets' + data[1];
-      }
+      this.cover = this.helpService.convertCoverPath(this.data.cover);
     }
     this.checkPromoButtonOption();
 
@@ -106,7 +98,6 @@ export class AdCardComponent implements OnInit {
     //   }
     // });
     this.getDayFromDate();
-    this.convertCategoryToRealName();
     if (this.data.gallery && this.data.gallery.length > 0) {
       this.gallery = this.helpService.getImagesForGallery(this.data.gallery);
     }
@@ -228,30 +219,6 @@ export class AdCardComponent implements OnInit {
     return CardType.place;
   }
 
-  convertCategoryToRealName() {
-    if (this.data.category) {
-      let item = [];
-      let categories = [];
-      if (typeof this.data.category === 'string') {
-        categories = this.data.category.split(',');
-      } else {
-        categories = this.data.category;
-      }
-      for (let j = 0; j < categories.length; j++) {
-        item.push(this.getNameOfCategory(Number(categories[j])));
-      }
-      this.categoryName = item.toString();
-    }
-  }
-
-  getNameOfCategory(category: number) {
-    for (let i = 0; i < this.categories.length; i++) {
-      if (this.categories[i].id == category) {
-        return this.categories[i].name;
-      }
-    }
-  }
-
   myCallbackFunction(event: StateChange) {
     switch (event.reason) {
       case 'setup':
@@ -280,7 +247,7 @@ export class AdCardComponent implements OnInit {
       case 'loading-failed':
         this.skeleton = false;
         this.imagePreview = '';
-        this.cover = "./assets/images/no-photo-available.png"
+        this.cover = './assets/images/no-photo-available.png';
         this.cdRef.detectChanges();
         break;
       case 'finally':
@@ -289,10 +256,21 @@ export class AdCardComponent implements OnInit {
         this.cdRef.detectChanges();
         break;
     }
-
   }
 
   public getThumpImage(index: number): string {
     return this.gallery[index];
+  }
+
+  copyToClipboard() {
+    const link = window.location + 'view/' + this.data.id;
+    navigator.clipboard.writeText(link).then(
+      () => {
+        this.toastr.showSuccessCustom('', this.language.successfulyCopyLink);
+      },
+      () => {
+        this.toastr.showErrorCustom('', this.language.errorCopyLink);
+      }
+    );
   }
 }

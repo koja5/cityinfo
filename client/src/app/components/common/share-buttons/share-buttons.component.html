@@ -1,0 +1,18 @@
+<div class="btn_wrap {{showButtons ? 'active' : ''}} mt-4">
+    <span (click)="showButtons ? showButtons = false : showButtons = true">{{language.share}}</span>
+    <div class="container">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{link}}" target="_blank"><i
+                class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/intent/tweet?url={{link}}&text=" target="_blank">
+            <i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{link}}&title=&summary=&source="
+            target="_blank">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://api.whatsapp.com/send?text={{link}}" target="_blank"><i
+                class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/share/url?url={{link}}&text=" target="_blank"><i
+                class="fab fa-telegram"></i></a>
+        <a href="mailto:?&subject=&body={{link}}" target="_blank"><i class="fab fa-mail"></i></a>
+    </div>
+</div>

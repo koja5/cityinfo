@@ -12,6 +12,11 @@ import { DialogInformationComponent } from './components/common/dialog-informati
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CarouselModule } from "@syncfusion/ej2-angular-navigations";
+import { ShareButtonsComponent } from './components/common/share-buttons/share-buttons.component';
+import { BadgeComponent } from './components/common/badge/badge.component';
+import { ViewComponent } from './components/common/view/view.component';
+import { ContactContainerComponent } from './components/common/contact-container/contact-container.component';
+import { FooterComponent } from './components/common/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +28,11 @@ import { CarouselModule } from "@syncfusion/ej2-angular-navigations";
     InvoiceComponent,
     DialogConfirmComponent,
     DialogInformationComponent,
+    ShareButtonsComponent,
+    ViewComponent,
+    BadgeComponent,
+    ContactContainerComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +48,7 @@ import { CarouselModule } from "@syncfusion/ej2-angular-navigations";
     AdCardComponent,
     NotFoundComponent,
     InvoiceComponent,
+    FooterComponent
   ],
   providers: [],
   bootstrap: [],

@@ -1,0 +1,17 @@
+<div class="category-info" *ngIf="badge === 'category' && categoryName">
+    <span class="badge-category" title="{{categoryName}}">{{categoryName}}</span>
+</div>
+
+<div class="badge-info" *ngIf="!badge || badge === 'type'">
+    <span *ngIf="(data.start_date || data.expired_date) && !data.datetime" class="ad-badge"
+        title="{{language.adTitle}}">{{language.ad}}</span>
+    <span *ngIf="data.datetime && data.position != 1" class="event-badge"
+        title="{{language.eventTitle}}">{{language.event}}</span>
+    <span *ngIf="data.datetime && data.position == 1" class="event-badge"
+        title="{{language.eventTitle}}">{{language.eventPayed}}</span>
+    <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
+        title="{{language.placeTitle}}">{{language.placeTitle}}</span>
+    <span *ngIf="(promotion || type === 'place') && data.active" class="badge-active ml-1">{{language.active}}</span>
+    <span *ngIf="(promotion || type === 'place') && !data.active"
+        class="badge-inactive ml-1">{{language.inactive}}</span>
+</div>

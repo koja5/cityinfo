@@ -273,5 +273,12 @@
     "deleteDialogTitle": "Eintrag löschen",
     "deactiveDialogTitle": "Eintrag deaktivieren",
     "activeDialogTitle": "Aktiver Eintrag",
-    "cancelDialogTitle": "Abbrechen Eintrag"
+    "cancelDialogTitle": "Abbrechen Eintrag",
+    "share": "Aktie",
+    "pageNotFound": "Seite nicht gefunden",
+    "pageNotFoundText": "Leider kann ich die von Ihnen gesuchte Seite nicht finden. Bitte klicken Sie auf die Schaltfläche, um zur Startseite zurückzukehren.",
+    "backToHomePage": "Zurück zur Startseite",
+    "copyLink": "Link kopieren",
+    "successfulyCopyLink": "Sie haben den Link erfolgreich kopiert",
+    "errorCopyLink": "Beim Kopieren des Links ist ein Fehler aufgetreten."
 }

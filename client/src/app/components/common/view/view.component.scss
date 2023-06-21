@@ -1,8 +1,4 @@
-@charset "UTF-8";
-/* 
-$content-width will be the max width of the content within the navigation bar. 
-$breakpoint determines at which width the media query breakpoint will take effect.
-*/
+/* NAVIGATION */
 
 .nav-list.block {
   display: block;
@@ -102,9 +98,7 @@ nav ul li ul li a {
   top: 22px;
   cursor: pointer;
   padding: 10px 35px 16px 0px;
-  border: none;
 }
-
 #nav-toggle span,
 #nav-toggle span:before,
 #nav-toggle span:after {
@@ -143,17 +137,12 @@ nav ul li ul li a {
     display: block !important;
   }
 }
-/* 
-.navigation – the outer wrapper for the navbar. Specifies the height and color, and will stretch the full width of the viewport.
-*/
+
 .navigation {
   height: 70px;
   background: #ffffff;
 }
 
-/*
-.nav-container – the inner wrapper for the navbar. Defines how far the actual content should stretch.
-*/
 .nav-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -173,84 +162,120 @@ nav ul li ul li a {
   text-decoration: none;
 }
 
-.left-fixed-ads {
-  position: fixed;
-  width: 20%;
-  height: 100%;
-  z-index: -1;
+/* END NAVIGATION */
+
+.first-box-info {
+  border: 1px solid lightgray;
+  border-radius: 5px 5px 0px 0px;
+  box-shadow: 1px 0.25rem 1rem rgba(19, 2, 12, 0.15);
 }
 
-.right-fixed-ads {
-  position: fixed;
-  width: 20%;
-  height: 100%;
-  right: 0px;
-  z-index: -1;
+.img-container {
+  margin: 0;
 }
 
-.inner-ads {
-  position: absolute;
+.img-container img {
+  border-radius: 0px 5px 5px 0px;
 }
 
-.inner-ads-right {
-  position: absolute;
-  right: 0px;
+.cover img {
+  width: 100%;
+  max-height: 582px;
 }
 
-.input-large {
-  border: 1px solid #197ffc !important;
-  margin-right: 30px;
-  margin-top: 15px;
-  width: 300px;
+.badge1 > app-badge > .category-info > .badge-category {
+  height: 50px !important;
 }
 
-@media (max-width: 800px) {
-  .nav-list {
-    text-align: center;
-    margin: auto;
-    padding: 14px !important;
-    border-bottom: 1px solid lightgray !important;
-    box-shadow: 0px 5px 8px 0px lightgray;
-  }
+.description {
+  max-height: 261px;
+  overflow: auto;
+  margin: auto;
+}
 
-  .input-large {
+.back img {
+  width: 25px;
+}
+
+/* GALLERY */
+
+.template-carousel-section .carousel-sample {
+  margin: 0 auto 2em;
+}
+
+.templateCarousel .e-carousel-navigators .e-previous,
+.templateCarousel .e-carousel-navigators .e-next,
+.templateCarousel .e-carousel-navigators .nav-btn {
+  padding: 0;
+}
+
+.templateCarousel .e-carousel-navigators .nav-btn:active,
+.templateCarousel .e-carousel-navigators .nav-btn:focus,
+.templateCarousel .e-carousel-navigators .nav-btn:hover {
+  background-color: transparent !important;
+  color: inherit;
+}
+
+.templateCarousel .e-carousel-navigators svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-width: 8px;
+  height: 2rem;
+  vertical-align: middle;
+  width: 2rem;
+}
+
+.templateCarousel .e-carousel-navigators .e-previous svg {
+  transform: rotate(180deg);
+}
+
+.templateCarousel
+  .e-carousel-indicators
+  .e-indicator-bars
+  .e-indicator-bar
+  .indicator {
+  background-color: #ececec;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  height: 3.5rem;
+  margin: 0.25rem;
+  width: 5rem;
+}
+
+.templateCarousel
+  .e-carousel-indicators
+  .e-indicator-bars
+  .e-indicator-bar.e-active
+  .indicator {
+  background-color: #3c78ef;
+}
+
+.e-template.e-active {
+  background: #3c78ef;
+}
+
+@media screen and (max-width: 480px) {
+  .template-carousel-section .carousel-sample {
     width: 100%;
+    height: 250px;
   }
 
-  .container {
-    position: relative !important;
-    left: 0px !important;
-  }
-}
-
-
-
-.card-item:hover {
-  transform: scale(1.04);
-}
-
-.select-option .e-input-group{
-  border-radius: 49px;
-}
-
-@media (min-width: 769px) {
-  .select-option {
-    margin: 13px 13px 0px 0px;
-    /*margin-left: 15px;
-    display: inline-block;*/
-  }
-
-  .select-option ejs-combobox {
-    width: 400px;
-  }
-
-  .select-range ejs-combobox {
-    width: 200px;
+  .templateCarousel .img-container {
+    margin: 12px;
   }
 }
 
-@media (max-width: 768px) {
-  .select-option ejs-combobox {
+@media screen and (max-width: 768px) {
+  .img-container {
+    height: 100% !important;
+  }
+}
+
+/* END GALLERY */
+
+.footer {
+    position: absolute;
+    bottom: 0px;
     width: 100%;
-  }
 }

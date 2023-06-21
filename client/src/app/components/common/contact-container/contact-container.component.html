@@ -1,0 +1,20 @@
+<div class="flex p-4 border-t border-b border-gray-300 text-gray-700 contact">
+    <div *ngIf="data.phone" class="flex-1  items-center">
+        <a href="tel:{{data.phone}}">
+            <span class="fa fa-phone new-row"></span>
+            <span class="text-gray-900 font-bold"></span> {{language.contactUs}}</a>
+    </div>
+    <div *ngIf="data.email" class="flex-1  items-center">
+        <a href="mailto:{{data.email}}">
+            <span class="fa fa-envelope new-row"></span>
+            <span class="text-gray-900 font-bold"></span> {{language.sendMail}}</a>
+    </div>
+    <div *ngIf="data.map_link" class="flex-1  items-center">
+        <a href="{{data.map_link}}" target="_blank">
+            <span class="fa fa-map-marker new-row"></span>
+            <span class="text-gray-900 font-bold"></span> {{language.seeLocationOnMap}}</a>
+    </div>
+    <div *ngIf="!data.phone && !data.email && !data.map_link" class="no-contact-information">
+        {{language.noContactInformationAvailable}}
+    </div>
+</div>

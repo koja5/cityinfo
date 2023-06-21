@@ -1254,6 +1254,34 @@ router.get("/getAllPlaces", auth, async (req, res, next) => {
   }
 });
 
+router.get("/getPlaceById/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select p.*, c.name as city_name, u.firstname, u.lastname, u.nameOfOrganization, u.email as 'client_email', u.phone as 'client_phone', u.mobile as 'client_mobile' from places p join cities c on p.city = c.id join users u on p.id_user = u.id where p.id = ?",
+          req.params.id,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 router.get("/getMyPlaces", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {

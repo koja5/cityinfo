@@ -26,6 +26,8 @@ import { DialogConfirmComponent } from './components/common/dialog-confirm/dialo
 import { DialogAllModule } from '@syncfusion/ej2-angular-popups';
 import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { CarouselModule } from '@syncfusion/ej2-angular-navigations';
+import { ViewComponent } from './components/common/view/view.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
     DialogAllModule,
     ComboBoxAllModule,
     SliderModule,
-    TextBoxAllModule
+    TextBoxAllModule,
+    CarouselModule
   ],
   providers: [CallApiService, DialogConfirmComponent],
   bootstrap: [AppComponent]

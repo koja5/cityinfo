@@ -82,29 +82,19 @@
                                 </p>
                             </div>
                             <div class="row badge-category-container">
-                                <div class="category-info col-md-4">
-                                    <span *ngIf="categoryName" class="badge-category"
-                                        title="{{categoryName}}">{{categoryName}}</span>
+                                <div class="col-md-4">
+                                    <app-badge [badge]="'category'" [categories]="categories" [data]="data"></app-badge>
                                 </div>
-                                <div class="badge-info col-md-8">
-                                    <span *ngIf="(data.start_date || data.expired_date) && !data.datetime"
-                                        class="ad-badge" title="{{language.adTitle}}">{{language.ad}}</span>
-                                    <span *ngIf="data.datetime && data.position != 1" class="event-badge"
-                                        title="{{language.eventTitle}}">{{language.event}}</span>
-                                    <span *ngIf="data.datetime && data.position == 1" class="event-badge"
-                                        title="{{language.eventTitle}}">{{language.eventPayed}}</span>
-                                    <span *ngIf="data.type == getCardTypePlace()" class="place-badge"
-                                        title="{{language.placeTitle}}">{{language.placeTitle}}</span>
-                                    <span *ngIf="(promotion || type === 'place') && data.active"
-                                        class="badge-active ml-1">{{language.active}}</span>
-                                    <span *ngIf="(promotion || type === 'place') && !data.active"
-                                        class="badge-inactive ml-1">{{language.inactive}}</span>
+                                <div class="col-md-8">
+
+                                    <app-badge [language]="language" [data]="data" [promotion]="promotion"
+                                        [type]="type"></app-badge>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div *ngIf="additionalInformation" class="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100">
-                        <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">
+                        <div class="text-xs uppercase font-bold text-gray tracking-wide">
                             {{language.additionalInformation}}</div>
                         <div class="items-center pt-2">
                             <p class="text-sm text-gray-700">{{language.position}}:
@@ -148,17 +138,17 @@
         (close)="closeDialog()">
         <ng-template #header>
             <span>
-                {{data.name}}</span>
+                {{data.name}} <span title="{{language.copyLink}}" class="far fa-clipboard cursor-pointer" (click)="copyToClipboard()"></span></span>
         </ng-template>
 
         <ng-template #content>
 
-            <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">{{language.description}}
+            <div class="text-xs uppercase font-bold text-gray tracking-wide">{{language.description}}
             </div>
             <div class="flex items-center pt-2 pb-2">
-                <p *ngIf="data.description" class="text-sm text-gray-700 description">{{data.description}}
+                <p *ngIf="data.description" class="description">{{data.description}}
                 </p>
-                <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
+                <p *ngIf="!data.description" class="description text-italic">
                     {{language.noDescriptionInformationAvailable}}
                 </p>
             </div>
@@ -190,27 +180,9 @@
                 </div>
             </div>
 
+            <app-contact-container [data]="data" [language]="language"></app-contact-container>
 
-            <div class="flex p-4 border-t border-b border-gray-300 text-gray-700 contact">
-                <div *ngIf="data.phone" class="flex-1  items-center">
-                    <a href="tel:{{data.phone}}">
-                        <span class="fa fa-phone new-row"></span>
-                        <span class="text-gray-900 font-bold"></span> {{language.contactUs}}</a>
-                </div>
-                <div *ngIf="data.email" class="flex-1  items-center">
-                    <a href="mailto:{{data.email}}">
-                        <span class="fa fa-envelope new-row"></span>
-                        <span class="text-gray-900 font-bold"></span> {{language.sendMail}}</a>
-                </div>
-                <div *ngIf="data.map_link" class="flex-1  items-center">
-                    <a href="{{data.map_link}}" target="_blank">
-                        <span class="fa fa-map-marker new-row"></span>
-                        <span class="text-gray-900 font-bold"></span> {{language.seeLocationOnMap}}</a>
-                </div>
-                <div *ngIf="!data.phone && !data.email && !data.map_link" class="no-contact-information">
-                    {{language.noContactInformationAvailable}}
-                </div>
-            </div>
+            <app-share-buttons [id]="data.id"></app-share-buttons>
         </ng-template>
     </ejs-dialog>
 </body>

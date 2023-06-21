@@ -105,6 +105,8 @@ label {
 }
 
 a {
+  text-decoration: none !important;
+  color: black;
   cursor: pointer;
 }
 
@@ -524,4 +526,102 @@ button:focus {
 
 .cover-image {
   width: 60%;
+}
+
+.main-container {
+  margin: auto;
+}
+
+@media (min-width: 1501px) {
+  .main-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1500px) {
+  .main-container {
+    width: 100%;
+  }
+}
+
+.text-gray {
+  color: #718096;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.flex {
+  display: flex;
+}
+
+.p-4 {
+  padding: 1rem !important;
+}
+
+.border-t {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.border-gray-300 {
+  border-color: #e2e8f0;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.fill-current {
+  fill: currentColor;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .img-container {
+    height: 100% !important;
+  }
+}
+
+.img-container {
+  height: 53vh;
+  margin: 0px !important;
+}
+
+.img-container img {
+  border-radius: 15px;
+  height: 100%;
+}
+
+.description {
+  white-space: pre-line;
+  overflow: hidden;
 }

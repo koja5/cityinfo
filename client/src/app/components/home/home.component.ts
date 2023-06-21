@@ -63,7 +63,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.year = new Date().getFullYear();
     this.initializeConfig();
     this.initializeData();
   }
