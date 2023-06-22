@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.initializeConfig();
     this.initializeData();
-    this.navigatorInit();
   }
 
   initializeConfig() {
@@ -120,14 +119,6 @@ export class HomeComponent implements OnInit {
       );
     }
 
-  }
-
-  navigatorInit() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(
-        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-      );
-    });
   }
 
   showHideMobileMenu() {
