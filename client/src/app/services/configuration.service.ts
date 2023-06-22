@@ -19,13 +19,13 @@ export class ConfigurationService {
 
   getLanguage(language?: string) {
     return this.http.get(
-      '../../assets/configurations/languages/germany.json'
+      '/assets/configurations/languages/germany.json'
     );
   }
 
   getAllLangs() {
     return this.http.get(
-      '../../assets/configurations/languages/choose-lang.json'
+      '/assets/configurations/languages/choose-lang.json'
     );
   }
 }
