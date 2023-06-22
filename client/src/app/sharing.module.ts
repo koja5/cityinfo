@@ -38,8 +38,8 @@ import { FooterComponent } from './components/common/footer/footer.component';
     CommonModule,
     DialogModule,
     LazyLoadImageModule,
+    CarouselModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
-    CarouselModule
   ],
   exports: [
     LoaderComponent,
