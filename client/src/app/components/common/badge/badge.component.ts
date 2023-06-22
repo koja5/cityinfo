@@ -19,7 +19,9 @@ export class BadgeComponent implements OnInit {
   constructor(private service: CallApiService) {}
 
   ngOnInit(): void {
-    this.convertCategoryToRealName();
+    if (this.badge === 'category') {
+      this.convertCategoryToRealName();
+    }
   }
 
   getCardTypePlace() {
