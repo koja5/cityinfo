@@ -58,6 +58,7 @@ import {provideClientHydration} from '@angular/platform-browser';
     ComboBoxAllModule,
     SliderModule,
     TextBoxAllModule,
+    CarouselModule
   ],
   providers: [CallApiService, DialogConfirmComponent, provideClientHydration()],
   bootstrap: [AppComponent]

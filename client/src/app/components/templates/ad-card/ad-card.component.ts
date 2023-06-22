@@ -18,7 +18,6 @@ import { ToastrComponent } from '../../dynamic-component/common/toastr/toastr.co
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { DialogConfirmComponent } from '../../common/dialog-confirm/dialog-confirm.component';
 import { DecisionType } from 'src/app/enums/decision-type';
-import { TypeOfComponent } from 'src/app/enums/type-of-component';
 import { MessageService } from 'src/app/services/message.service';
 import { CardType } from 'src/app/enums/card-type';
 import { Meta, Title } from '@angular/platform-browser';
