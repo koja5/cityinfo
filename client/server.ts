@@ -13,7 +13,7 @@ const api = require('../server/providers/api');
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const apiProxy = createProxyMiddleware('/api/*', {
-  target: 'https://city-info.at:3001',
+  target: 'http://localhost:3001',
 });
 
 // The Express app is exported so that it can be used by serverless Functions.
