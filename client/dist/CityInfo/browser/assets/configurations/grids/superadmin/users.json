@@ -1,0 +1,334 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/getUsers",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSize": 10
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": false
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "contextMenuItems": [
+        "AutoFit",
+        "AutoFitAll",
+        "SortAscending",
+        "SortDescending",
+        "Copy",
+        "Edit",
+        "Delete",
+        "Save",
+        "Cancel",
+        "FirstPage",
+        "PrevPage",
+        "LastPage",
+        "NextPage",
+        "Group",
+        "Ungroup"
+    ],
+    "toolbar": [
+        "Add",
+        "Edit",
+        "Delete",
+        "Print",
+        "Search"
+    ],
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": true,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "api": "/api/createUser",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        },
+        "edit": {
+            "type": "POST",
+            "api": "/api/updateUser",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        },
+        "delete": {
+            "type": "POST",
+            "api": "/api/deleteUser",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "ID",
+            "width": 70,
+            "filterable": true,
+            "filter": "date",
+            "type": "number",
+            "class": "text-align-right",
+            "field": "id",
+            "isPrimaryKey": true,
+            "allowEditing": false
+        },
+        {
+            "title": "firstname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "firstname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "lastname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "email",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "phone",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "phone",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "mobile",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "mobile",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "address",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "address",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "zip_code",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "zip_code",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "city",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "city",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "active",
+            "template": {
+                "choices": [
+                    {
+                        "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Not verified mail</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-danger'>Inactive</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Verified mail</span>"
+                    }
+                ]
+            },
+            "field": "active"
+        },
+        {
+            "title": "club",
+            "template": {
+                "choices": [
+                    {
+                        "field": "is_club",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Club</span>"
+                    },
+                    {
+                        "field": "is_club",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Company</span>"
+                    }
+                ]
+            },
+            "field": "is_club"
+        }
+    ],
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12 hide",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "firstname",
+            "title": "firstname",
+            "field": "firstname"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "lastname",
+            "title": "lastname",
+            "field": "lastname"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "email",
+            "title": "email",
+            "field": "email"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "phone",
+            "title": "phone",
+            "field": "phone"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "mobile",
+            "title": "mobile",
+            "field": "mobile"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "address",
+            "title": "address",
+            "field": "address"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "zip_code",
+            "title": "zip_code",
+            "field": "zip_code"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "city",
+            "title": "city",
+            "field": "city"
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12 mt-2",
+            "class": "e-outline",
+            "name": "active",
+            "title": "active",
+            "field": "active"
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "is_club",
+            "title": "club",
+            "field": "is_club"
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "save",
+            "field": "submit",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}
