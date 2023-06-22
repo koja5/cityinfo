@@ -6,6 +6,10 @@ import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { AppServerModule } from './src/main.server';
+import 'localstorage-polyfill'
+
+// api
+const api = require("../server/providers/api");
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -32,6 +36,12 @@ export function app(): express.Express {
   server.get('*', (req, res) => {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
+
+  // import different staff
+  global['localStorage'] = localStorage;
+
+  //api implemented
+  server.use('/api/*', api);
 
   return server;
 }
