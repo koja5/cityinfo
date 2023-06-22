@@ -51,6 +51,7 @@
     "bootstrap": "^5.3.0",
     "express": "^4.15.2",
     "file-saver": "^2.0.5",
+    "http-proxy-middleware": "^2.0.6",
     "i": "^0.3.7",
     "localstorage-polyfill": "^1.0.1",
     "ng-lazyload-image": "^9.1.3",
