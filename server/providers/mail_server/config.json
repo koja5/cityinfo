@@ -32,7 +32,7 @@
     "send_request_for_new_created_company_account": {
         "template": "send_request_for_new_created_company_account.hjs",
         "subject": "Ein neues Firmenkonto erstellt!",
-        "email": "webaj.info@gmail.com",
+        "email": "albert.sprung@gmail.com",
         "fields": {
             "title": "Ein neues Firmenkonto erstellt!",
             "text": "",
