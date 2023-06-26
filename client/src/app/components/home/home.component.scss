@@ -223,13 +223,11 @@ nav ul li ul li a {
   }
 }
 
-
-
 .card-item:hover {
   transform: scale(1.04);
 }
 
-.select-option .e-input-group{
+.select-option .e-input-group {
   border-radius: 49px;
 }
 
@@ -247,10 +245,23 @@ nav ul li ul li a {
   .select-range ejs-combobox {
     width: 200px;
   }
+
+  .total {
+    margin-right: 30px;
+  }
+
+  .container-card {
+    height: calc(100vh - 169px);
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .select-option ejs-combobox {
+    width: 100%;
+  }
+  .container-card {
+    height: calc(100vh - 125px);
     width: 100%;
   }
 }

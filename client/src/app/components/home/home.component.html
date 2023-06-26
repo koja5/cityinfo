@@ -63,29 +63,33 @@
         </div>
     </div> -->
 
-    <div class="mt-4" style="position: inherit;">
+    <div class="mt-2" style="position: inherit;">
         <div *ngIf="loader" style="height: 81vh;">
             <app-loader></app-loader>
         </div>
-        <div class="main-container" *ngIf="!loader" style="min-height: 81vh;">
-            <div class="text-right" *ngIf="allData && allData.length > 0">
-                <p class="custom-label">{{language.totalForShow}}: {{allData.length}}</p>
-            </div>
-            <div class="row" *ngIf="allData && allData.length > 0 && categories">
-                <app-ad-card *ngFor="let item of allData" [data]="item" [showDetailsOnClick]="true"
-                    [showMoreActionButton]="false" [scaleOnHover]="true" [categories]="categories"
-                    class="col-lg-3 col-md-4 col-sm-6 col-xs-12"></app-ad-card>
-            </div>
-            <div *ngIf="!allData || allData.length == 0" class="outer" style="height: 81vh;">
-                <div class="middle">
-                    <div class="inner">
-                        <img style="width: 310px;" src="../../../assets/images/no-data.jpg" alt="no-data">
-                        <h4>{{language.noFoundDataForSelectedCity}}</h4>
-                    </div>
+        <div class="main-container text-right mb-2" *ngIf="allData && allData.length > 0">
+            <p class="custom-label total">{{language.totalForShow}}: {{allData.length}}</p>
+        </div>
+        <div *ngIf="allData && allData.length > 0 && categories">
+            <cdk-virtual-scroll-viewport class="container-card" itemSize="50">
+                <div class="main-container row" *ngIf="!loader" style="min-height: 81vh;">
+                    <ng-container *cdkVirtualFor="let item of allData">
+                        <app-ad-card [data]="item" [showDetailsOnClick]="true" [showMoreActionButton]="false"
+                            [scaleOnHover]="true" [categories]="categories"
+                            class="col-lg-3 col-md-4 col-sm-6 col-xs-12"></app-ad-card>
+                    </ng-container>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+        <div *ngIf="!allData || allData.length == 0" class="outer" style="height: 81vh;">
+            <div class="middle">
+                <div class="inner">
+                    <img style="width: 310px;" src="../../../assets/images/no-data.jpg" alt="no-data">
+                    <h4>{{language.noFoundDataForSelectedCity}}</h4>
                 </div>
             </div>
-            <app-footer [language]="language"></app-footer>
         </div>
+        <app-footer [language]="language"></app-footer>
     </div>
 
     <!-- <div class="right-fixed-ads hidden-xs">
