@@ -185,16 +185,21 @@ export class UserAdsComponent implements OnInit {
       this.dialog.show();
     } else if (event.operation === ActionsType.delete) {
       this.service
-        .callPostMethod('api/deleteMyAds', this.data)
+        .callPostMethod('api/deleteMyAds', event.data)
         .subscribe((data) => {
-          if (data) {
-            this.dialog.hide();
-            this.toastr.showSuccess();
-          } else {
-            this.toastr.showError();
-          }
+          this.initializeAfterResponse(data);
         });
     }
+  }
+
+  initializeAfterResponse(data: any) {
+    if (data) {
+      this.intializeData();
+      this.toastr.showSuccess();
+    } else {
+      this.toastr.showError();
+    }
+    this.dialog.hide();
   }
 
   /* CROPPER */

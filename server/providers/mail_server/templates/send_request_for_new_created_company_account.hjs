@@ -40,10 +40,10 @@
             <!-- Logo -->
             <tr>
               <td style="text-align:center;">
-                <a href="https://rakeshmandal.com" title="logo" target="_blank">
+                <a href="https://city-info.at" title="logo" target="_blank">
                   <img
-                    width="60"
-                    src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png"
+                    width="200"
+                    src="https://city-info.at/assets/images/logo.png"
                     title="logo"
                     alt="logo"
                   />
@@ -67,6 +67,7 @@
                   <tr>
                     <td style="height:40px;">&nbsp;</td>
                   </tr>
+                  <!-- Title -->
                   <tr>
                     <td style="padding:0 15px; text-align:center;">
                       <h4
@@ -98,12 +99,48 @@
                     </td>
                   </tr>
 
+                  <br />
+
                   <tr>
-                    <td style="padding:0 15px;">
-                      <p>Zapažanje:</p>
-                      <b>{{note}}</b>
+                    <td>
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        style="width: 100%; border: 1px solid #ededed"
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              style="padding: 10px; border-bottom: 1px solid #ededed; border-right: 1px solid #ededed; width: 35%; font-weight:500; color:rgba(0,0,0,.64)"
+                            >
+                              Name:</td>
+                            <td
+                              style="padding: 10px; border-bottom: 1px solid #ededed; color: #455056;"
+                            >
+                              {{firstname}}</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="padding: 10px; border-bottom: 1px solid #ededed; border-right: 1px solid #ededed; width: 35%; font-weight:500; color:rgba(0,0,0,.64)"
+                            >
+                              Email:</td>
+                            <td
+                              style="padding: 10px; border-bottom: 1px solid #ededed; color: #455056;"
+                            >
+                              {{email_info}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </td>
                   </tr>
+                  <a
+                    href="{{link}}"
+                    style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"
+                  >{{buttonText}}</a>
+                  <a
+                    href="{{deactive}}"
+                    style="background:#d80000;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"
+                  >{{buttonTextDeactive}}</a>
                   <tr>
                     <td style="height:40px;">&nbsp;</td>
                   </tr>
@@ -117,12 +154,9 @@
               <td style="text-align:center;">
                 <p
                   style="font-size:13px; color:##485963bd; line-height:18px; font-style: italic;"
-                ><strong>Ovaj mail je automatski generisan. Molimo Vas da ne
-                    odgovarate na njega.</strong></p>
+                ><strong>This email is automatically generated. Please don't you
+                    respond to him.</strong></p>
               </td>
-            </tr>
-            <tr>
-              <td style="height:40px;">&nbsp;</td>
             </tr>
           </table>
         </td>

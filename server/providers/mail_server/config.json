@@ -1,28 +1,40 @@
 {
     "activate_mail": {
         "template": "activate_mail.hjs",
-        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
+        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei www.City-Info.at aktivieren!",
         "fields": {
-            "title": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
-            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei CityInfo angelegt. Um Ihr konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
+            "title": "Bitte E-Mail bestätigen und Ihr Konto bei www.City-Info.at aktivieren!",
+            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei www.City-Info.at angelegt. Um Ihr Konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
             "buttonText": "Hier anklicken, um Ihr Konto zu aktivieren"
         }
     },
     "activate_mail_for_club": {
         "template": "activate_mail.hjs",
-        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
+        "subject": "Bitte E-Mail bestätigen und Ihr Konto bei www.City-Info.at aktivieren!",
         "fields": {
-            "title": "Bitte E-Mail bestätigen und Ihr Konto bei CityInfo aktivieren!",
-            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei CityInfo angelegt. Um Ihr konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
+            "title": "Bitte E-Mail bestätigen und Ihr Konto bei www.City-Info.at aktivieren!",
+            "text": "Herzlichen Glückwunsch! Sie haben erfolgreich ein Konto bei www.City-Info.at angelegt. Um Ihr Konto zu aktivieren, bestätigen Sie bitte Ihre E-Mail-Adresse durch Klicken des Links.",
             "buttonText": "Hier anklicken, um Ihre Konto zu aktivieren"
         }
     },
     "send_request_for_new_created_club_account": {
         "template": "send_request_for_new_created_club_account.hjs",
-        "subject": "Ein neues Club-Konto wurde angelegt!",
+        "subject": "Ein neues Vereins- bzw. Veranstalter-Konto wurde angelegt!",
         "email": "albert.sprung@gmail.com",
         "fields": {
-            "title": "Ein neues Club-Konto wurde angelegt!",
+            "title": "Ein neues Vereins- bzw. Veranstalter-Konto wurde angelegt!",
+            "text": "",
+            "greeting": "Sehr geehrter Administrator",
+            "buttonText": "Konto aktivieren",
+            "buttonTextDeactive": "Konto deaktivieren"
+        }
+    },
+    "send_request_for_new_created_company_account": {
+        "template": "send_request_for_new_created_company_account.hjs",
+        "subject": "Ein neues Firmenkonto erstellt!",
+        "email": "webaj.info@gmail.com",
+        "fields": {
+            "title": "Ein neues Firmenkonto erstellt!",
             "text": "",
             "greeting": "Sehr geehrter Administrator",
             "buttonText": "Konto aktivieren",
@@ -31,19 +43,19 @@
     },
     "info_approved_club_account_from_admin": {
         "template": "info_approved_club_account_from_admin.hjs",
-        "subject": "Ihr Club-Konto wurde aktiviert!",
+        "subject": "Ihr Vereins- bzw. Veranstalter-Konto wurde aktiviert!",
         "fields": {
-            "title": "Ihr Club-Konto wurde aktiviert!",
-            "text": "Herzlich Willkommen. Ihr Club-Konto wurde aktiviert. Sie können jetzt Veranstaltungen erstellen!",
+            "title": "Ihr Vereins- bzw. Veranstalter wurde aktiviert!",
+            "text": "Herzlich Willkommen. Ihr Vereins- bzw. Veranstalter wurde aktiviert. Sie können jetzt Veranstaltungen anlegen!",
             "greeting": "Liebe/r {firstname}"
         }
     },
     "info_deactive_club_account_from_admin": {
         "template": "info_approved_club_account_from_admin.hjs",
-        "subject": "Ihr Clubkonto ist deaktiviert!",
+        "subject": "Ihr Vereins- bzw. Veranstalter wurde deaktiviert!",
         "fields": {
-            "title": "Ihr Club-Konto wurde deaktiviert!",
-            "text": "Herzlich Willkommen. Ihr Club-Konto wurde deaktiviert. Bitte wenden Sie sich an office@bci.social!",
+            "title": "Ihr Vereins- bzw. Veranstalter wurde deaktiviert!",
+            "text": "Herzlich Willkommen. Ihr Vereins- bzw. Veranstalter wurde deaktiviert. Bitte wenden Sie sich an office@bci.social!",
             "greeting": "Liebe/r {firstname}"
         }
     },
@@ -52,7 +64,7 @@
         "subject": "Konto wurde geändert!",
         "fields": {
             "title": "Konto wurde geändert!",
-            "text": "Wir möchten Sie informieren, dass bei Ihrem Konto Änderungen durchgeführt wurden. Das bedeutet, dass Ihr Zugriff auf CityInfo oder andere Zugriffe geändert wurden.",
+            "text": "Wir möchten Sie informieren, dass bei Ihrem Konto Änderungen durchgeführt wurden. Das bedeutet, dass Ihr Zugriff auf www.City-Info.at oder andere Zugriffe geändert wurden.",
             "greeting": "Liebe/r {firstname}"
         }
     },
@@ -99,8 +111,8 @@
         "subject": "Neu geschaffener Ort zur Kontrolle!",
         "email": "albert.sprung@gmail.com",
         "fields": {
-            "title": "Neu geschaffener Ort zur Kontrolle!",
-            "text": "Dem System wurde ein neuer Ort hinzugefügt. Sie können die Ortsinformationen unten überprüfen.",
+            "title": "Ein neuer Freizeitort wurde angelegt. Bitte kontrollieren!",
+            "text": "Auf www.City-Info.at wurde ein neuer Freizeitort hinzugefügt. Sie können die Informationen unten überprüfen.",
             "greeting": "Sehr geehrter Administrator",
             "buttonActive": "Aktiv",
             "buttonNameOfLocation": "Name des Standorts nicht angemessen",
@@ -113,14 +125,14 @@
     },
     "send_request_to_check_place_update": {
         "template": "send_request_to_check_place.hjs",
-        "subject": "Daten für einen Ort ändern!",
+        "subject": "Daten für einen Freiteizort wurden geändert!",
         "email": "albert.sprung@gmail.com",
         "fields": {
-            "title": "Daten für einen Ort ändern!",
-            "text": "Der Benutzer hat die Informationen für den Ort geändert. Die neuen Informationen können Sie unten einsehen.",
+            "title": "Daten für einen Freiteizort  wurden geändert!",
+            "text": "Ein Benutzer hat Informationen für den Freiteizort geändert. Die neuen Informationen können Sie unten einsehen.",
             "greeting": "Sehr geehrter Administrator",
             "buttonActive": "Aktiv",
-            "buttonNameOfLocation": "Name des Standorts nicht angemessen",
+            "buttonNameOfLocation": "Name des Freizeitortes nicht angemessen",
             "buttonPicture": "Bild nicht ausreichend",
             "buttonDescription": "Beschreibungstext nicht angemessen",
             "buttonMapsPosition": "Karten-Position nicht ausreichend",
@@ -134,13 +146,13 @@
         "fields": {
             "title": "CityInfo - Ort",
             "greeting": "Hi {firstname}",
-            "activePlaceText": "Der Ort, den Sie kürzlich hinzugefügt haben, wurde von einem Administrator genehmigt.",
-            "deactivePlaceNameOfLocationText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da der Standort nicht gut ist!",
-            "deactivePlacePictureText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da das Bild nicht gut ist!",
-            "deactivePlaceDescriptionText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da die Beschreibung nicht gut ist!",
-            "deactivePlaceMapsPositionText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da die Position auf der Karte nicht gut ist!",
-            "deactivePlaceSamePlaceText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da es einen identischen oder ähnlichen Ort gibt!",
-            "deactivePlaceOtherText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert. Der Grund ist nicht bekannt. Sie können uns kontaktieren, wenn Sie weitere Hilfe benötigen."
+            "activePlaceText": "Der Freiteizort, den Sie kürzlich hinzugefügt haben, wurde von einem Administrator genehmigt.",
+            "deactivePlaceNameOfLocationText": "Der von Ihnen hinzugefügte Ort wurde deaktiviert, da der angegebene Ort nicht richtig oder passend ist!",
+            "deactivePlacePictureText": "Der von Ihnen hinzugefügte Freiteizort wurde deaktiviert, da die Bildqualität des/der Fotos nicht ausreichend ist oder nicht den Anforderungen entspricht!",
+            "deactivePlaceDescriptionText": "Der von Ihnen hinzugefügte Freiteizort wurde deaktiviert, da die Beschreibung nicht den Anforderungen entspricht!",
+            "deactivePlaceMapsPositionText": "Der von Ihnen hinzugefügte Freiteizort wurde deaktiviert, da der Google-Maps-Standort nicht richtig angelegt wurde!",
+            "deactivePlaceSamePlaceText": "Der von Ihnen hinzugefügte Freiteizort wurde deaktiviert, da es einen identischen oder ähnlichen Ort bereits gibt!",
+            "deactivePlaceOtherText": "Der von Ihnen hinzugefügte Freiteizort wurde deaktiviert. Bitte kontaktieren sie uns, wenn Sie weitere Hilfe benötigen."
         }
     }
 }

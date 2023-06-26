@@ -185,7 +185,23 @@ export class UserEventsComponent implements OnInit {
       );
       this.currentData = JSON.parse(JSON.stringify(event.data));
       this.dialogEvent.show();
+    } else if (event.operation === ActionsType.delete) {
+      this.service
+        .callPostMethod('api/deleteEventDraft', event.data)
+        .subscribe((data) => {
+          this.initializeAfterResponse(data);
+        });
     }
+  }
+
+  initializeAfterResponse(data: any) {
+    if (data) {
+      this.intializeData();
+      this.toastr.showSuccess();
+    } else {
+      this.toastr.showError();
+    }
+    this.dialogEvent.hide();
   }
 
   /* CROPPER */

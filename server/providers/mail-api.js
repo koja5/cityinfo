@@ -63,9 +63,9 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
     req.body.firstname;
 
   body.send_request_for_new_created_club_account.fields["link"] =
-    process.env.link_api + "activeClub/" + sha1(req.body.email);
+    process.env.link_api + "activeUser/" + sha1(req.body.email);
   body.send_request_for_new_created_club_account.fields["deactive"] =
-    process.env.link_api + "deactiveClub/" + sha1(req.body.email);
+    process.env.link_api + "deactiveUser/" + sha1(req.body.email);
   var options = {
     rejectUnauthorized: false,
     url: process.env.link_api + "mail-server/sendMail",
@@ -82,7 +82,36 @@ router.post("/sendInfoForNewCreatedClubAccount", function (req, res, next) {
   });
 });
 
-router.post("/infoApprovedClubAccountFromAdmin", function (req, res, next) {
+router.post("/sendInfoForNewCreatedCompanyAccount", function (req, res, next) {
+  var body = JSON.parse(
+    fs.readFileSync("./providers/mail_server/config.json", "utf-8")
+  );
+  body.send_request_for_new_created_company_account.fields["email_info"] =
+    req.body.email;
+  body.send_request_for_new_created_company_account.fields["firstname"] =
+    req.body.firstname;
+
+  body.send_request_for_new_created_company_account.fields["link"] =
+    process.env.link_api + "activeUser/" + sha1(req.body.email);
+  body.send_request_for_new_created_company_account.fields["deactive"] =
+    process.env.link_api + "deactiveUser/" + sha1(req.body.email);
+  var options = {
+    rejectUnauthorized: false,
+    url: process.env.link_api + "mail-server/sendMail",
+    method: "POST",
+    body: body.send_request_for_new_created_company_account,
+    json: true,
+  };
+  request(options, function (error, response, body) {
+    if (!error) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+});
+
+router.post("/infoApprovedAccountFromAdmin", function (req, res, next) {
   var body = JSON.parse(
     fs.readFileSync("./providers/mail_server/config.json", "utf-8")
   );

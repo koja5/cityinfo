@@ -21,6 +21,10 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'city/:city',
+    component: HomeComponent,
+  },
+  {
     path: 'login',
     canActivate: [LoggedGuardService],
     component: LoginComponent,
@@ -69,8 +73,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,9 @@
 /* NAVIGATION */
 
+.view-container {
+  max-width: 545px;
+}
+
 .nav-list.block {
   display: block;
 }
@@ -275,7 +279,5 @@ nav ul li ul li a {
 /* END GALLERY */
 
 .footer {
-    position: absolute;
-    bottom: 0px;
     width: 100%;
 }

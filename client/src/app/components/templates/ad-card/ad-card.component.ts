@@ -263,7 +263,8 @@ export class AdCardComponent implements OnInit {
   }
 
   copyToClipboard() {
-    const link = window.location + 'view/' + this.data.id;
+    console.log(window);
+    const link = window.location.origin + '/view/' + this.data.id;
     navigator.clipboard.writeText(link).then(
       () => {
         this.toastr.showSuccessCustom('', this.language.successfulyCopyLink);

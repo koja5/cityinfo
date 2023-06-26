@@ -17,31 +17,13 @@
 </section>
 
 
-<div class="main-container mt-4">
+<div class="main-container view-container mt-4">
 
     <a class="text-gray back" href="../"><img src="./assets/images/back.png"> {{language.backToHomePage}}</a>
 
     <div class="row text-center first-box-info mt-4" *ngIf="data && categories">
-        <div class="col-md-4 p-4 text-left">
-            <h1 class="h2 text-gray">{{data.name}}</h1>
-            <div class="mt-4 badge1">
-                <app-badge [badge]="'category'" [data]="data" [categories]="categories"></app-badge>
-            </div>
 
-            <div class="description mt-4 mb-4">
-                <p *ngIf="data.description" class="description">{{data.description}}
-                </p>
-                <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
-                    {{language.noDescriptionInformationAvailable}}
-                </p>
-            </div>
-
-            <div>
-                <app-contact-container [data]="data" [language]="language"></app-contact-container>
-            </div>
-        </div>
-
-        <div class="col-md-8 p-0">
+        <div class="col-md-12 p-0">
             <div class="img-container cover" *ngIf="!data.gallery && data.cover">
                 <img [src]="data.cover">
             </div>
@@ -67,6 +49,26 @@
                 </e-carousel-items>
             </ejs-carousel>
         </div>
+
+        <div class="col-md-12 p-4 text-left">
+            <h1 class="h2 text-gray">{{data.name}}</h1>
+            <div class="mt-4 badge1">
+                <app-badge [badge]="'category'" [data]="data" [categories]="categories"></app-badge>
+            </div>
+
+            <div class="description mt-4 mb-4">
+                <p *ngIf="data.description" class="description">{{data.description}}
+                </p>
+                <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
+                    {{language.noDescriptionInformationAvailable}}
+                </p>
+            </div>
+
+            <div>
+                <app-contact-container [data]="data" [language]="language"></app-contact-container>
+            </div>
+        </div>
+
     </div>
 
     <div class="share text-center">
@@ -76,6 +78,6 @@
 
 </div>
 
-<div class="footer">
+<div class="footer mt-4 mb-2">
     <app-footer [language]="language"></app-footer>
 </div>

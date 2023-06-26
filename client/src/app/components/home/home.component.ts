@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
@@ -59,12 +60,13 @@ export class HomeComponent implements OnInit {
     private service: CallApiService,
     private helpService: HelpService,
     private configurationService: ConfigurationService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.initializeConfig();
-    this.initializeData();
   }
 
   initializeConfig() {
@@ -73,6 +75,8 @@ export class HomeComponent implements OnInit {
       this.helpService.setLanguage(data);
     });
 
+    const paramFromUrl = this.route.snapshot.paramMap.get('city');
+
     if (
       this.helpService.getLocalStorageStringValue('selectedCity') &&
       this.helpService.getLocalStorageStringValue('selectedCity') != 'null' &&
@@ -80,6 +84,11 @@ export class HomeComponent implements OnInit {
     ) {
       this.selectedCity = this.helpService.getLocalStorage('selectedCity');
       this.selectedCityId = this.selectedCity.id;
+      this.initializeData();
+    } else if (paramFromUrl) {
+      this.getCityIdFromName(paramFromUrl);
+    } else {
+      this.initializeData();
     }
 
     if (!this.storageService.getCookie('cookie')) {
@@ -118,7 +127,6 @@ export class HomeComponent implements OnInit {
         ''
       );
     }
-
   }
 
   showHideMobileMenu() {
@@ -130,15 +138,18 @@ export class HomeComponent implements OnInit {
   }
 
   changeCity(event: any) {
-    if (event.value == null) {
-      this.helpService.removeLocalStorageItem('range');
-      this.rangeValue = null;
-    }
     this.selectedCity = event.itemData;
     this.helpService.setLocalStorage(
       'selectedCity',
       JSON.stringify(event.itemData)
     );
+    if (event.value == null) {
+      this.helpService.removeLocalStorageItem('range');
+      this.rangeValue = null;
+      this.router.navigate(['/']);
+    } else {
+      this.router.navigate(['city/' + this.selectedCity.name]);
+    }
     if (this.rangeValue) {
       this.setNewRange({ value: this.rangeValue });
     } else {
@@ -235,6 +246,15 @@ export class HomeComponent implements OnInit {
     this.service.callGetMethod('api/getCities', '').subscribe((data) => {
       this.listOfCities = data;
     });
+  }
+
+  getCityIdFromName(value: string) {
+    this.service
+      .callGetMethod('api/getCityIdFromName', value)
+      .subscribe((data: any) => {
+        this.selectedCityId = data.id;
+        this.initializeData();
+      });
   }
 
   getPaidAdsByCity(parameter: string) {

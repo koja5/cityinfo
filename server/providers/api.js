@@ -101,6 +101,18 @@ router.post("/signUp", async function (req, res, next) {
                   request(options, function (error, response, body) {
                     console.log(error);
                   });
+
+                  var option_request = {
+                    rejectUnauthorized: false,
+                    url:
+                      process.env.link_api +
+                      "sendInfoForNewCreatedCompanyAccount",
+                    method: "POST",
+                    body: req.body,
+                    json: true,
+                  };
+
+                  request(option_request, function (error, response, body) {});
                   res.json(true);
                 }
               }
@@ -166,7 +178,7 @@ router.post("/login", function (req, res, next) {
   });
 });
 
-router.get("/activeClub/:email", function (req, res, next) {
+router.get("/activeUser/:email", function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -185,8 +197,7 @@ router.get("/activeClub/:email", function (req, res, next) {
                 conn.release();
                 var option_request = {
                   rejectUnauthorized: false,
-                  url:
-                    process.env.link_api + "infoApprovedClubAccountFromAdmin",
+                  url: process.env.link_api + "infoApprovedAccountFromAdmin",
                   method: "POST",
                   body: rows[0],
                   json: true,
@@ -208,7 +219,7 @@ router.get("/activeClub/:email", function (req, res, next) {
   }
 });
 
-router.get("/deactiveClub/:email", function (req, res, next) {
+router.get("/deactiveUser/:email", function (req, res, next) {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -372,6 +383,34 @@ router.get("/getCities", async (req, res, next) => {
               res.json(err);
             } else {
               res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getCityIdFromName/:name", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select id from cities c where c.name = ?",
+          req.params.name,
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows[0]);
             }
           }
         );
