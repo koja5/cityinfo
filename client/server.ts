@@ -7,19 +7,21 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { AppServerModule } from './src/main.server';
 import 'localstorage-polyfill';
+import * as compression from 'compression';
 
 // api
 const api = require('../server/providers/api');
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const apiProxy = createProxyMiddleware('/api/*', {
-  target: 'http://localhost:3001',
+  target: 'https://localhost:3001',
 });
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
   server.use(apiProxy);
+  // server.use(compression());
   const distFolder = join(process.cwd(), 'dist/CityInfo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
@@ -30,6 +32,7 @@ export function app(): express.Express {
     'html',
     ngExpressEngine({
       bootstrap: AppServerModule,
+      inlineCriticalCss: false,
     })
   );
 
