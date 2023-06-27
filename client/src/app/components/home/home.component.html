@@ -71,7 +71,7 @@
             <p class="custom-label total">{{language.totalForShow}}: {{allData.length}}</p>
         </div>
         <div *ngIf="allData && allData.length > 0 && categories">
-            <cdk-virtual-scroll-viewport class="container-card" itemSize="50">
+            <cdk-virtual-scroll-viewport class="container-card" itemSize="20">
                 <div class="main-container row" *ngIf="!loader" style="min-height: 81vh;">
                     <ng-container *cdkVirtualFor="let item of allData">
                         <app-ad-card [data]="item" [showDetailsOnClick]="true" [showMoreActionButton]="false"
