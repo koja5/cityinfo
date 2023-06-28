@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   public value: number = 30;
   public rangeValue: any;
   public categories: any;
+  private paramFromUrl: any = null;
   public ranges = [
     {
       text: '5 km',
@@ -78,7 +79,7 @@ export class HomeComponent implements OnInit {
       this.helpService.setLanguage(data);
     });
 
-    const paramFromUrl = this.route.snapshot.paramMap.get('city');
+    this.paramFromUrl = this.route.snapshot.paramMap.get('city');
 
     if (
       this.helpService.getLocalStorageStringValue('selectedCity') &&
@@ -88,8 +89,8 @@ export class HomeComponent implements OnInit {
       this.selectedCity = this.helpService.getLocalStorage('selectedCity');
       this.selectedCityId = this.selectedCity.id;
       this.initializeData();
-    } else if (paramFromUrl) {
-      this.getCityIdFromName(paramFromUrl);
+    } else if (this.paramFromUrl) {
+      this.getCityIdFromName(this.paramFromUrl);
     } else {
       this.initializeData();
     }
@@ -110,7 +111,14 @@ export class HomeComponent implements OnInit {
   }
 
   initializeData() {
-    this.getAllCities();
+    if (this.paramFromUrl) {
+      this.getCities(this.paramFromUrl);
+    } else if (this.selectedCity) {
+      this.getCities(this.selectedCity.name);
+    } else {
+      this.getCities('');
+    }
+    
     this.getCategories();
 
     if (this.selectedCityId && this.rangeValue) {
@@ -152,8 +160,26 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  filterCity(event: any) {
+    if (event && event.text != '') {
+      this.service
+        .callGetMethod('api/getCities', event.text)
+        .subscribe((data) => {
+          this.listOfCities = data;
+          event.updateData(data);
+        });
+    } else {
+      this.service.callGetMethod('api/getCities', '').subscribe((data) => {
+        this.listOfCities = data;
+        event.updateData(data);
+      });
+    }
+  }
+
   changeCity(event: any) {
     this.selectedCity = event.itemData;
+
+    console.log(this.selectedCity);
     this.helpService.setLocalStorage(
       'selectedCity',
       JSON.stringify(event.itemData)
@@ -257,8 +283,8 @@ export class HomeComponent implements OnInit {
     this.allAds = this.allAds.concat(events.splice(0, events.length));
   }
 
-  getAllCities() {
-    this.service.callGetMethod('api/getCities', '').subscribe((data) => {
+  getCities(param: string) {
+    this.service.callGetMethod('api/getCities', param).subscribe((data) => {
       this.listOfCities = data;
     });
   }

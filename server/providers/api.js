@@ -367,7 +367,7 @@ router.post("/changePersonalInfo", auth, function (req, res, next) {
 
 /* CITIES */
 
-router.get("/getCities/:search?*", async (req, res, next) => {
+router.get("/getCities/:search?", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -377,6 +377,22 @@ router.get("/getCities/:search?*", async (req, res, next) => {
         if (!req.params.search || req.params.search === "") {
           conn.query(
             "select * from cities order by name asc LIMIT 0, 10",
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        } else {
+          console.log(req.params.search);
+          conn.query(
+            "select * from cities where name like '" +
+              req.params.search +
+              "%' order by name asc",
             function (err, rows, fields) {
               conn.release();
               if (err) {

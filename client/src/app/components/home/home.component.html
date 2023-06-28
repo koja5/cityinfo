@@ -10,18 +10,20 @@
                 </div>
                 <ul class="nav-list {{showHideMenu}}">
                     <li class="select-option">
+                        <!--COMBOBOX TEMPLATE [itemTemplate]='itemTemplate' -->
                         <ejs-combobox *ngIf="listOfCities" [cssClass]="'e-outline'" [id]="selectedCityId"
                             [dataSource]="listOfCities" [fields]="{text: 'name', value: 'id'}"
                             [(ngModel)]="selectedCityId" [value]="selectedCityId"
-                            [placeholder]="language.selectNameOfCity" [allowFiltering]="true"
-                            [itemTemplate]='itemTemplate' (change)="changeCity($event)">
-                            <ng-template #itemTemplate let-data>
+                            [placeholder]="language.selectNameOfCity" [allowFiltering]='true'
+                             (filtering)='filterCity($event)'
+                            (change)="changeCity($event)">
+                            <!-- <ng-template #itemTemplate let-data>
                                 <span>{{data.name}}</span> <span style="float: right"
                                     class="hidden-xs">{{data.district}}</span>
                             </ng-template>
                             <ng-template *ngIf="listOfCities" #noRecordsTemplate>
                                 <span class="norecord"> {{language?.noRecords}}</span>
-                            </ng-template>
+                            </ng-template> -->
                         </ejs-combobox>
                     </li>
 
