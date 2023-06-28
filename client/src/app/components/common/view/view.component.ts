@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CarouselAnimationEffect } from '@syncfusion/ej2-angular-navigations';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { HelpService } from 'src/app/services/help.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-view',
@@ -20,7 +21,8 @@ export class ViewComponent implements OnInit {
   constructor(
     private helpService: HelpService,
     private service: CallApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private metaService: MetaService
   ) {}
 
   ngOnInit(): void {
@@ -35,14 +37,28 @@ export class ViewComponent implements OnInit {
       .subscribe((data: any) => {
         if (data && data.length > 0) {
           this.data = data[0];
+          this.updateTags();
           this.data.cover = this.helpService.convertCoverPath(this.data.cover);
           if (this.data.gallery && this.data.gallery.length > 0) {
-            this.gallery = this.helpService.getImagesForGallery(this.data.gallery);
+            this.gallery = this.helpService.getImagesForGallery(
+              this.data.gallery
+            );
           }
         }
       });
 
     this.getCategories();
+  }
+
+  updateTags() {
+    this.metaService.updateMetaTags({
+      title: this.data.name,
+      type: 'website',
+      imageSrc: window.location.origin + this.data.cover.split('/dist')[1],
+      url: window.location.href,
+      description: this.data.description,
+      cardType: 'summary_large_image',
+    });
   }
 
   getCategories() {

@@ -367,25 +367,27 @@ router.post("/changePersonalInfo", auth, function (req, res, next) {
 
 /* CITIES */
 
-router.get("/getCities", async (req, res, next) => {
+router.get("/getCities/:search?*", async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query(
-          "select * from cities order by name asc",
-          function (err, rows, fields) {
-            conn.release();
-            if (err) {
-              logger.log("error", err.sql + ". " + err.sqlMessage);
-              res.json(err);
-            } else {
-              res.json(rows);
+        if (!req.params.search || req.params.search === "") {
+          conn.query(
+            "select * from cities order by name asc LIMIT 0, 10",
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
             }
-          }
-        );
+          );
+        }
       }
     });
   } catch (ex) {
@@ -1538,7 +1540,7 @@ router.get("/getPlacesForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1",
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1  LIMIT 0, 8",
           function (err, rows, fields) {
             conn.release();
             if (err) {

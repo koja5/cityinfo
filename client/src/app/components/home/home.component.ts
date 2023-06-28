@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HelpService } from 'src/app/services/help.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -62,10 +63,12 @@ export class HomeComponent implements OnInit {
     private configurationService: ConfigurationService,
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private metaService: MetaService
   ) {}
 
   ngOnInit(): void {
+    this.updateMetaTags();
     this.initializeConfig();
   }
 
@@ -127,6 +130,18 @@ export class HomeComponent implements OnInit {
         ''
       );
     }
+  }
+
+  updateMetaTags() {
+    this.metaService.updateMetaTags({
+      title: 'City-Info - check the best places and events',
+      type: 'website',
+      imageSrc: 'https://city-info.at/assets/images/logo.png',
+      url: 'https://city-info.at',
+      description:
+        'With city-info you can on one place check all information for places and events in your city.',
+      cardType: 'summary_large_image',
+    });
   }
 
   showHideMobileMenu() {

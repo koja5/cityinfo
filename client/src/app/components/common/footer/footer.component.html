@@ -5,7 +5,7 @@
                 <div class="copyright-text">
                     <p class="mb-lg-0 mb-md-0">
                         &copy; Copyright {{ year }}. Made
-                        <a routerLink="/" class="text-decoration-none">CityInfo</a> with
+                        <a href="javascript:void(null)" routerLink="/" class="text-decoration-none">CityInfo</a> with
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="heart"
                             class="svg-inline--fa fa-heart fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512" width="14">
@@ -18,11 +18,11 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 text-right copyright-text">
-                <a routerLink="/impressum">{{ language.footerImpressum }} | </a>
-                <a routerLink="/privacy-policy">
+                <a href="/impressum" target="black">{{ language.footerImpressum }} | </a>
+                <a href="/privacy-policy" target="black">
                     {{ language.footerPrivacyPolicy }} |
                 </a>
-                <a routerLink="/terms">{{ language.footerTerms }}</a>
+                <a href="/terms" target="black">{{ language.footerTerms }}</a>
             </div>
         </div>
     </div>
