@@ -1556,7 +1556,7 @@ router.get("/getPlacesForAllCity", async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1  LIMIT 0, 8",
+          "select p.*, c.name as 'city_name' from places p join cities c on p.city = c.id where p.active = 1",
           function (err, rows, fields) {
             conn.release();
             if (err) {

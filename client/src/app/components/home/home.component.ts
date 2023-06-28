@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
   public rangeValue: any;
   public categories: any;
   private paramFromUrl: any = null;
+  private timeLeft: number = 1;
+  private interval: any;
   public ranges = [
     {
       text: '5 km',
@@ -118,7 +120,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.getCities('');
     }
-    
+
     this.getCategories();
 
     if (this.selectedCityId && this.rangeValue) {
@@ -174,6 +176,18 @@ export class HomeComponent implements OnInit {
         event.updateData(data);
       });
     }
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft) {
+        this.timeLeft--;
+      }
+    }, 1000);
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
   }
 
   changeCity(event: any) {
