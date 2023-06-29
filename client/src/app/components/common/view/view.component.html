@@ -28,8 +28,7 @@
                 <img [src]="data.cover">
             </div>
 
-            <ejs-carousel *ngIf="data.gallery" #carousel cssClass="templateCarousel"
-                [animationEffect]="carouselAnimation">
+            <ejs-carousel *ngIf="data.gallery" #carousel cssClass="templateCarousel">
 
                 <ng-template #indicatorsTemplate let-data>
                     <div class="indicator">
