@@ -6,7 +6,11 @@ import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { AppServerModule } from './src/main.server';
+
+//special things
 import 'localstorage-polyfill';
+const MockBrowser = require('mock-browser').mocks.MockBrowser;
+const mock = new MockBrowser();
 import * as compression from 'compression';
 
 // api
@@ -14,7 +18,7 @@ const api = require('../server/providers/api');
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const apiProxy = createProxyMiddleware('/api/*', {
-  target: 'https://localhost:3001',
+  target: 'http://localhost:3001',
 });
 
 // The Express app is exported so that it can be used by serverless Functions.
@@ -59,6 +63,7 @@ export function app(): express.Express {
 
   // import different staff
   global['localStorage'] = localStorage;
+  global['window'] = mock.getWindow();
 
   //api implemented
   server.use('/api/*', api);
