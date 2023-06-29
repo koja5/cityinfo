@@ -69,6 +69,31 @@
             </div>
         </div>
 
+        <div class="col-md-8 p-0">
+            <div class="img-container cover" *ngIf="!data.gallery && data.cover">
+                <img [src]="data.cover">
+            </div>
+
+            <ejs-carousel *ngIf="data.gallery" #carousel cssClass="templateCarousel">
+
+                <ng-template #indicatorsTemplate let-data>
+                    <div class="indicator">
+                        <img alt="image" [src]="getThumpImage(data.index)" style="height:100%;width:100%;" />
+                    </div>
+                </ng-template>
+                <e-carousel-items>
+
+                    <e-carousel-item *ngFor="let item of gallery">
+                        <ng-template #template>
+                            <figure class="img-container">
+                                <img src="{{item}}" alt="cardinal" style="height:100%;width:100%;" />
+                            </figure>
+                        </ng-template>
+                    </e-carousel-item>
+
+                </e-carousel-items>
+            </ejs-carousel>
+        </div>
     </div>
 
     <div class="share text-center">

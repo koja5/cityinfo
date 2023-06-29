@@ -1,0 +1,373 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/getAllPaidEvents",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSize": 10
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": false
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "contextMenuItems": [
+        "AutoFit",
+        "AutoFitAll",
+        "SortAscending",
+        "SortDescending",
+        "Copy",
+        "Edit",
+        "Delete",
+        "Save",
+        "Cancel",
+        "FirstPage",
+        "PrevPage",
+        "LastPage",
+        "NextPage",
+        "Group",
+        "Ungroup"
+    ],
+    "toolbar": [
+        "Edit",
+        "Delete",
+        "Print",
+        "Search"
+    ],
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": false,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "api": "/api/createPaidEvents",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        },
+        "edit": {
+            "type": "POST",
+            "api": "/api/updatePaidEvent",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        },
+        "delete": {
+            "type": "POST",
+            "api": "/api/deletePaidEvent",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "id",
+            "width": 70,
+            "filterable": true,
+            "filter": "date",
+            "type": "number",
+            "class": "text-align-right",
+            "field": "id",
+            "isPrimaryKey": true,
+            "allowEditing": false
+        },
+        {
+            "title": "startDateTitleForEvent",
+            "filterable": true,
+            "type": "date",
+            "format": "dd.MM.yyyy",
+            "class": "text-align-right",
+            "field": "datetime",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "nameForEvent",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "event_name",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "cityForEvent",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "city_name",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "positionForEvent",
+            "template": {
+                "choices": [
+                    {
+                        "field": "position",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Fixed</span>"
+                    },
+                    {
+                        "field": "position",
+                        "value": 2,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-info'>Scroll</span>"
+                    }
+                ]
+            },
+            "field": "position"
+        },
+        {
+            "title": "activeForEvent",
+            "template": {
+                "choices": [
+                    {
+                        "field": "active",
+                        "value": 0,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-danger'>Inactive</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": 1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-success'>Active</span>"
+                    },
+                    {
+                        "field": "active",
+                        "value": -1,
+                        "operator": "==",
+                        "html": "<span class='e-badge e-badge-warning'>Deny</span>"
+                    }
+                ]
+            },
+            "field": "active"
+        },
+        {
+            "title": "firstname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "firstname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "lastname",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientEmail",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientPhone",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_phone",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "clientMobile",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "field": "client_mobile",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "",
+            "filterable": true,
+            "type": "string",
+            "class": "text-align-right",
+            "template": {
+                "type": "button",
+                "action": "previewAd",
+                "field": "filename",
+                "class": "btn btn-none btn-color-default button-text-center button-action text-center",
+                "classIcon": "visibility"
+            }
+        }
+    ],
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12 hide",
+            "class": "e-outline",
+            "name": "id",
+            "title": "id",
+            "field": "id",
+            "readonly": true,
+            "hide": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "event_draft",
+            "title": "nameForEvent",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getAllEventsDraft",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedEventDraft",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "city",
+            "title": "cityForEvent",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getCities",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedCity",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "datetime",
+            "title": "startDateTitleForEvent",
+            "field": "datetime",
+            "format": "dd.MM.yyyy / HH:MM"
+        },
+        {
+            "type": "label",
+            "width": "col-md-12 pt-2",
+            "title": "eventAdditionalDescribeTitle",
+            "text": "eventAdditionalDescribeText"
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "position",
+            "title": "positionForEvent",
+            "field": {
+                "text": "name",
+                "value": "id"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/getPositionPrices",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "placeholder": "selectedPosition",
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            },
+            "required": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "start_date_top",
+            "title": "eventStartDateTopPromotion",
+            "field": "start_date_top",
+            "format": "dd.MM.yyyy"
+        },
+        {
+            "type": "numeric",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "number_of_weeks",
+            "title": "numberOfWeeksForEvent",
+            "field": "number_of_weeks"
+        },
+        {
+            "type": "switch",
+            "width": "col-md-12 mt-4",
+            "class": "e-outline",
+            "name": "active",
+            "title": "activeForEvent",
+            "field": "active"
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "e-info button-action",
+            "name": "submit",
+            "title": "saveEvent",
+            "field": "submit",
+            "positionClass": "position-end mt-3 col-md-12"
+        }
+    ]
+}

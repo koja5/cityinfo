@@ -28,6 +28,7 @@ import { ComboBoxAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { SliderModule, TextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { CarouselModule } from '@syncfusion/ej2-angular-navigations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import {provideClientHydration} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CarouselModule,
     ScrollingModule
   ],
-  providers: [CallApiService, DialogConfirmComponent],
+  providers: [CallApiService, DialogConfirmComponent, provideClientHydration()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
