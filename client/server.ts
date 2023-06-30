@@ -67,7 +67,7 @@ export function app(): express.Express {
   global['window'] = mock.getWindow();
 
   //api implemented
-  server.use('/api/*', api);
+  // server.use('/api/*', api);
 
   return server;
 }

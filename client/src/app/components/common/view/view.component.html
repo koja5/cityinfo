@@ -1,81 +1,83 @@
-<section class="navigation">
-    <div class="nav-container">
-        <div class="brand">
-            <a routerLink=""><img src="../../../assets/images/logo.png" class="logo" alt="logo"></a>
+<div *ngIf="language">
+    <section class="navigation">
+        <div class="nav-container">
+            <div class="brand">
+                <a routerLink=""><img src="../../../assets/images/logo.png" class="logo" alt="logo"></a>
+            </div>
+            <nav>
+                <div class="nav-mobile">
+                    <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
+                </div>
+                <ul class="nav-list {{showHideMenu}}">
+
+                    <li><a class="btn transparent" href="./login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            {{language.login}}</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <div class="nav-mobile">
-                <a id="nav-toggle" (click)="showHideMobileMenu()"><span></span></a>
-            </div>
-            <ul class="nav-list {{showHideMenu}}">
-
-                <li><a class="btn transparent" href="./login"><i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        {{language.login}}</a></li>
-            </ul>
-        </nav>
-    </div>
-</section>
+    </section>
 
 
-<div class="main-container view-container mt-4">
+    <div class="main-container view-container mt-4">
 
-    <a class="text-gray back" href="../"><img src="./assets/images/back.png"> {{language.backToHomePage}}</a>
+        <a class="text-gray back" href="../"><img src="./assets/images/back.png"> {{language.backToHomePage}}</a>
 
-    <div class="row text-center first-box-info mt-4" *ngIf="data && categories">
+        <div class="row text-center first-box-info mt-4" *ngIf="data && categories">
 
-        <div class="col-md-12 p-0">
-            <div class="cover" *ngIf="!data.gallery && data.cover">
-                <img [src]="data.cover">
-            </div>
+            <div class="col-md-12 p-0">
+                <div class="cover" *ngIf="!data.gallery && data.cover">
+                    <img [src]="data.cover">
+                </div>
 
-            <ejs-carousel *ngIf="data.gallery" #carousel cssClass="templateCarousel">
+                <ejs-carousel *ngIf="data.gallery" #carousel cssClass="templateCarousel">
 
-                <ng-template #indicatorsTemplate let-data>
-                    <div class="indicator">
-                        <img alt="image" [src]="getThumpImage(data.index)" style="height:100%;width:100%;" />
-                    </div>
-                </ng-template>
-                <e-carousel-items>
+                    <ng-template #indicatorsTemplate let-data>
+                        <div class="indicator">
+                            <img alt="image" [src]="getThumpImage(data.index)" style="height:100%;width:100%;" />
+                        </div>
+                    </ng-template>
+                    <e-carousel-items>
 
-                    <e-carousel-item *ngFor="let item of gallery">
-                        <ng-template #template>
-                            <figure class="m-0">
-                                <img src="{{item}}" alt="cardinal" style="height:100%;width:100%;" />
-                            </figure>
-                        </ng-template>
-                    </e-carousel-item>
+                        <e-carousel-item *ngFor="let item of gallery">
+                            <ng-template #template>
+                                <figure class="m-0">
+                                    <img src="{{item}}" alt="cardinal" style="height:100%;width:100%;" />
+                                </figure>
+                            </ng-template>
+                        </e-carousel-item>
 
-                </e-carousel-items>
-            </ejs-carousel>
-        </div>
-
-        <div class="col-md-12 p-4 text-left">
-            <h1 class="h2 text-gray">{{data.name}}</h1>
-            <div class="mt-4 badge1">
-                <app-badge [badge]="'category'" [data]="data" [categories]="categories"></app-badge>
+                    </e-carousel-items>
+                </ejs-carousel>
             </div>
 
-            <div class="description mt-4 mb-4">
-                <p *ngIf="data.description" class="description">{{data.description}}
-                </p>
-                <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
-                    {{language.noDescriptionInformationAvailable}}
-                </p>
-            </div>
+            <div class="col-md-12 p-4 text-left">
+                <h1 class="h2 text-gray">{{data.name}}</h1>
+                <div class="mt-4 badge1">
+                    <app-badge [badge]="'category'" [data]="data" [categories]="categories"></app-badge>
+                </div>
 
-            <div>
-                <app-contact-container [data]="data" [language]="language"></app-contact-container>
+                <div class="description mt-4 mb-4">
+                    <p *ngIf="data.description" class="description">{{data.description}}
+                    </p>
+                    <p *ngIf="!data.description" class="text-sm text-gray-700 description text-italic">
+                        {{language.noDescriptionInformationAvailable}}
+                    </p>
+                </div>
+
+                <div>
+                    <app-contact-container [data]="data" [language]="language"></app-contact-container>
+                </div>
             </div>
         </div>
+
+        <div class="share text-center">
+
+            <app-share-buttons></app-share-buttons>
+        </div>
+
     </div>
 
-    <div class="share text-center">
-
-        <app-share-buttons></app-share-buttons>
+    <div class="footer mt-4 mb-2">
+        <app-footer [language]="language"></app-footer>
     </div>
-
-</div>
-
-<div class="footer mt-4 mb-2">
-    <app-footer [language]="language"></app-footer>
 </div>
